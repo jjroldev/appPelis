@@ -1,33 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect, useState } from 'react'
 import './App.css'
-
+import axios from 'axios'
+import { CardMovie } from './components/CardMovie/CardMovie'
+import { Movie } from './interface/Movie'
+export const URL_IMAGE = 'https://image.tmdb.org/t/p/original'
 function App() {
-  const [count, setCount] = useState(0)
+  const [movies, setMovies] = useState<Movie[]>([])
+  const API_URL = 'https://api.themoviedb.org/3'
+  const API_KEY = '6e6a632ff00b90c42dadea3c48a464ab'
+  const fecthMovies = async (searchKey: string) => {
+    try {
+      const type = searchKey ? 'search' : 'discover'
+      const { data: { results } } = await axios.get(`${API_URL}/${type}/movie`, {
+        params: {
+          api_key: API_KEY,
+          query: searchKey,
+        }
+      })
+      setMovies(results)
+      console.log(results)
+    } catch {
+      console.error("error")
+    }
+  }
 
+  useEffect(() => {
+    fecthMovies("Superman")
+  }, []);
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="header" >
+        {movies.length > 0 && (
+          <img src={URL_IMAGE + movies[0].backdrop_path} alt={movies[0].title} />
+        )}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+      <div className="contenedorPeliculas">
+        {movies.map((movie) => (
+          <CardMovie key={movie.id} movie={movie} />
+        ))}
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
