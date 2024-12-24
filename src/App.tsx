@@ -57,7 +57,8 @@ function App() {
     <>
       <div className="header" >
         <div className="navbar">
-          
+          <img src="../src/images/Netflix_Logo_RGB.png" alt="logo-de-netflix-practica" />
+          <i className="fa-solid fa-magnifying-glass"></i>
         </div>
         {movies.length > 0 && (
           <>
