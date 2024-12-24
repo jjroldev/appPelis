@@ -8,6 +8,7 @@ function App() {
   const [movies, setMovies] = useState<Movie[]>([])
   const API_URL = 'https://api.themoviedb.org/3'
   const API_KEY = '6e6a632ff00b90c42dadea3c48a464ab'
+  const [logoPath,setLogoPath]=useState('');
   const fecthMovies = async (searchKey: string) => {
     try {
       const type = searchKey ? 'search' : 'discover'
@@ -22,16 +23,50 @@ function App() {
     } catch {
       console.error("error")
     }
+
+
   }
 
+  const fetchMovieImages = async (movieId: number) => {
+    try {
+      const { data } = await axios.get(`${API_URL}/movie/${movieId}/images`, {
+        params: {
+          api_key: API_KEY,
+        },
+      });
+      const logo = data.logos.find((logo: any) => logo.iso_639_1 === "en") || data.logos[0];
+      setLogoPath(logo.file_path)
+    } catch (error) {
+      console.error("Error al obtener las imágenes de la película:", error);
+    }
+  };
+  
+
   useEffect(() => {
-    fecthMovies("Superman")
+    fecthMovies("")    
   }, []);
+
+  useEffect(() => {
+    if (movies.length > 0) {
+      fetchMovieImages(movies[0].id)
+    }
+  }, [movies])
+
+
   return (
     <>
       <div className="header" >
+        <div className="navbar">
+          
+        </div>
         {movies.length > 0 && (
-          <img src={URL_IMAGE + movies[0].backdrop_path} alt={movies[0].title} />
+          <>
+          <img className='fondo' src={URL_IMAGE + movies[0].backdrop_path} alt={movies[0].title} />
+          <div className='contenedorLogo'>
+            <img src={URL_IMAGE+logoPath} alt="" />
+            <p>{movies[0].overview}</p>
+          </div>
+          </>
         )}
       </div>
       <div className="contenedorPeliculas">
