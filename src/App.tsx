@@ -46,7 +46,7 @@ function App() {
   };
 
   useEffect(() => {
-    fetchMovies("us");
+    fetchMovies("");
   }, []);
 
   useEffect(() => {

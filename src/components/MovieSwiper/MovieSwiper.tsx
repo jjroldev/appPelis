@@ -24,7 +24,6 @@ export function MovieSwiper({movies}:{movies:Movie[]}){
           responsive={responsive}
           autoPlay
           infinite
-          showDots
           swipeable
           draggable
           renderArrowsWhenDisabled={false}
