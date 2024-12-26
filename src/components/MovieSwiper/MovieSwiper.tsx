@@ -5,7 +5,7 @@ import './MovieSwiper.css'
 import { useFetchMovies } from "../../hooks/useFetchMovies";
 export function MovieSwiper({ URL, title }: { URL: string, title: string }) {
 
-  const {movies}=useFetchMovies(URL);
+  const { movies } = useFetchMovies(URL);
 
   const responsive = {
     desktop: {
@@ -21,18 +21,25 @@ export function MovieSwiper({ URL, title }: { URL: string, title: string }) {
     mobile: {
       breakpoint: { max: 767, min: 464 },
       items: 2,
-      slidesToSlide: 1 
+      slidesToSlide: 1
     }
   };
   return (
     <div className="carousel">
       <h2 className="tituloCarousel">{title}</h2>
       <Carousel
-        responsive={responsive}
-        swipeable={true}
+        swipeable={false}
         draggable={false}
+        showDots={false}
+        responsive={responsive}
+        ssr={true}
         infinite={true}
-        partialVisible={false}
+        autoPlay={true}
+        autoPlaySpeed={3000}
+        keyBoardControl={true}
+        customTransition="all .5"
+        transitionDuration={500}
+        containerClass="carousel-container"
       >
         {movies.map(
           (movie) =>

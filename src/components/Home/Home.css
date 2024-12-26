@@ -1,0 +1,12 @@
+.contenedorHome{
+    background-color: #000;
+}
+
+.contenedorPeliculas {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+    width: 100%;
+    padding: 0 0 100px 40px;
+    box-sizing: border-box;
+  }
