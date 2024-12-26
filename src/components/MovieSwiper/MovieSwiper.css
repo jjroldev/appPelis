@@ -1,0 +1,10 @@
+.carousel{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.tituloCarousel{
+    color: #fff;
+}
+
