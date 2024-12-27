@@ -25,7 +25,7 @@ export function Buscar({ language }: { language: string }) {
     if (movies.length === 0) {
         return (
             <div className='bg-black contenedorNoC'>
-                <NavBar logoBuscar={true} />
+                <NavBar logoBuscar={true} language={language}/>
                 <div className='textoNoC'>
                     <p className='text-white'>No hay coincidencias</p>
                 </div>
@@ -76,7 +76,7 @@ export function Buscar({ language }: { language: string }) {
                     </button>
                 </form>
             </div>
-            <div className='contenedorPeliculas'>
+            <div className='contenedorPeliculasBuscar'>
                 {movies
                     .filter((movie) => movie.poster_path)
                     .map((movie) => (

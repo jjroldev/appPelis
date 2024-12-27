@@ -37,7 +37,7 @@ export function Banner({ URL, language, logoBuscar }: { URL: string; language: s
 
     return (
         <div className="header">
-            <NavBar logoBuscar={logoBuscar} />
+            <NavBar logoBuscar={logoBuscar} language={language}/>
             {movie && (
                 <>
                     <img
@@ -46,11 +46,13 @@ export function Banner({ URL, language, logoBuscar }: { URL: string; language: s
                         alt={movie.title}
                     />
                     <div className="contenedorLogo">
-                        {logoPath && (
+                        {logoPath ? (
                             <img
                                 src={`${URL_IMAGE}${logoPath}`}
                                 alt={movie.title}
                             />
+                        ):(
+                            <p className="overview">{movie.overview}</p>
                         )}
                         <div className="botones">
                             <button>

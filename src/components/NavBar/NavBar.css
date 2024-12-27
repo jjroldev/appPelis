@@ -12,6 +12,30 @@
 }
 
 .navbar img {
-    width: 150px;
+    width: 130px;
     height: auto;
 }
+
+.navOpciones{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
+
+.textInicio{
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: .3s ease-in-out;
+}
+
+.lupa{
+    font-size: 1.3rem;
+    transition: .3s ease-in-out;
+}
+
+.textInicio:hover,.lupa:hover{
+    color: rgba(255,255,255,.7);
+}
+

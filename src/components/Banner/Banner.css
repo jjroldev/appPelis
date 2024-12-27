@@ -48,6 +48,12 @@
     gap: 20px;
 }
 
+.overview{
+    font-size: 1.1rem;
+    font-weight: 300;
+    max-width: 550px;
+}
+
 .botones button {
     display: flex;
     align-items: center;
