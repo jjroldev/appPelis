@@ -1,17 +1,32 @@
-.cardContainerImage {
+.contenedor-poster {
+    padding: 0 10px;
+  }
+  
+  .cardContainerImage.poster {
     width: 100%;
     height: auto;
     aspect-ratio: 2 / 3;
     margin: auto;
-}
-
-.cardContainerImage img {
+  }
+  
+  .cardContainerImage.poster img {
     width: 100%;
     height: 100%;
     object-fit: cover; 
     cursor: pointer;
-}
-
-.contenedor-poster{
-    padding: 0 10px;
-}
+  }
+  
+  .cardContainerImage.backdrop {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9; 
+    margin: auto;
+  }
+  
+  .cardContainerImage.backdrop img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+  }
+  

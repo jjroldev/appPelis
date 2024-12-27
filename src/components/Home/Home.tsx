@@ -2,7 +2,6 @@ import { Banner } from "../Banner/Banner";
 import { API_KEY, BASE_URL } from "../../App";
 import './Home.css';
 import { MovieSwiper } from "../MovieSwiper/MovieSwiper";
-
 export function Home({ language }: { language: string }) {
   const fetchURLS = [{
     popularMovies: `${BASE_URL}/movie/popular?api_key=${API_KEY}&language=${language}`,
@@ -33,24 +32,24 @@ export function Home({ language }: { language: string }) {
       <Banner URL={fetchURLS[0].nowPlaying} language={language} logoBuscar={true} />
       <div className="contenedorPeliculas">
         <MovieSwiper URL={fetchURLS[0].popularMovies} title={language === 'es' ? 'Populares' : 'Populars'} />
-        <MovieSwiper URL={fetchURLS[0].topRatedMovies} title={language === 'es' ? 'Mejores Votadas' : 'Best Voted'} />
-        <MovieSwiper URL={fetchURLS[0].upcomingMovies} title={language === 'es' ? "Próximamente" : 'Upcoming'} />
-        <MovieSwiper URL={fetchURLS[0].actionMovies} title={language === 'es' ? 'Acción' : 'Action'} />
-        <MovieSwiper URL={fetchURLS[0].adventureMovies} title={language === 'es' ? 'Aventura' : 'Adventure'} />
-        <MovieSwiper URL={fetchURLS[0].animationMovies} title={language === 'es' ? 'Animación' : 'Animation'} />
-        <MovieSwiper URL={fetchURLS[0].comedyMovies} title={language === 'es' ? 'Comedia' : 'Comedy'} />
-        <MovieSwiper URL={fetchURLS[0].crimeMovies} title={language === 'es' ? 'Crimen' : 'Crime'} />
-        <MovieSwiper URL={fetchURLS[0].documentaryMovies} title={language === 'es' ? 'Documentales' : 'Documentary'} />
-        <MovieSwiper URL={fetchURLS[0].dramaMovies} title={language === 'es' ? 'Drama' : 'Drama'} />
-        <MovieSwiper URL={fetchURLS[0].familyMovies} title={language === 'es' ? 'Familia' : 'Family'} />
-        <MovieSwiper URL={fetchURLS[0].fantasyMovies} title={language === 'es' ? 'Fantasía' : 'Fantasy'} />
+        <MovieSwiper URL={fetchURLS[0].topRatedMovies} title={language === 'es' ? 'Mejores Votadas' : 'Best Voted' }isLarge={true} />
+        <MovieSwiper URL={fetchURLS[0].upcomingMovies} title={language === 'es' ? "Próximamente" : 'Upcoming'} isLarge={true}/>
+        <MovieSwiper URL={fetchURLS[0].actionMovies} title={language === 'es' ? 'Acción' : 'Action'} isLarge={true}/>
+        <MovieSwiper URL={fetchURLS[0].adventureMovies} title={language === 'es' ? 'Aventura' : 'Adventure'} isLarge={true}/>
+        <MovieSwiper URL={fetchURLS[0].animationMovies} title={language === 'es' ? 'Animación' : 'Animation'} isLarge={true}/>
+        <MovieSwiper URL={fetchURLS[0].comedyMovies} title={language === 'es' ? 'Comedia' : 'Comedy'} isLarge={true}/>
+        <MovieSwiper URL={fetchURLS[0].crimeMovies} title={language === 'es' ? 'Crimen' : 'Crime'} isLarge={true}/>
+        <MovieSwiper URL={fetchURLS[0].documentaryMovies} title={language === 'es' ? 'Documentales' : 'Documentary'} isLarge={true}/>
+        <MovieSwiper URL={fetchURLS[0].dramaMovies} title={language === 'es' ? 'Drama' : 'Drama'} isLarge={true}/>
+        <MovieSwiper URL={fetchURLS[0].familyMovies} title={language === 'es' ? 'Familia' : 'Family'} isLarge={true}/>
+        <MovieSwiper URL={fetchURLS[0].fantasyMovies} title={language === 'es' ? 'Fantasía' : 'Fantasy'} isLarge={true}/>
         <MovieSwiper URL={fetchURLS[0].historyMovies} title={language === 'es' ? 'Historia' : 'History'} />
         <MovieSwiper URL={fetchURLS[0].horrorMovies} title={language === 'es' ? 'Terror' : 'Horror'} />
-        <MovieSwiper URL={fetchURLS[0].musicMovies} title={language === 'es' ? 'Música' : 'Music'} />
-        <MovieSwiper URL={fetchURLS[0].mysteryMovies} title={language === 'es' ? 'Misterio' : 'Mystery'} />
-        <MovieSwiper URL={fetchURLS[0].romanceMovies} title={language === 'es' ? 'Románticas' : 'Romance'} />
-        <MovieSwiper URL={fetchURLS[0].scienceFictionMovies} title={language === 'es' ? 'Ciencia Ficción' : 'Science Fiction'} />
-        <MovieSwiper URL={fetchURLS[0].thrillerMovies} title={language === 'es' ? 'Suspenso' : 'Thriller'} />
+        <MovieSwiper URL={fetchURLS[0].musicMovies} title={language === 'es' ? 'Música' : 'Music'} isLarge={true}/>
+        <MovieSwiper URL={fetchURLS[0].mysteryMovies} title={language === 'es' ? 'Misterio' : 'Mystery'} isLarge={true}/>
+        <MovieSwiper URL={fetchURLS[0].romanceMovies} title={language === 'es' ? 'Románticas' : 'Romance'} isLarge={true}/>
+        <MovieSwiper URL={fetchURLS[0].scienceFictionMovies} title={language === 'es' ? 'Ciencia Ficción' : 'Science Fiction'} isLarge={true}/>
+        <MovieSwiper URL={fetchURLS[0].thrillerMovies} title={language === 'es' ? 'Suspenso' : 'Thriller'} isLarge={true}/>
       </div>
     </div>
   );
