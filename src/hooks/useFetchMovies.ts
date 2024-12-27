@@ -7,7 +7,7 @@ export const useFetchMovies = (url: string) => {
         try {
             const response = await fetch(url);
             const data = await response.json();
-            setMovies(data.results || []);
+            setMovies(data.results);
         } catch (err) {
             console.error('error');
         }

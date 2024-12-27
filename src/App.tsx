@@ -8,7 +8,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Home } from "./components/Home/Home";
 import { useState } from "react";
 import { Buscar } from "./components/Buscar/Buscar";
-import { DetailMovie } from "./components/DetailMovie/DetailMovie";
 function App() {
   const [language, setLanguage] = useState<string>("es");
   return (
