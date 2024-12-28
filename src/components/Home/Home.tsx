@@ -29,7 +29,7 @@ export function Home({ language }: { language: string }) {
 
   return (
     <div className="contenedorHome">
-      <Banner URL={fetchURLS[0].nowPlaying} language={language} logoBuscar={true} />
+      <Banner URL={fetchURLS[0].nowPlaying} language={language} logoBuscar={true} isShort={false}/>
       <div className="contenedorPeliculas">
         <MovieSwiper URL={fetchURLS[0].popularMovies} title={language === 'es' ? 'Películas Populares' : 'Populars Movies'} language={language}/>
         <MovieSwiper URL={fetchURLS[0].topRatedMovies} title={language === 'es' ? 'Mejores Votadas' : 'Best Voted' }isLarge={true} language={language}/>
