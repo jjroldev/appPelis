@@ -1,14 +1,14 @@
 .navbar {
+    position: fixed;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 70px;
     width: 100%;
-    color: #fff;
+    padding: 10px 45px;
     font-size: 1.3rem;
-    z-index: 2;
-    top: 20px;
-    left: 40px;
+    z-index: 6;
+    color: #fff;
+    background-color: transparent;
 }
 
 .navbar img {
@@ -33,6 +33,7 @@
 .lupa{
     font-size: 1.3rem;
     transition: .3s ease-in-out;
+    cursor: pointer;
 }
 
 .textInicio:hover,.lupa:hover{

@@ -20,7 +20,7 @@ export function Buscar({ language }: { language: string }) {
         ? `${BASE_URL}/search/movie?api_key=${API_KEY}&language=${language}&query=${nameMovie}`
         : `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=${language}`;
 
-    const { movies } = useFetchMovies(fetchURL);
+    const { movies } = useFetchMovies(fetchURL,2);
 
     if (movies.length === 0) {
         return (
@@ -80,7 +80,7 @@ export function Buscar({ language }: { language: string }) {
                 {movies
                     .filter((movie) => movie.poster_path)
                     .map((movie) => (
-                        <CardMovie key={movie.id} movie={movie} />
+                        <CardMovie key={movie.id} movie={movie} language={language} />
                     ))
                 }
             </div>

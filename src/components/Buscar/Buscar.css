@@ -1,5 +1,5 @@
 .contenedor{
-    background-color: #000000;
+    background-color: rgb(32, 32, 32);
 }
 
 .contenedorBuscar {
@@ -15,12 +15,7 @@
     padding: 30px;
     grid-template-columns: repeat(5,1fr);
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.content{
-    height: 100%;
-    background-color: #000;
+    box-shadow: 0 2px 5px rgb(32, 32, 32);
 }
 
 .contenedorNoC{

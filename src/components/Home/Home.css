@@ -1,12 +1,13 @@
 .contenedorHome{
-    background-color: #000000;
+    background-color: #1f1f1f;
 }
 
 .contenedorPeliculas {
+    padding: 20px 0 20px 45px;
+    margin-top: -60px;
     display: flex;
     flex-direction: column;
-    gap: 60px;
+    gap: 45px;
     width: 100%;
-    padding: 0 0 100px 40px;
     box-sizing: border-box;
   }

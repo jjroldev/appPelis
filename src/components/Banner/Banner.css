@@ -1,7 +1,7 @@
 .header {
     display: flex;
     width: 100%;
-    height: 90vh;
+    height: 100vh;
     align-items: flex-start;
     position: relative;
     overflow: hidden;
@@ -16,6 +16,12 @@
     display: block;
 }
 
+.cuerpoBanner{
+    width: 100%;
+    height: 100%;
+    padding: 0px 45px 20px 45px;
+}
+
 .header::before {
     content: "";
     position: absolute;
@@ -23,7 +29,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, black, transparent 30%, transparent 70%, black);
+    background: linear-gradient(to bottom, rgb(32, 32, 32), transparent 30%, transparent 70%, rgb(32, 32, 32));
     z-index: 1;
 }
 
@@ -32,10 +38,8 @@
     flex-direction: column;
     gap: 30px;
     position: absolute;
-    bottom: 70px;
-    left: 70px;
+    bottom: 150px;
     color: #fff;
-    z-index: 2;
 }
 
 .contenedorLogo img {
@@ -50,7 +54,7 @@
 
 .overview{
     font-size: 1.1rem;
-    font-weight: 300;
+    font-weight: 400;
     max-width: 550px;
 }
 
@@ -63,8 +67,8 @@
     font-weight: bold;
     border: none;
     border-radius: 5px;
-    cursor: pointer;
     transition: all 0.3s ease;
+    z-index: 5;
 }
 
 .botones button:first-child {
