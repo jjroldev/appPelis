@@ -7,9 +7,9 @@ import { NavBar } from "../NavBar/NavBar";
 import useFetchLogo from "../../hooks/useFectLogo";
 
 export function Banner({ URL, language, logoBuscar }: { URL: string; language: string; logoBuscar: boolean }) {
-    const [movie, setMovie] = useState<Movie>();
+    const [movie, setMovie] = useState<Movie | null>(null);
     const { movies } = useFetchMovies(URL,1);
-    const logoPath = useFetchLogo(movie?.id, language, BASE_URL, API_KEY);
+    const logoPath = useFetchLogo(movie?.id ?? 0, language, BASE_URL, API_KEY);
 
     useEffect(() => {
         const validMovies = movies.filter((movie) => movie.backdrop_path);

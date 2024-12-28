@@ -2,30 +2,23 @@ import { useFetchMovies } from '../../hooks/useFetchMovies';
 import './Buscar.css';
 import { MdLocalMovies } from "react-icons/md";
 import { API_KEY, BASE_URL } from '../../App';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { CardMovie } from '../CardMovie/CardMovie';
 import { Banner } from '../Banner/Banner';
 import { NavBar } from '../NavBar/NavBar';
 
 export function Buscar({ language }: { language: string }) {
-    const [nameMovie, setNameMovie] = useState(() => {
-        return localStorage.getItem('nameMovie') || '';
-    });
-
-    useEffect(() => {
-        localStorage.setItem('nameMovie', nameMovie);
-    }, [nameMovie]);
-
+    const [nameMovie, setNameMovie] = useState('');
     const fetchURL = nameMovie
         ? `${BASE_URL}/search/movie?api_key=${API_KEY}&language=${language}&query=${nameMovie}`
         : `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=${language}`;
 
-    const { movies } = useFetchMovies(fetchURL,5);
+    const { movies } = useFetchMovies(fetchURL, 5);
 
     if (movies.length === 0) {
         return (
             <div className='bg-black contenedorNoC'>
-                <NavBar logoBuscar={true} language={language}/>
+                <NavBar logoBuscar={true} language={language} />
                 <div className='textoNoC'>
                     <p className='text-white'>No hay coincidencias</p>
                 </div>
@@ -84,7 +77,6 @@ export function Buscar({ language }: { language: string }) {
                     ))
                 }
             </div>
-
         </div>
     );
 }
