@@ -3,7 +3,6 @@ import "react-multi-carousel/lib/styles.css";
 import { CardMovie } from "../CardMovie/CardMovie";
 import { useFetchMovies } from "../../hooks/useFetchMovies";
 import './MovieSwiper.css';
-import { MdLanguage } from "react-icons/md";
 
 export function MovieSwiper({ URL, title, isLarge, language }: { URL: string, title: string, isLarge?: boolean, language: string }) {
   const { movies } = useFetchMovies(URL, 2);

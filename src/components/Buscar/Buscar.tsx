@@ -20,7 +20,7 @@ export function Buscar({ language }: { language: string }) {
         ? `${BASE_URL}/search/movie?api_key=${API_KEY}&language=${language}&query=${nameMovie}`
         : `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=${language}`;
 
-    const { movies } = useFetchMovies(fetchURL,2);
+    const { movies } = useFetchMovies(fetchURL,5);
 
     if (movies.length === 0) {
         return (

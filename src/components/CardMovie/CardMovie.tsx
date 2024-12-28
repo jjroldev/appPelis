@@ -1,7 +1,6 @@
 import "./CardMovie.css";
 import { Movie } from "../../interface/Movie";
 import { URL_IMAGE } from "../../App";
-import { useEffect, useState } from "react";
 import { BASE_URL } from "../../App";
 import { API_KEY } from "../../App";
 import useFetchLogo from "../../hooks/useFectLogo";
