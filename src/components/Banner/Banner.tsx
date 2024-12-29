@@ -5,11 +5,15 @@ import { BASE_URL, API_KEY, URL_IMAGE_lOGO, URL_IMAGE_BANNER } from "../../App";
 import { useFetchMovies } from "../../hooks/useFetchMovies";
 import { NavBar } from "../NavBar/NavBar";
 import useFetchLogo from "../../hooks/useFectLogo";
+import React from "react";
+import VideoModal from "../ModalVideo/ModalVideo";
 export function Banner({ URL, language, logoBuscar, isShort }: { URL: string; language: string; logoBuscar: boolean, isShort: boolean }) {
-    const [movie, setMovie] = useState<Movie | null>(null);
+    const [movie, setMovie] = useState<Movie | null>();
     const { movies } = useFetchMovies(URL, 2);
     const logoPath = useFetchLogo(movie?.id ?? 0, language, BASE_URL, API_KEY);
-
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
     useEffect(() => {
         const validMovies = movies.filter((movie) => movie.backdrop_path);
 
@@ -22,6 +26,9 @@ export function Banner({ URL, language, logoBuscar, isShort }: { URL: string; la
             setMovie(firstMovie);
         } else {
             setMovie(null)
+        }
+        if(logoPath){
+            console.log(logoPath)
         }
     }, [movies, language]);
 
@@ -61,9 +68,10 @@ export function Banner({ URL, language, logoBuscar, isShort }: { URL: string; la
 
                             {!isShort && (
                                 <div className="botones">
-                                    <button>
-                                        <i className="fa-solid fa-play"></i> {language === 'es' ? 'Reproducir' : 'Play'}
+                                    <button onClick={handleOpen}>
+                                        <i className="fa-solid fa-play"></i> {language === "es" ? "Reproducir" : "Play"}
                                     </button>
+                                    <VideoModal language={language} movieId={movie.id} open={open} onClose={handleClose}/>
                                     <button>
                                         <i className="fa-solid fa-circle-info"></i> {language === 'es' ? 'Más Información' : 'More Information'}
                                     </button>

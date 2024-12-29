@@ -2,14 +2,17 @@ import "./CardMovie.css";
 import { Movie } from "../../interface/Movie";
 import { BASE_URL } from "../../App";
 import { API_KEY } from "../../App";
-import { URL_IMAGE_BACKDROP,URL_IMAGE_POSTER,URL_IMAGE_lOGO } from "../../App";
+import { URL_IMAGE_BACKDROP, URL_IMAGE_POSTER, URL_IMAGE_lOGO } from "../../App";
 import useFetchLogo from "../../hooks/useFectLogo";
 import { BsFillPlayFill } from "react-icons/bs";
 import { FaInfo } from "react-icons/fa";
 import React from "react";
+import VideoModal from "../ModalVideo/ModalVideo";
 const CardMovie = React.memo(({ movie, isLarge, language }: { movie: Movie; isLarge?: boolean; language: string }) => {
   const logoPath = useFetchLogo(movie.id, language, BASE_URL, API_KEY);
-
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   return (
     <div className={`contenedor-poster ${isLarge ? "large" : ""}`}>
       <div className={`cardContainerImage ${isLarge ? "backdrop" : "poster"}`}>
@@ -23,9 +26,15 @@ const CardMovie = React.memo(({ movie, isLarge, language }: { movie: Movie; isLa
 
         <div className="hover-details">
           <div className="play-button">
-            <button>
+            <button onClick={handleOpen}>
               <BsFillPlayFill size={23} />
             </button>
+            <VideoModal
+              open={open}
+              onClose={handleClose}
+              movieId={movie.id}
+              language={language}
+            />
             <button>
               <FaInfo size={16} />
             </button>

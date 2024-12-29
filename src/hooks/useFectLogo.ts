@@ -45,7 +45,6 @@ const useFetchLogo = (
 
         const logoFilePath = logo?.file_path
         setLogoPath(logoFilePath);
-
         if (logoFilePath) {
           localStorage.setItem(cacheKey, logoFilePath);
           localStorage.setItem(cacheTimestampKey, now.toString());

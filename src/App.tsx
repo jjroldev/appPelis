@@ -6,7 +6,7 @@ export const URL_IMAGE_BACKDROP = "https://image.tmdb.org/t/p/w780";
 export const URL_IMAGE_BANNER = "https://image.tmdb.org/t/p/original";
 export const URL_IMAGE_lOGO = "https://image.tmdb.org/t/p/w500";
 export const BASE_URL = "https://api.themoviedb.org/3";
-export const API_KEY = "6e6a632ff00b90c42dadea3c48a464ab";
+export const API_KEY = "7b3eb704908cad196b55f47390040305";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Home } from "./components/Home/Home";
 import { useState } from "react";
