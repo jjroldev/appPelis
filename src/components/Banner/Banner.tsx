@@ -8,7 +8,7 @@ import useFetchLogo from "../../hooks/useFectLogo";
 
 export function Banner({ URL, language, logoBuscar, isShort }: { URL: string; language: string; logoBuscar: boolean, isShort: boolean }) {
     const [movie, setMovie] = useState<Movie | null>(null);
-    const { movies } = useFetchMovies(URL, 1);
+    const { movies } = useFetchMovies(URL, 5);
     const logoPath = useFetchLogo(movie?.id ?? 0, language, BASE_URL, API_KEY);
 
     useEffect(() => {
