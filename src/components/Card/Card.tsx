@@ -1,5 +1,5 @@
-import { URL_IMAGE } from "../../App";
-import { Movie } from "../../interface/Movie";
+import { URL_IMAGE } from "../App";
+import { Movie } from "../interface/Movie";
 import { BsFillPlayFill } from "react-icons/bs";
 import "./Card.css"
 export function Card({movie}:{movie:Movie}){
