@@ -37,6 +37,7 @@ export const useFetchMovies = (url: string, totalPages: number) => {
       }
 
       setMovies(allMovies);
+      console.log(allMovies)
     } catch (err: any) {
       console.error("Error fetching movies:", err);
       setError(err.message);

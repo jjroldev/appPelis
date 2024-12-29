@@ -101,7 +101,7 @@ export function Banner({ URL, language, logoBuscar, isShort }: { URL: string; la
                             textAnchor="middle"
                             dominantBaseline="middle"
                         >
-                            {language==="es"?"No Hay Resultados":"Not Results Found"}
+                            {language === "es" ? "No Hay Resultados" : "Not Results Found"}
                         </text>
                     </svg>
                 </div>

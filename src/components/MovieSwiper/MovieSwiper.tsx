@@ -10,7 +10,7 @@ export function MovieSwiper({ URL, title, isLarge, language }: { URL: string, ti
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
-      items: isLarge ? 6 : 8,
+      items: isLarge ? 5 : 8,
       slidesToSlide: 2,
     },
     tablet: {
@@ -41,6 +41,7 @@ export function MovieSwiper({ URL, title, isLarge, language }: { URL: string, ti
         containerClass="carousel-container"
         dotListClass="custom-dot-list-style"
         itemClass="carousel-item-padding-40-px"
+        className="carousel-react"
       >
         {movies.map((movie) => {
           const imagePath = isLarge ? movie.backdrop_path : movie.poster_path;

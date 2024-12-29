@@ -1,7 +1,7 @@
 .carousel{
+    height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 10px;
     z-index: 5;
 }
 .tituloCarousel{
@@ -12,4 +12,8 @@
 
 .react-multi-carousel-item{
     padding-right: 20px;
+    z-index: 10;
+}
+.react-multi-carousel-track{
+    padding: 20px 10px;
 }
