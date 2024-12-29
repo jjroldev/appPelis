@@ -31,7 +31,7 @@ export function CardMovie({ movie, isLarge, language }: { movie: Movie; isLarge?
           </div>
           <div className="details">
             <p className="release-date">
-              Movie <span>{movie.release_date.split("-")[0]}</span>
+              {language=='es'?"Película del ":"Movie of "}<span>{movie.release_date.split("-")[0]}</span>
             </p>
             <p className="duration">1.2h</p>
           </div>

@@ -80,11 +80,13 @@
 
 .details {
   text-align: right;
+  line-height: 1;
   color: white;
 }
 
 .details .release-date {
   font-weight: bold;
+  font-size: 1.3rem;
   color: #4caf50;
 }
 

@@ -26,6 +26,11 @@
     padding: 0px 45px 20px 45px;
 }
 
+.titulo-banner{
+    font-size: 4rem;
+    font-weight: bold;
+}
+
 .header::before,.header1::before {
     content: "";
     position: absolute;

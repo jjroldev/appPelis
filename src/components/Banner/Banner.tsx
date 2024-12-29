@@ -8,7 +8,7 @@ import useFetchLogo from "../../hooks/useFectLogo";
 
 export function Banner({ URL, language, logoBuscar, isShort }: { URL: string; language: string; logoBuscar: boolean, isShort: boolean }) {
     const [movie, setMovie] = useState<Movie | null>(null);
-    const { movies } = useFetchMovies(URL, 5);
+    const { movies } = useFetchMovies(URL, 2);
     const logoPath = useFetchLogo(movie?.id ?? 0, language, BASE_URL, API_KEY);
 
     useEffect(() => {
@@ -16,6 +16,7 @@ export function Banner({ URL, language, logoBuscar, isShort }: { URL: string; la
 
         if (validMovies.length > 0) {
             const randomMovie = validMovies[Math.floor(Math.random() * validMovies.length)];
+            console.log(randomMovie)
             setMovie(randomMovie);
         } else if (movies.length > 0) {
             const firstMovie = movies[0];
@@ -44,16 +45,18 @@ export function Banner({ URL, language, logoBuscar, isShort }: { URL: string; la
                                         alt={movie.title}
                                     />
                                     {!isShort && (
-                                        <p className="overview">
-                                            {movie.overview.slice(0, movie.overview.indexOf(".") + 1)}
-                                        </p>
+                                        movie.overview && (
+                                            <p className="overview">{movie.overview.slice(0, movie.overview.indexOf(".") + 1)}  </p>
+                                        )
                                     )}
                                 </>
                             ) : (
                                 !isShort && (
-                                    <p className="overview">
-                                        {movie.overview.slice(0, movie.overview.indexOf(".") + 1)}
-                                    </p>
+                                    movie.overview ? (
+                                        <p className="overview">{movie.overview.slice(0, movie.overview.indexOf(".") + 1)}  </p>
+                                    ) : (
+                                        <h2 className="titulo-banner">{movie.original_title}</h2>
+                                    )
                                 )
                             )}
 
