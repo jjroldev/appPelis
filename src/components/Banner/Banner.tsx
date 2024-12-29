@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import "./Banner.css";
 import { Movie } from "../../interface/Movie";
-import { BASE_URL, API_KEY, URL_IMAGE } from "../../App";
+import { BASE_URL, API_KEY, URL_IMAGE_lOGO, URL_IMAGE_BANNER } from "../../App";
 import { useFetchMovies } from "../../hooks/useFetchMovies";
 import { NavBar } from "../NavBar/NavBar";
 import useFetchLogo from "../../hooks/useFectLogo";
-
 export function Banner({ URL, language, logoBuscar, isShort }: { URL: string; language: string; logoBuscar: boolean, isShort: boolean }) {
     const [movie, setMovie] = useState<Movie | null>(null);
     const { movies } = useFetchMovies(URL, 2);
@@ -28,11 +27,11 @@ export function Banner({ URL, language, logoBuscar, isShort }: { URL: string; la
 
     return (
         <div className={`header ${isShort ? "header-short" : ""}`}>
-            {movie ? (
+            {movie && (
                 <>
                     <img
                         className="fondo"
-                        src={`${URL_IMAGE}${movie.backdrop_path}`}
+                        src={`${URL_IMAGE_BANNER}${movie.backdrop_path}`}
                         alt={movie.title}
                     />
                     <NavBar logoBuscar={logoBuscar} language={language} />
@@ -41,7 +40,7 @@ export function Banner({ URL, language, logoBuscar, isShort }: { URL: string; la
                             {logoPath ? (
                                 <>
                                     <img
-                                        src={`${URL_IMAGE}${logoPath}`}
+                                        src={`${URL_IMAGE_lOGO}${logoPath}`}
                                         alt={movie.title}
                                     />
                                     {!isShort && (
@@ -73,42 +72,8 @@ export function Banner({ URL, language, logoBuscar, isShort }: { URL: string; la
                         </div>
                     </div>
                 </>
-            ) : (
-                <div
-                    style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        backgroundColor: '#202020',
-                        width: '100%',
-                        height: '100%',
-                        position: 'relative',
-                    }}
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 500 250"
-                        style={{
-                            width: '80%',
-                            height: 'auto',
-                        }}
-                    >
-                        <rect width="100%" height="100%" fill="#202020" />
-                        <text
-                            x="50%"
-                            y="50%"
-                            fill="#ffffff"
-                            fontFamily="Arial, sans-serif"
-                            fontSize="24"
-                            fontWeight="bold"
-                            textAnchor="middle"
-                            dominantBaseline="middle"
-                        >
-                            {language === "es" ? "No Hay Resultados" : "Not Results Found"}
-                        </text>
-                    </svg>
-                </div>
-            )}
+            )
+            }
         </div>
     );
 }

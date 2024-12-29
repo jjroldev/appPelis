@@ -2,8 +2,8 @@ import { useFetchMovies } from '../../hooks/useFetchMovies';
 import './Buscar.css';
 import { API_KEY, BASE_URL } from '../../App';
 import { useState, useEffect } from 'react';
-import { CardMovie } from '../CardMovie/CardMovie';
-import { Banner } from '../Banner/Banner';
+import  CardMovie  from '../CardMovie/CardMovie';
+import  {Banner}  from '../Banner/Banner';
 import { Lupa } from '../Lupa/Lupa';
 
 export function Buscar({ language }: { language: string }) {
