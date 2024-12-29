@@ -17,3 +17,7 @@
 .react-multi-carousel-track{
     padding: 20px 10px;
 }
+
+.carousel-react{
+    /* overflow: visible !important; */
+}

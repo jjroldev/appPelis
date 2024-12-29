@@ -9,7 +9,7 @@ import { Home } from "./components/Home/Home";
 import { useState } from "react";
 import { Buscar } from "./components/Buscar/Buscar";
 function App() {
-  const [language, setLanguage] = useState<string>("en");
+  const [language, setLanguage] = useState<string>("es");
   return (
     <>
     <BrowserRouter>
