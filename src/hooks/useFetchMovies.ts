@@ -20,14 +20,11 @@ export const useFetchMovies = (url: string, totalPages: number) => {
       const cacheDuration = 86400000; 
       if (cachedData && cachedTimestamp && now - parseInt(cachedTimestamp) < cacheDuration) {
         allMovies = JSON.parse(cachedData);
-        console.log("Cargando datos desde el localstorage")
+        // console.log("Cargando datos desde el localstorage")
       } else {
-        console.log("Cargando datos desde la API")
+        // console.log("Cargando datos desde la API")
         for (let page = 1; page <= totalPages; page++) {
           const response = await fetch(`${url}&page=${page}`);
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
           const data = await response.json();
           allMovies = [...allMovies, ...data.results];
         }

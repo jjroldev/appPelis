@@ -38,7 +38,9 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, rgb(32, 32, 32), transparent 30%, transparent 70%, rgb(32, 32, 32));
+    background: 
+        linear-gradient(to bottom, rgb(0, 0, 0), transparent 30%, transparent 70%, rgb(0, 0, 0)),
+        linear-gradient(to right, rgb(0, 0, 0), transparent 40%); 
     z-index: 1;
 }
 
@@ -48,14 +50,29 @@
     gap: 30px;
     position: absolute;
     color: #fff;
+    max-width: 550px;
 }
 
+.logo-banner{
+    width: 350px !important;
+    height: auto;
+}
+
+.logo-banner-reducido{
+    width: 200px !important;
+}
 .contenedorLogo{
     bottom: 140px;
+    z-index: 3;
 }
 
 .contenedorLogo1{
     bottom: 110px;
+    z-index: 3;
+}
+
+.contenedorDetailN{
+    bottom: 80px;
 }
 
 .contenedorLogo img {
@@ -75,8 +92,7 @@
 
 .overview{
     font-size: 1.1rem;
-    font-weight: 400;
-    max-width: 550px;
+    font-weight: 500;
 }
 
 .botones button {
@@ -112,4 +128,24 @@
 
 .botones button i {
     font-size: 1.2rem;
+}
+
+.movieDetailsBanner{
+    gap: 10px;
+}
+
+.bannerDetails{
+    gap: 20px;
+}
+
+.bannerDetails span{
+    font-weight: 700;
+    justify-content: space-between;
+    color: rgb(203, 203, 203);
+}
+.generosBanner{
+    gap: 30px;
+    list-style:circle;
+    list-style-position: inside;
+    font-weight: 600;
 }

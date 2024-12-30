@@ -7,12 +7,17 @@ import useFetchLogo from "../../hooks/useFectLogo";
 import { BsFillPlayFill } from "react-icons/bs";
 import { FaInfo } from "react-icons/fa";
 import React from "react";
+import { useNavigate } from "react-router";
 import VideoModal from "../ModalVideo/ModalVideo";
 const CardMovie = React.memo(({ movie, isLarge, language }: { movie: Movie; isLarge?: boolean; language: string }) => {
   const logoPath = useFetchLogo(movie.id, language, BASE_URL, API_KEY);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const navigate = useNavigate();
+  const pasarMovie = () => {
+    navigate("/info", { state: { movie, language } });
+  };
   return (
     <div className={`contenedor-poster ${isLarge ? "large" : ""}`}>
       <div className={`cardContainerImage ${isLarge ? "backdrop" : "poster"}`}>
@@ -35,15 +40,9 @@ const CardMovie = React.memo(({ movie, isLarge, language }: { movie: Movie; isLa
               movieId={movie.id}
               language={language}
             />
-            <button>
+            <button onClick={pasarMovie}>
               <FaInfo size={16} />
             </button>
-          </div>
-          <div className="details">
-            <p className="release-date">
-              {language == 'es' ? "Película del " : "Movie of "}<span>{movie.release_date.split("-")[0]}</span>
-            </p>
-            <p className="duration">1.2h</p>
           </div>
         </div>
 

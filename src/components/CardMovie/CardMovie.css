@@ -32,7 +32,7 @@
 }
 
 .cardContainerImage:hover img.main-image {
-  opacity: 0.5;
+  opacity: 0.9;
 }
 
 .hover-details {
@@ -75,28 +75,8 @@
 }
 
 .play-button button:hover {
-  background-color: #ccc;
-}
-
-.details {
-  text-align: right;
-  line-height: 1;
+  background-color: #000000;
   color: white;
-}
-
-.details .release-date {
-  font-weight: bold;
-  font-size: 1rem;
-  color: #4caf50;
-}
-
-.details .release-date span {
-  color: white;
-}
-
-.details .duration {
-  margin-top: 10px;
-  font-size: 14px;
 }
 
 .cardContainerImage.backdrop .contenedorLogo {

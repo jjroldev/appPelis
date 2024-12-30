@@ -1,12 +1,18 @@
 interface LupaProps {
-    value: string;
     placeholder: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onSubmit: (value: string) => void;
 }
+import { useState } from "react";
+export function Lupa({ placeholder, onSubmit }: LupaProps) {
+    const [inputValue, setInputValue] = useState('');
 
-export function Lupa({ value, placeholder, onChange }: LupaProps) {
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        onSubmit(inputValue);
+    };
+
     return (
-        <form className="flex items-center max-w-sm mx-auto" onSubmit={(e) => e.preventDefault()}>
+        <form className="flex items-center max-w-sm mx-auto" onSubmit={handleSubmit}>
             <div className="relative w-full">
                 <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                     <svg
@@ -29,8 +35,12 @@ export function Lupa({ value, placeholder, onChange }: LupaProps) {
                     type="text"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder={placeholder}
-                    value={value}
-                    onChange={onChange}
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                />
+                <button
+                    type="submit"
+                    style={{ display: 'none' }}
                 />
             </div>
         </form>

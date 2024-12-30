@@ -1,5 +1,5 @@
 .contenedor{
-    background-color: rgb(32, 32, 32);
+    background-color: rgb(0, 0, 0);
 }
 
 .contenedorNotFound{
@@ -19,7 +19,7 @@
     padding: 30px;
     grid-template-columns: repeat(5,1fr);
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgb(32, 32, 32);
+    box-shadow: 0 2px 5px rgb(0, 0, 0);
 }
 
 .contenedorNoC{

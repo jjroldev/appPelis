@@ -10,13 +10,13 @@ function MovieSwiper({ URL, title, isLarge, language }: { URL: string, title: st
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
-      items: isLarge ? 5 : 8,
-      slidesToSlide: isLarge ? 4 : 7,
+      items: isLarge ? 6 : 8,
+      slidesToSlide: isLarge ? 5 : 5,
     },
     tablet: {
       breakpoint: { max: 1024, min: 768 },
       items: 3,
-      slidesToSlide: 2,
+      slidesToSlide: 3,
     },
     mobile: {
       breakpoint: { max: 767, min: 464 },
@@ -35,10 +35,7 @@ function MovieSwiper({ URL, title, isLarge, language }: { URL: string, title: st
         responsive={responsive}
         ssr={true}
         infinite={true}
-        keyBoardControl={true}
-        containerClass="carousel-container"
-        dotListClass="custom-dot-list-style"
-        itemClass="carousel-item-padding-40-px"
+        autoPlay={false}
         className="carousel-react"
       >
         {movies.map((movie) => {

@@ -4,7 +4,9 @@ import './Home.css';
 import React from "react";
 const MovieSwiper = React.lazy(() => import('../MovieSwiper/MovieSwiper'));
 import { Suspense } from "react";
+import { useFetchMovies } from "../../hooks/useFetchMovies";
 export function Home({ language }: { language: string }) {
+
   const fetchURLS = [{
     popularMovies: `${BASE_URL}/movie/popular?api_key=${API_KEY}&language=${language}`,
     topRatedMovies: `${BASE_URL}/movie/top_rated?api_key=${API_KEY}&language=${language}`,
@@ -29,9 +31,12 @@ export function Home({ language }: { language: string }) {
     thrillerMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=${language}&with_genres=53`,
   }];
 
+  const {movies}=useFetchMovies(fetchURLS[0].actionMovies,2)
+  const validMovies = movies.filter((movie) => movie.backdrop_path);
+
   return (
     <div className="contenedorHome">
-      <Banner URL={fetchURLS[0].romanceMovies} language={language} logoBuscar={true} isShort={false} />
+      <Banner movie={validMovies[4]} language={language} logoBuscar={true} isShort={false} />
       <div className="contenedorPeliculas">
           <Suspense fallback={<div>Cargando Películas Populares...</div>}>
             <MovieSwiper URL={fetchURLS[0].popularMovies} title={language === 'es' ? 'Películas Populares' : 'Popular Movies'} language={language} />

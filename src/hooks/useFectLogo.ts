@@ -14,18 +14,18 @@ const useFetchLogo = (
       const cacheTimestampKey = `${cacheKey}-timestamp`;
 
       const now = Date.now();
-      const cacheDuration = 86400000; 
+      const cacheDuration = 86400000;
+
       const cachedData = localStorage.getItem(cacheKey);
       const cachedTimestamp = localStorage.getItem(cacheTimestampKey);
 
       if (
-        cachedData !== null && 
-        cachedData !== "null" && 
-        cachedTimestamp !== null && 
-        now - parseInt(cachedTimestamp) < cacheDuration 
+        cachedData &&
+        cachedTimestamp &&
+        now - parseInt(cachedTimestamp, 10) < cacheDuration
       ) {
         setLogoPath(cachedData);
-        return; 
+        return;
       }
 
       try {
@@ -34,21 +34,31 @@ const useFetchLogo = (
         );
 
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
         const data = await response.json();
 
+        if (!data || !data.logos || !Array.isArray(data.logos) || data.logos.length === 0) {
+          console.warn("No logos found in the API response.");
+          setLogoPath(null);
+          localStorage.removeItem(cacheKey);
+          localStorage.removeItem(cacheTimestampKey);
+          return;
+        }
+
         const logo =
           data.logos.find((l: { iso_639_1: string }) => l.iso_639_1 === language) ||
-          data.logos.find((l: { iso_639_1: string }) => l.iso_639_1 === "en");
+          data.logos.find((l: { iso_639_1: string }) => l.iso_639_1 === "en") ||
+          data.logos[0];
 
-        const logoFilePath = logo?.file_path
-        setLogoPath(logoFilePath);
-        if (logoFilePath) {
-          localStorage.setItem(cacheKey, logoFilePath);
+        if (logo?.file_path) {
+          setLogoPath(logo.file_path);
+          localStorage.setItem(cacheKey, logo.file_path);
           localStorage.setItem(cacheTimestampKey, now.toString());
         } else {
+          console.warn("No valid logo file path found.");
+          setLogoPath(null);
           localStorage.removeItem(cacheKey);
           localStorage.removeItem(cacheTimestampKey);
         }
@@ -58,8 +68,10 @@ const useFetchLogo = (
       }
     };
 
-    if (movieId) {
+    if (movieId > 0) {
       fetchMovieLogo();
+    } else {
+      setLogoPath(null);
     }
   }, [movieId, language, BASE_URL, API_KEY]);
 
