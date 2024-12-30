@@ -5,7 +5,6 @@ import { NavBar } from "../NavBar/NavBar";
 import useFetchLogo from "../../hooks/useFectLogo";
 import React from "react";
 import VideoModal from "../ModalVideo/ModalVideo";
-import { Link } from "react-router";
 import { useNavigate } from "react-router";
 import useFetchMovieDetails from "../../hooks/useFecthMovieDetails";
 export function Banner({ movie, language, logoBuscar, isShort, isDetail }: { movie: Movie; language: string; logoBuscar: boolean, isShort: boolean, isDetail?: boolean }) {
@@ -15,7 +14,7 @@ export function Banner({ movie, language, logoBuscar, isShort, isDetail }: { mov
     const handleClose = () => setOpen(false);
     let movieDetails = null;
     if (isDetail) {
-        const { movieDetails: details, cast } = useFetchMovieDetails(movie?.id ?? 0, language);
+        const { movieDetails: details} = useFetchMovieDetails(movie?.id ?? 0, language);
         movieDetails = details;
     }
     // useEffect(() => {
@@ -71,7 +70,7 @@ export function Banner({ movie, language, logoBuscar, isShort, isDetail }: { mov
                                                     )
                                                 }
                                                 <div className="bannerDetails flex flex-row">
-                                                    <span>TMDB {movie.vote_average}</span>
+                                                    <span>TMDB {movie.vote_average.toFixed(1)}</span>
                                                     <span>{movie.release_date.split("-")[0]}</span>
                                                     <span>
                                                         {movie.runtime ? `${Math.floor(movie.runtime / 60)}h ${movie.runtime % 60}min`

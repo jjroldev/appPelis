@@ -4,7 +4,7 @@ import { useFetchMovies } from "../../hooks/useFetchMovies";
 import CardMovie from "../CardMovie/CardMovie";
 import './MovieSwiper.css';
 
-function MovieSwiper({ URL, title, isLarge, language }: { URL: string, title: string, isLarge?: boolean, language: string }) {
+export function MovieSwiper({ URL, title, isLarge, language }: { URL: string, title: string, isLarge?: boolean, language: string }) {
   const { movies } = useFetchMovies(URL, 2);
 
   const responsive = {
@@ -51,4 +51,3 @@ function MovieSwiper({ URL, title, isLarge, language }: { URL: string, title: st
   );
 }
 
-export default MovieSwiper
