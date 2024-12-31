@@ -1,11 +1,10 @@
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { useFetchMovies } from "../../hooks/useFetchMovies";
 import CardMovie from "../CardMovie/CardMovie";
 import './MovieSwiper.css';
-export default function MovieSwiper({ URL, title, isLarge, language }: { URL: string, title: string, isLarge?: boolean, language: string }) {
-  const { movies } = useFetchMovies(URL, 2);
-
+import { useFetchMoviesWithDetails } from "../../hooks/useFecthMovieDetails";
+export default function MovieSwiper({ URL, title, isLarge, language }: { URL:string, title: string, isLarge?: boolean, language: string }) {
+  const { movies} = useFetchMoviesWithDetails(URL,2,language,["videos",'images',"credits"])
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },

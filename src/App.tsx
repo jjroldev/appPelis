@@ -16,7 +16,7 @@ const Home = lazy(() => import("./components/Home/Home"));
 const InfoMovie = lazy(() => import("./components/InfoMovie/InfoMovie"));
 
 function App() {
-  const [language, setLanguage] = useState<string>("es");
+  const [language, setLanguage] = useState<string>("en");
 
   return (
     <BrowserRouter>

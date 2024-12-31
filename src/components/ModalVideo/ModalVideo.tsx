@@ -1,51 +1,17 @@
-import React, { useEffect, useState } from "react";
 import Modal from "@mui/material/Modal";
 import YouTube from "react-youtube";
-import { API_KEY, BASE_URL } from "../../App";
-
+import { Movie } from "../../interface/Movie";
 interface VideoModalProps {
     open: boolean;
     onClose: () => void;
-    movieId: number;
+    movie: Movie;
     language: string;
 }
 
-const VideoModal: React.FC<VideoModalProps> = ({ open, onClose, movieId, language }) => {
-    const [trailer, setTrailer] = useState<string | null>(null);
-
-    const fetchTrailer = async (id: number) => {
-        try {
-            const storedTrailer = localStorage.getItem(`trailer-key-${id}`);
-            if (storedTrailer) {
-                setTrailer(storedTrailer);
-            } else {
-                const response = await fetch(
-                    `${BASE_URL}/movie/${id}?api_key=${API_KEY}&append_to_response=videos&language=${language}`
-                );
-                const data = await response.json();
-
-                if (data.videos && data.videos.results) {
-                    const trailer =
-                        data.videos.results.find((vid: any) => vid.name === "Official Trailer") ||
-                        data.videos.results[0] ||
-                        data.videos.results.find((vid: any) => vid.name === "Trailer");
-
-                    if (trailer) {
-                        localStorage.setItem(`trailer-key-${id}`, trailer.key);
-                        setTrailer(trailer.key);
-                    }
-                }
-            }
-        } catch (error) {
-            console.error("Error fetching movie data:", error);
-            setTrailer(null);
-        }
-    };
-
-    useEffect(() => {
-        fetchTrailer(movieId);
-    }, [movieId, language]);
-
+const VideoModal: React.FC<VideoModalProps> = ({ open, onClose, movie, language }) => {
+    const trailer =movie?.videos?.results?.find(
+        (vid: any) => vid.name === "Official Trailer"
+    )|| movie?.videos?.results[0];
     return (
         <Modal open={open} onClose={onClose}>
             {trailer ? (
@@ -63,7 +29,7 @@ const VideoModal: React.FC<VideoModalProps> = ({ open, onClose, movieId, languag
                     }}
                 >
                     <YouTube
-                        videoId={trailer}
+                        videoId={trailer.key}
                         opts={{
                             width: "100%",
                             height: "100%",

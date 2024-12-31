@@ -1,4 +1,4 @@
-import { useFetchMovies } from '../../hooks/useFetchMovies';
+import { useFetchMoviesWithDetails } from '../../hooks/useFecthMovieDetails';
 import './Buscar.css';
 import { API_KEY, BASE_URL } from '../../App';
 import { useState, useEffect } from 'react';
@@ -15,7 +15,7 @@ export default function Buscar({ language }: { language: string }) {
         ? `${BASE_URL}/search/movie?api_key=${API_KEY}&language=${language}&query=${nameMovie}`
         : `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=${language}`;
 
-    const { movies } = useFetchMovies(fetchURL, 5);
+    const { movies } = useFetchMoviesWithDetails(fetchURL, 4, language, ["videos", 'images', "credits"])
     const validMovies = movies.filter((movie) => movie.backdrop_path);
     useEffect(() => {
         localStorage.setItem('nameMovie', nameMovie);

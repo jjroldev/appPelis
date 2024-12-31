@@ -7,7 +7,6 @@ export function NavBar({ logoBuscar, language }: { logoBuscar: boolean, language
     const handleSearchClick = () => {
         navigate("/buscar");
     };
-
     return (
         <div className="navbar">
 

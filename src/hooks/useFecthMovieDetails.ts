@@ -1,70 +1,70 @@
 import { useState, useEffect } from "react";
-import { CastMember } from "../interface/CastMember";
 import { Movie } from "../interface/Movie";
-import { API_KEY } from "../App";
-import { BASE_URL } from "../App";
+import { BASE_URL, API_KEY } from "../App";
 
-const useFetchMovieDetails = (movieId:number,language:String) => {
-  const [movieDetails, setMovieDetails] = useState<Movie | null>(null);
-  const [cast, setCast] = useState<CastMember[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+// Función para obtener IDs de películas
+const fetchMovies = async (url: string, totalPages: number): Promise<number[]> => {
+
+  let allMovieIds: number[] = [];
+  for (let page = 1; page <= totalPages; page++) {
+    const response = await fetch(`${url}&page=${page}`);
+    const data = await response.json();
+    allMovieIds = [...allMovieIds, ...data.results.map((movie: Movie) => movie.id)];
+  }
+
+  return allMovieIds;
+};
+
+// Función para obtener detalles de películas
+const fetchMovieDetails = async (
+  movieIds: number[],
+  language: string,
+  appendProps: string[]
+): Promise<Movie[]> => {
+
+  let allMovies: Movie[] = [];
+
+  for (const id of movieIds) {
+
+      const response = await fetch(
+        `${BASE_URL}/movie/${id}?api_key=${API_KEY}&language=${language}&append_to_response=${appendProps.join(",")}`
+      );
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.status_message || "Error fetching movie details");
+
+      allMovies.push(data);
+
+  }
+
+  return allMovies;
+};
+
+export const useFetchMoviesWithDetails = (
+  url: string,
+  totalPages: number,
+  language: string,
+  appendProps: string[]
+) => {
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-
-      const detailsCacheKey = `movie-${movieId}-details-${language}`;
-      const castCacheKey = `movie-${movieId}-cast-${language}`;
-      const timestampKey = `movie-${movieId}-timestamp`;
-      const cacheDuration = 86400000;
-      const now = Date.now();
-
       try {
-        let cachedDetails = localStorage.getItem(detailsCacheKey);
-        let cachedCast = localStorage.getItem(castCacheKey);
-        const cachedTimestamp = localStorage.getItem(timestampKey);
-
-        const isCacheValid =cachedTimestamp && now - parseInt(cachedTimestamp) < cacheDuration;
-
-        if (cachedDetails && cachedCast && isCacheValid) {
-          // console.log("Cargando detalles y reparto desde caché");
-          setMovieDetails(JSON.parse(cachedDetails));
-          setCast(JSON.parse(cachedCast));
-        } else {
-          // console.log("Cargando detalles y reparto desde la API");
-
-          const detailsResponse = await fetch(
-            `${BASE_URL}/movie/${movieId}?api_key=${API_KEY}&language=${language}`
-          );
-          const detailsData = await detailsResponse.json();
-
-          const castResponse = await fetch(
-            `${BASE_URL}/movie/${movieId}/credits?api_key=${API_KEY}&language=${language}`
-          );
-          const castData = await castResponse.json();
-
-          setMovieDetails(detailsData);
-          setCast(castData.cast);
-
-          localStorage.setItem(detailsCacheKey, JSON.stringify(detailsData));
-          localStorage.setItem(castCacheKey, JSON.stringify(castData.cast));
-          localStorage.setItem(timestampKey, now.toString());
-        }
+        const movieIds = await fetchMovies(url, totalPages);
+        const movies = await fetchMovieDetails(movieIds, language, appendProps);
+        setMovies(movies);
       } catch (err: any) {
-        console.error("Error fetching movie data:", err);
         setError(err.message);
       } finally {
         setIsLoading(false);
       }
     };
 
-    if (movieId) {
-      fetchData();
-    }
-  }, [movieId, language, BASE_URL, API_KEY]);
+    fetchData();
+  }, [url, totalPages, language]);
 
-  return { movieDetails, cast, isLoading, error };
+  return { movies, isLoading, error };
 };
-
-export default useFetchMovieDetails;

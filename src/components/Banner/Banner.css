@@ -141,7 +141,7 @@
 .bannerDetails span{
     font-weight: 700;
     justify-content: space-between;
-    color: rgb(203, 203, 203);
+    color: rgba(231, 231, 231, 0.712);
 }
 .generosBanner{
     gap: 30px;

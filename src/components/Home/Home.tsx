@@ -1,11 +1,11 @@
 import { Banner } from "../Banner/Banner";
-import { API_KEY, BASE_URL } from "../../App";
+// import { useFetchMovieDetails, useFetchMoviesWithDetails } from "../../hooks/useFecthMovieDetails";
 import './Home.css';
+import { useFetchMoviesWithDetails } from "../../hooks/useFecthMovieDetails";
 import React from "react";
 const MovieSwiper = React.lazy(() => import("../MovieSwiper/MovieSwiper"));
-import { useFetchMovies } from "../../hooks/useFetchMovies";
-import { Skeleton } from "@mui/material";
 import { Suspense } from "react";
+import { BASE_URL,API_KEY } from "../../App";
 export default function Home({ language }: { language: string }) {
 
   const fetchURLS = [{
@@ -31,13 +31,11 @@ export default function Home({ language }: { language: string }) {
     scienceFictionMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=${language}&with_genres=878`,
     thrillerMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=${language}&with_genres=53`,
   }];
-
-  const { movies } = useFetchMovies(fetchURLS[0].actionMovies, 2)
-  const validMovies = movies.filter((movie) => movie.backdrop_path);
-
+  
+  const { movies} = useFetchMoviesWithDetails(fetchURLS[0].actionMovies,2,language,["videos",'images',"credits"])
   return (
     <div className="contenedorHome">
-      <Banner movie={validMovies[Math.floor(Math.random() * validMovies.length)]} language={language} logoBuscar={true} isShort={false} />
+      <Banner movie={movies[0]} language={language} logoBuscar={true} isShort={false}/>
       <div className="contenedorPeliculas">
         <Suspense fallback={<div>Cargando...</div>}>
           <MovieSwiper
