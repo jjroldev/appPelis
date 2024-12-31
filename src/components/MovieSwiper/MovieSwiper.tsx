@@ -3,8 +3,7 @@ import "react-multi-carousel/lib/styles.css";
 import { useFetchMovies } from "../../hooks/useFetchMovies";
 import CardMovie from "../CardMovie/CardMovie";
 import './MovieSwiper.css';
-
-export function MovieSwiper({ URL, title, isLarge, language }: { URL: string, title: string, isLarge?: boolean, language: string }) {
+export default function MovieSwiper({ URL, title, isLarge, language }: { URL: string, title: string, isLarge?: boolean, language: string }) {
   const { movies } = useFetchMovies(URL, 2);
 
   const responsive = {
@@ -15,13 +14,13 @@ export function MovieSwiper({ URL, title, isLarge, language }: { URL: string, ti
     },
     tablet: {
       breakpoint: { max: 1024, min: 768 },
-      items: 3,
-      slidesToSlide: 3,
+      items: 5,
+      slidesToSlide: 5,
     },
     mobile: {
       breakpoint: { max: 767, min: 464 },
-      items: 2,
-      slidesToSlide: 2,
+      items: 4,
+      slidesToSlide: 4,
     },
   };
 

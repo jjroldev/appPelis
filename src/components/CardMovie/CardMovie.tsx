@@ -1,7 +1,5 @@
 import "./CardMovie.css";
 import { Movie } from "../../interface/Movie";
-import { BASE_URL } from "../../App";
-import { API_KEY } from "../../App";
 import { URL_IMAGE_BACKDROP, URL_IMAGE_POSTER, URL_IMAGE_lOGO } from "../../App";
 import useFetchLogo from "../../hooks/useFectLogo";
 import { BsFillPlayFill } from "react-icons/bs";
@@ -10,7 +8,7 @@ import React from "react";
 import { useNavigate } from "react-router";
 import VideoModal from "../ModalVideo/ModalVideo";
 const CardMovie = React.memo(({ movie, isLarge, language }: { movie: Movie; isLarge?: boolean; language: string }) => {
-  const logoPath = useFetchLogo(movie.id, language, BASE_URL, API_KEY);
+  const logoPath = useFetchLogo(movie.id, language);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);

@@ -5,7 +5,7 @@ import { Movie } from '../../interface/Movie'
 import Carousel from 'react-multi-carousel'
 import { Card } from '../Card/Card'
 import useFetchMovieDetails from '../../hooks/useFecthMovieDetails'
-export function InfoMovie() {
+export default function InfoMovie() {
     const location = useLocation();
     const { movie, language }: { movie: Movie, language: string } = location.state;
 

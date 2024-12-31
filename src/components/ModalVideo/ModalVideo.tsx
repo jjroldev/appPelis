@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Modal from "@mui/material/Modal";
 import YouTube from "react-youtube";
-import axios from "axios";
 import { API_KEY, BASE_URL } from "../../App";
-import { Trailer } from "../../interface/Trailer";
+
 interface VideoModalProps {
     open: boolean;
     onClose: () => void;
@@ -12,27 +11,41 @@ interface VideoModalProps {
 }
 
 const VideoModal: React.FC<VideoModalProps> = ({ open, onClose, movieId, language }) => {
-    const [trailer, setTrailer] = useState<Trailer>()
-    const fetchTrailer = async (id: number) => {
-        const { data } = await axios.get(`${BASE_URL}/movie/${id}`, {
-            params: {
-                api_key: API_KEY,
-                append_to_response: "videos",
-                language
-            },
-        });
+    const [trailer, setTrailer] = useState<string | null>(null);
 
-        if (data.videos && data.videos.results) {
-            const trailer = data.videos.results.find(
-                (vid: any) => vid.name === "Official Trailer"
-            );
-            setTrailer(trailer ? trailer : data.videos.results[0]);
+    const fetchTrailer = async (id: number) => {
+        try {
+            const storedTrailer = localStorage.getItem(`trailer-key-${id}`);
+            if (storedTrailer) {
+                setTrailer(storedTrailer);
+            } else {
+                const response = await fetch(
+                    `${BASE_URL}/movie/${id}?api_key=${API_KEY}&append_to_response=videos&language=${language}`
+                );
+                const data = await response.json();
+
+                if (data.videos && data.videos.results) {
+                    const trailer =
+                        data.videos.results.find((vid: any) => vid.name === "Official Trailer") ||
+                        data.videos.results[0] ||
+                        data.videos.results.find((vid: any) => vid.name === "Trailer");
+
+                    if (trailer) {
+                        localStorage.setItem(`trailer-key-${id}`, trailer.key);
+                        setTrailer(trailer.key);
+                    }
+                }
+            }
+        } catch (error) {
+            console.error("Error fetching movie data:", error);
+            setTrailer(null);
         }
     };
 
     useEffect(() => {
-        fetchTrailer(movieId)
-    }, [movieId, language])
+        fetchTrailer(movieId);
+    }, [movieId, language]);
+
     return (
         <Modal open={open} onClose={onClose}>
             {trailer ? (
@@ -50,7 +63,7 @@ const VideoModal: React.FC<VideoModalProps> = ({ open, onClose, movieId, languag
                     }}
                 >
                     <YouTube
-                        videoId={trailer?.key}
+                        videoId={trailer}
                         opts={{
                             width: "100%",
                             height: "100%",
@@ -79,8 +92,11 @@ const VideoModal: React.FC<VideoModalProps> = ({ open, onClose, movieId, languag
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                    }}>
-                    <p style={{ color: "white", textAlign: "center" }}>{language=="en"?"No trailer available":"No hay trailer disponible"}</p>
+                    }}
+                >
+                    <p style={{ color: "white", textAlign: "center" }}>
+                        {language === "en" ? "No trailer available" : "No hay trailer disponible"}
+                    </p>
                 </div>
             )}
         </Modal>

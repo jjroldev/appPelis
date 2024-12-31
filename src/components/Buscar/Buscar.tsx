@@ -6,7 +6,7 @@ import CardMovie from '../CardMovie/CardMovie';
 import { Banner } from '../Banner/Banner';
 import { Lupa } from '../Lupa/Lupa';
 
-export function Buscar({ language }: { language: string }) {
+export default function Buscar({ language }: { language: string }) {
     const [nameMovie, setNameMovie] = useState(() => {
         return localStorage.getItem('nameMovie') || '';
     });

@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
-
+import { BASE_URL } from "../App";
+import { API_KEY } from "../App";
 const useFetchLogo = (
   movieId: number, 
-  language: string, 
-  BASE_URL: string, 
-  API_KEY: string
+  language: string
 ) => {
   const [logoPath, setLogoPath] = useState<string | null>(null);
 
@@ -33,14 +32,9 @@ const useFetchLogo = (
           `${BASE_URL}/movie/${movieId}/images?api_key=${API_KEY}`
         );
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
         const data = await response.json();
 
         if (!data || !data.logos || !Array.isArray(data.logos) || data.logos.length === 0) {
-          console.warn("No logos found in the API response.");
           setLogoPath(null);
           localStorage.removeItem(cacheKey);
           localStorage.removeItem(cacheTimestampKey);
@@ -57,13 +51,11 @@ const useFetchLogo = (
           localStorage.setItem(cacheKey, logo.file_path);
           localStorage.setItem(cacheTimestampKey, now.toString());
         } else {
-          console.warn("No valid logo file path found.");
           setLogoPath(null);
           localStorage.removeItem(cacheKey);
           localStorage.removeItem(cacheTimestampKey);
         }
       } catch (err) {
-        console.error("Error fetching movie logo:", err);
         setLogoPath(null);
       }
     };

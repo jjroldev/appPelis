@@ -1,6 +1,6 @@
 import "./Banner.css";
 import { Movie } from "../../interface/Movie";
-import { BASE_URL, API_KEY, URL_IMAGE_lOGO, URL_IMAGE_BANNER } from "../../App";
+import {URL_IMAGE_lOGO, URL_IMAGE_BANNER } from "../../App";
 import { NavBar } from "../NavBar/NavBar";
 import useFetchLogo from "../../hooks/useFectLogo";
 import React from "react";
@@ -8,13 +8,13 @@ import VideoModal from "../ModalVideo/ModalVideo";
 import { useNavigate } from "react-router";
 import useFetchMovieDetails from "../../hooks/useFecthMovieDetails";
 export function Banner({ movie, language, logoBuscar, isShort, isDetail }: { movie: Movie; language: string; logoBuscar: boolean, isShort: boolean, isDetail?: boolean }) {
-    const logoPath = useFetchLogo(movie?.id ?? 0, language, BASE_URL, API_KEY);
+    const logoPath = useFetchLogo(movie?.id || 0, language);
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     let movieDetails = null;
     if (isDetail) {
-        const { movieDetails: details} = useFetchMovieDetails(movie?.id ?? 0, language);
+        const { movieDetails: details} = useFetchMovieDetails(movie.id, language);
         movieDetails = details;
     }
     // useEffect(() => {
