@@ -26,7 +26,7 @@ export default function Buscar({ language }: { language: string }) {
             <Banner
                 movie={validMovies[0]}
                 language={language}
-                logoBuscar={false}
+                logoBuscar={true}
                 isShort={true}
             />
             <div className='contenedorBuscar'>

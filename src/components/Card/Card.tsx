@@ -1,7 +1,7 @@
 import { URL_IMAGE_PROFILE } from '../../App'
 import './Card.css'
 import { CastMember } from '../../interface/CastMember'
-export function Card({castMember}:{castMember:CastMember}) {    
+export function Card({ castMember, isCrew }: { castMember: CastMember, isCrew?: boolean }) {
     return (
         <>
             <div className={`contenedor-posterCM`}>
@@ -13,8 +13,15 @@ export function Card({castMember}:{castMember:CastMember}) {
                     />
                     <div className='detailsCM flex flex-col'>
                         <p>{castMember.name}</p>
-                        {castMember.character &&(<p className='papel'><span>{castMember.character}</span></p>)}
-                    </div>            
+                        {castMember.character && (<p className='papel'><span>{castMember.character}</span></p>)}
+                        {
+                            !isCrew ? (
+                                <p className='papel'><span>{castMember.character}</span></p>
+                            ) : (
+                                <p className='papel'><span>{castMember.job}</span></p>
+                            )
+                        }
+                    </div>
                 </div>
             </div>
         </>

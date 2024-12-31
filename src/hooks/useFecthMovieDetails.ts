@@ -21,23 +21,21 @@ const fetchMovieDetails = async (
   language: string,
   appendProps: string[]
 ): Promise<Movie[]> => {
+  const movieDetailPromises = movieIds.map((id) =>
+    fetch(
+      `${BASE_URL}/movie/${id}?api_key=${API_KEY}&language=${language}&append_to_response=${appendProps.join(",")}`
+    ).then((response) => {
+      if (!response.ok) {
+        return Promise.reject(new Error(`Error fetching details for movie ID: ${id}`));
+      }
+      return response.json();
+    })
+  );
 
-  let allMovies: Movie[] = [];
-
-  for (const id of movieIds) {
-
-      const response = await fetch(
-        `${BASE_URL}/movie/${id}?api_key=${API_KEY}&language=${language}&append_to_response=${appendProps.join(",")}`
-      );
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.status_message || "Error fetching movie details");
-
-      allMovies.push(data);
-
-  }
-
+  const allMovies = await Promise.all(movieDetailPromises);
   return allMovies;
 };
+
 
 export const useFetchMoviesWithDetails = (
   url: string,

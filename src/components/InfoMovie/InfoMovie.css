@@ -10,3 +10,15 @@
     width: 150px;
     height: auto;
 }
+
+.detallesReparto{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.detallesReparto h2{
+    margin-left: 20px;
+    font-size: 1.6rem;
+    font-weight: bold;
+}

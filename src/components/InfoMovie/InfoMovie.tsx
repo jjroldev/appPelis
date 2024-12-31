@@ -29,11 +29,11 @@ export default function InfoMovie() {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-      }, []);
+    }, []);
 
     return (
         <div className='contenedorPrincipalMovie'>
-            <Banner language={language} movie={movie} logoBuscar={false} isShort={false} isDetail={true}/>
+            <Banner language={language} movie={movie} logoBuscar={true} isShort={false} isDetail={true} />
             <div className='infoMovieContainer'>
                 {/* <h2>Más Información</h2> */}
                 <div className='detallesInfo'>
@@ -50,26 +50,52 @@ export default function InfoMovie() {
                     <h3>Rated</h3>
                     <p>{movie?.vote_average.toFixed(1)}</p>
                     <h3>Cast</h3> */}
-                    <Carousel
-                        swipeable={false}
-                        draggable={false}
-                        showDots={false}
-                        responsive={responsive}
-                        ssr={true}
-                        infinite={true}
-                        keyBoardControl={false}
-                        containerClass="carousel-container"
-                        dotListClass="custom-dot-list-style"
-                        itemClass="carousel-item-padding-40-px"
-                        className="carousel-react"
-                    >
-                        {movie?.credits.cast.map((castM) => {
-                            if (castM.profile_path) {
-                                return <Card key={castM.id} castMember={castM} />
-                            }
-                            return null
-                        })}
-                    </Carousel>
+                    <div className='detallesReparto'>
+                        <h2>Cast</h2>
+                        <Carousel
+                            swipeable={false}
+                            draggable={false}
+                            showDots={false}
+                            responsive={responsive}
+                            ssr={true}
+                            infinite={true}
+                            keyBoardControl={false}
+                            containerClass="carousel-container"
+                            dotListClass="custom-dot-list-style"
+                            itemClass="carousel-item-padding-40-px"
+                            className="carousel-react"
+                        >
+                            {movie?.credits.cast.map((castM) => {
+                                if (castM.profile_path) {
+                                    return <Card key={castM.id} castMember={castM} />
+                                }
+                                return null
+                            })}
+                        </Carousel>
+                    </div>
+                    <div className='detallesReparto'>
+                        <h2>Crew</h2>
+                        <Carousel
+                            swipeable={false}
+                            draggable={false}
+                            showDots={false}
+                            responsive={responsive}
+                            ssr={true}
+                            infinite={true}
+                            keyBoardControl={false}
+                            containerClass="carousel-container"
+                            dotListClass="custom-dot-list-style"
+                            itemClass="carousel-item-padding-40-px"
+                            className="carousel-react"
+                        >
+                            {movie?.credits.crew.map((crewM) => {
+                                if (crewM.profile_path) {
+                                    return <Card key={crewM.id} castMember={crewM} isCrew={true}/>
+                                }
+                                return null
+                            })}
+                        </Carousel>
+                    </div>
                 </div>
             </div>
         </div>
