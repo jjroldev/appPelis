@@ -11,20 +11,37 @@ export default function Buscar({ language }: { language: string }) {
         return localStorage.getItem('nameMovie') || '';
     });
 
+    const [featuredMovie, setFeaturedMovie] = useState(() => {
+        const storedMovie = localStorage.getItem('featuredMovie-buscar');
+        return storedMovie ? JSON.parse(storedMovie) : null;
+    });
+    const fetchPopular = `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=${language}`
+    const fetchSearch = `${BASE_URL}/search/movie?api_key=${API_KEY}&language=${language}&query=${nameMovie}`
     const fetchURL = nameMovie
-        ? `${BASE_URL}/search/movie?api_key=${API_KEY}&language=${language}&query=${nameMovie}`
-        : `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=${language}`;
+        ? fetchSearch
+        : fetchPopular;
 
     const { movies } = useFetchMoviesWithDetails(fetchURL, 4, language, ["videos", 'images', "credits"])
+    const { movies: moviesPopulars } = useFetchMoviesWithDetails(fetchPopular, 6, language, ["videos", 'images', "credits"])
+
     const validMovies = movies.filter((movie) => movie.backdrop_path);
+    const validMoviesPopular = moviesPopulars.filter((movie) => movie.backdrop_path);
     useEffect(() => {
         localStorage.setItem('nameMovie', nameMovie);
     }, [nameMovie]);
 
+    useEffect(() => {
+        const movieToStore = validMovies[0] || validMoviesPopular[0];
+        if (movieToStore) {
+            localStorage.setItem('featuredMovie-buscar', JSON.stringify(movieToStore));
+            setFeaturedMovie(movieToStore);
+        }
+    }, [validMovies, validMoviesPopular]);
+
     return (
-        <div className={`contenedor ${movies.length === 0 && "contenedorNotFound"}`}>
+        <div className={`contenedor`}>
             <Banner
-                movie={validMovies[0]}
+                movie={featuredMovie}
                 language={language}
                 logoBuscar={true}
                 isShort={true}
@@ -40,14 +57,29 @@ export default function Buscar({ language }: { language: string }) {
                     {movies
                         .filter((movie) => movie.poster_path)
                         .map((movie, index) => (
-                            <CardMovie key={index} movie={movie} language={language} />
+                            movie.backdrop_path && movie.poster_path
+                            && movie.images.logos[0] && movie.credits.cast[0] &&
+                            movie.credits.crew[0] && (<CardMovie key={index} movie={movie} language={language} />)
                         ))
                     }
                 </div>
             ) : (
-                <div className='textoNoC'>
-                    <p className='text-white'>{language === 'es' ? "No hay coincidencias" : "Not Matches Found"}</p>
-                </div>
+                <>
+                    <div className='textoNoC'>
+                        <p className='text-white'>{language === 'es' ? "No hay coincidencias" : `There are no 
+                        coincidences of ${nameMovie}, but these are the most popular movies we have`}</p>
+                    </div>
+                    <div className='contenedorPeliculasBuscar'>
+                        {moviesPopulars
+                            .filter((movie) => movie.poster_path)
+                            .map((movie, index) => (
+                                movie.backdrop_path && movie.poster_path
+                                && movie.images.logos[0] && movie.credits.cast[0] &&
+                                movie.credits.crew[0] && (<CardMovie key={index} movie={movie} language={language} />)
+                            ))
+                        }
+                    </div>
+                </>
             )}
         </div>
     );

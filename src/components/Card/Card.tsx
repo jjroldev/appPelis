@@ -13,7 +13,6 @@ export function Card({ castMember, isCrew }: { castMember: CastMember, isCrew?: 
                     />
                     <div className='detailsCM flex flex-col'>
                         <p>{castMember.name}</p>
-                        {castMember.character && (<p className='papel'><span>{castMember.character}</span></p>)}
                         {
                             !isCrew ? (
                                 <p className='papel'><span>{castMember.character}</span></p>

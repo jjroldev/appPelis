@@ -2,10 +2,6 @@
     background-color: rgb(0, 0, 0);
 }
 
-.contenedorNotFound{
-    height: 100vh;
-}
-
 .contenedorBuscar {
     display: flex;
     justify-content: center;
@@ -22,12 +18,8 @@
     box-shadow: 0 2px 5px rgb(0, 0, 0);
 }
 
-.contenedorNoC{
-    display: flex;
-    flex-direction: column;
-}
-
 .textoNoC{
+    color: white;
     display: flex;
     flex-direction: column;
     gap: 30px;

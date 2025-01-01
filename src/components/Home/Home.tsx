@@ -3,9 +3,11 @@ import { Banner } from "../Banner/Banner";
 import './Home.css';
 import { useFetchMoviesWithDetails } from "../../hooks/useFecthMovieDetails";
 import React from "react";
+import { useEffect,useState } from "react";
 const MovieSwiper = React.lazy(() => import("../MovieSwiper/MovieSwiper"));
 import { Suspense } from "react";
-import { BASE_URL,API_KEY } from "../../App";
+import { Movie } from "../../interface/Movie";
+import { BASE_URL, API_KEY } from "../../App";
 export default function Home({ language }: { language: string }) {
 
   const fetchURLS = [{
@@ -31,11 +33,24 @@ export default function Home({ language }: { language: string }) {
     scienceFictionMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=${language}&with_genres=878`,
     thrillerMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=${language}&with_genres=53`,
   }];
-  
-  const { movies} = useFetchMoviesWithDetails(fetchURLS[0].actionMovies,2,language,["videos",'images',"credits"])
+
+  const { movies } = useFetchMoviesWithDetails(fetchURLS[0].actionMovies, 2, language, ["videos", 'images', "credits"])
+
+  const [featuredMovie, setFeaturedMovie] = useState<Movie>();
+
+  useEffect(() => {
+    const savedMovie = localStorage.getItem("featuredMovie-home");
+
+    if (savedMovie) {
+      setFeaturedMovie(JSON.parse(savedMovie));
+    } else if (movies && movies.length > 0) {
+      localStorage.setItem("featuredMovie-home", JSON.stringify(movies[0]));
+      setFeaturedMovie(movies[0]);
+    }
+  }, [movies]);
   return (
     <div className="contenedorHome">
-      <Banner movie={movies[0]} language={language} logoBuscar={true} isShort={false}/>
+      <Banner movie={featuredMovie} language={language} logoBuscar={true} isShort={false} />
       <div className="contenedorPeliculas">
         <Suspense fallback={<div>Cargando...</div>}>
           <MovieSwiper

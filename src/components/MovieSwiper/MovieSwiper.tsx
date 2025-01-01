@@ -39,7 +39,7 @@ export default function MovieSwiper({ URL, title, isLarge, language }: { URL:str
         {movies.map((movie) => {
           const imagePath = isLarge ? movie.backdrop_path : movie.poster_path;
 
-          if (imagePath) {
+          if (imagePath && (movie.backdrop_path && movie.poster_path)) {
             return <CardMovie key={movie.id} movie={movie} isLarge={isLarge} language={language} />;
           }
           return null;

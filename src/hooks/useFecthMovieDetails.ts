@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Movie } from "../interface/Movie";
 import { BASE_URL, API_KEY } from "../App";
 
-// Función para obtener IDs de películas
 const fetchMovies = async (url: string, totalPages: number): Promise<number[]> => {
 
   let allMovieIds: number[] = [];
@@ -15,7 +14,6 @@ const fetchMovies = async (url: string, totalPages: number): Promise<number[]> =
   return allMovieIds;
 };
 
-// Función para obtener detalles de películas
 const fetchMovieDetails = async (
   movieIds: number[],
   language: string,
