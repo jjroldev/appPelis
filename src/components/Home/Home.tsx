@@ -33,7 +33,7 @@ export default function Home({ language }: { language: string }) {
   }];
 
   const { movies } = useFetchMoviesWithDetails(fetchURLS[0].actionMovies, 2, language, ["videos", 'images', "credits"])
-
+  const randomIndex = Math.floor(Math.random() * movies.length);
   const [featuredMovie, setFeaturedMovie] = useState<Movie>();
 
   useEffect(() => {
@@ -42,8 +42,8 @@ export default function Home({ language }: { language: string }) {
     if (savedMovie) {
       setFeaturedMovie(JSON.parse(savedMovie));
     } else if (movies && movies.length > 0) {
-      localStorage.setItem(`featuredMovie-home-${language}`, JSON.stringify(movies[0]));
-      setFeaturedMovie(movies[0]);
+      localStorage.setItem(`featuredMovie-home-${language}`, JSON.stringify(movies[randomIndex]));
+      setFeaturedMovie(movies[randomIndex]);
     }
   }, [movies]);
   return (

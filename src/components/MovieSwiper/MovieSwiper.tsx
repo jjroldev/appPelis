@@ -6,6 +6,8 @@ import './MovieSwiper.css';
 import { Movie } from "../../interface/Movie";
 import { useState, useEffect } from "react";
 import { useFetchMoviesWithDetails } from "../../hooks/useFecthMovieDetails";
+import { SkeletonCarousel } from '../SkeletonCarrusel/SkeletonCarousel';
+import { SkeletonCard } from '../SkeletonCard/SkeletonCard';
 
 const DB_NAME = 'MoviesDB-Home';
 const STORE_NAME = 'movies-home';
@@ -38,9 +40,9 @@ export default function MovieSwiper({ URL, title, isLarge, language }: { URL: st
 
       if (cachedMovies) {
         setMovies(cachedMovies.data);
-        console.log("cargando datos de idb")
+        console.log("cargando datos de idb");
       } else if (fetchedMovies.length > 0) {
-        console.log("cargando datos de api")
+        console.log("cargando datos de api");
         await db.put(STORE_NAME, { key, data: fetchedMovies });
         setMovies(fetchedMovies);
       }
@@ -68,7 +70,7 @@ export default function MovieSwiper({ URL, title, isLarge, language }: { URL: st
   };
 
   const renderMovies = (movies: Movie[]) => {
-    return movies.map((movie) => { 
+    return movies.map((movie) => {
       const imagePath = isLarge ? movie.backdrop_path : movie.poster_path;
       if (imagePath) {
         return (
@@ -80,26 +82,29 @@ export default function MovieSwiper({ URL, title, isLarge, language }: { URL: st
           />
         );
       }
-      return null;
+      return null
     });
   };
-
 
   return (
     <div className="carousel">
       <h2 className="tituloCarousel">{title}</h2>
-      <Carousel
-        swipeable={false}
-        draggable={false}
-        showDots={false}
-        responsive={responsive}
-        ssr={true}
-        infinite={true}
-        autoPlay={false}
-        className="carousel-react"
-      >
-        {renderMovies(movies)}
-      </Carousel>
+      {movies.length > 0 ? (
+        <Carousel
+          swipeable={false}
+          draggable={false}
+          showDots={false}
+          responsive={responsive}
+          ssr={true}
+          infinite={true}
+          autoPlay={false}
+          className="carousel-react"
+        >
+          {renderMovies(movies)}
+        </Carousel>
+      ) : (
+        <SkeletonCarousel numMovies={isLarge ? 6 : 8} isLarge={isLarge || false} />
+      )}
     </div>
   );
 }
