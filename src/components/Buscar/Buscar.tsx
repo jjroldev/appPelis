@@ -5,14 +5,14 @@ import { useState, useEffect } from 'react';
 import CardMovie from '../CardMovie/CardMovie';
 import { Banner } from '../Banner/Banner';
 import { Lupa } from '../Lupa/Lupa';
-
+import { Movie } from '../../interface/Movie';
 export default function Buscar({ language }: { language: string }) {
     const [nameMovie, setNameMovie] = useState(() => {
-        return localStorage.getItem('nameMovie') || '';
+        return localStorage.getItem(`nameMovie-${language}`) || '';
     });
 
     const [featuredMovie, setFeaturedMovie] = useState(() => {
-        const storedMovie = localStorage.getItem('featuredMovie-buscar');
+        const storedMovie = localStorage.getItem(`featuredMovie-buscar-${language}`);
         return storedMovie ? JSON.parse(storedMovie) : null;
     });
     const fetchPopular = `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=${language}`
@@ -27,16 +27,24 @@ export default function Buscar({ language }: { language: string }) {
     const validMovies = movies.filter((movie) => movie.backdrop_path);
     const validMoviesPopular = moviesPopulars.filter((movie) => movie.backdrop_path);
     useEffect(() => {
-        localStorage.setItem('nameMovie', nameMovie);
+        localStorage.setItem(`nameMovie-${language}`, nameMovie);
     }, [nameMovie]);
 
     useEffect(() => {
         const movieToStore = validMovies[0] || validMoviesPopular[0];
         if (movieToStore) {
-            localStorage.setItem('featuredMovie-buscar', JSON.stringify(movieToStore));
+            localStorage.setItem(`featuredMovie-buscar-${language}`, JSON.stringify(movieToStore));
             setFeaturedMovie(movieToStore);
         }
     }, [validMovies, validMoviesPopular]);
+
+    const renderMovies = (movies: Movie[]) => {
+        return movies
+            .map((movie, index) => (
+                movie.poster_path && movie.credits.cast.length > 0 &&
+                movie.credits.crew.length > 0 && (<CardMovie key={index} movie={movie} language={language} />)
+            ))
+    }
 
     return (
         <div className={`contenedor`}>
@@ -53,33 +61,31 @@ export default function Buscar({ language }: { language: string }) {
                 />
             </div>
             {movies.length !== 0 ? (
-                <div className='contenedorPeliculasBuscar'>
-                    {movies
-                        .filter((movie) => movie.poster_path)
-                        .map((movie, index) => (
-                            movie.backdrop_path && movie.poster_path
-                            && movie.images.logos[0] && movie.credits.cast[0] &&
-                            movie.credits.crew[0] && (<CardMovie key={index} movie={movie} language={language} />)
-                        ))
-                    }
-                </div>
-            ) : (
-                <>
-                    <div className='textoNoC'>
-                        <p className='text-white'>{language === 'es' ? "No hay coincidencias" : `There are no 
-                        coincidences of ${nameMovie}, but these are the most popular movies we have`}</p>
-                    </div>
+                movies.length > 0 ? (
                     <div className='contenedorPeliculasBuscar'>
-                        {moviesPopulars
-                            .filter((movie) => movie.poster_path)
-                            .map((movie, index) => (
-                                movie.backdrop_path && movie.poster_path
-                                && movie.images.logos[0] && movie.credits.cast[0] &&
-                                movie.credits.crew[0] && (<CardMovie key={index} movie={movie} language={language} />)
-                            ))
-                        }
+                        {renderMovies(validMovies)}
                     </div>
-                </>
+                ) : (
+                    <div className="w-full h-full min-h-screen bg-black flex items-start justify-center">
+                        <div className="spinner"></div>
+                    </div>
+                )
+            ) : (
+                moviesPopulars.length > 0 ? (
+                    <>
+                        <div className='textoNoC'>
+                            <p className='text-white'>{language === 'es' ? "No hay coincidencias" : `There are no 
+                        coincidences of ${nameMovie}, but these are the most popular movies we have`}</p>
+                        </div>
+                        <div className='contenedorPeliculasBuscar'>
+                            {renderMovies(validMoviesPopular)}
+                        </div>
+                    </>
+                ) : (
+                    <div className="w-full h-full min-h-screen bg-black flex items-start justify-center">
+                        <div className="spinner"></div>
+                    </div>
+                )
             )}
         </div>
     );

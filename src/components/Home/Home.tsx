@@ -1,11 +1,9 @@
 import { Banner } from "../Banner/Banner";
-// import { useFetchMovieDetails, useFetchMoviesWithDetails } from "../../hooks/useFecthMovieDetails";
 import './Home.css';
 import { useFetchMoviesWithDetails } from "../../hooks/useFecthMovieDetails";
 import React from "react";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 const MovieSwiper = React.lazy(() => import("../MovieSwiper/MovieSwiper"));
-import { Suspense } from "react";
 import { Movie } from "../../interface/Movie";
 import { BASE_URL, API_KEY } from "../../App";
 export default function Home({ language }: { language: string }) {
@@ -39,170 +37,139 @@ export default function Home({ language }: { language: string }) {
   const [featuredMovie, setFeaturedMovie] = useState<Movie>();
 
   useEffect(() => {
-    const savedMovie = localStorage.getItem("featuredMovie-home");
+    const savedMovie = localStorage.getItem(`featuredMovie-home-${language}`);
 
     if (savedMovie) {
       setFeaturedMovie(JSON.parse(savedMovie));
     } else if (movies && movies.length > 0) {
-      localStorage.setItem("featuredMovie-home", JSON.stringify(movies[0]));
+      localStorage.setItem(`featuredMovie-home-${language}`, JSON.stringify(movies[0]));
       setFeaturedMovie(movies[0]);
     }
   }, [movies]);
   return (
     <div className="contenedorHome">
-      <Banner movie={featuredMovie} language={language} logoBuscar={true} isShort={false} />
-      <div className="contenedorPeliculas">
-        <Suspense fallback={<div>Cargando...</div>}>
-          <MovieSwiper
-            URL={fetchURLS[0].popularMovies}
-            title={language === 'es' ? 'Películas Populares' : 'Popular Movies'}
-            language={language}
-          />
-        </Suspense>
-        <Suspense fallback={<div>Cargando...</div>}>
-          <MovieSwiper
-            URL={fetchURLS[0].topRatedMovies}
-            title={language === 'es' ? 'Mejores Votadas' : 'Best Voted'}
-            isLarge
-            language={language}
-          />
-        </Suspense>
-        <Suspense fallback={<div>Cargando...</div>}>
-          <MovieSwiper
-            URL={fetchURLS[0].upcomingMovies}
-            title={language === 'es' ? 'Próximamente' : 'Upcoming'}
-            isLarge
-            language={language}
-          />
-        </Suspense>
-        <Suspense fallback={<div>Cargando...</div>}>
-          <MovieSwiper
-            URL={fetchURLS[0].actionMovies}
-            title={language === 'es' ? 'Acción' : 'Action'}
-            isLarge
-            language={language}
-          />
-        </Suspense>
-        <Suspense fallback={<div>Cargando...</div>}>
-          <MovieSwiper
-            URL={fetchURLS[0].adventureMovies}
-            title={language === 'es' ? 'Aventura' : 'Adventure'}
-            isLarge
-            language={language}
-          />
-        </Suspense>
-        <Suspense fallback={<div>Cargando...</div>}>
-          <MovieSwiper
-            URL={fetchURLS[0].animationMovies}
-            title={language === 'es' ? 'Animación' : 'Animation'}
-            isLarge
-            language={language}
-          />
-        </Suspense>
-        <Suspense fallback={<div>Cargando...</div>}>
-          <MovieSwiper
-            URL={fetchURLS[0].comedyMovies}
-            title={language === 'es' ? 'Comedia' : 'Comedy'}
-            isLarge
-            language={language}
-          />
-        </Suspense>
-        <Suspense fallback={<div>Cargando...</div>}>
-          <MovieSwiper
-            URL={fetchURLS[0].crimeMovies}
-            title={language === 'es' ? 'Crimen' : 'Crime'}
-            isLarge
-            language={language}
-          />
-        </Suspense>
-        <Suspense fallback={<div>Cargando...</div>}>
-          <MovieSwiper
-            URL={fetchURLS[0].documentaryMovies}
-            title={language === 'es' ? 'Documentales' : 'Documentary'}
-            isLarge
-            language={language}
-          />
-        </Suspense>
-        <Suspense fallback={<div>Cargando...</div>}>
-          <MovieSwiper
-            URL={fetchURLS[0].dramaMovies}
-            title={language === 'es' ? 'Drama' : 'Drama'}
-            isLarge
-            language={language}
-          />
-        </Suspense>
-        <Suspense fallback={<div>Cargando...</div>}>
-          <MovieSwiper
-            URL={fetchURLS[0].familyMovies}
-            title={language === 'es' ? 'Familia' : 'Family'}
-            isLarge
-            language={language}
-          />
-        </Suspense>
-        <Suspense fallback={<div>Cargando...</div>}>
-          <MovieSwiper
-            URL={fetchURLS[0].fantasyMovies}
-            title={language === 'es' ? 'Fantasía' : 'Fantasy'}
-            isLarge
-            language={language}
-          />
-        </Suspense>
-        <Suspense fallback={<div>Cargando...</div>}>
-          <MovieSwiper
-            URL={fetchURLS[0].historyMovies}
-            title={language === 'es' ? 'Historia' : 'History'}
-            language={language}
-          />
-        </Suspense>
-        <Suspense fallback={<div>Cargando...</div>}>
-          <MovieSwiper
-            URL={fetchURLS[0].horrorMovies}
-            title={language === 'es' ? 'Terror' : 'Horror'}
-            language={language}
-          />
-        </Suspense>
-        <Suspense fallback={<div>Cargando...</div>}>
-          <MovieSwiper
-            URL={fetchURLS[0].musicMovies}
-            title={language === 'es' ? 'Música' : 'Music'}
-            isLarge
-            language={language}
-          />
-        </Suspense>
-        <Suspense fallback={<div>Cargando...</div>}>
-          <MovieSwiper
-            URL={fetchURLS[0].mysteryMovies}
-            title={language === 'es' ? 'Misterio' : 'Mystery'}
-            isLarge
-            language={language}
-          />
-        </Suspense>
-        <Suspense fallback={<div>Cargando...</div>}>
-          <MovieSwiper
-            URL={fetchURLS[0].romanceMovies}
-            title={language === 'es' ? 'Románticas' : 'Romance'}
-            isLarge
-            language={language}
-          />
-        </Suspense>
-        <Suspense fallback={<div>Cargando...</div>}>
-          <MovieSwiper
-            URL={fetchURLS[0].scienceFictionMovies}
-            title={language === 'es' ? 'Ciencia Ficción' : 'Science Fiction'}
-            isLarge
-            language={language}
-          />
-        </Suspense>
-        <Suspense fallback={<div>Cargando...</div>}>
-          <MovieSwiper
-            URL={fetchURLS[0].thrillerMovies}
-            title={language === 'es' ? 'Suspenso' : 'Thriller'}
-            isLarge
-            language={language}
-          />
-        </Suspense>
-
-      </div>
+      {movies.length > 0 ? (
+        <>
+          <Banner movie={featuredMovie} language={language} logoBuscar={true} isShort={false} />
+          <div className="contenedorPeliculas">
+            <MovieSwiper
+              URL={fetchURLS[0].popularMovies}
+              title={language === 'es' ? 'Películas Populares' : 'Popular Movies'}
+              language={language}
+            />
+            <MovieSwiper
+              URL={fetchURLS[0].topRatedMovies}
+              title={language === 'es' ? 'Mejores Votadas' : 'Best Voted'}
+              isLarge
+              language={language}
+            />
+            <MovieSwiper
+              URL={fetchURLS[0].upcomingMovies}
+              title={language === 'es' ? 'Próximamente' : 'Upcoming'}
+              isLarge
+              language={language}
+            />
+            <MovieSwiper
+              URL={fetchURLS[0].actionMovies}
+              title={language === 'es' ? 'Acción' : 'Action'}
+              isLarge
+              language={language}
+            />
+            <MovieSwiper
+              URL={fetchURLS[0].adventureMovies}
+              title={language === 'es' ? 'Aventura' : 'Adventure'}
+              isLarge
+              language={language}
+            />
+            <MovieSwiper
+              URL={fetchURLS[0].animationMovies}
+              title={language === 'es' ? 'Animación' : 'Animation'}
+              isLarge
+              language={language}
+            />
+            <MovieSwiper
+              URL={fetchURLS[0].comedyMovies}
+              title={language === 'es' ? 'Comedia' : 'Comedy'}
+              isLarge
+              language={language}
+            />
+            <MovieSwiper
+              URL={fetchURLS[0].crimeMovies}
+              title={language === 'es' ? 'Crimen' : 'Crime'}
+              isLarge
+              language={language}
+            />
+            <MovieSwiper
+              URL={fetchURLS[0].documentaryMovies}
+              title={language === 'es' ? 'Documentales' : 'Documentary'}
+              isLarge
+              language={language}
+            />
+            <MovieSwiper
+              URL={fetchURLS[0].dramaMovies}
+              title={language === 'es' ? 'Drama' : 'Drama'}
+              isLarge
+              language={language}
+            />
+            <MovieSwiper
+              URL={fetchURLS[0].familyMovies}
+              title={language === 'es' ? 'Familia' : 'Family'}
+              isLarge
+              language={language}
+            />
+            <MovieSwiper
+              URL={fetchURLS[0].fantasyMovies}
+              title={language === 'es' ? 'Fantasía' : 'Fantasy'}
+              isLarge
+              language={language}
+            />
+            <MovieSwiper
+              URL={fetchURLS[0].historyMovies}
+              title={language === 'es' ? 'Historia' : 'History'}
+              language={language}
+            />
+            <MovieSwiper
+              URL={fetchURLS[0].horrorMovies}
+              title={language === 'es' ? 'Terror' : 'Horror'}
+              language={language}
+            />
+            <MovieSwiper
+              URL={fetchURLS[0].musicMovies}
+              title={language === 'es' ? 'Música' : 'Music'}
+              isLarge
+              language={language}
+            />
+            <MovieSwiper
+              URL={fetchURLS[0].mysteryMovies}
+              title={language === 'es' ? 'Misterio' : 'Mystery'}
+              isLarge
+              language={language}
+            />
+            <MovieSwiper
+              URL={fetchURLS[0].romanceMovies}
+              title={language === 'es' ? 'Románticas' : 'Romance'}
+              isLarge
+              language={language}
+            />
+            <MovieSwiper
+              URL={fetchURLS[0].scienceFictionMovies}
+              title={language === 'es' ? 'Ciencia Ficción' : 'Science Fiction'}
+              isLarge
+              language={language}
+            />
+            <MovieSwiper
+              URL={fetchURLS[0].thrillerMovies}
+              title={language === 'es' ? 'Suspenso' : 'Thriller'}
+              isLarge
+              language={language}
+            />
+          </div>
+        </>
+      ) : (
+        <div className="w-full h-screen bg-black flex items-center justify-center">
+          <div className="spinner"></div>
+        </div>
+      )}
     </div>
   );
 }

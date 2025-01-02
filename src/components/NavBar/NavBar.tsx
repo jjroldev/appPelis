@@ -12,7 +12,7 @@ export function NavBar({ logoBuscar, language }: { logoBuscar: boolean, language
 
             <div className='navOpciones'>
                 <img
-                    src="../src/images/Netflix_Logo_RGB.png"
+                    src="../src/images/glow.svg"
                     alt="Netflix Logo"
                 />
                 <Link className='textInicio' to="/">{language === 'es' ? "Inicio" : "Home"}</Link>
