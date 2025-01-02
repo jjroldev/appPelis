@@ -8,7 +8,7 @@ export const URL_IMAGE_lOGO = "https://image.tmdb.org/t/p/w500";
 export const BASE_URL = "https://api.themoviedb.org/3";
 export const API_KEY = "85d5fd78d8d1befad8c1afdad9cd0418";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { lazy, useState } from "react";
+import { lazy, useEffect, useState } from "react";
 import { Suspense } from "react";
 
 const Buscar = lazy(() => import("./components/Buscar/Buscar"));
@@ -18,6 +18,9 @@ const InfoMovie = lazy(() => import("./components/InfoMovie/InfoMovie"));
 function App() {
   const [language, setLanguage] = useState<string>("en");
 
+  useEffect(()=>{
+    setLanguage("en")
+  },[])
   return (
     <BrowserRouter>
       <Suspense

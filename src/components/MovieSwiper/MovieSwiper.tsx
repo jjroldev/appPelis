@@ -7,7 +7,6 @@ import { Movie } from "../../interface/Movie";
 import { useState, useEffect } from "react";
 import { useFetchMoviesWithDetails } from "../../hooks/useFecthMovieDetails";
 import { SkeletonCarousel } from '../SkeletonCarrusel/SkeletonCarousel';
-import { SkeletonCard } from '../SkeletonCard/SkeletonCard';
 
 const DB_NAME = 'MoviesDB-Home';
 const STORE_NAME = 'movies-home';
