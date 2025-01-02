@@ -22,7 +22,7 @@ function App() {
     setLanguage("en")
   },[])
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/appPelis">
       <Suspense
         fallback={
           <div
