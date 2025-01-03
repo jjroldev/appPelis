@@ -6,7 +6,6 @@ import './MovieSwiper.css';
 import { Movie } from "../../interface/Movie";
 import { useState, useEffect } from "react";
 import { useFetchMoviesWithDetails } from "../../hooks/useFecthMovieDetails";
-import { SkeletonCarousel } from '../SkeletonCarrusel/SkeletonCarousel';
 
 const DB_NAME = 'MoviesDB-Home';
 const STORE_NAME = 'movies-home';
@@ -52,21 +51,27 @@ export default function MovieSwiper({ URL, title, isLarge, language }: { URL: st
 
   const responsive = {
     desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: isLarge ? 6 : 8,
-      slidesToSlide: isLarge ? 5 : 5,
+      breakpoint: { max: 3000, min: 1281 },
+      items: isLarge? 5:8,
+      slidesToSlide: isLarge? 3:6,
     },
     tablet: {
-      breakpoint: { max: 1024, min: 768 },
-      items: 5,
-      slidesToSlide: 5,
+      breakpoint: { max: 1280, min: 769 },
+      items: isLarge? 4:6,
+      slidesToSlide: isLarge? 3:4,
     },
-    mobile: {
-      breakpoint: { max: 767, min: 464 },
-      items: 4,
-      slidesToSlide: 4,
+    mobileLarge: {
+      breakpoint: { max: 768, min: 481 }, 
+      items: isLarge? 3:4,
+      slidesToSlide: 2,
+    },
+    mobileSmall: {
+      breakpoint: { max: 480, min: 0 },
+      items: 2,
+      slidesToSlide: 1,
     },
   };
+  
 
   const renderMovies = (movies: Movie[]) => {
     return movies.map((movie) => {
@@ -88,22 +93,18 @@ export default function MovieSwiper({ URL, title, isLarge, language }: { URL: st
   return (
     <div className="carousel">
       <h2 className="tituloCarousel">{title}</h2>
-      {movies.length > 0 ? (
-        <Carousel
-          swipeable={false}
-          draggable={false}
-          showDots={false}
-          responsive={responsive}
-          ssr={true}
-          infinite={true}
-          autoPlay={false}
-          className="carousel-react"
-        >
-          {renderMovies(movies)}
-        </Carousel>
-      ) : (
-        <SkeletonCarousel numMovies={isLarge ? 6 : 8} isLarge={isLarge || false} />
-      )}
+      <Carousel
+        swipeable={false}
+        draggable={false}
+        showDots={false}
+        responsive={responsive}
+        ssr={true}
+        infinite={true}
+        autoPlay={false}
+        className="carousel-react"
+      >
+        {renderMovies(movies)}
+      </Carousel>
     </div>
   );
 }

@@ -12,8 +12,8 @@ export function NavBar({ logoBuscar, language }: { logoBuscar: boolean, language
 
             <div className='navOpciones'>
                 <img
-                    src="../src/images/glow.svg"
-                    alt="Netflix Logo"
+                    src="/appPelis/JUSTFLIX.svg"
+                    alt="Logo"
                 />
                 <Link className='textInicio' to="/">{language === 'es' ? "Inicio" : "Home"}</Link>
             </div>

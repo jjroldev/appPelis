@@ -17,12 +17,12 @@ export default function InfoMovie() {
         },
         tablet: {
             breakpoint: { max: 1024, min: 768 },
-            items: 3,
+            items: 5,
             slidesToSlide: 2,
         },
         mobile: {
             breakpoint: { max: 767, min: 464 },
-            items: 2,
+            items: 4,
             slidesToSlide: 2,
         },
     };
@@ -62,10 +62,6 @@ export default function InfoMovie() {
                                     ssr={true}
                                     infinite={true}
                                     keyBoardControl={false}
-                                    containerClass="carousel-container"
-                                    dotListClass="custom-dot-list-style"
-                                    itemClass="carousel-item-padding-40-px"
-                                    className="carousel-react"
                                 >
                                     {movie?.credits.cast.map((castM) => {
                                         if (castM.profile_path) {

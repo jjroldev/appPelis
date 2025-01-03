@@ -1,13 +1,13 @@
 .contenedor-poster {
   position: relative;
   width: 100%;
-  border-radius: 10px;
+  border-radius: 5px;
   overflow: hidden;
   transition: transform 0.3s ease-in-out;
 }
 
 .contenedor-poster:hover {
-  transform: scale(1.09);
+  transform: scale(1.01);
 }
 
 .cardContainerImage {
@@ -81,13 +81,14 @@
 
 .cardContainerImage.backdrop .contenedorLogo {
   position: absolute;
+  width: 30%;
   bottom: 10px;
   left: 15px;
   z-index: 2;
 }
 
 .cardContainerImage.backdrop .logoBanner {
-  width: 100px;
+  width: 100%;
   height: auto;
   filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.8));
 }

@@ -44,13 +44,12 @@
     z-index: 1;
 }
 
-.contenedorLogo,.contenedorLogo1 {
+.contenedorLogo, .contenedorLogo1 {
     display: flex;
     flex-direction: column;
     gap: 30px;
     position: absolute;
     color: #fff;
-    max-width: 550px;
 }
 
 .logo-banner{
@@ -59,7 +58,8 @@
 }
 
 .logo-banner-reducido{
-    width: 200px !important;
+    width: 100%;
+    height: auto;
 }
 .contenedorLogo{
     bottom: 140px;
@@ -67,7 +67,7 @@
 }
 
 .contenedorLogo1{
-    bottom: 110px;
+    bottom: 80px;
     z-index: 3;
 }
 
@@ -76,12 +76,12 @@
 }
 
 .contenedorLogo img {
-    width: 360px;
+    width: clamp(150px, 30vw, 360px);
     height: auto;
 }
 
 .contenedorLogo1 img {
-    width: 280px;
+    width: clamp(150px, 30vw, 280px);
     height: auto;
 }
 
@@ -91,8 +91,9 @@
 }
 
 .overview{
-    font-size: 1.1rem;
+    font-size: clamp(.65rem, 1.1vw, 1.1rem);
     font-weight: 500;
+    max-width: clamp(250px, 40%, 550px);
 }
 
 .botones button {
@@ -100,7 +101,7 @@
     align-items: center;
     gap: 10px;
     padding: 10px 25px;
-    font-size: 1.2rem;
+    font-size: clamp(.35rem, 2.2vw, 1.2rem);
     font-weight: bold;
     border: none;
     border-radius: 5px;
@@ -127,7 +128,7 @@
 }
 
 .botones button i {
-    font-size: 1.2rem;
+    font-size: clamp(.35rem, 2.2vw, 1.2rem);
 }
 
 .movieDetailsBanner{
@@ -135,6 +136,7 @@
 }
 
 .bannerDetails{
+    font-size: clamp(.65rem, 1.1vw, 1.1rem);
     gap: 20px;
 }
 
@@ -148,4 +150,85 @@
     list-style:circle;
     list-style-position: inside;
     font-weight: 600;
+    font-size: clamp(.65rem, 1.1vw, 1.1rem);
 }
+  
+  @media (max-width: 1280px) {
+    
+  }
+
+  @media (max-width: 1024px) {
+    .header {
+        height: 90vh;
+    }
+    
+    .header-short {
+        height: 55vh;
+    }
+
+    .contenedorLogo{
+        bottom: 120px;
+        z-index: 3;
+    }
+    
+    .contenedorLogo1{
+        bottom: 75px;
+    }
+
+    .botones button{
+        padding: 6px 20px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .header {
+        height: 60vh;
+    }
+    
+    .header-short {
+        height: 50vh
+    }
+
+    .contenedorLogo{
+        bottom: 60px;
+        z-index: 3;
+    }
+    
+    .contenedorLogo1{
+        bottom: 50px;
+        z-index: 3;
+    }
+
+    .contenedorLogo, .contenedorLogo1{
+        gap: 17px;
+    }
+
+    .botones button{
+        padding: 6px 15px;
+    }
+
+  }
+
+  
+@media (max-width: 480px) {
+    .header {
+        height: 50vh;
+    }
+    
+    .header-short {
+        height: 40vh;
+    }
+
+    .contenedorLogo{
+        bottom:50px;
+        z-index: 3;
+    }
+    
+    .contenedorLogo1{
+        bottom: 40px;
+        z-index: 3;
+    }
+  }
+  
+  
+  

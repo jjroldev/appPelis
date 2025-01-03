@@ -12,7 +12,7 @@
 }
 
 .navbar img {
-    width: 130px;
+    width: clamp(78px, 10vw, 150px);
     height: auto;
 }
 
@@ -25,8 +25,8 @@
 
 .textInicio{
     cursor: pointer;
-    font-size: 1rem;
     font-weight: 600;
+    font-size: clamp(.7rem, 1.5vw, 1rem);
     transition: .3s ease-in-out;
 }
 
@@ -39,4 +39,5 @@
 .textInicio:hover,.lupa:hover{
     color: rgba(255,255,255,.7);
 }
+
 

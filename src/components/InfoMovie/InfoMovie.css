@@ -14,11 +14,30 @@
 .detallesReparto{
     display: flex;
     flex-direction: column;
-    gap: 20px;
 }
 
 .detallesReparto h2{
     margin-left: 20px;
-    font-size: 1.6rem;
+    font-size: clamp(1.2rem, 1.5vw, 1.6rem);
     font-weight: bold;
 }
+
+.detallesInfo{
+    gap: 30px;
+    padding-left: 45px;
+}
+
+@media (max-width: 1024px) {
+    .detallesInfo{
+        gap: 20px;
+        padding-left: 25px;
+    }
+
+  }
+
+  @media (max-width: 768px) {
+    .detallesInfo{
+        gap: 10px;
+        padding-left: 18px;
+    }
+  }

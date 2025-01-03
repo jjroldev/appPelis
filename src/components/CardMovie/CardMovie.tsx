@@ -3,65 +3,72 @@ import { Movie } from "../../interface/Movie";
 import { URL_IMAGE_BACKDROP, URL_IMAGE_POSTER, URL_IMAGE_lOGO } from "../../App";
 import { BsFillPlayFill } from "react-icons/bs";
 import { FaInfo } from "react-icons/fa";
-import React from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router";
 import VideoModal from "../ModalVideo/ModalVideo";
-import { SkeletonCard } from "../SkeletonCard/SkeletonCard";
+import { Skeleton } from "@mui/material";
+import { useVisibility } from "../../hooks/useVisibility";
+
 const CardMovie = ({ movie, isLarge, language }: { movie: Movie; isLarge?: boolean; language: string }) => {
   const logoPath = movie?.images?.logos?.[0]?.file_path;
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const cardRefMovie = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const navigate = useNavigate();
   const pasarMovie = () => {
     navigate("/info", { state: { movie, language } });
   };
+
+  const isVisible = useVisibility(cardRefMovie)
+
   return (
-    movie?(
-      <div className={`contenedor-poster ${isLarge ? "large" : ""}`}>
+    <div ref={cardRefMovie} className={`contenedor-poster ${isLarge ? "large" : ""}`}>
+      {!isVisible ? (
         <div className={`cardContainerImage ${isLarge ? "backdrop" : "poster"}`}>
-          <>
-            <img
-              src={`${isLarge
-                ? `${URL_IMAGE_BACKDROP}${movie.backdrop_path}`
-                : `${URL_IMAGE_POSTER}${movie.poster_path}`}`}
-              alt={movie.title}
-              className="main-image"
-            />
-
-            <div className="hover-details">
-              <div className="play-button">
-                <button onClick={handleOpen}>
-                  <BsFillPlayFill size={23} />
-                </button>
-                <VideoModal
-                  open={open}
-                  onClose={handleClose}
-                  movie={movie}
-                  language={language}
-                />
-                <button onClick={pasarMovie}>
-                  <FaInfo size={16} />
-                </button>
-              </div>
-            </div>
-
-            {isLarge && logoPath && (
-              <div className="contenedorLogo">
-                <img
-                  src={`${URL_IMAGE_lOGO}${logoPath}`}
-                  alt={`${movie.title} Logo`}
-                  className="logoBanner"
-                />
-              </div>
-            )}
-          </>
+          <Skeleton width={"100%"} height={"100%"} variant="rectangular" sx={{ bgcolor: "grey.900" }}/>
         </div>
-      </div>
-    ):(
-      <SkeletonCard isLarge/>
-    )
-  );
-}
+      ) : (
+        <div className={`cardContainerImage ${isLarge ? "backdrop" : "poster"}`}>
+          <img
+            src={`${isLarge
+              ? `${URL_IMAGE_BACKDROP}${movie.backdrop_path}`
+              : `${URL_IMAGE_POSTER}${movie.poster_path}`}`}
+            alt={movie.title}
+            className="main-image"
+          />
 
-export default CardMovie
+          <div className="hover-details">
+            <div className="play-button">
+              <button onClick={handleOpen}>
+                <BsFillPlayFill size={23} />
+              </button>
+              <VideoModal
+                open={open}
+                onClose={handleClose}
+                movie={movie}
+                language={language}
+              />
+              <button onClick={pasarMovie}>
+                <FaInfo size={16} />
+              </button>
+            </div>
+          </div>
+
+          {isLarge && logoPath && (
+            <div className="contenedorLogo">
+              <img
+                src={`${URL_IMAGE_lOGO}${logoPath}`}
+                alt={`${movie.title} Logo`}
+                className="logoBanner"
+              />
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default CardMovie;

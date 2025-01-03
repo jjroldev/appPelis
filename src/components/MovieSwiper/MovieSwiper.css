@@ -7,17 +7,19 @@
 .tituloCarousel{
     color: #fff;
     font-weight: 500;
-    font-size: 1.3rem;
+    font-size: clamp(.8rem, 1.5vw, 1.3rem);
 }
 
 .react-multi-carousel-item{
-    padding-right: 20px;
+    padding-right: 2px;
     z-index: 10;
 }
 .react-multi-carousel-track{
-    padding: 20px 0 20px 18px;
+    padding: 20px 0;
 }
 
 /* .carousel-react{
     overflow: visible !important;
+    overflow-x: hidden !important;
 } */
+ 
