@@ -1,1 +1,0 @@
-.contenedor{background-color:#000}.contenedorBuscar{display:flex;justify-content:center;align-items:center;padding:30px}.contenedorPeliculasBuscar{display:grid;gap:35px;padding:30px;grid-template-columns:repeat(7,1fr);border-radius:8px;box-shadow:0 2px 5px #000}.textoNoC{color:#fff;display:flex;flex-direction:column;gap:30px;padding:20px;align-items:center;justify-content:center}
