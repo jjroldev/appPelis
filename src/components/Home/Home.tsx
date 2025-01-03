@@ -5,6 +5,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 const MovieSwiper = React.lazy(() => import("../MovieSwiper/MovieSwiper"));
 import { Movie } from "../../interface/Movie";
+import { useMemo } from "react";
 import { BASE_URL, API_KEY } from "../../App";
 export default function Home({ language }: { language: string }) {
 
@@ -32,7 +33,8 @@ export default function Home({ language }: { language: string }) {
     thrillerMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=${language}&with_genres=53`,
   }];
 
-  const { movies } = useFetchMoviesWithDetails(fetchURLS[0].actionMovies, 2, language, ["videos", 'images', "credits"])
+  const appendProps = useMemo(() => ["videos", "images", "credits"], []);
+  const { movies } = useFetchMoviesWithDetails(fetchURLS[0].actionMovies, 2, language, appendProps)
   const randomIndex = Math.floor(Math.random() * movies.length);
   const [featuredMovie, setFeaturedMovie] = useState<Movie>();
 

@@ -76,7 +76,7 @@
 }
 
 .contenedorLogo img {
-    width: clamp(150px, 30vw, 360px);
+    width: clamp(120px, 20vw, 360px);
     height: auto;
 }
 
@@ -132,7 +132,7 @@
 }
 
 .movieDetailsBanner{
-    gap: 10px;
+    gap: 7px;
 }
 
 .bannerDetails{
@@ -167,12 +167,13 @@
     }
 
     .contenedorLogo{
-        bottom: 120px;
+        gap: 20px;
+        bottom: 100px;
         z-index: 3;
     }
     
     .contenedorLogo1{
-        bottom: 75px;
+        bottom: 73px;
     }
 
     .botones button{
@@ -182,7 +183,7 @@
 
   @media (max-width: 768px) {
     .header {
-        height: 60vh;
+        height: 80vh;
     }
     
     .header-short {
@@ -190,7 +191,7 @@
     }
 
     .contenedorLogo{
-        bottom: 60px;
+        bottom: 80px;
         z-index: 3;
     }
     
@@ -209,6 +210,7 @@
 
   }
 
+
   
 @media (max-width: 480px) {
     .header {
@@ -220,7 +222,7 @@
     }
 
     .contenedorLogo{
-        bottom:50px;
+        bottom:56px;
         z-index: 3;
     }
     
@@ -228,6 +230,11 @@
         bottom: 40px;
         z-index: 3;
     }
+  }
+
+  @media (max-width: 480px) {
+    
+
   }
   
   

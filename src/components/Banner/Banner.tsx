@@ -1,20 +1,21 @@
 import "./Banner.css";
 import { URL_IMAGE_lOGO, URL_IMAGE_BANNER } from "../../App";
 import { NavBar } from "../NavBar/NavBar";
+import { useCallback } from "react";
 import React from "react";
 import VideoModal from "../ModalVideo/ModalVideo";
 import { useNavigate } from "react-router";
 export function Banner({ movie, language, logoBuscar, isShort, isDetail }: { movie: any; language: string; logoBuscar: boolean, isShort: boolean, isDetail?: boolean }) {
     const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-
 
     const navigate = useNavigate();
-    const pasarMovie = () => {
-        navigate('/info', { state: { movie, language } });
-    };
-    const logoPath = movie?.images?.logos?.[0]?.file_path;    
+    const handleOpen = useCallback(() => setOpen(true), []);
+    const handleClose = useCallback(() => setOpen(false), []);
+    const pasarMovie = useCallback(() => {
+        navigate("/info", { state: { movie, language } });
+    }, [navigate, movie, language]);
+
+    const logoPath = movie?.images?.logos?.[0]?.file_path;
     return (
         <div className={`header ${isShort ? "header-short" : ""}`}>
             {movie && (
@@ -26,8 +27,8 @@ export function Banner({ movie, language, logoBuscar, isShort, isDetail }: { mov
                     />
                     <NavBar logoBuscar={logoBuscar} language={language} />
                     <div className="cuerpoBanner">
-                        <div className={`${isShort ? "contenedorLogo1" : `contenedorLogo ${isDetail && "contenedorDetailN"}`} `}>
-                            {logoPath? (
+                        <div className={`${isShort ? "contenedorLogo1" : `contenedorLogo ${isDetail ? "contenedorDetailN" : ""}`} `}>
+                            {logoPath ? (
                                 <>
                                     <img className={`${!isShort ? "logo-banner" : "logo-banner-reducido"}`}
                                         src={`${URL_IMAGE_lOGO}${logoPath}`}
@@ -42,7 +43,7 @@ export function Banner({ movie, language, logoBuscar, isShort, isDetail }: { mov
                                             <div className="movieDetailsBanner flex flex-col">
                                                 {
                                                     movie.overview && (
-                                                        <p className="overview">{movie.overview}</p>
+                                                        <p className="overview">{movie.overview.slice(0, movie.overview.indexOf(".") + 1)}</p>
                                                     )
                                                 }
                                                 <div className="bannerDetails flex flex-row">
@@ -55,7 +56,7 @@ export function Banner({ movie, language, logoBuscar, isShort, isDetail }: { mov
                                                 </div>
                                                 <div>
                                                     <ul className="generosBanner flex flex-row">
-                                                        {movie.genres?.map((genre:any) => (
+                                                        {movie.genres?.map((genre: any) => (
                                                             <li key={genre.id}>
                                                                 <span>{genre.name}</span>
                                                             </li>
@@ -81,8 +82,8 @@ export function Banner({ movie, language, logoBuscar, isShort, isDetail }: { mov
                                     <button onClick={handleOpen}>
                                         <i className="fa-solid fa-play"></i> {language === "es" ? "Reproducir" : "Play"}
                                     </button>
-                                    <VideoModal language={language} movie={movie} open={open} onClose={handleClose} /> 
-                                     <button onClick={pasarMovie} className="boton-info-banner">
+                                    <VideoModal language={language} movie={movie} open={open} onClose={handleClose} />
+                                    <button onClick={pasarMovie} className="boton-info-banner">
                                         <i className="fa-solid fa-circle-info"></i> {language === 'es' ? 'Más Información' : 'More Information'}
                                     </button>
                                 </div>

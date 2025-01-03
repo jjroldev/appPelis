@@ -11,21 +11,27 @@ export default function InfoMovie() {
 
     const responsive = {
         desktop: {
-            breakpoint: { max: 3000, min: 1024 },
+            breakpoint: { max: 3000, min: 1281 },
             items: 7,
             slidesToSlide: 6,
         },
         tablet: {
-            breakpoint: { max: 1024, min: 768 },
-            items: 5,
-            slidesToSlide: 2,
+            breakpoint: { max: 1280, min: 769 },
+            items: 6,
+            slidesToSlide: 5,
         },
-        mobile: {
-            breakpoint: { max: 767, min: 464 },
+        mobileLarge: {
+            breakpoint: { max: 768, min: 481 },
             items: 4,
-            slidesToSlide: 2,
+            slidesToSlide: 3,
+        },
+        mobileSmall: {
+            breakpoint: { max: 480, min: 0 },
+            items: 2,
+            slidesToSlide: 1,
         },
     };
+
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -34,7 +40,7 @@ export default function InfoMovie() {
     return (
         <div className='contenedorPrincipalMovie'>
             <Banner language={language} movie={movie} logoBuscar={true} isShort={false} isDetail={true} />
-            {(movie.credits.cast.length>0 || movie.credits.crew.length>0) &&
+            {(movie.credits.cast.length > 0 || movie.credits.crew.length > 0) &&
                 <div className='infoMovieContainer'>
                     {/* <h2>Más Información</h2> */}
                     <div className='detallesInfo'>

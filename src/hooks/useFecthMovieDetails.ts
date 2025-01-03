@@ -60,7 +60,7 @@ export const useFetchMoviesWithDetails = (
     };
 
     fetchData();
-  }, [url, totalPages, language]);
+  }, [url,language]);
 
   return { movies, isLoading, error };
 };
