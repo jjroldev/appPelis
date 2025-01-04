@@ -12,16 +12,18 @@ export default function Buscar({ language }: { language: string }) {
     const storedData = localStorage.getItem(`nameMovie-${language}`);
     if (storedData) {
       try {
-        const { value, timestamp } = JSON.parse(storedData);
-        if (new Date().getTime() - timestamp < 600000) {
-          return value;
+        const parsedData = JSON.parse(storedData);
+        if (parsedData && typeof parsedData.value === "string" && parsedData.timestamp) {
+          if (new Date().getTime() - parsedData.timestamp < 600000) {
+            return parsedData.value;
+          }
         }
       } catch (err) {
         console.error("Error parsing nameMovie from localStorage:", err);
       }
     }
     return '';
-  });
+  });  
   
   const [savedMovie, setSavedMovie] = useState<Movie | null>(() => {
     const storedData = localStorage.getItem(`featuredMovie-buscar-${language}`);
