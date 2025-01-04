@@ -11,20 +11,14 @@ export default function Buscar({ language }: { language: string }) {
   const [nameMovie, setNameMovie] = useState(() => {
     const storedData = localStorage.getItem(`nameMovie-${language}`);
     if (storedData) {
-      try {
-        const parsedData = JSON.parse(storedData);
-        if (parsedData && typeof parsedData.value === "string" && parsedData.timestamp) {
-          if (new Date().getTime() - parsedData.timestamp < 600000) {
-            return parsedData.value;
-          }
-        }
-      } catch (err) {
-        console.error("Error parsing nameMovie from localStorage:", err);
+      const { value, timestamp } = JSON.parse(storedData);
+      if (new Date().getTime() - timestamp < 600000) {
+        return value;
       }
     }
     return '';
-  });  
-  
+  });
+
   const [savedMovie, setSavedMovie] = useState<Movie | null>(() => {
     const storedData = localStorage.getItem(`featuredMovie-buscar-${language}`);
     return storedData ? JSON.parse(storedData) : null;
@@ -40,7 +34,7 @@ export default function Buscar({ language }: { language: string }) {
   const validMovies = useMemo(() => movies.filter((movie) => movie.backdrop_path), [movies]);
   const validMoviesPopular = useMemo(() => moviesPopulars.filter((movie) => movie.backdrop_path), [moviesPopulars]);
 
-  const featuredMovie = validMovies[0] || validMoviesPopular[0] || savedMovie;
+  const featuredMovie = validMovies[0] || validMoviesPopular[0];
 
   const handleSearch = (value: string) => {
     setNameMovie(value);
@@ -67,8 +61,8 @@ export default function Buscar({ language }: { language: string }) {
     <div className="textoNoC">
       <p className="text-white">
         {language === 'es'
-          ? `No hay coincidencias de "${nameMovie}", pero estas son las películas más populares:`
-          : `There are no matches for "${nameMovie}", but these are the most popular movies:`}
+          ? `No hay coincidencias, pero estas son las películas más populares:`
+          : `There are no matches, but these are the most popular movies:`}
       </p>
     </div>
   );
@@ -85,7 +79,7 @@ export default function Buscar({ language }: { language: string }) {
     } else if (nameMovie && validMovies.length === 0) {
       return (
         <>
-          {noMoviesFoundMessage}
+          {savedMovie && savedMovie.backdrop_path && noMoviesFoundMessage}
           <div className="contenedorPeliculasBuscar">{renderMovies(validMoviesPopular)}</div>
         </>
       );
@@ -95,17 +89,17 @@ export default function Buscar({ language }: { language: string }) {
       return loadingSpinner;
     }
   };
-  
+
 
   return (
     <div className="contenedor">
-      <Banner
-        movie={featuredMovie}
+      {savedMovie && <Banner
+        movie={savedMovie}
         language={language}
         logoBuscar={true}
         isShort={true}
         isBuscar={true}
-      />
+      />}
       <div className="contenedorBuscar">
         <Lupa
           placeholder={language === 'es' ? 'Buscar películas' : 'Search Movies'}

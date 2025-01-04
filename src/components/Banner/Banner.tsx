@@ -9,7 +9,8 @@ import { Movie } from "../../interface/Movie";
 import useFetchMovieDetails from "../../hooks/useFecthMovieWithDetail";
 import useFetchLogo from "../../hooks/useFetchLogos";
 import { Genre } from "../../interface/Movie";
-export function Banner({ movie, language, logoBuscar, isShort, isDetail,isBuscar}: {isBuscar?:boolean, movie: Movie; language: string; logoBuscar: boolean, isShort: boolean, isDetail?: boolean }) {
+import { Skeleton } from "@mui/material";
+export function Banner({ movie, language, logoBuscar, isShort, isDetail, isBuscar }: { isBuscar?: boolean, movie: Movie; language: string; logoBuscar: boolean, isShort: boolean, isDetail?: boolean }) {
     const [open, setOpen] = React.useState(false);
     const { movie: fetchedDetails, isLoading } = useFetchMovieDetails(movie?.id, language);
     const { logoPath } = useFetchLogo(movie?.id, language);
@@ -22,8 +23,15 @@ export function Banner({ movie, language, logoBuscar, isShort, isDetail,isBuscar
 
     if (isBuscar && (!movie || isLoading)) {
         return (
-            <div className="w-full h-screen bg-black flex items-top justify-center">
-                <NavBar language={language} logoBuscar={true} />
+            <div className={`header ${isShort ? "header-short" : ""}`}>
+                <NavBar logoBuscar={true} language={language}/>
+                <Skeleton
+                    width="100%"
+                    height="100%"
+                    variant="rectangular"
+                    sx={{ bgcolor: "grey.900" }}
+                    animation="wave"
+                />
             </div>
         )
     }
