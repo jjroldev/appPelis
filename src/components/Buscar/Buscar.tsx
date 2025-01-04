@@ -11,14 +11,18 @@ export default function Buscar({ language }: { language: string }) {
   const [nameMovie, setNameMovie] = useState(() => {
     const storedData = localStorage.getItem(`nameMovie-${language}`);
     if (storedData) {
-      const { value, timestamp } = JSON.parse(storedData);
-      if (new Date().getTime() - timestamp < 600000) {
-        return value;
+      try {
+        const { value, timestamp } = JSON.parse(storedData);
+        if (new Date().getTime() - timestamp < 600000) {
+          return value;
+        }
+      } catch (err) {
+        console.error("Error parsing nameMovie from localStorage:", err);
       }
     }
     return '';
   });
-
+  
   const [savedMovie, setSavedMovie] = useState<Movie | null>(() => {
     const storedData = localStorage.getItem(`featuredMovie-buscar-${language}`);
     return storedData ? JSON.parse(storedData) : null;
