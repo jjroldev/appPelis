@@ -1,9 +1,6 @@
 import { URL_IMAGE_PROFILE } from "../../App";
 import "./Card.css";
 import { CastMember } from "../../interface/CastMember";
-import { Skeleton } from "@mui/material";
-import { useVisibility } from "../../hooks/useVisibility";
-import { useRef } from "react";
 import React from "react";
 
 function renderCardContent(castMember: CastMember, isCrew?: boolean) {
@@ -25,22 +22,10 @@ function renderCardContent(castMember: CastMember, isCrew?: boolean) {
 }
 
 export const Card = React.memo(({ castMember, isCrew }: { castMember: CastMember; isCrew?: boolean }) => {
-  const cardRefCredit = useRef<HTMLDivElement>(null);
-  const isVisibleCredit = useVisibility(cardRefCredit);
-
   return (
-    <div ref={cardRefCredit} className="contenedor-posterCM">
+    <div className="contenedor-posterCM">
       <div className="cardContainerImageCM posterCM">
-        {!isVisibleCredit ? (
-          <Skeleton
-            width="100%"
-            height="100%"
-            variant="rectangular"
-            sx={{ bgcolor: "grey.900" }}
-          />
-        ) : (
-          renderCardContent(castMember, isCrew)
-        )}
+          {renderCardContent(castMember, isCrew)}
       </div>
     </div>
   );

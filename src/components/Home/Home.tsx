@@ -1,14 +1,13 @@
+import { useState, useEffect } from "react";
 import { Banner } from "../Banner/Banner";
 import './Home.css';
-import { useFetchMoviesWithDetails } from "../../hooks/useFecthMovieDetails";
 import React from "react";
-import { useEffect, useState } from "react";
-const MovieSwiper = React.lazy(() => import("../MovieSwiper/MovieSwiper"));
 import { Movie } from "../../interface/Movie";
-import { useMemo } from "react";
+const MovieSwiper = React.lazy(() => import("../MovieSwiper/MovieSwiper"));
 import { BASE_URL, API_KEY } from "../../App";
-export default function Home({ language }: { language: string }) {
+import { useFetchMovies } from "../../hooks/useFetchMovies";
 
+export default function Home({ language }: { language: string }) {
   const fetchURLS = [{
     popularMovies: `${BASE_URL}/movie/popular?api_key=${API_KEY}&language=${language}`,
     topRatedMovies: `${BASE_URL}/movie/top_rated?api_key=${API_KEY}&language=${language}`,
@@ -33,26 +32,42 @@ export default function Home({ language }: { language: string }) {
     thrillerMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=${language}&with_genres=53`,
   }];
 
-  const appendProps = useMemo(() => ["videos", "images", "credits"], []);
-  const { movies } = useFetchMoviesWithDetails(fetchURLS[0].actionMovies, 2, language, appendProps)
-  const randomIndex = Math.floor(Math.random() * movies.length);
-  const [featuredMovie, setFeaturedMovie] = useState<Movie>();
+  const { movies } = useFetchMovies(fetchURLS[0].actionMovies, 2, language);
+
+  const [featuredMovie, setFeaturedMovie] = useState<Movie | null>(null);
 
   useEffect(() => {
-    const savedMovie = localStorage.getItem(`featuredMovie-home-${language}`);
+    const storedData = localStorage.getItem(`featuredMovie-home-${language}`);
+    const currentTime = new Date().getTime();
+    const ecuadorTimeOffset = -5;
+    const ecuadorTime = new Date(currentTime + ecuadorTimeOffset * 3600 * 1000).getTime();
 
-    if (savedMovie) {
-      setFeaturedMovie(JSON.parse(savedMovie));
-    } else if (movies && movies.length > 0) {
-      localStorage.setItem(`featuredMovie-home-${language}`, JSON.stringify(movies[randomIndex]));
-      setFeaturedMovie(movies[randomIndex]);
+    if (storedData) {
+      const { movie, timestamp } = JSON.parse(storedData);
+      if (ecuadorTime - timestamp < 3600000) {
+        setFeaturedMovie(movie);
+        return;
+      }
     }
-  }, [movies]);
+
+    if (movies && movies.length > 0) {
+      const randomIndex = Math.floor(Math.random() * movies.length);
+      const selectedMovie = movies[randomIndex];
+      setFeaturedMovie(selectedMovie);
+      localStorage.setItem(
+        `featuredMovie-home-${language}`,
+        JSON.stringify({ movie: selectedMovie, timestamp: ecuadorTime })
+      );
+    }
+  }, [movies, language]);
+
   return (
     <div className="contenedorHome">
       {movies.length > 0 ? (
         <>
-          <Banner movie={featuredMovie} language={language} logoBuscar={true} isShort={false} />
+          {featuredMovie && (
+            <Banner movie={featuredMovie} language={language} logoBuscar={true} isShort={false} />
+          )}
           <div className="contenedorPeliculas">
             <MovieSwiper
               URL={fetchURLS[0].popularMovies}

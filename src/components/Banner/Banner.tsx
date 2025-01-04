@@ -5,9 +5,14 @@ import { useCallback } from "react";
 import React from "react";
 import VideoModal from "../ModalVideo/ModalVideo";
 import { useNavigate } from "react-router";
-export function Banner({ movie, language, logoBuscar, isShort, isDetail }: { movie: any; language: string; logoBuscar: boolean, isShort: boolean, isDetail?: boolean }) {
+import { Movie } from "../../interface/Movie";
+import useFetchMovieDetails from "../../hooks/useFecthMovieWithDetail";
+import useFetchLogo from "../../hooks/useFetchLogos";
+import { Genre } from "../../interface/Movie";
+export function Banner({ movie, language, logoBuscar, isShort, isDetail,isBuscar}: {isBuscar?:boolean, movie: Movie; language: string; logoBuscar: boolean, isShort: boolean, isDetail?: boolean }) {
     const [open, setOpen] = React.useState(false);
-
+    const { movie: fetchedDetails, isLoading } = useFetchMovieDetails(movie?.id, language);
+    const { logoPath } = useFetchLogo(movie?.id, language);
     const navigate = useNavigate();
     const handleOpen = useCallback(() => setOpen(true), []);
     const handleClose = useCallback(() => setOpen(false), []);
@@ -15,7 +20,23 @@ export function Banner({ movie, language, logoBuscar, isShort, isDetail }: { mov
         navigate("/info", { state: { movie, language } });
     }, [navigate, movie, language]);
 
-    const logoPath = movie?.images?.logos?.[0]?.file_path;
+    if (isBuscar && (!movie || isLoading)) {
+        return (
+            <div className="w-full h-screen bg-black flex items-top justify-center">
+                <NavBar language={language} logoBuscar={true} />
+            </div>
+        )
+    }
+
+    const renderGenres = (genres: Genre[] = []) => {
+        return genres.map((genre: Genre) => (
+            <li key={genre.id}>
+                <span>{genre.name}</span>
+            </li>
+        ));
+    };
+
+
     return (
         <div className={`header ${isShort ? "header-short" : ""}`}>
             {movie && (
@@ -30,37 +51,33 @@ export function Banner({ movie, language, logoBuscar, isShort, isDetail }: { mov
                         <div className={`${isShort ? "contenedorLogo1" : `contenedorLogo ${isDetail ? "contenedorDetailN" : ""}`} `}>
                             {logoPath ? (
                                 <>
-                                    <img className={`${!isShort ? "logo-banner" : "logo-banner-reducido"}`}
+                                    <img
+                                        className={`${!isShort ? "logo-banner" : "logo-banner-reducido"}`}
                                         src={`${URL_IMAGE_lOGO}${logoPath}`}
                                         alt={movie.title}
                                     />
                                     {!isShort && (
                                         !isDetail ? (
                                             movie.overview && (
-                                                <p className="overview">{movie.overview.slice(0, movie.overview.indexOf(".") + 1)}  </p>
+                                                <p className="overview">{movie.overview.slice(0, movie.overview.indexOf(".") + 1)}</p>
                                             )
                                         ) : (
                                             <div className="movieDetailsBanner flex flex-col">
-                                                {
-                                                    movie.overview && (
-                                                        <p className="overview">{movie.overview.slice(0, movie.overview.indexOf(".") + 1)}</p>
-                                                    )
-                                                }
+                                                {fetchedDetails?.overview && (
+                                                    <p className="overview">{fetchedDetails?.overview.slice(0, fetchedDetails?.overview.indexOf(".") + 1)}</p>
+                                                )}
                                                 <div className="bannerDetails flex flex-row">
-                                                    <span>TMDB {movie.vote_average.toFixed(1)}</span>
-                                                    <span>{movie.release_date.split("-")[0]}</span>
+                                                    <span>TMDB {fetchedDetails?.vote_average.toFixed(1)}</span>
+                                                    <span>{fetchedDetails?.release_date.split("-")[0]}</span>
                                                     <span>
-                                                        {movie.runtime ? `${Math.floor(movie.runtime / 60)}h ${movie.runtime % 60}min`
+                                                        {fetchedDetails?.runtime
+                                                            ? `${Math.floor(fetchedDetails?.runtime / 60)}h ${fetchedDetails?.runtime % 60}min`
                                                             : "Runtime no disponible"}
                                                     </span>
                                                 </div>
                                                 <div>
                                                     <ul className="generosBanner flex flex-row">
-                                                        {movie.genres?.map((genre: any) => (
-                                                            <li key={genre.id}>
-                                                                <span>{genre.name}</span>
-                                                            </li>
-                                                        ))}
+                                                        {renderGenres(fetchedDetails?.genres)}
                                                     </ul>
                                                 </div>
                                             </div>
@@ -70,13 +87,12 @@ export function Banner({ movie, language, logoBuscar, isShort, isDetail }: { mov
                             ) : (
                                 !isShort && (
                                     movie.overview ? (
-                                        <p className="overview">{movie.overview.slice(0, movie.overview.indexOf(".") + 1)}  </p>
+                                        <p className="overview">{movie.overview.slice(0, movie.overview.indexOf(".") + 1)}</p>
                                     ) : (
                                         <h2 className="titulo-banner">{movie.original_title}</h2>
                                     )
                                 )
                             )}
-
                             {!isShort && (
                                 <div className="botones">
                                     <button onClick={handleOpen}>
@@ -91,8 +107,8 @@ export function Banner({ movie, language, logoBuscar, isShort, isDetail }: { mov
                         </div>
                     </div>
                 </>
-            )
-            }
+            )}
         </div>
     );
 }
+
