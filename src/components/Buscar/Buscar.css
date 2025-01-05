@@ -21,16 +21,6 @@
     background-color: rgb(0, 0, 0);
 }
 
-.textoNoC{
-    color: white;
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    padding: 20px;
-    align-items: center;
-    justify-content: center;
-}
-
 
 @media (max-width: 1024px) {
     .contenedorPeliculasBuscar {

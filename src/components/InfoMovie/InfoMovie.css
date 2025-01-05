@@ -27,6 +27,10 @@
     padding-left: 45px;
 }
 
+.carousel-cast .react-multi-carousel-item{
+    padding-right: 15px;
+}
+
 @media (max-width: 1024px) {
     .detallesInfo{
         gap: 20px;

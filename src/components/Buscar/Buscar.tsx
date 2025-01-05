@@ -57,16 +57,6 @@ export default function Buscar({ language }: { language: string }) {
       <CardMovie key={index} movie={movie} language={language} />
     ));
 
-  const noMoviesFoundMessage = (
-    <div className="textoNoC">
-      <p className="text-white">
-        {language === 'es'
-          ? `No hay coincidencias, pero estas son las películas más populares:`
-          : `There are no matches, but these are the most popular movies:`}
-      </p>
-    </div>
-  );
-
   const loadingSpinner = (
     <div className="w-full h-full min-h-screen bg-black flex items-center justify-center">
       <div className="spinner"></div>
@@ -78,10 +68,7 @@ export default function Buscar({ language }: { language: string }) {
       return <div className="contenedorPeliculasBuscar">{renderMovies(validMovies)}</div>;
     } else if (nameMovie && validMovies.length === 0) {
       return (
-        <>
-          {savedMovie && savedMovie.backdrop_path && noMoviesFoundMessage}
-          <div className="contenedorPeliculasBuscar">{renderMovies(validMoviesPopular)}</div>
-        </>
+        <div className="contenedorPeliculasBuscar">{renderMovies(validMoviesPopular)}</div>
       );
     } else if (moviesPopulars.length > 0) {
       return <div className="contenedorPeliculasBuscar">{renderMovies(validMoviesPopular)}</div>;

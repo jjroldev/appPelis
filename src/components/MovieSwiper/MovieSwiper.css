@@ -10,11 +10,11 @@
     font-size: clamp(.8rem, 1.5vw, 1.3rem);
 }
 
-.react-multi-carousel-item{
+.carousel-react .react-multi-carousel-item{
     padding-right: 2px;
     z-index: 10;
 }
-.react-multi-carousel-track{
+.carousel-react .react-multi-carousel-track{
     padding: 20px 0;
 }
 

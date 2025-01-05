@@ -60,6 +60,7 @@ export default function InfoMovie() {
                                     ssr={true}
                                     infinite={true}
                                     keyBoardControl={false}
+                                    className='carousel-cast'
                                 >
                                     {movie.credits.cast.map((castM) => {
                                         if (castM.profile_path) {
@@ -81,10 +82,7 @@ export default function InfoMovie() {
                                     ssr={true}
                                     infinite={true}
                                     keyBoardControl={false}
-                                    containerClass="carousel-container"
-                                    dotListClass="custom-dot-list-style"
-                                    itemClass="carousel-item-padding-40-px"
-                                    className="carousel-react"
+                                    className="carousel-cast"
                                 >
                                     {movie.credits.crew.map((crewM) => {
                                         if (crewM.profile_path) {

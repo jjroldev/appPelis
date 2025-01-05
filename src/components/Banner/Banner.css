@@ -152,7 +152,41 @@
     font-weight: 600;
     font-size: clamp(.65rem, 1.1vw, 1.1rem);
 }
-  
+
+.provedores-container {
+    position: absolute;
+    padding:  0 20px;
+    bottom: 0px;
+    right: 0px;
+    width: 40%;
+}
+
+.carouselProviders .react-multi-carousel-item{
+    padding-right: 10px;
+}
+
+.carouselProviders .react-multiple-carousel__arrow  {
+    width: 13%;
+    height: 100%;
+    border-radius: 0;
+    background-color: rgba(0,0,0,.9);
+}
+.carouselProviders .react-multiple-carousel__arrow--left{
+    left: 0;
+}
+.carouselProviders .react-multiple-carousel__arrow--right{
+    right: 0;
+}
+
+/* 
+.provedorLogo{
+    transition: .3s ease-in-out;
+}
+
+.provedorLogo:hover{
+    transform: scale(1.5);
+} */
+
   @media (max-width: 1280px) {
     
   }
