@@ -2,7 +2,9 @@ import './NavBar.css';
 import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import { useEffect,useState } from 'react';
-export function NavBar({ logoBuscar, language }: { logoBuscar: boolean, language: string }) {
+import { useLanguage } from '../../context/LanguageContext';
+export function NavBar({ logoBuscar}: { logoBuscar: boolean}) {
+    const { language } = useLanguage();
     const navigate = useNavigate();
 
     const handleSearchClick = () => {

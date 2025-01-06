@@ -12,11 +12,13 @@ import CarouselBoostrap from "../CarouselBoostrap/CarouselBoostrap";
 import { Genre } from "../../interface/Movie";
 import { Skeleton } from "@mui/material";
 import Carousel from "react-multi-carousel";
+import { useLanguage } from "../../context/LanguageContext";
 import useFetchProviders from "../../hooks/useFetchProviders";
-export function Banner({ movie, language, logoBuscar, isShort, isDetail, isBuscar }: { isBuscar?: boolean, movie: Movie; language: string; logoBuscar: boolean, isShort: boolean, isDetail?: boolean }) {
+export function Banner({ movie,  logoBuscar, isShort, isDetail, isBuscar }: { isBuscar?: boolean, movie: Movie; logoBuscar: boolean, isShort: boolean, isDetail?: boolean }) {
+    const { language } = useLanguage();
     const [open, setOpen] = React.useState(false);
     const { movie: fetchedDetails, isLoading } = useFetchMovieDetails(movie?.id, language);
-    const { logoPath } = useFetchLogo(movie?.id, language);
+    const { logoPath } = useFetchLogo(movie?.id);
     const navigate = useNavigate();
     const { movieProviders } = useFetchProviders(movie.id)
     const handleOpen = useCallback(() => setOpen(true), []);
@@ -28,7 +30,7 @@ export function Banner({ movie, language, logoBuscar, isShort, isDetail, isBusca
     if (isBuscar && (!movie || isLoading)) {
         return (
             <div className={`header ${isShort ? "header-short" : ""}`}>
-                <NavBar logoBuscar={true} language={language} />
+                <NavBar logoBuscar={true} />
                 <Skeleton
                     width="100%"
                     height="100%"
@@ -80,7 +82,7 @@ export function Banner({ movie, language, logoBuscar, isShort, isDetail, isBusca
                         src={`${URL_IMAGE_BANNER}${movie.backdrop_path}`}
                         alt={movie.title}
                     />
-                    <NavBar logoBuscar={logoBuscar} language={language} />
+                    <NavBar logoBuscar={logoBuscar} />
                     <div className="cuerpoBanner">
                         <div className={`${isShort ? "contenedorLogo1" : `contenedorLogo ${isDetail ? "contenedorDetailN" : ""}`} `}>
                             {logoPath ? (

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { openDB } from "idb";
 import { BASE_URL, API_KEY } from "../App";
+import { useLanguage } from "../context/LanguageContext";
 
 const DB_NAME = "MoviesDBLogos";
 const STORE_NAME = "movie-logos";
@@ -15,10 +16,10 @@ const getDB = async () => {
   });
 };
 
-const useFetchLogo = (movieId: number, language: string) => {
+const useFetchLogo = (movieId: number) => {
   const [logoPath, setLogoPath] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
+  const {language} = useLanguage()
   useEffect(() => {
     const fetchMovieLogo = async () => {
       if (movieId <= 0) {

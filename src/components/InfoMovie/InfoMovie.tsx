@@ -7,11 +7,12 @@ import { Card } from '../Card/Card';
 import { useEffect } from 'react';
 import useFetchMovieDetails from '../../hooks/useFecthMovieWithDetail';
 import CarouselBoostrap from '../CarouselBoostrap/CarouselBoostrap';
-
+import { useLanguage } from '../../context/LanguageContext';
 export default function InfoMovie() {
     const location = useLocation();
-    const { movie: movie1, language }: { movie: Movie, language: string } = location.state;
-    const { movie } = useFetchMovieDetails(movie1?.id, language);
+    const { movie: movie1}: { movie: Movie } = location.state;
+    const {language} = useLanguage()
+    const { movie } = useFetchMovieDetails(movie1?.id,language);
 
     const responsive = {
         desktop: {
@@ -46,7 +47,7 @@ export default function InfoMovie() {
 
     return (
         <div className="contenedorPrincipalMovie">
-            <Banner language={language} movie={movie} logoBuscar={true} isShort={false} isDetail={true} />
+            <Banner movie={movie} logoBuscar={true} isShort={false} isDetail={true} />
             {(movie.credits?.cast?.length > 0 || movie.credits?.crew?.length > 0) && (
                 <div className="infoMovieContainer">
                     <div className="detallesInfo">
@@ -98,7 +99,7 @@ export default function InfoMovie() {
                     <div className='contenedor-imagenes'>
                         <div className='flex flex-col backdropss'>
                             <h2>Backdrops</h2>
-                            <CarouselBoostrap movie={movie} />
+                            <CarouselBoostrap movie={movie1} />
                         </div>
                     </div>
                 </div>

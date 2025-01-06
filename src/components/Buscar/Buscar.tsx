@@ -6,8 +6,9 @@ import { Banner } from '../Banner/Banner';
 import { Lupa } from '../Lupa/Lupa';
 import { Movie } from '../../interface/Movie';
 import { useFetchMovies } from '../../hooks/useFetchMovies';
-
-export default function Buscar({ language }: { language: string }) {
+import { useLanguage } from '../../context/LanguageContext';
+export default function Buscar() {
+  const { language } = useLanguage();
   const [nameMovie, setNameMovie] = useState(() => {
     const storedData = sessionStorage.getItem(`nameMovie-${language}`);
     if (storedData) {
@@ -28,8 +29,8 @@ export default function Buscar({ language }: { language: string }) {
   const fetchSearch = `${BASE_URL}/search/movie?api_key=${API_KEY}&language=${language}&query=${nameMovie}`;
   const fetchURL = fetchSearch || fetchPopular;
 
-  const { movies } = useFetchMovies(fetchURL, 4, language);
-  const { movies: moviesPopulars } = useFetchMovies(fetchPopular, 6, language);
+  const { movies } = useFetchMovies(fetchURL, 4);
+  const { movies: moviesPopulars } = useFetchMovies(fetchPopular, 6);
 
   const validMovies = useMemo(() => movies.filter((movie) => movie.backdrop_path), [movies]);
   const validMoviesPopular = useMemo(() => moviesPopulars.filter((movie) => movie.backdrop_path), [moviesPopulars]);
@@ -54,7 +55,7 @@ export default function Buscar({ language }: { language: string }) {
 
   const renderMovies = (movies: Movie[]) =>
     movies.map((movie, index) => (
-      <CardMovie key={index} movie={movie} language={language} />
+      <CardMovie key={index} movie={movie}/>
     ));
 
   const loadingSpinner = (
@@ -82,7 +83,6 @@ export default function Buscar({ language }: { language: string }) {
     <div className="contenedor">
       {savedMovie && <Banner
         movie={savedMovie}
-        language={language}
         logoBuscar={true}
         isShort={true}
         isBuscar={true}

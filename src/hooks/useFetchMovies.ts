@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { openDB } from "idb";
 import { Movie } from "../interface/Movie";
+import { useLanguage } from "../context/LanguageContext";
 
 const DB_NAME = "MoviesDB";
 const STORE_NAME = "movies";
@@ -15,11 +16,11 @@ const getDB = async () => {
   });
 };
 
-export const useFetchMovies = (url: string, totalPages: number, language: string) => {
+export const useFetchMovies = (url: string, totalPages: number) => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
+  const {language} = useLanguage()
   const fetchMovies = async () => {
     try {
       setIsLoading(true);

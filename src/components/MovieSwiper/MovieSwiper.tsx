@@ -7,18 +7,18 @@ import "./MovieSwiper.css";
 import { useFetchMovies } from "../../hooks/useFetchMovies";
 import { SkeletonCarousel } from "../SkeletonCarousel/SkeletonCarousel";
 const MovieSwiper = React.memo(
-  ({ URL, title, isLarge, language }: { URL: string; title: string; isLarge?: boolean; language: string }) => {
-    const { movies, isLoading } = useFetchMovies(URL, 3, language);
+  ({ URL, title, isLarge }: { URL: string; title: string; isLarge?: boolean}) => {
+    const { movies, isLoading } = useFetchMovies(URL, 3);
 
     const renderMovies = useCallback(
       (movies: Movie[]) =>
         movies.map((movie) => {
           const imagePath = isLarge ? movie.backdrop_path : movie.poster_path;
           return imagePath ? (
-            <CardMovie key={movie.id} movie={movie} isLarge={isLarge} language={language} />
+            <CardMovie key={movie.id} movie={movie} isLarge={isLarge} />
           ) : null;
         }),
-      [isLarge, language]
+      [isLarge]
     );
 
     const responsive = useMemo(
@@ -32,7 +32,6 @@ const MovieSwiper = React.memo(
     );
 
     if (isLoading) {
-      return <div>Loading...</div>;
     }
 
     return (

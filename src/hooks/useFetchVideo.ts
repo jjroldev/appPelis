@@ -3,6 +3,7 @@ import axios from "axios";
 import { openDB } from "idb";
 import { Trailer } from "../interface/Trailer";
 import { BASE_URL, API_KEY } from "../App";
+import { useLanguage } from "../context/LanguageContext";
 
 const DB_NAME = "MoviesDB-trailers";
 const STORE_NAME = "movie-trailers";
@@ -17,9 +18,9 @@ const getDB = async () => {
   });
 };
 
-const useFetchTrailer = (movieId: number | undefined, language: string) => {
+const useFetchTrailer = (movieId: number | undefined) => {
   const [trailer, setTrailer] = useState<Trailer | null>(null);
-
+  const {language} = useLanguage()
   useEffect(() => {
     const fetchTrailer = async () => {
       if (!movieId) return;

@@ -7,9 +7,10 @@ import { Movie } from "../../interface/Movie";
 import { URL_IMAGE_BACKDROP, URL_IMAGE_POSTER } from "../../App";
 import "./CardMovie.css";
 import { Skeleton } from "@mui/material";
-
+import { useLanguage } from "../../context/LanguageContext";
 const CardMovie = React.memo(
-  ({ movie, isLarge, language }: { movie: Movie; isLarge?: boolean; language: string }) => {
+  ({ movie, isLarge}: { movie: Movie; isLarge?: boolean}) => {
+    const { language } = useLanguage();
     const [open, setOpen] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
     const [imageLoaded, setImageLoaded] = useState(false);
