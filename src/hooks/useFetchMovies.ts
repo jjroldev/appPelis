@@ -1,20 +1,9 @@
 import { useState, useEffect } from "react";
-import { openDB } from "idb";
 import { Movie } from "../interface/Movie";
 import { useLanguage } from "../context/LanguageContext";
-
+import { getDB } from "../utils/funcionesIDB";
 const DB_NAME = "MoviesDB";
 const STORE_NAME = "movies";
-
-const getDB = async () => {
-  return openDB(DB_NAME, 1, {
-    upgrade(db) {
-      if (!db.objectStoreNames.contains(STORE_NAME)) {
-        db.createObjectStore(STORE_NAME, { keyPath: "key" });
-      }
-    },
-  });
-};
 
 export const useFetchMovies = (url: string, totalPages: number) => {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -24,7 +13,7 @@ export const useFetchMovies = (url: string, totalPages: number) => {
   const fetchMovies = async () => {
     try {
       setIsLoading(true);
-      const db = await getDB();
+      const db = await getDB(DB_NAME,STORE_NAME);
       const key = `${url}_${language}`;
       const cachedMovies = await db.get(STORE_NAME, key);
 

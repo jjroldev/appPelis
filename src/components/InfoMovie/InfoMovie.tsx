@@ -6,36 +6,54 @@ import Carousel from 'react-multi-carousel';
 import { Card } from '../Card/Card';
 import { useEffect } from 'react';
 import useFetchMovieDetails from '../../hooks/useFecthMovieWithDetail';
-import CarouselBoostrap from '../CarouselBoostrap/CarouselBoostrap';
+import { responsiveInfo } from '../../utils/ResponsiveCarrousel';
+import { lazy } from 'react';
+import { Suspense } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
+const CarouselBoostrap = lazy(() => import('../CarouselBoostrap/CarouselBoostrap'));
 export default function InfoMovie() {
     const location = useLocation();
-    const { movie: movie1}: { movie: Movie } = location.state;
-    const {language} = useLanguage()
-    const { movie } = useFetchMovieDetails(movie1?.id,language);
+    const { movie: movie1 }: { movie: Movie } = location.state;
+    const { language } = useLanguage()
+    const { movie } = useFetchMovieDetails(movie1?.id, language);
 
-    const responsive = {
-        desktop: {
-            breakpoint: { max: 3000, min: 1281 },
-            items: 8,
-            slidesToSlide: 6,
-        },
-        tablet: {
-            breakpoint: { max: 1280, min: 769 },
-            items: 6,
-            slidesToSlide: 5,
-        },
-        mobileLarge: {
-            breakpoint: { max: 768, min: 481 },
-            items: 4,
-            slidesToSlide: 3,
-        },
-        mobileSmall: {
-            breakpoint: { max: 480, min: 0 },
-            items: 2,
-            slidesToSlide: 1,
-        },
+    const renderCastMembers = (movie: Movie) => {
+        return movie.credits.cast.map((castM) => {
+            if (castM.profile_path) {
+                return <Card key={castM.id} castMember={castM} />;
+            }
+            return null;
+        });
     };
+
+    const renderCrewMembers = (movie: Movie) => {
+        return movie.credits.crew.map((crewM) => {
+            if (crewM.profile_path) {
+                return <Card key={crewM.id} castMember={crewM} isCrew={true} />;
+            }
+            return null;
+        });
+    };
+
+
+    const CarouselCredits = ({ renderCredits, title }: { renderCredits: React.ReactNode, title: string }) => {
+        return <div className="detallesReparto">
+            <h2>{title}</h2>
+            <Carousel
+                swipeable={false}
+                draggable={false}
+                showDots={false}
+                responsive={responsiveInfo}
+                ssr={true}
+                infinite={true}
+                keyBoardControl={false}
+                className="carousel-cast"
+            >
+                {renderCredits}
+            </Carousel>
+        </div>
+    }
+
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -52,54 +70,34 @@ export default function InfoMovie() {
                 <div className="infoMovieContainer">
                     <div className="detallesInfo">
                         {movie.credits.cast?.length > 0 && (
-                            <div className="detallesReparto">
-                                <h2>Cast</h2>
-                                <Carousel
-                                    swipeable={false}
-                                    draggable={false}
-                                    showDots={false}
-                                    responsive={responsive}
-                                    ssr={true}
-                                    infinite={true}
-                                    keyBoardControl={false}
-                                    className='carousel-cast'
-                                >
-                                    {movie.credits.cast.map((castM) => {
-                                        if (castM.profile_path) {
-                                            return <Card key={castM.id} castMember={castM} />;
-                                        }
-                                        return null;
-                                    })}
-                                </Carousel>
-                            </div>
+                            <>
+                                <CarouselCredits renderCredits={renderCastMembers(movie)} title='CAST' />
+                            </>
                         )}
                         {movie.credits.crew?.length > 0 && (
-                            <div className="detallesReparto">
-                                <h2>Crew</h2>
-                                <Carousel
-                                    swipeable={false}
-                                    draggable={false}
-                                    showDots={false}
-                                    responsive={responsive}
-                                    ssr={true}
-                                    infinite={true}
-                                    keyBoardControl={false}
-                                    className="carousel-cast"
-                                >
-                                    {movie.credits.crew.map((crewM) => {
-                                        if (crewM.profile_path) {
-                                            return <Card key={crewM.id} castMember={crewM} isCrew={true} />;
-                                        }
-                                        return null;
-                                    })}
-                                </Carousel>
-                            </div>
+                            <>
+                                <CarouselCredits renderCredits={renderCrewMembers(movie)} title='CREW' />
+                            </>
                         )}
                     </div>
                     <div className='contenedor-imagenes'>
                         <div className='flex flex-col backdropss'>
                             <h2>Backdrops</h2>
-                            <CarouselBoostrap movie={movie1} />
+                            <Suspense
+                                fallback={
+                                    <div
+                                        style={{
+                                            textAlign: 'center',
+                                            padding: '2rem',
+                                            fontSize: '1.2rem',
+                                        }}
+                                    >
+                                        Cargando...
+                                    </div>
+                                }
+                            >
+                                <CarouselBoostrap movie={movie}/>
+                            </Suspense>
                         </div>
                     </div>
                 </div>

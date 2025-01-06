@@ -14,13 +14,28 @@
 .detallesReparto{
     display: flex;
     flex-direction: column;
+    gap: 15px;
 }
 
-.detallesReparto h2{
-    margin-left: 20px;
+.detallesReparto h2 {
     font-size: clamp(1.2rem, 1.5vw, 1.6rem);
     font-weight: bold;
+    position: relative;
+    padding-bottom: 10px;
 }
+
+.detallesReparto h2::after {
+    content: "";
+    display: block;
+    width: 10%;
+    height: 4px;
+    background-color: rgb(255, 255, 73);
+    position: absolute;
+    bottom: 0;
+    left: 0%;
+    border-radius: 2px;
+}
+
 
 .detallesInfo{
     gap: 30px;

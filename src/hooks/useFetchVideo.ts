@@ -1,22 +1,11 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { openDB } from "idb";
 import { Trailer } from "../interface/Trailer";
 import { BASE_URL, API_KEY } from "../App";
 import { useLanguage } from "../context/LanguageContext";
-
+import { getDB } from "../utils/funcionesIDB";
 const DB_NAME = "MoviesDB-trailers";
 const STORE_NAME = "movie-trailers";
-
-const getDB = async () => {
-  return openDB(DB_NAME, 1, {
-    upgrade(db) {
-      if (!db.objectStoreNames.contains(STORE_NAME)) {
-        db.createObjectStore(STORE_NAME, { keyPath: "key" });
-      }
-    },
-  });
-};
 
 const useFetchTrailer = (movieId: number | undefined) => {
   const [trailer, setTrailer] = useState<Trailer | null>(null);
@@ -25,8 +14,8 @@ const useFetchTrailer = (movieId: number | undefined) => {
     const fetchTrailer = async () => {
       if (!movieId) return;
 
-      const db = await getDB();
-      const key = `${movieId}_${language}`;
+     const db = await getDB(DB_NAME,STORE_NAME);
+      const key = `${movieId}_video_${language}`;
       const cachedTrailer = await db.get(STORE_NAME, key);
 
       if (cachedTrailer) {

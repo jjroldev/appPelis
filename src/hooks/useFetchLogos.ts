@@ -1,20 +1,10 @@
 import { useState, useEffect } from "react";
-import { openDB } from "idb";
+import { getDB } from "../utils/funcionesIDB";
 import { BASE_URL, API_KEY } from "../App";
 import { useLanguage } from "../context/LanguageContext";
 
 const DB_NAME = "MoviesDBLogos";
 const STORE_NAME = "movie-logos";
-
-const getDB = async () => {
-  return openDB(DB_NAME, 1, {
-    upgrade(db) {
-      if (!db.objectStoreNames.contains(STORE_NAME)) {
-        db.createObjectStore(STORE_NAME, { keyPath: "key" });
-      }
-    },
-  });
-};
 
 const useFetchLogo = (movieId: number) => {
   const [logoPath, setLogoPath] = useState<string | null>(null);
@@ -29,8 +19,8 @@ const useFetchLogo = (movieId: number) => {
       }
 
       setIsLoading(true);
-      const db = await getDB();
-      const key = `${movieId}_${language}`;
+      const db = await getDB(DB_NAME,STORE_NAME);
+      const key = `${movieId}_logo_${language}`;
       const cachedLogo = await db.get(STORE_NAME, key);
 
       if (cachedLogo) {

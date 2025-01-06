@@ -6,7 +6,7 @@ export const URL_IMAGE_BANNER = "https://image.tmdb.org/t/p/original";
 export const URL_IMAGE_PROFILE = "https://image.tmdb.org/t/p/h632";
 export const URL_IMAGE_lOGO = "https://image.tmdb.org/t/p/w500";
 export const BASE_URL = "https://api.themoviedb.org/3";
-export const API_KEY = "85d5fd78d8d1befad8c1afdad9cd0418";
+export const API_KEY = import.meta.env.VITE_API_KEY as string;
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { lazy} from "react";
 import { LanguageProvider } from "./context/LanguageContext";

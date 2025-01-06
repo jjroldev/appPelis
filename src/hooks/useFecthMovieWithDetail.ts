@@ -1,20 +1,10 @@
 import { useState, useEffect } from "react";
-import { openDB } from "idb";
 import { Movie } from "../interface/Movie";
 import { BASE_URL, API_KEY } from "../App";
+import { getDB } from "../utils/funcionesIDB";
 
 const DB_NAME = "MoviesDB-details";
 const STORE_NAME = "movie-details";
-
-const getDB = async () => {
-  return openDB(DB_NAME, 1, {
-    upgrade(db) {
-      if (!db.objectStoreNames.contains(STORE_NAME)) {
-        db.createObjectStore(STORE_NAME, { keyPath: "key" });
-      }
-    },
-  });
-};
 
 const useFetchMovieDetails = (
   movieId: number | undefined,
@@ -33,8 +23,8 @@ const useFetchMovieDetails = (
       }
 
       setIsLoading(true);
-      const db = await getDB();
-      const key = `${movieId}_${language}`;
+      const db = await getDB(DB_NAME,STORE_NAME);
+      const key = `${movieId}_details_${language}`;
       const cachedMovie = await db.get(STORE_NAME, key);
 
       if (cachedMovie) {

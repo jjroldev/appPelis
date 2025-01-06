@@ -1,7 +1,7 @@
 import Carousel from "react-multi-carousel"
 import { SkeletonCard } from "./SkeletonCard";
 
-export function SkeletonCarousel({ isLarge,numMovies }: { isLarge: boolean,numMovies:number }) {
+export default function SkeletonCarousel({ isLarge,numMovies }: { isLarge: boolean,numMovies:number }) {
 
     const responsive = {
         desktop: {

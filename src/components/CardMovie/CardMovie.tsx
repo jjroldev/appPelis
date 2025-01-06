@@ -2,14 +2,16 @@ import React, { useState, useCallback, useRef, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { BsFillPlayFill } from "react-icons/bs";
 import { FaInfo } from "react-icons/fa";
-import VideoModal from "../ModalVideo/ModalVideo";
+import { lazy } from "react";
 import { Movie } from "../../interface/Movie";
+import { Suspense } from "react";
 import { URL_IMAGE_BACKDROP, URL_IMAGE_POSTER } from "../../App";
+const VideoModal = lazy(() => import('../ModalVideo/ModalVideo'));
 import "./CardMovie.css";
 import { Skeleton } from "@mui/material";
 import { useLanguage } from "../../context/LanguageContext";
 const CardMovie = React.memo(
-  ({ movie, isLarge}: { movie: Movie; isLarge?: boolean}) => {
+  ({ movie, isLarge }: { movie: Movie; isLarge?: boolean }) => {
     const { language } = useLanguage();
     const [open, setOpen] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
@@ -20,8 +22,8 @@ const CardMovie = React.memo(
     const handleOpen = useCallback(() => setOpen(true), []);
     const handleClose = useCallback(() => setOpen(false), []);
     const pasarMovie = useCallback(() => {
-      navigate("/info", { state: { movie, language } });
-    }, [navigate, movie, language]);
+      navigate("/info", { state: { movie } });
+    }, [navigate, movie]);
 
     useEffect(() => {
       const observer = new IntersectionObserver(
@@ -72,7 +74,9 @@ const CardMovie = React.memo(
                   <button onClick={handleOpen}>
                     <BsFillPlayFill size={23} />
                   </button>
-                  <VideoModal open={open} onClose={handleClose} movie={movie} language={language} />
+                  <Suspense fallback={<div />}>
+                    <VideoModal open={open} onClose={handleClose} movie={movie} language={language} />
+                  </Suspense>
                   <button onClick={pasarMovie}>
                     <FaInfo size={16} />
                   </button>
@@ -80,7 +84,7 @@ const CardMovie = React.memo(
               </div>
             )}
           </div>
-        ) }
+        )}
       </div>
     );
   }
