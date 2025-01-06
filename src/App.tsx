@@ -11,7 +11,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { lazy} from "react";
 import { LanguageProvider } from "./context/LanguageContext";
 import { Suspense } from "react";
-import { Navigate } from "react-router-dom";
 const Buscar = lazy(() => import("./components/Buscar/Buscar"));
 const Home = lazy(() => import("./components/Home/Home"));
 const InfoMovie = lazy(() => import("./components/InfoMovie/InfoMovie"));
