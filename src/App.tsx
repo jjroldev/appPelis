@@ -42,7 +42,6 @@ function App() {
             <Route index path="/" element={<Home />} />
             <Route path="/buscar" element={<Buscar />} />
             <Route path="/info" element={<InfoMovie />} />
-            <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </Suspense>
       </BrowserRouter>
