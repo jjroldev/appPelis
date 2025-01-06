@@ -37,7 +37,7 @@ export default function Home({ language }: { language: string }) {
   const [featuredMovie, setFeaturedMovie] = useState<Movie | null>(null);
 
   useEffect(() => {
-    const storedData = localStorage.getItem(`featuredMovie-home-${language}`);
+    const storedData = sessionStorage.getItem(`featuredMovie-home-${language}`);
     const currentTime = new Date().getTime();
     const ecuadorTimeOffset = -5;
     const ecuadorTime = new Date(currentTime + ecuadorTimeOffset * 3600 * 1000).getTime();
@@ -54,7 +54,7 @@ export default function Home({ language }: { language: string }) {
       const randomIndex = Math.floor(Math.random() * movies.length);
       const selectedMovie = movies[randomIndex];
       setFeaturedMovie(selectedMovie);
-      localStorage.setItem(
+      sessionStorage.setItem(
         `featuredMovie-home-${language}`,
         JSON.stringify({ movie: selectedMovie, timestamp: ecuadorTime })
       );

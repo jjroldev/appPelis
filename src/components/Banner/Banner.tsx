@@ -8,6 +8,7 @@ import { useNavigate } from "react-router";
 import { Movie } from "../../interface/Movie";
 import useFetchMovieDetails from "../../hooks/useFecthMovieWithDetail";
 import useFetchLogo from "../../hooks/useFetchLogos";
+import CarouselBoostrap from "../CarouselBoostrap/CarouselBoostrap";
 import { Genre } from "../../interface/Movie";
 import { Skeleton } from "@mui/material";
 import Carousel from "react-multi-carousel";
@@ -18,13 +19,11 @@ export function Banner({ movie, language, logoBuscar, isShort, isDetail, isBusca
     const { logoPath } = useFetchLogo(movie?.id, language);
     const navigate = useNavigate();
     const { movieProviders } = useFetchProviders(movie.id)
-    console.log(movieProviders)
     const handleOpen = useCallback(() => setOpen(true), []);
     const handleClose = useCallback(() => setOpen(false), []);
     const pasarMovie = useCallback(() => {
         navigate("/info", { state: { movie, language } });
     }, [navigate, movie, language]);
-    console.log(movieProviders)
 
     if (isBuscar && (!movie || isLoading)) {
         return (
@@ -118,7 +117,10 @@ export function Banner({ movie, language, logoBuscar, isShort, isDetail, isBusca
                                                         </ul>
                                                     </div>
                                                 </div>
-                                                <div className="provedores-container">
+                                                <div className="provedores-container posters-continer-banner">
+                                                    <div className='postersInfo'>
+                                                        <CarouselBoostrap movie={movie} isPoster={true} />
+                                                    </div>
                                                     {movieProviders &&
                                                         <Carousel
                                                             swipeable={false}

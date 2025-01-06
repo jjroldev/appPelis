@@ -48,14 +48,12 @@ const useFetchProviders = (movieId: number) => {
         if (cachedData && Date.now() - cachedData.timestamp < CACHE_LIFETIME) {
           setMovieProviders(cachedData.providers);
           setIsLoading(false);
-          console.log("datos desde idb")
           return;
         }
 
         const response = await fetch(
           `${BASE_URL}/movie/${movieId}/watch/providers?api_key=${API_KEY}`
         );
-        console.log("datos desde api")
 
         if (!response.ok) {
           throw new Error(`Error fetching details for movie ID: ${movieId}`);

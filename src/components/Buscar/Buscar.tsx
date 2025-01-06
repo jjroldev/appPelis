@@ -9,7 +9,7 @@ import { useFetchMovies } from '../../hooks/useFetchMovies';
 
 export default function Buscar({ language }: { language: string }) {
   const [nameMovie, setNameMovie] = useState(() => {
-    const storedData = localStorage.getItem(`nameMovie-${language}`);
+    const storedData = sessionStorage.getItem(`nameMovie-${language}`);
     if (storedData) {
       const { value, timestamp } = JSON.parse(storedData);
       if (new Date().getTime() - timestamp < 600000) {
@@ -20,7 +20,7 @@ export default function Buscar({ language }: { language: string }) {
   });
 
   const [savedMovie, setSavedMovie] = useState<Movie | null>(() => {
-    const storedData = localStorage.getItem(`featuredMovie-buscar-${language}`);
+    const storedData = sessionStorage.getItem(`featuredMovie-buscar-${language}`);
     return storedData ? JSON.parse(storedData) : null;
   });
 
@@ -39,7 +39,7 @@ export default function Buscar({ language }: { language: string }) {
   const handleSearch = (value: string) => {
     setNameMovie(value);
 
-    localStorage.setItem(
+    sessionStorage.setItem(
       `nameMovie-${language}`,
       JSON.stringify({ value, timestamp: new Date().getTime() })
     );
@@ -48,7 +48,7 @@ export default function Buscar({ language }: { language: string }) {
   useEffect(() => {
     if (featuredMovie) {
       setSavedMovie(featuredMovie);
-      localStorage.setItem(`featuredMovie-buscar-${language}`, JSON.stringify(featuredMovie));
+      sessionStorage.setItem(`featuredMovie-buscar-${language}`, JSON.stringify(featuredMovie));
     }
   }, [featuredMovie, language]);
 

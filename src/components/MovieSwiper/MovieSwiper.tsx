@@ -1,11 +1,11 @@
-import React, { useCallback ,useMemo} from "react";
+import React, { useCallback, useMemo } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import CardMovie from "../CardMovie/CardMovie";
 import { Movie } from "../../interface/Movie";
 import "./MovieSwiper.css";
 import { useFetchMovies } from "../../hooks/useFetchMovies";
-
+import { SkeletonCarousel } from "../SkeletonCarousel/SkeletonCarousel";
 const MovieSwiper = React.memo(
   ({ URL, title, isLarge, language }: { URL: string; title: string; isLarge?: boolean; language: string }) => {
     const { movies, isLoading } = useFetchMovies(URL, 3, language);
@@ -38,18 +38,22 @@ const MovieSwiper = React.memo(
     return (
       <div className="carousel">
         <h2 className="tituloCarousel">{title}</h2>
-        <Carousel
-          swipeable={false}
-          draggable={false}
-          showDots={false}
-          responsive={responsive}
-          ssr={true}
-          infinite={true}
-          autoPlay={false}
-          className="carousel-react"
-        >
-          {renderMovies(movies)}
-        </Carousel>
+        {movies.length >0 ? (
+          <Carousel
+            swipeable={false}
+            draggable={false}
+            showDots={false}
+            responsive={responsive}
+            ssr={true}
+            infinite={true}
+            autoPlay={false}
+            className="carousel-react"
+          >
+            {renderMovies(movies)}
+          </Carousel>
+        ) : (
+          <SkeletonCarousel numMovies={isLarge ? 6 : 8} isLarge={isLarge || false} />
+        )}
       </div>
     );
   }

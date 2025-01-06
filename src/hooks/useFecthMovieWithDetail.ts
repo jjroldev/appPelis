@@ -18,7 +18,7 @@ const getDB = async () => {
 
 const useFetchMovieDetails = (
   movieId: number | undefined,
-  language: string,
+  language?: string,
 ) => {
   const [movie, setMovie] = useState<Movie | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -45,7 +45,7 @@ const useFetchMovieDetails = (
 
       try {
         const response = await fetch(
-          `${BASE_URL}/movie/${movieId}?api_key=${API_KEY}&language=${language}&append_to_response=credits`
+          `${BASE_URL}/movie/${movieId}?api_key=${API_KEY}${language?`&language=${language}`:""}&append_to_response=credits,images`
         );
 
         if (!response.ok) {

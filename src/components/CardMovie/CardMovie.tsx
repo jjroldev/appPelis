@@ -53,7 +53,7 @@ const CardMovie = React.memo(
                 height="100%"
                 variant="rectangular"
                 sx={{ bgcolor: "grey.900" }}
-                animation="pulse"
+                animation="wave"
               />
             )}
             <img

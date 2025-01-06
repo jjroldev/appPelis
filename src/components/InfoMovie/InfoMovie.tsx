@@ -6,16 +6,17 @@ import Carousel from 'react-multi-carousel';
 import { Card } from '../Card/Card';
 import { useEffect } from 'react';
 import useFetchMovieDetails from '../../hooks/useFecthMovieWithDetail';
+import CarouselBoostrap from '../CarouselBoostrap/CarouselBoostrap';
 
 export default function InfoMovie() {
     const location = useLocation();
     const { movie: movie1, language }: { movie: Movie, language: string } = location.state;
-    const { movie} = useFetchMovieDetails(movie1?.id, language);
+    const { movie } = useFetchMovieDetails(movie1?.id, language);
 
     const responsive = {
         desktop: {
             breakpoint: { max: 3000, min: 1281 },
-            items: 7,
+            items: 8,
             slidesToSlide: 6,
         },
         tablet: {
@@ -49,7 +50,7 @@ export default function InfoMovie() {
             {(movie.credits?.cast?.length > 0 || movie.credits?.crew?.length > 0) && (
                 <div className="infoMovieContainer">
                     <div className="detallesInfo">
-                        {movie.credits.cast?.length > 0 &&(
+                        {movie.credits.cast?.length > 0 && (
                             <div className="detallesReparto">
                                 <h2>Cast</h2>
                                 <Carousel
@@ -71,7 +72,7 @@ export default function InfoMovie() {
                                 </Carousel>
                             </div>
                         )}
-                        {movie.credits.crew?.length > 0 &&(
+                        {movie.credits.crew?.length > 0 && (
                             <div className="detallesReparto">
                                 <h2>Crew</h2>
                                 <Carousel
@@ -93,6 +94,12 @@ export default function InfoMovie() {
                                 </Carousel>
                             </div>
                         )}
+                    </div>
+                    <div className='contenedor-imagenes'>
+                        <div className='flex flex-col backdropss'>
+                            <h2>Backdrops</h2>
+                            <CarouselBoostrap movie={movie} />
+                        </div>
                     </div>
                 </div>
             )}
