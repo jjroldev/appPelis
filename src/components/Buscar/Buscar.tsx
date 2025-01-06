@@ -1,6 +1,6 @@
 import './Buscar.css';
 import { API_KEY, BASE_URL } from '../../App';
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import CardMovie from '../CardMovie/CardMovie';
 import { Banner } from '../Banner/Banner';
 import { Lupa } from '../Lupa/Lupa';
