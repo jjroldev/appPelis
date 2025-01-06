@@ -1,6 +1,6 @@
 import './Buscar.css';
 import { API_KEY, BASE_URL } from '../../App';
-import { useState, useEffect } from 'react';
+import { useState, useEffect,useMemo } from 'react';
 import CardMovie from '../CardMovie/CardMovie';
 import { Banner } from '../Banner/Banner';
 import { Lupa } from '../Lupa/Lupa';
@@ -32,8 +32,9 @@ export default function Buscar() {
   const { movies } = useFetchMovies(fetchURL, 4);
   const { movies: moviesPopulars } = useFetchMovies(fetchPopular, 6);
 
-  const validMovies = movies.filter((movie) => movie.backdrop_path);
-  const validMoviesPopular =moviesPopulars.filter((movie) => movie.backdrop_path);
+  const validMovies = useMemo(() => movies.filter((movie) => movie.backdrop_path), [movies]);
+  const validMoviesPopular = useMemo(() => moviesPopulars.filter((movie) => movie.backdrop_path), [moviesPopulars]);
+
 
   const featuredMovie = validMovies[0] || validMoviesPopular[0];
 
@@ -55,7 +56,7 @@ export default function Buscar() {
 
   const renderMovies = (movies: Movie[]) =>
     movies.map((movie, index) => (
-      <CardMovie key={index} movie={movie}/>
+      <CardMovie key={index} movie={movie} />
     ));
 
   const loadingSpinner = (
