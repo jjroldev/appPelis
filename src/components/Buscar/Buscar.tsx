@@ -32,8 +32,8 @@ export default function Buscar() {
   const { movies } = useFetchMovies(fetchURL, 4);
   const { movies: moviesPopulars } = useFetchMovies(fetchPopular, 6);
 
-  const validMovies = useMemo(() => movies.filter((movie) => movie.backdrop_path), [movies]);
-  const validMoviesPopular = useMemo(() => moviesPopulars.filter((movie) => movie.backdrop_path), [moviesPopulars]);
+  const validMovies = movies.filter((movie) => movie.backdrop_path);
+  const validMoviesPopular =moviesPopulars.filter((movie) => movie.backdrop_path);
 
   const featuredMovie = validMovies[0] || validMoviesPopular[0];
 

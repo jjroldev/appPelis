@@ -26,7 +26,7 @@ export const useFetchMovies = (url: string, totalPages: number) => {
 
         const results = await Promise.all(fetchPromises);
 
-        const allMovies = results.flatMap((result) => result.results);
+        const allMovies = results.flatMap((result) => result?.results || []);
 
         await db.put(STORE_NAME, { key, data: allMovies });
         setMovies(allMovies);
