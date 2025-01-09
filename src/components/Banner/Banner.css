@@ -63,12 +63,12 @@
     height: auto;
 }
 .contenedorLogo{
-    bottom: 140px;
+    bottom: 190px;
     z-index: 3;
 }
 
 .contenedorLogo1{
-    bottom: 80px;
+    bottom: 130px;
     z-index: 3;
 }
 
@@ -197,7 +197,7 @@
 
   @media (max-width: 1024px) {
     .header {
-        height: 90vh;
+        height: 70vh;
     }
     
     .header-short {
@@ -206,12 +206,12 @@
 
     .contenedorLogo{
         gap: 20px;
-        bottom: 100px;
+        bottom: 170px;
         z-index: 3;
     }
     
     .contenedorLogo1{
-        bottom: 73px;
+        bottom: 110px;
     }
 
     .botones button{
@@ -221,7 +221,7 @@
 
   @media (max-width: 768px) {
     .header {
-        height: 80vh;
+        height: 70vh;
     }
     
     .header-short {
@@ -229,12 +229,12 @@
     }
 
     .contenedorLogo{
-        bottom: 80px;
+        bottom: 150px;
         z-index: 3;
     }
     
     .contenedorLogo1{
-        bottom: 50px;
+        bottom: 90px;
         z-index: 3;
     }
 
@@ -252,7 +252,7 @@
   
 @media (max-width: 480px) {
     .header {
-        height: 50vh;
+        height: 60vh;
     }
     
     .header-short {
@@ -260,20 +260,12 @@
     }
 
     .contenedorLogo{
-        bottom:56px;
+        bottom:130px;
         z-index: 3;
     }
     
     .contenedorLogo1{
-        bottom: 40px;
+        bottom: 70px;
         z-index: 3;
     }
   }
-
-  @media (max-width: 480px) {
-    
-
-  }
-  
-  
-  

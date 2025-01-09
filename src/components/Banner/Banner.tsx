@@ -16,7 +16,7 @@ import { Skeleton } from "@mui/material";
 import Carousel from "react-multi-carousel";
 import { useLanguage } from "../../context/LanguageContext";
 import useFetchProviders from "../../hooks/useFetchProviders";
-export function Banner({ movie, logoBuscar, isShort, isDetail, isBuscar }: { isBuscar?: boolean, movie: Movie; logoBuscar: boolean, isShort: boolean, isDetail?: boolean }) {
+export function Banner({ movie, logoBuscar, isShort, isDetail}: {movie: Movie; logoBuscar: boolean, isShort: boolean, isDetail?: boolean }) {
     const { language } = useLanguage();
     const [open, setOpen] = React.useState(false);
     const { movie: fetchedDetails, isLoading } = useFetchMovieDetails(movie?.id, language);
@@ -29,7 +29,7 @@ export function Banner({ movie, logoBuscar, isShort, isDetail, isBuscar }: { isB
         navigate("/info", { state: { movie } });
     }, [navigate, movie]);
 
-    if (isBuscar && (!movie || isLoading)) {
+    if ((!movie || isLoading)) {
         return (
             <div className={`header ${isShort ? "header-short" : ""}`}>
                 <NavBar logoBuscar={true} />

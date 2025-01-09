@@ -6,7 +6,7 @@
 
 .contenedorPeliculas {
     padding: 20px 0 20px 45px;
-    margin-top: -75px;
+    margin-top: -120px;
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -17,7 +17,7 @@
   @media (max-width: 1024px) {
     .contenedorPeliculas{
         padding-left: 25px;
-        margin-top: -60px;
+        margin-top: -90px;
     }
 
     .cuerpoBanner{
@@ -33,7 +33,7 @@
   @media (max-width: 768px) {
     .contenedorPeliculas{
         padding-left: 18px;
-        margin-top: -55px;
+        margin-top: -85px;
     }
 
     .cuerpoBanner{
@@ -44,4 +44,3 @@
         padding: 0 18px;
     }
   }
-

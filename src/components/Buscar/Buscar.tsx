@@ -86,7 +86,6 @@ export default function Buscar() {
         movie={savedMovie}
         logoBuscar={true}
         isShort={true}
-        isBuscar={true}
       />}
       <div className="contenedorBuscar">
         <Lupa
