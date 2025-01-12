@@ -5,8 +5,8 @@ import CardMovie from "../CardMovie/CardMovie";
 import { Movie } from "../../interface/Movie";
 import "./MovieSwiper.css";
 import { useFetchMovies } from "../../hooks/useFetchMovies";
-import SkeletonCarousel from "../SkeletonCarousel/SkeletonCarousel";
 import { responsive } from "../../utils/ResponsiveCarrousel";
+import SkeletonCarousel from "../SkeletonCarousel/SkeletonCarousel";
 const MovieSwiper = React.memo(
   ({ URL, title, isLarge }: { URL: string; title: string; isLarge?: boolean }) => {
     const { movies, isLoading } = useFetchMovies(URL, 9);
@@ -28,6 +28,7 @@ const MovieSwiper = React.memo(
     );
 
     if (isLoading) {
+      return null
     }
 
     return (
