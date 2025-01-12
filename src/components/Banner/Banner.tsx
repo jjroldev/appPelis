@@ -81,7 +81,7 @@ export function Banner({ movie, logoBuscar, isShort, isDetail}: {movie: Movie; l
         if (!isShort && movie.overview) {
             return <p className="overview">{movie.overview.slice(0, movie.overview.indexOf(".") + 1)}</p>;
         }
-        if (!isShort) {
+        if (isShort) {
             return <h2 className="titulo-banner">{movie.original_title}</h2>;
         }
         return null;

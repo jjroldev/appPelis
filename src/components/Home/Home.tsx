@@ -4,35 +4,12 @@ import './Home.css';
 import React from "react";
 import { Movie } from "../../interface/Movie";
 const MovieSwiper = React.lazy(() => import("../MovieSwiper/MovieSwiper"));
-import { BASE_URL, API_KEY } from "../../App";
 import { useFetchMovies } from "../../hooks/useFetchMovies";
 import { useLanguage } from "../../context/LanguageContext";
+import { getFetchURLs } from "../../utils/endPoints";
 export default function Home() {
   const { language } = useLanguage();
-  const fetchURLS = [{
-    popularMovies: `${BASE_URL}/movie/popular?api_key=${API_KEY}&language=${language}`,
-    topRatedMovies: `${BASE_URL}/movie/top_rated?api_key=${API_KEY}&language=${language}`,
-    upcomingMovies: `${BASE_URL}/movie/upcoming?api_key=${API_KEY}&language=${language}`,
-    discoverMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=${language}`,
-    nowPlaying: `${BASE_URL}/movie/now_playing?api_key=${API_KEY}&language=${language}`,
-    actionMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=${language}&with_genres=28`,
-    adventureMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=${language}&with_genres=12`,
-    animationMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=${language}&with_genres=16`,
-    comedyMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=${language}&with_genres=35`,
-    crimeMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=${language}&with_genres=80`,
-    documentaryMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=${language}&with_genres=99`,
-    dramaMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=${language}&with_genres=18`,
-    familyMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=${language}&with_genres=10751`,
-    fantasyMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=${language}&with_genres=14`,
-    historyMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=${language}&with_genres=36`,
-    horrorMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=${language}&with_genres=27`,
-    musicMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=${language}&with_genres=10402`,
-    mysteryMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=${language}&with_genres=9648`,
-    romanceMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=${language}&with_genres=10749`,
-    scienceFictionMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=${language}&with_genres=878`,
-    thrillerMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=${language}&with_genres=53`,
-  }];
-
+  const fetchURLS = getFetchURLs(language)
   const { movies } = useFetchMovies(fetchURLS[0].actionMovies, 2);
 
   const [featuredMovie, setFeaturedMovie] = useState<Movie | null>(null);
@@ -92,7 +69,6 @@ export default function Home() {
           <MovieSwiper
             URL={fetchURLS[0].actionMovies}
             title={language === 'es' ? 'Acción' : 'Action'}
-            isLarge
           />
           <MovieSwiper
             URL={fetchURLS[0].adventureMovies}

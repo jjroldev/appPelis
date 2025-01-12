@@ -11,6 +11,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { lazy} from "react";
 import { LanguageProvider } from "./context/LanguageContext";
 import { Suspense } from "react";
+const Favorites= lazy(()=> import ("./components/Favorites/Favorites"));
 const Buscar = lazy(() => import("./components/Buscar/Buscar"));
 const Home = lazy(() => import("./components/Home/Home"));
 const InfoMovie = lazy(() => import("./components/InfoMovie/InfoMovie"));
@@ -41,6 +42,7 @@ function App() {
             <Route index path="/" element={<Home />} />
             <Route path="/buscar" element={<Buscar />} />
             <Route path="/info" element={<InfoMovie />} />
+            <Route path="/favoritos" element={<Favorites />} />
           </Routes>
         </Suspense>
       </BrowserRouter>

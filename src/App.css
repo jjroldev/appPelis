@@ -7,6 +7,10 @@
   font-family: Poppins, sans-serif;
 }
 
+html{
+  font-size: 120%;
+}
+
 .spinner {
   width: 56px;
   height: 56px;

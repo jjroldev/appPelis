@@ -11,7 +11,7 @@
 }
 
 .carousel-react .react-multi-carousel-item{
-    padding-right: 2px;
+    padding-right: 15px;
     z-index: 10;
 }
 .carousel-react .react-multi-carousel-track{

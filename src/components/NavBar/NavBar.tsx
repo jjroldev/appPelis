@@ -33,6 +33,7 @@ export function NavBar({ logoBuscar}: { logoBuscar: boolean}) {
                     alt="Logo"
                 />
                 <Link className='textInicio' to="/">{language === 'es' ? "Inicio" : "Home"}</Link>
+                <Link className="textInicio" to="/favoritos">{language === 'es' ? "Favoritas" : "Favorites"}</Link>
             </div>
             {logoBuscar && (<i
                 className="fa-solid fa-magnifying-glass lupa"
