@@ -26,6 +26,8 @@ export default function Buscar() {
     [moviesPopulars]
   );
 
+  const movieBanner = validMovies[0] || validMoviesPopular[0];
+
   const handleSearch = (value: string) => {
     setNameMovie(value);
     sessionStorage.setItem(`nameMovie-${language}`, value);
@@ -56,8 +58,8 @@ export default function Buscar() {
 
   return (
     <div className="contenedor">
-      {validMovies[0] && <Banner
-        movie={validMovies[0]}
+      {movieBanner && <Banner
+        movie={movieBanner}
         logoBuscar={true}
         isShort={true}
       />}
