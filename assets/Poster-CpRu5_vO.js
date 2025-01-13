@@ -1,0 +1,1 @@
+import{j as s,d as e}from"./index-YSHuCsjT.js";function t({poster_path:r}){return s.jsx("div",{className:"wrapperPoster",children:s.jsx("img",{src:e+r,className:"backdropPoster"})})}export{t as default};
