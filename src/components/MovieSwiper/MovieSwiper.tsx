@@ -6,7 +6,6 @@ import { Movie } from "../../interface/Movie";
 import "./MovieSwiper.css";
 import { useFetchMovies } from "../../hooks/useFetchMovies";
 import { responsive } from "../../utils/ResponsiveCarrousel";
-import SkeletonCarousel from "../SkeletonCarousel/SkeletonCarousel";
 const MovieSwiper = React.memo(
   ({ URL, title, isLarge }: { URL: string; title: string; isLarge?: boolean }) => {
     const { movies, isLoading } = useFetchMovies(URL, 9);
@@ -33,7 +32,7 @@ const MovieSwiper = React.memo(
 
     return (
       <div className="carousel">
-        {movies.length > 0 ? (
+        {movies.length > 0 && (
           <>
             <h2 className="tituloCarousel">{title}</h2>
             <Carousel
@@ -48,11 +47,6 @@ const MovieSwiper = React.memo(
             >
               {renderMovies(movies)}
             </Carousel>
-          </>
-        ) : (
-          <>
-            <h2 className="tituloCarousel"> </h2>
-            <SkeletonCarousel numMovies={isLarge ? 6 : 8} isLarge={isLarge || false} />
           </>
         )}
       </div>

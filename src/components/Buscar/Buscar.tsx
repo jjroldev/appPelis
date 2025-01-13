@@ -58,17 +58,21 @@ export default function Buscar() {
 
   return (
     <div className="contenedor">
-      {movieBanner && <Banner
-        movie={movieBanner}
-        logoBuscar={true}
-        isShort={true}
-      />}
-      <div className="contenedorBuscar">
-        <Lupa
-          placeholder={language === 'es' ? 'Buscar películas' : 'Search Movies'}
-          onSubmit={handleSearch}
-        />
-      </div>
+      {movieBanner &&
+        (
+          <><Banner
+            movie={movieBanner}
+            logoBuscar={true}
+            isShort={true}
+          />
+            <div className="contenedorBuscar">
+              <Lupa
+                placeholder={language === 'es' ? 'Buscar películas' : 'Search Movies'}
+                onSubmit={handleSearch}
+              />
+            </div>
+          </>
+        )}
       {renderContent()}
     </div>
   );
