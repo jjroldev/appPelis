@@ -1,15 +1,12 @@
 import { useState, useEffect } from "react";
-import { getDB } from "../utils/funcionesIDB";
 import { BASE_URL, API_KEY } from "../App";
 import { useLanguage } from "../context/LanguageContext";
-
-const DB_NAME = "MoviesDBLogos";
-const STORE_NAME = "movie-logos";
 
 const useFetchLogo = (movieId: number) => {
   const [logoPath, setLogoPath] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const {language} = useLanguage()
+  const { language } = useLanguage();
+
   useEffect(() => {
     const fetchMovieLogo = async () => {
       if (movieId <= 0) {
@@ -19,15 +16,6 @@ const useFetchLogo = (movieId: number) => {
       }
 
       setIsLoading(true);
-      const db = await getDB(DB_NAME,STORE_NAME);
-      const key = `${movieId}_logo_${language}`;
-      const cachedLogo = await db.get(STORE_NAME, key);
-
-      if (cachedLogo) {
-        setLogoPath(cachedLogo.path);
-        setIsLoading(false);
-        return;
-      }
 
       try {
         const response = await fetch(
@@ -42,7 +30,6 @@ const useFetchLogo = (movieId: number) => {
 
         if (logo?.file_path) {
           setLogoPath(logo.file_path);
-          await db.put(STORE_NAME, { key, path: logo.file_path });
         } else {
           setLogoPath(null);
         }

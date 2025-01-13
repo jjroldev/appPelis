@@ -12,7 +12,6 @@ import useFetchMovieDetails from "../../hooks/useFecthMovieWithDetail";
 import useFetchLogo from "../../hooks/useFetchLogos";
 import { Genre } from "../../interface/Movie";
 import { responsiveCredits } from "../../utils/ResponsiveCarrousel";
-import { Skeleton } from "@mui/material";
 import Carousel from "react-multi-carousel";
 import { useLanguage } from "../../context/LanguageContext";
 import useFetchProviders from "../../hooks/useFetchProviders";
@@ -31,15 +30,8 @@ export function Banner({ movie, logoBuscar, isShort, isDetail}: {movie: Movie; l
 
     if ((!movie || isLoading)) {
         return (
-            <div className={`header ${isShort ? "header-short" : ""}`}>
-                <NavBar logoBuscar={true} />
-                <Skeleton
-                    width="100%"
-                    height="100%"
-                    variant="rectangular"
-                    sx={{ bgcolor: "grey.900" }}
-                    animation="wave"
-                />
+            <div className={`header ${isShort ? "header-short" : ""} bg-gray-800`}>
+                <NavBar logoBuscar={logoBuscar} />
             </div>
         )
     }

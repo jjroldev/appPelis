@@ -15,27 +15,10 @@ export default function Home() {
   const [featuredMovie, setFeaturedMovie] = useState<Movie | null>(null);
 
   useEffect(() => {
-    const storedData = sessionStorage.getItem(`featuredMovie-home-${language}`);
-    const currentTime = new Date().getTime();
-    const ecuadorTimeOffset = -5;
-    const ecuadorTime = new Date(currentTime + ecuadorTimeOffset * 3600 * 1000).getTime();
-
-    if (storedData) {
-      const { movie, timestamp } = JSON.parse(storedData);
-      if (ecuadorTime - timestamp < 3600000) {
-        setFeaturedMovie(movie);
-        return;
-      }
-    }
-
     if (movies && movies.length > 0) {
       const randomIndex = Math.floor(Math.random() * movies.length);
       const selectedMovie = movies[randomIndex];
       setFeaturedMovie(selectedMovie);
-      sessionStorage.setItem(
-        `featuredMovie-home-${language}`,
-        JSON.stringify({ movie: selectedMovie, timestamp: ecuadorTime })
-      );
     }
   }, [movies, language]);
 
