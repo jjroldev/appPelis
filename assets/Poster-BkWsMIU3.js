@@ -1,0 +1,1 @@
+import{j as r}from"./index-DaSmVpyY.js";import{f as e}from"./endPoints-f2vaGF2r.js";function a({poster_path:s}){return r.jsx("div",{className:"wrapperPoster",children:r.jsx("img",{src:e+s,className:"backdropPoster"})})}export{a as default};
