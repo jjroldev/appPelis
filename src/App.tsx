@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import {Routes, Route, Navigate, HashRouter } from 'react-router-dom';
 import { PrivateRoutes } from './components/PrivateRoutes';
 import { PublicRoutes } from './components/PublicRoutes';
 import { AuthProvider, useAuth } from './context/AuthContext';
@@ -27,10 +27,10 @@ export default function App() {
         <AuthProvider>
           <EmailProvider>
             <SearchProvider>
-              <BrowserRouter basename='/appPelis'>
+              <HashRouter>
                 <Toaster position="bottom-right" reverseOrder={false} />
                 <AppRoutes />
-              </BrowserRouter>
+              </HashRouter>
             </SearchProvider>
           </EmailProvider>
         </AuthProvider>
