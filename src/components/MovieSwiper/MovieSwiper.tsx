@@ -13,7 +13,9 @@ const MovieSwiper = React.memo(
   ({ URL, title, isLarge = false }: { URL: string; title: string; isLarge?: boolean }) => {
     const { currentPerfil, currentUser } = useAuth()
 
-    const { data: movies} = useQuery(["movies", URL], () => fetchData(URL),{ staleTime: 1000 * 60 * 5 });    
+    const { data: movies} = useQuery(["movies", URL], () => fetchData(URL),
+    { staleTime: 1000 * 60 * 5 ,refetchOnWindowFocus: false,});  
+  
     const queryClient=useQueryClient()
     const validMovies = useMemo(() => {
       return movies?.results?.filter((movie: Movie) => movie.backdrop_path) || [];
@@ -21,7 +23,11 @@ const MovieSwiper = React.memo(
 
     const handleAddFavorite = async (movie: Movie) => {
       await addFavoriteToProfile(currentUser?.id, currentPerfil?.id, movie);
-      await queryClient.invalidateQueries(`favorites-${currentUser?.id}-${currentPerfil?.id}`);
+      await queryClient.invalidateQueries(`favorites-${currentUser?.id}-${currentPerfil?.id}`
+        , {
+          refetchInactive: false,
+        }
+      );
     };
     const responsivew = useMemo(() => responsive(isLarge), [isLarge]);
 
@@ -30,7 +36,7 @@ const MovieSwiper = React.memo(
         movies.map((movie) => {
           return <CardMovie key={movie.id} movie={movie} isLarge={isLarge} onAddFavorite={handleAddFavorite} />
         }),
-      [isLarge]
+      [isLarge,handleAddFavorite]
     );
 
     return (

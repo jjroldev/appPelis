@@ -8,6 +8,7 @@
     color: #fff;
     font-weight: 500;
     font-size: clamp(.8rem, 1.5vw, 1.3rem);
+    margin-bottom: -10px;
 }
 
 .carousel-react .react-multi-carousel-item{

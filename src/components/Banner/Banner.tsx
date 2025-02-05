@@ -96,7 +96,6 @@ export function Banner({ movie, logoBuscar, isDetail = false }: BannerProps) {
     if (isLoading || !movie) {
         return (
             <div className={`header`}>
-                <NavBar perfil={true} menu={true} logoBuscar={logoBuscar} />
                 <div className="cuerpoBanner">
                     <div className={`contenedorLogo ${isDetail ? "contenedorDetailN" : ""}`}>
                     </div>

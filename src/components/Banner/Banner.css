@@ -1,9 +1,9 @@
 .header {
     display: flex;
     width: 100%;
-    height: 100vh;
+    height: 110vh;
     position: relative;
-    background-color: rgb(17,17,17);
+    background-color: rgb(17, 17, 17);
 }
 
 
@@ -16,25 +16,26 @@
     display: block;
 }
 
-.cuerpoBanner{
+.cuerpoBanner {
     width: 100%;
     height: 100%;
     padding: 0px 45px 20px 75px;
 }
 
-.titulo-banner{
+.titulo-banner {
     font-size: 3rem;
     font-weight: bold;
 }
 
-.header::before,.header1::before {
+.header::before,
+.header1::before {
     content: "";
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: 
+    background:
         linear-gradient(to bottom, rgb(17, 17, 17), transparent 20%, transparent 90%, rgb(17, 17, 17));
     z-index: 1;
 }
@@ -48,27 +49,29 @@
     color: #fff;
 }
 
-.logo-banner{
+.logo-banner {
     width: 100%;
     height: auto;
 }
-.contenedorLogo{
-    bottom: 190px;
+
+.contenedorLogo {
+    bottom: 230px;
     z-index: 3;
 }
 
 .contenedorLogo img {
-    width: clamp(120px, 20vw, 450px);
+    width:28vw;
     margin-bottom: 20px;
     height: auto;
 }
+
 .botones {
     display: flex;
     gap: 20px;
     margin-top: -10px;
 }
 
-.overview{
+.overview {
     font-size: clamp(.65rem, 1.1vw, 1.1rem);
     font-weight: 500;
     max-width: clamp(250px, 40%, 550px);
@@ -109,63 +112,61 @@
     font-size: clamp(.35rem, 2.2vw, 1.2rem);
 }
 
-.botonMeGustaBanner{
-    background-color: rgba(0, 0, 0,.5);
+.botonMeGustaBanner {
+    background-color: rgba(0, 0, 0, .5);
     color: #fff;
 }
 
-.botonMeGustaBanner:hover{
+.botonMeGustaBanner:hover {
     color: red;
 }
 
-  @media (max-width: 1280px) {
-    
-  }
+@media (max-width: 1280px) {}
 
-  @media (max-width: 1024px) {
+@media (max-width: 1024px) {
     .header {
         height: 70vh;
     }
-    
-    .contenedorLogo{
+
+    .contenedorLogo {
         gap: 20px;
         bottom: 170px;
         z-index: 3;
     }
 
-    .botones button{
+    .botones button {
         padding: 6px 20px;
     }
-  }
+}
 
-  @media (max-width: 768px) {
+@media (max-width: 768px) {
     .header {
         height: 70vh;
     }
 
 
-    .contenedorLogo{
+    .contenedorLogo {
         bottom: 150px;
         z-index: 3;
         gap: 17px;
     }
 
-    .botones button{
+    .botones button {
         padding: 6px 15px;
     }
 
-  }
+}
 
 
-  
+
 @media (max-width: 480px) {
     .header {
         height: 60vh;
     }
-    
-    .contenedorLogo{
-        bottom:130px;
+
+    .contenedorLogo {
+        bottom: 130px;
         z-index: 3;
     }
-    
-  }
+
+}
