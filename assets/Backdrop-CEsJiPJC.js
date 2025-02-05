@@ -1,1 +1,0 @@
-import{j as r}from"./index-BuxvlJJ-.js";import{b as s}from"./endPoints-CFqYS5zJ.js";function c({backdrop_path:a}){return r.jsx(r.Fragment,{children:r.jsx("div",{className:"wrapperBackdrop",children:r.jsx("img",{src:s+a,className:"backdropInfo"})})})}export{c as default};
