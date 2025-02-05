@@ -1,1 +1,0 @@
-import{j as r}from"./index-qPRpgYuD.js";import{d as s}from"./fetchData-CYFUk2L8.js";import"./objectWithoutPropertiesLoose-Dsqj8S3w.js";function p({backdrop_path:a}){return r.jsx(r.Fragment,{children:r.jsx("div",{className:"wrapperBackdrop",children:r.jsx("img",{src:s+a,className:"backdropInfo"})})})}export{p as default};
