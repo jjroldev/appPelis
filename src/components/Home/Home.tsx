@@ -1,134 +1,154 @@
 import { useState, useEffect } from "react";
 import { Banner } from "../Banner/Banner";
 import './Home.css';
-import React from "react";
+import { lazy } from "react";
 import { Movie } from "../../interface/Movie";
-const MovieSwiper = React.lazy(() => import("../MovieSwiper/MovieSwiper"));
-import { useFetchMovies } from "../../hooks/useFetchMovies";
-import { useLanguage } from "../../context/LanguageContext";
+const MovieSwiper = lazy(() => import("../MovieSwiper/MovieSwiper"));
 import { getFetchURLs } from "../../utils/endPoints";
+import { fetchData } from "../../utils/fetchData";
+import { useQuery } from "react-query";
+import { useMemo } from "react";
+import { useSearch } from "../../context/SearchContext";
+import { useLanguage } from "../../context/LanguageContext";
 export default function Home() {
-  const { language } = useLanguage();
-  const fetchURLS = getFetchURLs(language)
-  const { movies } = useFetchMovies(fetchURLS[0].actionMovies, 2);
+    const { language } = useLanguage()
+    const fetchURLS = useMemo(() => getFetchURLs(language), []);
+    const { data: movies, isLoading } = useQuery(["moviesHome"], () => fetchData(getFetchURLs(language).actionMovies));
 
-  const [featuredMovie, setFeaturedMovie] = useState<Movie | null>(null);
+    const [featuredMovie, setFeaturedMovie] = useState<Movie | null>(null);
+    const { setSearchTerm } = useSearch()
 
-  useEffect(() => {
-    if (movies && movies.length > 0) {
-      const randomIndex = Math.floor(Math.random() * movies.length);
-      const selectedMovie = movies[randomIndex];
-      setFeaturedMovie(selectedMovie);
+    const validMovies = useMemo(() => {
+        return movies?.results?.filter((movie: Movie) => movie.backdrop_path)
+    }, [movies?.results])
+
+    useEffect(() => {
+        if (!isLoading && validMovies.length > 0) {
+            const storedMovie = sessionStorage.getItem('featuredMovie');
+            
+            if (storedMovie) {
+                setFeaturedMovie(JSON.parse(storedMovie));
+            } else {
+                const randomIndex = Math.floor(Math.random() * validMovies.length);
+                const selectedMovie = validMovies[randomIndex];
+                setFeaturedMovie(selectedMovie);
+    
+                sessionStorage.setItem('featuredMovie', JSON.stringify(selectedMovie));
+            }
+        }
+    }, [validMovies]);
+    
+
+
+    useEffect(() => {
+        window.scroll({ top: 0, left: 0, behavior: "instant" });
+        setSearchTerm("");
+    }, []);
+    
+
+
+    if (isLoading) {
+        return (
+            <>
+                <div className={` w-full h-screen cargandoHome`}>
+                    <div className="spinner"></div>
+                </div>
+            </>
+        )
     }
-  }, [movies, language]);
 
-  if (movies.length === 0) {
-    return <div className="w-full h-screen bg-black flex items-center justify-center">
-      <div className="spinner"></div>
-    </div>
-  }
+    return (
+        <div className="contenedorHome">
+            <Banner movie={featuredMovie} logoBuscar={true} />
+            <div className="contenedorPeliculas">
+                <MovieSwiper
+                    URL={fetchURLS.popularMovies}
+                    title="Popular Movies"
+                />
+                <MovieSwiper
+                    URL={fetchURLS.topRatedMovies}
+                    title="Best Voted"
+                    isLarge
+                />
+                <MovieSwiper
+                    URL={fetchURLS.actionMovies}
+                    title="Action"
+                />
+                <MovieSwiper
+                    URL={fetchURLS.adventureMovies}
+                    title="Adventure"
+                    isLarge
+                />
+                <MovieSwiper
+                    URL={fetchURLS.animationMovies}
+                    title="Animation"
+                    isLarge
+                />
+                <MovieSwiper
+                    URL={fetchURLS.comedyMovies}
+                    title="Comedy"
+                    isLarge
+                />
+                <MovieSwiper
+                    URL={fetchURLS.crimeMovies}
+                    title="Crime"
+                    isLarge
+                />
+                <MovieSwiper
+                    URL={fetchURLS.documentaryMovies}
+                    title="Documentary"
+                    isLarge
+                />
+                <MovieSwiper
+                    URL={fetchURLS.dramaMovies}
+                    title="Drama"
+                    isLarge
+                />
+                <MovieSwiper
+                    URL={fetchURLS.familyMovies}
+                    title="Family"
+                    isLarge
+                />
+                <MovieSwiper
+                    URL={fetchURLS.fantasyMovies}
+                    title="Fantasy"
+                    isLarge
+                />
+                <MovieSwiper
+                    URL={fetchURLS.historyMovies}
+                    title="History"
+                />
+                <MovieSwiper
+                    URL={fetchURLS.horrorMovies}
+                    title="Horror"
+                />
+                <MovieSwiper
+                    URL={fetchURLS.musicMovies}
+                    title="Music"
+                    isLarge
+                />
+                <MovieSwiper
+                    URL={fetchURLS.mysteryMovies}
+                    title="Mystery"
+                    isLarge
+                />
+                <MovieSwiper
+                    URL={fetchURLS.romanceMovies}
+                    title="Romance"
+                    isLarge
+                />
+                <MovieSwiper
+                    URL={fetchURLS.scienceFictionMovies}
+                    title="Science Fiction"
+                    isLarge
+                />
+                <MovieSwiper
+                    URL={fetchURLS.thrillerMovies}
+                    title="Thriller"
+                    isLarge
+                />
 
-  return (
-    <div className="contenedorHome">
-
-      {featuredMovie && (
-        <>
-          <Banner movie={featuredMovie} logoBuscar={true} isShort={false} />
-          <div className="contenedorPeliculas">
-            <MovieSwiper
-              URL={fetchURLS[0].popularMovies}
-              title={language === 'es' ? 'Películas Populares' : 'Popular Movies'}
-            />
-            <MovieSwiper
-              URL={fetchURLS[0].topRatedMovies}
-              title={language === 'es' ? 'Mejores Votadas' : 'Best Voted'}
-              isLarge
-            />
-            <MovieSwiper
-              URL={fetchURLS[0].upcomingMovies}
-              title={language === 'es' ? 'Próximamente' : 'Upcoming'}
-              isLarge
-            />
-            <MovieSwiper
-              URL={fetchURLS[0].actionMovies}
-              title={language === 'es' ? 'Acción' : 'Action'}
-            />
-            <MovieSwiper
-              URL={fetchURLS[0].adventureMovies}
-              title={language === 'es' ? 'Aventura' : 'Adventure'}
-              isLarge
-            />
-            <MovieSwiper
-              URL={fetchURLS[0].animationMovies}
-              title={language === 'es' ? 'Animación' : 'Animation'}
-              isLarge
-            />
-            <MovieSwiper
-              URL={fetchURLS[0].comedyMovies}
-              title={language === 'es' ? 'Comedia' : 'Comedy'}
-              isLarge
-            />
-            <MovieSwiper
-              URL={fetchURLS[0].crimeMovies}
-              title={language === 'es' ? 'Crimen' : 'Crime'}
-              isLarge
-            />
-            <MovieSwiper
-              URL={fetchURLS[0].documentaryMovies}
-              title={language === 'es' ? 'Documentales' : 'Documentary'}
-              isLarge
-            />
-            <MovieSwiper
-              URL={fetchURLS[0].dramaMovies}
-              title={language === 'es' ? 'Drama' : 'Drama'}
-              isLarge
-            />
-            <MovieSwiper
-              URL={fetchURLS[0].familyMovies}
-              title={language === 'es' ? 'Familia' : 'Family'}
-              isLarge
-            />
-            <MovieSwiper
-              URL={fetchURLS[0].fantasyMovies}
-              title={language === 'es' ? 'Fantasía' : 'Fantasy'}
-              isLarge
-            />
-            <MovieSwiper
-              URL={fetchURLS[0].historyMovies}
-              title={language === 'es' ? 'Historia' : 'History'}
-            />
-            <MovieSwiper
-              URL={fetchURLS[0].horrorMovies}
-              title={language === 'es' ? 'Terror' : 'Horror'}
-            />
-            <MovieSwiper
-              URL={fetchURLS[0].musicMovies}
-              title={language === 'es' ? 'Música' : 'Music'}
-              isLarge
-            />
-            <MovieSwiper
-              URL={fetchURLS[0].mysteryMovies}
-              title={language === 'es' ? 'Misterio' : 'Mystery'}
-              isLarge
-            />
-            <MovieSwiper
-              URL={fetchURLS[0].romanceMovies}
-              title={language === 'es' ? 'Románticas' : 'Romance'}
-              isLarge
-            />
-            <MovieSwiper
-              URL={fetchURLS[0].scienceFictionMovies}
-              title={language === 'es' ? 'Ciencia Ficción' : 'Science Fiction'}
-              isLarge
-            />
-            <MovieSwiper
-              URL={fetchURLS[0].thrillerMovies}
-              title={language === 'es' ? 'Suspenso' : 'Thriller'}
-              isLarge
-            />
-          </div>
-        </>
-      )}
-    </div>
-  );
+            </div>
+        </div>
+    );
 }

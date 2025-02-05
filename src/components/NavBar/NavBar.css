@@ -1,49 +1,65 @@
 .navbar {
-    position: fixed;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 0px 45px;
-    font-size: 1.3rem;
-    z-index: 6;
-    color: #fff;
-    background-color: transparent;
-    transition: background-color 0.4s ease-in-out;
-  }
-  
-  .navbar.scrolled {
-    background-color: rgba(0, 0, 0, 0.9);
-  }
-  
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0px 45px;
+  font-size: 1.3rem;
+  z-index: 6;
+  background-color: transparent;
+  transition: background-color 0.4s ease-in-out;
+}
+
+a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.navbar.scrolled {
+  background-color: rgb(17, 17, 17);
+}
+
 
 .navbar img {
-    width: clamp(78px, 10vw, 150px);
-    height: auto;
+  width: 12vw;
+  height: auto;
 }
 
-.navOpciones{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 60px;
+.navbar .logoGrande {
+  width: 16vw;
+  height: auto;
 }
 
-.textInicio{
-    cursor: pointer;
-    font-weight: 600;
-    font-size: clamp(.7rem, 1.5vw, 1rem);
-    transition: .3s ease-in-out;
+.navOpciones {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 60px;
 }
 
-.lupa{
-    font-size: 1.3rem;
-    transition: .3s ease-in-out;
-    cursor: pointer;
+.textInicio {
+  cursor: pointer;
+  font-weight: 300;
+  font-size: clamp(.7rem, 1.5vw, 1rem);
+  transition: .3s ease-in-out;
 }
 
-.textInicio:hover,.lupa:hover{
-    color: rgba(255,255,255,.7);
+.lupa {
+  font-size: 1.3rem;
+  transition: 0.3s ease-in-out;
+  cursor: pointer;
+  color: #fff;
 }
 
+.textInicio:hover,
+.lupa:hover {
+  color: rgba(255, 255, 255, .7);
+}
 
+.perfilYLupaContenedor {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+}

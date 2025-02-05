@@ -1,6 +1,8 @@
 .contenedor{
-    background-color: rgb(0, 0, 0);
-    height: 100vh;
+    overflow-y: visible;
+    overflow-x: hidden;
+    background-color: rgb(17, 17, 17);
+    min-height: 120vh;
 }
 
 .contenedorBuscar {
@@ -10,34 +12,48 @@
     padding: 30px;
 
 }
-
 .contenedorPeliculasBuscar {
     display: grid;
-    gap: 5px;
-    padding: 30px;
-    grid-template-columns: repeat(6,1fr);
+    gap: 15px;
+    row-gap: 30px;
+    padding: 100px 80px;
+    grid-template-columns: repeat(8,1fr);
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgb(0, 0, 0);
-    background-color: rgb(0, 0, 0);
+    background-color: rgb(17, 17, 17);
 }
 
+.cargando{
+    background-color: rgb(17, 17, 17);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 110vh;
+}
+
+.contenedorPeliculasNoE{
+    height: 100%;
+    min-height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 1rem;
+    width: 100%;
+}
+
+.inputLupa{
+    padding: 10px;
+    background-color: transparent !important;
+}
 
 @media (max-width: 1024px) {
     .contenedorPeliculasBuscar {
-        grid-template-columns: repeat(5,1fr);
+        grid-template-columns: repeat(7,1fr);
     }
 }
 
 @media (max-width: 768px) {
     .contenedorPeliculasBuscar {
-        grid-template-columns: repeat(4,1fr);
+        grid-template-columns: repeat(5,1fr);
     }
 }
-
-  
-@media (max-width: 480px) {
-    .contenedorPeliculasBuscar {
-        grid-template-columns: repeat(3,1fr);
-    }
-}
-  

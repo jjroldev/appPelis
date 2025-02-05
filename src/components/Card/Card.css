@@ -1,39 +1,43 @@
 .contenedor-posterCM {
-    position: relative;
-    width: 100%;
-    margin: 0 auto;
-    border-radius: 10px;
-    overflow: hidden;
-    transition: transform 0.3s ease-in-out;
-  }
-  .cardContainerImageCM {
-    position: relative;
-  }
-  
-  .cardContainerImageCM.posterCM {
-    aspect-ratio: 2 / 3;
-  }
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
+}
+.cardContainerImageCM {
+  position: relative;
+}
 
-  .cardContainerImageCM img.main-imageCM {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+.cardContainerImageCM.posterCM {
+  aspect-ratio: 2 / 3;
+}
 
-  .detailsCM{
-    padding: 30px 0px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: #ffffff;
-  }
+.cardContainerImageCM img.main-imageCM {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
-  .papel{
-    color: rgb(156, 156, 156);
-    font-size: clamp(.8rem, 1.4vw, 1.2rem);
-  }
+.detailsCM{
+  padding: 30px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #ffffff;
+}
 
-  .nombre-caster{
-    font-size: clamp(.8rem, 1.4vw, 1.2rem);
-  }
+.fondoCard{
+  background-color: rgb(59, 59, 59);
+}
+
+.papel{
+  color: rgb(156, 156, 156);
+  font-size: clamp(.8rem, 1.4vw, 1.2rem);
+}
+
+.nombre-caster{
+  font-size: clamp(.8rem, 1.4vw, 1.2rem);
+}

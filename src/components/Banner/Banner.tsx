@@ -1,80 +1,57 @@
 import "./Banner.css";
-import { URL_IMAGE_lOGO, URL_IMAGE_BANNER } from "../../App";
 import { NavBar } from "../NavBar/NavBar";
-import { useCallback } from "react";
-import React from "react";
+import { URL_IMAGE_lOGO, URL_IMAGE_BANNER, getURLMovieDetails } from "../../utils/endPoints";
+import React, { useCallback } from "react";
 import { useNavigate } from "react-router";
-import { Suspense, lazy } from "react";
-const CarouselBoostrap = lazy(() => import('../CarouselBoostrap/CarouselBoostrap'));
+import { getFavoritesByProfile } from "../../firebase";
+import { lazy } from "react";
 const VideoModal = lazy(() => import('../ModalVideo/ModalVideo'));
-import { Movie } from "../../interface/Movie";
-import useFetchMovieDetails from "../../hooks/useFecthMovieWithDetail";
-import useFetchLogo from "../../hooks/useFetchLogos";
-import { Genre } from "../../interface/Movie";
-import { responsiveCredits } from "../../utils/ResponsiveCarrousel";
-import Carousel from "react-multi-carousel";
-import { useLanguage } from "../../context/LanguageContext";
-import useFetchProviders from "../../hooks/useFetchProviders";
-export function Banner({ movie, logoBuscar, isShort, isDetail}: {movie: Movie; logoBuscar: boolean, isShort: boolean, isDetail?: boolean }) {
-    const { language } = useLanguage();
+import { Movie, MovieDetails } from "../../interface/Movie";
+const DetalleBanner = lazy(() => import('../DetalleBanner/DetalleBaner'))
+import { useAuth } from "../../context/AuthContext";
+import { useQuery, useQueryClient } from "react-query";
+import { fetchData } from "../../utils/fetchData";
+import { addFavoriteToProfile } from "../../firebase";
+interface BannerProps {
+    movie: Movie | null; logoBuscar: boolean, isDetail?: boolean
+}
+export function Banner({ movie, logoBuscar, isDetail = false }: BannerProps) {
+    const { currentPerfil, currentUser } = useAuth()
     const [open, setOpen] = React.useState(false);
-    const { movie: fetchedDetails, isLoading } = useFetchMovieDetails(movie?.id, language);
-    const { logoPath } = useFetchLogo(movie?.id);
+    const { data: fetchedDetails, isLoading } = useQuery<MovieDetails>(
+        `movie-${movie?.id}`,
+        () => fetchData(getURLMovieDetails(movie?.id).movieDetails),
+        {
+            enabled: !!movie?.id,
+        }
+    );
+
+    const queryClient = useQueryClient()
     const navigate = useNavigate();
-    const { movieProviders } = useFetchProviders(movie.id)
     const handleOpen = useCallback(() => setOpen(true), []);
     const handleClose = useCallback(() => setOpen(false), []);
     const pasarMovie = useCallback(() => {
         navigate("/info", { state: { movie } });
     }, [navigate, movie]);
 
-    if ((!movie || isLoading)) {
-        return (
-            <div className={`header ${isShort ? "header-short" : ""} bg-gray-800`}>
-                <NavBar logoBuscar={logoBuscar} />
-            </div>
-        )
-    }
+    const {  } = useQuery<Movie[]>(
+        `favorites-${currentUser?.id}-${currentPerfil?.id}`,
+        () => getFavoritesByProfile(currentUser?.id, currentPerfil?.id),
+        {
+            enabled: !!currentUser?.id && !!currentPerfil?.id,
+        }
+    );
 
-    const renderGenres = (genres: Genre[] = []) => {
-        return genres.map((genre: Genre) => (
-            <li key={genre.id}>
-                <span>{genre.name}</span>
-            </li>
-        ));
+    const handleAddFavorite = async (movie: Movie | null) => {
+        await addFavoriteToProfile(currentUser?.id, currentPerfil?.id, movie);
+        await queryClient.invalidateQueries(`favorites-${currentUser?.id}-${currentPerfil?.id}`);
     };
 
-    const renderProviders = (movieProviders: any) => {
-        if (!movieProviders) return null
-        return (
-            <Carousel
-                swipeable={false}
-                draggable={false}
-                showDots={false}
-                responsive={responsiveCredits}
-                ssr={true}
-                infinite={true}
-                keyBoardControl={true}
-                className="carouselProviders"
-            >
-                {movieProviders.map((provider: any) => (
-                    <img
-                        key={provider.provider_id}
-                        className="provedorLogo"
-                        src={URL_IMAGE_BANNER + provider.logo_path}
-                        alt={provider.provider_name}
-                    />
-                ))}
-            </Carousel>
-        )
-    }
-
+    const logoPath = fetchedDetails?.images?.logos?.find((l: { iso_639_1: string }) => l.iso_639_1 === "en")?.file_path ||
+        fetchedDetails?.images?.logos[0]?.file_path;
     const renderOverviewOrTitle = () => {
-        if (!isShort && movie.overview) {
+        if (movie?.overview) {
             return <p className="overview">{movie.overview.slice(0, movie.overview.indexOf(".") + 1)}</p>;
-        }
-        if (isShort) {
-            return <h2 className="titulo-banner">{movie.original_title}</h2>;
         }
         return null;
     };
@@ -84,95 +61,65 @@ export function Banner({ movie, logoBuscar, isShort, isDetail}: {movie: Movie; l
             return (
                 <>
                     <img
-                        className={`${!isShort ? "logo-banner" : "logo-banner-reducido"}`}
+                        className={"logo-banner"}
                         src={`${URL_IMAGE_lOGO}${logoPath}`}
-                        alt={movie.title}
+                        alt={movie?.title}
                     />
-                    {!isShort && (isDetail ? <Details /> : renderOverviewOrTitle())}
+                    {(isDetail ? <DetalleBanner movie={fetchedDetails} /> : renderOverviewOrTitle())}
                 </>
             );
         }
-        return !isShort ? renderOverviewOrTitle() : null;
+        return renderOverviewOrTitle();
     };
 
-
-    const Details = () => {
-        return <>
-            <div className="movieDetailsBanner flex flex-col">
-                {fetchedDetails?.overview && (
-                    <p className="overview">{fetchedDetails?.overview.slice(0, fetchedDetails?.overview.indexOf(".") + 1)}</p>
-                )}
-
-                <div className="bannerDetails flex flex-row">
-                    <span>TMDB {fetchedDetails?.vote_average.toFixed(1)}</span>
-                    <span>{fetchedDetails?.release_date.split("-")[0]}</span>
-                    <span>
-                        {fetchedDetails?.runtime
-                            ? `${Math.floor(fetchedDetails?.runtime / 60)}h ${fetchedDetails?.runtime % 60}min`
-                            : "Runtime no disponible"}
-                    </span>
-                </div>
-                <div>
-                    <ul className="generosBanner flex flex-row">
-                        {renderGenres(fetchedDetails?.genres)}
-                    </ul>
-                </div>
-            </div>
-            <div className="provedores-container posters-continer-banner">
-                <div className='postersInfo'>
-                    <Suspense
-                        fallback={
-                            <div
-                                style={{
-                                    textAlign: 'center',
-                                    padding: '2rem',
-                                    fontSize: '1.2rem',
-                                }}
-                            >
-                                Cargando...
-                            </div>
-                        }
-                    >
-                        <CarouselBoostrap movie={movie} isPoster={true}/>
-                    </Suspense>
-                </div>
-                {renderProviders(movieProviders)}
-            </div>
-        </>
-    }
 
     const renderButtons = () => (
         <div className="botones">
             <button onClick={handleOpen}>
-                <i className="fa-solid fa-play"></i> {language === "es" ? "Reproducir" : "Play"}
+                <i className="fa-solid fa-play"></i> Play
             </button>
-            <Suspense fallback={<div />}>
-                <VideoModal language={language} movie={movie} open={open} onClose={handleClose} />
-            </Suspense>
+            <VideoModal movie={movie} open={open} onClose={handleClose} />
             <button onClick={pasarMovie} className="boton-info-banner">
-                <i className="fa-solid fa-circle-info"></i> {language === "es" ? "Más Información" : "More Information"}
+                <i className="fa-solid fa-circle-info"></i> More Information
+            </button>
+            <button onClick={() => {
+                handleAddFavorite(movie)
+            }}
+                className="botonMeGustaBanner"
+            >
+                <i className="fa-solid fa-heart">
+                </i>
             </button>
         </div>
     );
 
+    if (isLoading || !movie) {
+        return (
+            <div className={`header`}>
+                <NavBar perfil={true} menu={true} logoBuscar={logoBuscar} />
+                <div className="cuerpoBanner">
+                    <div className={`contenedorLogo ${isDetail ? "contenedorDetailN" : ""}`}>
+                    </div>
+                </div>
+            </div>
+        )
+    }
 
-    if (!movie) return null;
 
     return (
-        <div className={`header ${isShort ? "header-short" : ""}`}>
+        <div className={`header`}>
             <img
                 className="fondo"
-                src={`${URL_IMAGE_BANNER}${movie.backdrop_path}`}
-                alt={movie.title}
+                src={`${URL_IMAGE_BANNER}${movie?.backdrop_path}`}
+                alt={movie?.title}
             />
-            <NavBar logoBuscar={logoBuscar} />
+            <NavBar perfil={true} menu={true} logoBuscar={logoBuscar} />
             <div className="cuerpoBanner">
-                <div className={`${isShort ? "contenedorLogo1" : `contenedorLogo ${isDetail ? "contenedorDetailN" : ""}`} `}>
+                <div className={`contenedorLogo ${isDetail ? "contenedorDetailN" : ""}`}>
                     {renderLogoOrContent()}
-                    {!isShort && renderButtons()}
+                    {renderButtons()}
                 </div>
             </div>
         </div>
     );
 }
-

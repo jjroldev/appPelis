@@ -1,17 +1,21 @@
 import './NavBar.css';
-import { useNavigate } from "react-router-dom";
-import { Link } from 'react-router-dom';
-import { useEffect,useState } from 'react';
-import { useLanguage } from '../../context/LanguageContext';
-export function NavBar({ logoBuscar}: { logoBuscar: boolean}) {
-    const { language } = useLanguage();
-    const navigate = useNavigate();
+import { useLocation, Link } from "react-router-dom";
+import { useEffect, useState, useRef, lazy } from 'react';
+const SearchBar = lazy(()=>import('../SearchBar/SearchBar'));
+const PerfilDrop = lazy(()=>import('../PerfilDrop/PerfilDrop'))
+interface NavBarProps {
+    logoBuscar: boolean;
+    menu?: boolean;
+    perfil?: boolean;
+    logoGrande?: boolean;
+    condicionExpanded?: boolean,
+}
 
-    const handleSearchClick = () => {
-        navigate("/buscar");
-    };
+export function NavBar({ logoBuscar, menu = false, perfil = false, logoGrande = false, condicionExpanded }: NavBarProps) {
+    const location = useLocation();
 
     const [scrolled, setScrolled] = useState(false);
+    const navbarRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -25,19 +29,29 @@ export function NavBar({ logoBuscar}: { logoBuscar: boolean}) {
     }, []);
 
     return (
-        <div className={`navbar ${scrolled ? "scrolled" : ""}`}>
-
+        <div className={`navbar ${scrolled ? "scrolled" : ""}`} ref={navbarRef}>
             <div className='navOpciones'>
                 <img
                     src="/appPelis/JUSTFLIX.svg"
                     alt="Logo"
+                    className={`${logoGrande ? "logoGrande" : ""}`}
                 />
-                <Link className='textInicio' to="/">{language === 'es' ? "Inicio" : "Home"}</Link>
-                <Link className="textInicio" to="/favoritos">{language === 'es' ? "Favoritas" : "Favorites"}</Link>
+                {menu && (
+                    <>
+                        <Link className={`textInicio ${location.pathname === "/home" ? "bold" : ""}`} to="/home">
+                            Home
+                        </Link>
+                        <Link className={`textInicio ${location.pathname === "/miLista" ? "bold" : ""}`} to="/miLista">
+                            Favorites
+                        </Link>
+                    </>
+                )}
             </div>
-            {logoBuscar && (<i
-                className="fa-solid fa-magnifying-glass lupa"
-                onClick={handleSearchClick} ></i>)}
+
+            <div className='perfilYLupaContenedor'>
+                {logoBuscar && <SearchBar condicionExpanded={condicionExpanded} desdeHome={location.state?.fromBuscar || false} />}
+                {perfil  && <PerfilDrop />}
+            </div>
         </div>
     );
 }

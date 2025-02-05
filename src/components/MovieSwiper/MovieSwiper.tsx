@@ -3,36 +3,46 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import CardMovie from "../CardMovie/CardMovie";
 import { Movie } from "../../interface/Movie";
+import { useQuery, useQueryClient } from 'react-query';
+import { fetchData } from "../../utils/fetchData";
 import "./MovieSwiper.css";
-import { useFetchMovies } from "../../hooks/useFetchMovies";
+import { useAuth } from "../../context/AuthContext";
 import { responsive } from "../../utils/ResponsiveCarrousel";
+import { addFavoriteToProfile } from "../../firebase";
+import { SkeletonCarousel } from "../SkeletonMovieSwiper/SkeletonCarousel";
 const MovieSwiper = React.memo(
-  ({ URL, title, isLarge }: { URL: string; title: string; isLarge?: boolean }) => {
-    const { movies, isLoading } = useFetchMovies(URL, 9);
+  ({ URL, title, isLarge = false }: { URL: string; title: string; isLarge?: boolean }) => {
+    const { currentPerfil, currentUser } = useAuth()
+
+    const { data: movies, isLoading } = useQuery(["movies", URL], () => fetchData(URL), {
+      staleTime: 1000 * 60 * 5, // 5 minutos
+    });    
+    const queryClient=useQueryClient()
+    const validMovies = useMemo(() => {
+      return movies?.results?.filter((movie: Movie) => movie.backdrop_path) || [];
+    }, [movies]);
+
+    const handleAddFavorite = async (movie: Movie) => {
+      await addFavoriteToProfile(currentUser?.id, currentPerfil?.id, movie);
+      await queryClient.invalidateQueries(`favorites-${currentUser?.id}-${currentPerfil?.id}`);
+    };
+    const responsivew = useMemo(() => responsive(isLarge), [isLarge]);
 
     const renderMovies = useCallback(
       (movies: Movie[]) =>
         movies.map((movie) => {
-          const imagePath = isLarge ? movie.backdrop_path : movie.poster_path;
-          return imagePath ? (
-            <CardMovie key={movie.id} movie={movie} isLarge={isLarge} />
-          ) : null;
+          return <CardMovie key={movie.id} movie={movie} isLarge={isLarge} onAddFavorite={handleAddFavorite} />
         }),
       [isLarge]
     );
 
-    const responsivew = useMemo(
-      () => (responsive(isLarge)),
-      [isLarge]
-    );
-
     if (isLoading) {
-      return null
+      return <SkeletonCarousel isLarge={isLarge} numMovies={20} title={title} />;
     }
 
     return (
       <div className="carousel">
-        {movies.length > 0 && (
+        {validMovies.length > 0 && (
           <>
             <h2 className="tituloCarousel">{title}</h2>
             <Carousel
@@ -45,7 +55,7 @@ const MovieSwiper = React.memo(
               autoPlay={false}
               className="carousel-react"
             >
-              {renderMovies(movies)}
+              {renderMovies(validMovies)}
             </Carousel>
           </>
         )}
@@ -55,4 +65,3 @@ const MovieSwiper = React.memo(
 );
 
 export default MovieSwiper;
-

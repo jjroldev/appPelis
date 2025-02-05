@@ -1,54 +1,40 @@
-import "./App.css";
-import "react-multi-carousel/lib/styles.css";
-export const URL_IMAGE_POSTER = "https://image.tmdb.org/t/p/w500";
-export const URL_IMAGE_BACKDROP = "https://image.tmdb.org/t/p/w780";
-export const URL_IMAGE_BANNER = "https://image.tmdb.org/t/p/original";
-export const URL_IMAGE_PROFILE = "https://image.tmdb.org/t/p/h632";
-export const URL_IMAGE_lOGO = "https://image.tmdb.org/t/p/w500";
-export const BASE_URL = "https://api.themoviedb.org/3";
-export const API_KEY = import.meta.env.VITE_API_KEY as string;
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { lazy} from "react";
-import { LanguageProvider } from "./context/LanguageContext";
-import { Suspense } from "react";
-const Favorites= lazy(()=> import ("./components/Favorites/Favorites"));
-const Buscar = lazy(() => import("./components/Buscar/Buscar"));
-const Home = lazy(() => import("./components/Home/Home"));
-const InfoMovie = lazy(() => import("./components/InfoMovie/InfoMovie"));
-function App() {
+import './App.css';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { PrivateRoutes } from './components/PrivateRoutes';
+import { PublicRoutes } from './components/PublicRoutes';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import { EmailProvider } from './context/ExistsEmailContext';
+import { Toaster } from 'react-hot-toast';
+import { SearchProvider } from './context/SearchContext';
+import { LanguageProvider } from './context/LanguageContext';
+import { QueryClient, QueryClientProvider } from 'react-query';
+function AppRoutes() {
+  const { isLoggedIn } = useAuth();
+
   return (
-    <LanguageProvider>
-      <BrowserRouter basename="/appPelis">
-        <Suspense
-          fallback={
-            <div
-              style={{
-                position: "fixed",
-                top: 0,
-                left: 0,
-                width: "100vw",
-                height: "100vh",
-                backgroundColor: "#000",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <div className="spinner"></div>
-            </div>
-          }
-        >
-          <Routes>
-            <Route index path="/" element={<Home />} />
-            <Route path="/buscar" element={<Buscar />} />
-            <Route path="/info" element={<InfoMovie />} />
-            <Route path="/favoritos" element={<Favorites />} />
-          </Routes>
-        </Suspense>
-      </BrowserRouter>
-    </LanguageProvider>
+    <Routes>
+      {isLoggedIn ? <Route path="/*" element={<PrivateRoutes />} /> : <Route path="/*" element={<PublicRoutes />} />}
+      <Route path="*" element={<Navigate to={isLoggedIn ? "/home" : "/login"} replace />} />
+    </Routes>
   );
 }
 
-export default App;
-
+export default function App() {
+  const queryClient = new QueryClient()
+  return (
+    <QueryClientProvider client={queryClient}>
+      <LanguageProvider>
+        <AuthProvider>
+          <EmailProvider>
+            <SearchProvider>
+              <BrowserRouter basename='/appPelis'>
+                <Toaster position="bottom-right" reverseOrder={false} />
+                <AppRoutes />
+              </BrowserRouter>
+            </SearchProvider>
+          </EmailProvider>
+        </AuthProvider>
+      </LanguageProvider>
+    </QueryClientProvider>
+  );
+}

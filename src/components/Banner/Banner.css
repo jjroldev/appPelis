@@ -2,14 +2,10 @@
     display: flex;
     width: 100%;
     height: 100vh;
-    align-items: flex-start;
     position: relative;
-    overflow: hidden;
+    background-color: rgb(17,17,17);
 }
 
-.header-short {
-    height: 60vh;
-}
 
 .header .fondo {
     width: 100%;
@@ -39,16 +35,15 @@
     width: 100%;
     height: 100%;
     background: 
-        linear-gradient(to bottom, rgb(0, 0, 0), transparent 30%, transparent 70%, rgb(0, 0, 0)),
-        linear-gradient(to right, rgb(0, 0, 0), transparent 40%); 
+        linear-gradient(to bottom, rgb(17, 17, 17), transparent 20%, transparent 90%, rgb(17, 17, 17));
     z-index: 1;
 }
 
-.contenedorLogo, .contenedorLogo1 {
+.contenedorLogo {
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 20px;
     position: absolute;
     color: #fff;
 }
@@ -57,38 +52,20 @@
     width: 100%;
     height: auto;
 }
-
-.logo-banner-reducido{
-    width: 100%;
-    height: auto;
-}
 .contenedorLogo{
     bottom: 190px;
     z-index: 3;
 }
 
-.contenedorLogo1{
-    bottom: 130px;
-    z-index: 3;
-}
-
-.contenedorDetailN{
-    bottom: 80px;
-}
-
 .contenedorLogo img {
-    width: clamp(120px, 20vw, 360px);
+    width: clamp(120px, 20vw, 450px);
+    margin-bottom: 20px;
     height: auto;
 }
-
-.contenedorLogo1 img {
-    width: clamp(150px, 30vw, 280px);
-    height: auto;
-}
-
 .botones {
     display: flex;
     gap: 20px;
+    margin-top: -10px;
 }
 
 .overview{
@@ -132,50 +109,14 @@
     font-size: clamp(.35rem, 2.2vw, 1.2rem);
 }
 
-.movieDetailsBanner{
-    gap: 7px;
+.botonMeGustaBanner{
+    background-color: rgba(0, 0, 0,.5);
+    color: #fff;
 }
 
-.bannerDetails{
-    font-size: clamp(.65rem, 1.1vw, 1.1rem);
-    gap: 20px;
+.botonMeGustaBanner:hover{
+    color: red;
 }
-
-.bannerDetails span{
-    font-weight: 700;
-    justify-content: space-between;
-    color: rgba(231, 231, 231, 0.712);
-}
-.generosBanner{
-    gap: 30px;
-    list-style:circle;
-    list-style-position: inside;
-    font-weight: 600;
-    font-size: clamp(.65rem, 1.1vw, 1.1rem);
-}
-
-.provedores-container {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    padding:  0 20px;
-    bottom: 0px;
-    gap: 60px;
-    right: 55px;
-    width: 40%;
-}
-.carouselProviders .react-multi-carousel-item{
-    padding-right: 10px;
-}
-
-/* 
-.provedorLogo{
-    transition: .3s ease-in-out;
-}
-
-.provedorLogo:hover{
-    transform: scale(1.5);
-} */
 
   @media (max-width: 1280px) {
     
@@ -186,18 +127,10 @@
         height: 70vh;
     }
     
-    .header-short {
-        height: 55vh;
-    }
-
     .contenedorLogo{
         gap: 20px;
         bottom: 170px;
         z-index: 3;
-    }
-    
-    .contenedorLogo1{
-        bottom: 110px;
     }
 
     .botones button{
@@ -209,22 +142,11 @@
     .header {
         height: 70vh;
     }
-    
-    .header-short {
-        height: 50vh
-    }
+
 
     .contenedorLogo{
         bottom: 150px;
         z-index: 3;
-    }
-    
-    .contenedorLogo1{
-        bottom: 90px;
-        z-index: 3;
-    }
-
-    .contenedorLogo, .contenedorLogo1{
         gap: 17px;
     }
 
@@ -241,17 +163,9 @@
         height: 60vh;
     }
     
-    .header-short {
-        height: 40vh;
-    }
-
     .contenedorLogo{
         bottom:130px;
         z-index: 3;
     }
     
-    .contenedorLogo1{
-        bottom: 70px;
-        z-index: 3;
-    }
   }

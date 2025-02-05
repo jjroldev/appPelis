@@ -1,79 +1,92 @@
 import './Buscar.css';
-import { API_KEY, BASE_URL } from '../../App';
-import { useState, useMemo } from 'react';
+import { BASE_URL } from '../../utils/endPoints';
 import CardMovie from '../CardMovie/CardMovie';
-import { Lupa } from '../Lupa/Lupa';
 import { Movie } from '../../interface/Movie';
-import { useFetchMovies } from '../../hooks/useFetchMovies';
+import { NavBar } from '../NavBar/NavBar';
+import { useEffect, useMemo } from 'react';
+import { useSearch } from '../../context/SearchContext';
+import { useNavigate } from 'react-router-dom';
+import { API_KEY } from '../../utils/endPoints';
 import { useLanguage } from '../../context/LanguageContext';
-import { Banner } from '../Banner/Banner';
+import { useQuery, useQueryClient } from 'react-query';
+import { fetchData } from '../../utils/fetchData';
+import { addFavoriteToProfile } from '../../firebase';
+import { getFavoritesByProfile } from '../../firebase';
+import { useAuth } from '../../context/AuthContext';
 export default function Buscar() {
-  const { language } = useLanguage();
-  const [nameMovie, setNameMovie] = useState(() => {
-    return sessionStorage.getItem(`nameMovie-${language}`) || '';
-  });
 
-  const fetchPopular = `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=${language}`;
-  const fetchSearch = `${BASE_URL}/search/movie?api_key=${API_KEY}&language=${language}&query=${nameMovie}`;
-  const fetchURL = nameMovie ? fetchSearch : fetchPopular;
+  const { searchTerm } = useSearch()
+  const navigate = useNavigate()
+  const { language } = useLanguage()
+  const {currentPerfil,currentUser}=useAuth()
+  useEffect(() => {
+    window.scroll({ top: 0, left: 0, behavior: "instant" });
+  }, []);
 
-  const { movies } = useFetchMovies(fetchURL, 4);
-  const { movies: moviesPopulars } = useFetchMovies(fetchPopular, 6);
 
-  const validMovies = useMemo(() => movies.filter((movie) => movie.backdrop_path), [movies]);
-  const validMoviesPopular = useMemo(
-    () => moviesPopulars.filter((movie) => movie.backdrop_path),
-    [moviesPopulars]
-  );
+  useEffect(() => {
+    if (searchTerm === "") {
+      navigate("/home", { state: { fromBuscar: true } });
+    }
+  }, [searchTerm]);
 
-  const movieBanner = validMovies[0] || validMoviesPopular[0];
+  const queryClient=useQueryClient()
 
-  const handleSearch = (value: string) => {
-    setNameMovie(value);
-    sessionStorage.setItem(`nameMovie-${language}`, value);
-  };
+  const {  } = useQuery<Movie[]>(
+    `favorites-${currentUser?.id}-${currentPerfil?.id}`,
+    () => getFavoritesByProfile(currentUser?.id, currentPerfil?.id),
+    {
+        enabled: !!currentUser?.id && !!currentPerfil?.id,
+    }
+);
+
+  const handleAddFavorite = async (movie: Movie | null) => {
+    await addFavoriteToProfile(currentUser?.id, currentPerfil?.id, movie);
+    await queryClient.invalidateQueries(`favorites-${currentUser?.id}-${currentPerfil?.id}`);
+};
+
+  const fetchSearch = `${BASE_URL}/search/movie?api_key=${API_KEY}&language=${language}&query=${searchTerm}`;
+
+  const { data: movies, isLoading } = useQuery([searchTerm, URL], () => fetchData(fetchSearch), { refetchOnWindowFocus: false, });
+
+  const validMovies = useMemo(() => {
+    return movies?.results?.filter((movie: Movie) => movie.backdrop_path && movie.poster_path)
+  }, [movies?.results])
+
+  if (isLoading) {
+    return (
+      <>
+        <NavBar logoBuscar={true} menu={true} perfil={true} condicionExpanded={true} />
+        <div className="cargando">
+          <div className="spinner"></div>
+        </div>
+      </>
+    )
+  }
 
   const renderMovies = (movies: Movie[]) =>
-    movies.map((movie, index) => <CardMovie key={index} movie={movie} />);
-
-  const loadingSpinner = (
-    <div className="w-full h-full min-h-screen bg-black flex items-center justify-center">
-      <div className="spinner"></div>
-    </div>
-  );
+    movies.map((movie, index) => <CardMovie key={index} movie={movie} onAddFavorite={()=>handleAddFavorite(movie)}/>);
 
   const renderContent = () => {
-    if (movies.length > 0) {
+    if (validMovies.length > 0) {
       return <div className="contenedorPeliculasBuscar">{renderMovies(validMovies)}</div>;
-    } else if (nameMovie && validMovies.length === 0) {
+    } else if (searchTerm && movies.length == 0) {
       return (
-        <div className="contenedorPeliculasBuscar">{renderMovies(validMoviesPopular)}</div>
-      );
-    } else if (moviesPopulars.length > 0) {
-      return <div className="contenedorPeliculasBuscar">{renderMovies(validMoviesPopular)}</div>;
-    } else {
-      return loadingSpinner;
-    }
-  };
+        <>
+          <div className='contenedorPeliculasNoE'>
+            <p>La busqueda de {searchTerm} no arrrojó coincidencias.</p>
+          </div>
+        </>
+      )
+    };
+  }
 
   return (
     <div className="contenedor">
-      {movieBanner &&
-        (
-          <><Banner
-            movie={movieBanner}
-            logoBuscar={true}
-            isShort={true}
-          />
-            <div className="contenedorBuscar">
-              <Lupa
-                placeholder={language === 'es' ? 'Buscar películas' : 'Search Movies'}
-                onSubmit={handleSearch}
-              />
-            </div>
-          </>
-        )}
-      {renderContent()}
+      <NavBar perfil={true} menu={true} logoBuscar={true} condicionExpanded={true} />
+      <div className="contenedorBuscar">
+        {renderContent()}
+      </div>
     </div>
   );
 }

@@ -1,6 +1,11 @@
-import { BASE_URL, API_KEY } from "../App";
-
-export const getFetchURLs = (language: string) => ([{
+export const URL_IMAGE_POSTER = "https://image.tmdb.org/t/p/w500";
+export const URL_IMAGE_BACKDROP = "https://image.tmdb.org/t/p/w780";
+export const URL_IMAGE_BANNER = "https://image.tmdb.org/t/p/original";
+export const URL_IMAGE_PROFILE = "https://image.tmdb.org/t/p/h632";
+export const URL_IMAGE_lOGO = "https://image.tmdb.org/t/p/w500";
+export const BASE_URL = "https://api.themoviedb.org/3";
+export const API_KEY = import.meta.env.VITE_API_KEY as string;
+export const getFetchURLs = (language: string) => ({
   popularMovies: `${BASE_URL}/movie/popular?api_key=${API_KEY}&language=${language}`,
   topRatedMovies: `${BASE_URL}/movie/top_rated?api_key=${API_KEY}&language=${language}`,
   upcomingMovies: `${BASE_URL}/movie/upcoming?api_key=${API_KEY}&language=${language}`,
@@ -22,4 +27,11 @@ export const getFetchURLs = (language: string) => ([{
   romanceMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=${language}&with_genres=10749`,
   scienceFictionMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=${language}&with_genres=878`,
   thrillerMovies: `${BASE_URL}/discover/movie?api_key=${API_KEY}&language=${language}&with_genres=53`,
-}]);
+});
+
+
+export const getURLMovieDetails=(id:number|undefined)=>({
+  movieDetails:`${BASE_URL}/movie/${id}?api_key=${API_KEY}&append_to_response=credits,images`,
+  providers: `${BASE_URL}/movie/${id}/watch/providers?api_key=${API_KEY}`,
+  videos: `${BASE_URL}/movie/${id}?api_key=${API_KEY}&append_to_response=videos`
+})

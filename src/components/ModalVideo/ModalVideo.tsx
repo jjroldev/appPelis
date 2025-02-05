@@ -1,18 +1,32 @@
 import Modal from "@mui/material/Modal";
 import YouTube from "react-youtube";
 import { Movie } from "../../interface/Movie";
-import useFetchTrailer from "../../hooks/useFetchVideo";
-import { useLanguage } from "../../context/LanguageContext";
+import { useQuery } from "react-query";
+import { fetchData } from "../../utils/fetchData";
+import { getURLMovieDetails } from "../../utils/endPoints";
+import { useEffect, useState } from "react";
+import { Trailer } from "../../interface/Trailer";
 interface VideoModalProps {
     open: boolean;
     onClose: () => void;
-    movie: Movie;
-    language: string;
+    movie: Movie | null;
 }
 
-const VideoModal: React.FC<VideoModalProps> = ({ open, onClose, movie}) => {
-    const { language } = useLanguage();
-    const trailer =useFetchTrailer(movie.id)
+const VideoModal: React.FC<VideoModalProps> = ({ open, onClose, movie }) => {
+    const {data}=useQuery(`video-${movie?.id}`,()=>fetchData(getURLMovieDetails(movie?.id).videos))
+    const [trailer,setTrailer]=useState<Trailer>()
+    useEffect(()=>{
+        if (data?.videos && data?.videos?.results) {
+            const foundTrailer =
+              data?.videos?.results.find(
+                (vid: any) => vid.name === "Official Trailer"
+              ) || data?.videos?.results[8];
+  
+            if (foundTrailer) {
+              setTrailer(foundTrailer);
+            }
+          }
+    },[data])
     return (
         <Modal open={open} onClose={onClose}>
             {trailer ? (
@@ -62,7 +76,7 @@ const VideoModal: React.FC<VideoModalProps> = ({ open, onClose, movie}) => {
                     }}
                 >
                     <p style={{ color: "white", textAlign: "center" }}>
-                        {language === "en" ? "No trailer available" : "No hay trailer disponible"}
+                        No trailer available
                     </p>
                 </div>
             )}

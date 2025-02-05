@@ -1,23 +1,27 @@
 import './InfoMovie.css';
 import { useLocation } from 'react-router';
 import { Banner } from '../Banner/Banner';
-import { Movie } from '../../interface/Movie';
+import 'react-multi-carousel/lib/styles.css';
+import { Movie, MovieDetails } from '../../interface/Movie';
 import Carousel from 'react-multi-carousel';
 import { Card } from '../Card/Card';
 import { useEffect } from 'react';
-import useFetchMovieDetails from '../../hooks/useFecthMovieWithDetail';
+import { fetchData } from '../../utils/fetchData';
+import { useQuery } from 'react-query';
+import { getURLMovieDetails } from '../../utils/endPoints';
 import { responsiveInfo } from '../../utils/ResponsiveCarrousel';
-import { lazy } from 'react';
-import { Suspense } from 'react';
-import { useLanguage } from '../../context/LanguageContext';
-const CarouselBoostrap = lazy(() => import('../CarouselBoostrap/CarouselBoostrap'));
+import CarouselBoostrap from '../CarouselBoostrap/CarouselBoostrap';
+import { useSearch } from '../../context/SearchContext';
 export default function InfoMovie() {
     const location = useLocation();
     const { movie: movie1 }: { movie: Movie } = location.state;
-    const { language } = useLanguage()
-    const { movie } = useFetchMovieDetails(movie1?.id, language);
+    const { data: movie, isLoading } = useQuery<MovieDetails>(`movieInfo-${movie1?.id}`,
+        () => fetchData(getURLMovieDetails(movie1?.id).movieDetails
+        ));
 
-    const renderCastMembers = (movie: Movie) => {
+    const {setSearchTerm}=useSearch()    
+
+    const renderCastMembers = (movie: MovieDetails) => {
         return movie.credits.cast.map((castM) => {
             if (castM.profile_path) {
                 return <Card key={castM.id} castMember={castM} />;
@@ -26,7 +30,7 @@ export default function InfoMovie() {
         });
     };
 
-    const renderCrewMembers = (movie: Movie) => {
+    const renderCrewMembers = (movie: MovieDetails) => {
         return movie.credits.crew.map((crewM) => {
             if (crewM.profile_path) {
                 return <Card key={crewM.id} castMember={crewM} isCrew={true} />;
@@ -56,16 +60,19 @@ export default function InfoMovie() {
 
 
     useEffect(() => {
-        window.scrollTo(0, 0);
+        window.scroll({ top: 0, left: 0, behavior: "instant" });
+        setSearchTerm("")
     }, []);
 
-    if (!movie) {
-        return <div className="w-screen h-screen bg-black"></div>;
+    if (!movie || isLoading) {
+        return <div className="w-screen h-screen cargandoInfo flex items-center justify-center">
+            <div className="spinner"></div>
+        </div>;
     }
 
     return (
         <div className="contenedorPrincipalMovie">
-            <Banner movie={movie} logoBuscar={true} isShort={false} isDetail={true} />
+            <Banner movie={movie1} logoBuscar={true} isDetail={true} />
             {(movie.credits?.cast?.length > 0 || movie.credits?.crew?.length > 0) && (
                 <div className="infoMovieContainer">
                     <div className="detallesInfo">
@@ -83,21 +90,7 @@ export default function InfoMovie() {
                     <div className='contenedor-imagenes'>
                         <div className='flex flex-col backdropss'>
                             <h2>Backdrops</h2>
-                            <Suspense
-                                fallback={
-                                    <div
-                                        style={{
-                                            textAlign: 'center',
-                                            padding: '2rem',
-                                            fontSize: '1.2rem',
-                                        }}
-                                    >
-                                        Cargando...
-                                    </div>
-                                }
-                            >
-                                <CarouselBoostrap movie={movie}/>
-                            </Suspense>
+                            <CarouselBoostrap movie={movie} />
                         </div>
                     </div>
                 </div>

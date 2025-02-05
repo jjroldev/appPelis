@@ -1,8 +1,7 @@
-import { URL_IMAGE_PROFILE } from "../../App";
 import "./Card.css";
-import { CastMember } from "../../interface/CastMember";
 import React from "react";
-
+import { CastMember } from "../../interface/Movie";
+import { URL_IMAGE_PROFILE } from "../../utils/endPoints";
 function renderCardContent(castMember: CastMember, isCrew?: boolean) {
   return (
     <>
