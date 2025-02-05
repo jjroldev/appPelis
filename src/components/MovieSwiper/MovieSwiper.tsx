@@ -9,14 +9,11 @@ import "./MovieSwiper.css";
 import { useAuth } from "../../context/AuthContext";
 import { responsive } from "../../utils/ResponsiveCarrousel";
 import { addFavoriteToProfile } from "../../firebase";
-import { SkeletonCarousel } from "../SkeletonMovieSwiper/SkeletonCarousel";
 const MovieSwiper = React.memo(
   ({ URL, title, isLarge = false }: { URL: string; title: string; isLarge?: boolean }) => {
     const { currentPerfil, currentUser } = useAuth()
 
-    const { data: movies, isLoading } = useQuery(["movies", URL], () => fetchData(URL), {
-      staleTime: 1000 * 60 * 5, // 5 minutos
-    });    
+    const { data: movies} = useQuery(["movies", URL], () => fetchData(URL),{ staleTime: 1000 * 60 * 5 });    
     const queryClient=useQueryClient()
     const validMovies = useMemo(() => {
       return movies?.results?.filter((movie: Movie) => movie.backdrop_path) || [];
@@ -35,10 +32,6 @@ const MovieSwiper = React.memo(
         }),
       [isLarge]
     );
-
-    if (isLoading) {
-      return <SkeletonCarousel isLarge={isLarge} numMovies={20} title={title} />;
-    }
 
     return (
       <div className="carousel">

@@ -6,7 +6,10 @@ const MiLista = lazy(() => import("./MiLista/MiLista"));
 const Buscar = lazy(() => import("./Buscar/Buscar"));
 const Home = lazy(() => import("./Home/Home"));
 const ManagePerfil = lazy(() => import("./ManagePerfil/ManagePerfil"))
-const InfoMovie=lazy(()=>import('./InfoMovie/InfoMovie'))
+const InfoMovie = lazy(() => import('./InfoMovie/InfoMovie'))
+import { Suspense } from 'react';
+import { Navigate } from 'react-router-dom';
+import Spinner from './Spinner/Spinner';
 export const PrivateRoutes = () => {
     const navigate = useNavigate()
     const { currentPerfil } = useAuth()
@@ -19,11 +22,12 @@ export const PrivateRoutes = () => {
     }, [currentPerfil])
     return (
         <Routes>
-            <Route path='home' element={<Home />} />
-            <Route path='miLista' element={<MiLista />} />
-            <Route path='buscar' element={<Buscar />} />
-            <Route path='manageProfiles' element={<ManagePerfil />} />
-            <Route path='info' element={<InfoMovie />} />
+            <Route path='home' element={<Suspense fallback={<Spinner />}><Home /></Suspense>} />
+            <Route path='miLista' element={<Suspense fallback={<Spinner />}><MiLista /></Suspense>} />
+            <Route path='buscar' element={<Suspense fallback={<Spinner />}><Buscar /></Suspense>} />
+            <Route path='manageProfiles' element={<Suspense fallback={<Spinner />}><ManagePerfil /></Suspense>} />
+            <Route path='info' element={<Suspense fallback={<Spinner />}><InfoMovie /></Suspense>} />
+            <Route path='*' element={<Navigate to='/home' replace />} />
         </Routes>
     );
 };

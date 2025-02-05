@@ -12,6 +12,7 @@ import { getURLMovieDetails } from '../../utils/endPoints';
 import { responsiveInfo } from '../../utils/ResponsiveCarrousel';
 import CarouselBoostrap from '../CarouselBoostrap/CarouselBoostrap';
 import { useSearch } from '../../context/SearchContext';
+import Spinner from '../Spinner/Spinner';
 export default function InfoMovie() {
     const location = useLocation();
     const { movie: movie1 }: { movie: Movie } = location.state;
@@ -65,9 +66,7 @@ export default function InfoMovie() {
     }, []);
 
     if (!movie || isLoading) {
-        return <div className="w-screen h-screen cargandoInfo flex items-center justify-center">
-            <div className="spinner"></div>
-        </div>;
+        return <Spinner />
     }
 
     return (

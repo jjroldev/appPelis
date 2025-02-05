@@ -1,20 +1,23 @@
 import { useState, useEffect } from "react";
 import { Banner } from "../Banner/Banner";
 import './Home.css';
-import { lazy } from "react";
 import { Movie } from "../../interface/Movie";
-const MovieSwiper = lazy(() => import("../MovieSwiper/MovieSwiper"));
 import { getFetchURLs } from "../../utils/endPoints";
 import { fetchData } from "../../utils/fetchData";
 import { useQuery } from "react-query";
 import { useMemo } from "react";
 import { useSearch } from "../../context/SearchContext";
+import MovieSwiper from "../MovieSwiper/MovieSwiper";
 import { useLanguage } from "../../context/LanguageContext";
+import Spinner from "../Spinner/Spinner";
 export default function Home() {
     const { language } = useLanguage()
-    const fetchURLS = useMemo(() => getFetchURLs(language), []);
-    const { data: movies, isLoading } = useQuery(["moviesHome"], () => fetchData(getFetchURLs(language).actionMovies));
-
+    const fetchURLS = useMemo(() => getFetchURLs(language), [language]);
+    const { data: movies, isLoading } = useQuery(
+        ["moviesHome", language], 
+        () => fetchData(fetchURLS.actionMovies),
+        { staleTime: 1000 * 60 * 5 }
+    )
     const [featuredMovie, setFeaturedMovie] = useState<Movie | null>(null);
     const { setSearchTerm } = useSearch()
 
@@ -49,11 +52,7 @@ export default function Home() {
 
     if (isLoading) {
         return (
-            <>
-                <div className={` w-full h-screen cargandoHome`}>
-                    <div className="spinner"></div>
-                </div>
-            </>
+            <Spinner />
         )
     }
 

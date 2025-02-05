@@ -6,6 +6,7 @@ import { Perfil } from '../../interface/Perfil';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { useQuery, useQueryClient } from 'react-query';
+import Spinner from '../Spinner/Spinner';
 
 export default function ManagePerfil() {
     const { currentUser, setCurrentPerfil } = useAuth();
@@ -61,9 +62,7 @@ export default function ManagePerfil() {
 
     if (isLoading) {
         return (
-            <div className='h-screen perfilesCargando flex items-center justify-center'>
-                <div className="spinner"></div>
-            </div>
+            <Spinner />
         );
     }
 

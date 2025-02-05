@@ -2,11 +2,10 @@ import React, { useState, useCallback, useRef, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { BsFillPlayFill } from "react-icons/bs";
 import { FaInfo } from "react-icons/fa";
-import { lazy } from "react";
 import { Movie } from "../../interface/Movie";
 import { URL_IMAGE_BACKDROP,URL_IMAGE_POSTER } from "../../utils/endPoints";
 import { Suspense } from "react";
-const VideoModal = lazy(() => import('../ModalVideo/ModalVideo'));
+import VideoModal from "../ModalVideo/ModalVideo";
 import "./CardMovie.css";
 interface CardMovieProps {
     movie: Movie;
