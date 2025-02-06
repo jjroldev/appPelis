@@ -1,10 +1,10 @@
-.formContainer{
+.formContainer {
     height: 80%;
     width: 100%;
     z-index: 3;
 }
 
-.formulario{
+.formulario {
     color: #fff;
     display: flex;
     flex-direction: column;
@@ -15,54 +15,55 @@
     margin: 0 auto;
     height: 100%;
     padding: 70px;
-    background-color: rgba(0,0,0,.7);
+    background-color: rgba(0, 0, 0, .7);
 }
 
-.headerForm{
+.headerForm {
     text-align: left;
 }
 
-.headerForm h2{
+.headerForm h2 {
     font-weight: bold;
     font-size: 2rem;
 }
-.formulario input{
-    background-color: rgba(0,0,0,.4);
+
+.formulario input {
+    background-color: rgba(0, 0, 0, .4);
     padding: 15px;
     color: #fff;
     font-size: 1rem;
     border: none;
 }
 
-input::placeholder{
-    color:rgba(199, 199, 199, 0.9);
+input::placeholder {
+    color: rgba(199, 199, 199, 0.9);
     border: none;
 }
 
 input:focus {
     outline: 1px solid #ffffff;
-  }
-  
+}
 
-.formulario .contenedorInput{
+
+.formulario .contenedorInput {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.formulario div{
+.formulario div {
     width: 100%;
 }
 
-.contenedorInput input{
+.contenedorInput input {
     width: 100%;
     box-shadow: 0 0 0 0.5px #fff;
     border-radius: 8px;
 }
 
 
-.button-enviar{
+.button-enviar {
     width: 100%;
     font-size: 1.3rem;
     color: #fff;
@@ -73,36 +74,36 @@ input:focus {
     transition: all .2s ease-in-out;
 }
 
-.button-enviar:hover{
-    background-color: rgba(226, 226, 10,.9);
+.button-enviar:hover {
+    background-color: rgba(226, 226, 10, .9);
 }
 
 
-.suscripbirse{
+.suscripbirse {
     font-weight: 400;
-    color:rgba(199, 199, 199, 0.9);
+    color: rgba(199, 199, 199, 0.9);
     text-align: center;
 }
 
-.suscripbirse span{
+.suscripbirse span {
     cursor: pointer;
     color: #fff;
 }
 
 
-.suscripbirse span:hover{
+.suscripbirse span:hover {
     text-decoration: underline;
 }
 
 
-.modal-title span{
+.modal-title span {
     font-weight: bold;
     color: #000;
 }
-  
-  .contentEmailExists {
+
+.contentEmailExists {
     border-radius: 5px;
-    border:none;
+    border: none;
     width: 400px;
     height: 120px;
     background-color: rgb(255, 254, 174);
@@ -111,21 +112,46 @@ input:focus {
     justify-content: center;
     flex-direction: column;
     padding: 10px;
-  }
-  
-  .contentEmailExists h2 {
+}
+
+.contentEmailExists h2 {
     font-size: 1rem;
     color: #000000;
     font-weight: bold;
-  }
-  
-  .contentEmailExists p {
+}
+
+.contentEmailExists p {
     font-size: .85rem;
     color: #000000;
-  }
-  
+}
 
-  .notVisible{
+
+.notVisible {
     display: none;
-  }
-  
+}
+
+
+@media (max-width: 1200px) {
+    .formulario{
+        width: 40%;
+    }
+}
+
+@media (max-width: 1000px) {
+    .formulario{
+        width: 50%;
+    }
+}
+
+@media (max-width: 800px) {
+    .formulario{
+        width: 60%;
+    }
+}
+
+
+@media (max-width: 600px) {
+    .formulario{
+        width: 90%;
+    }
+}

@@ -63,3 +63,37 @@ a {
   justify-content: center;
   gap: 25px;
 }
+
+
+@media (max-width: 1200px) {
+  .navbar img{
+    width: 13vw;
+  }
+
+  .navbar .logoGrande {
+    width: 17vw;
+    height: auto;
+  }
+}
+
+@media (max-width: 1000px) {
+  .navbar img{
+    width: 14vw;
+  }
+
+  .navbar .logoGrande {
+    width: 18vw;
+    height: auto;
+  }
+}
+
+@media (max-width: 800px) {
+  .navbar img{
+    width: 19vw;
+  }
+
+  .navbar .logoGrande {
+    width: 34vw;
+    height: auto;
+  }
+}

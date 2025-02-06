@@ -125,4 +125,30 @@ input:focus {
   .notVisible{
     display: none;
   }
+
+
+  @media (max-width: 1200px) {
+    .formulario{
+        width: 40%;
+    }
+}
+
+@media (max-width: 1000px) {
+    .formulario{
+        width: 50%;
+    }
+}
+
+@media (max-width: 800px) {
+    .formulario{
+        width: 60%;
+    }
+}
+
+
+@media (max-width: 600px) {
+    .formulario{
+        width: 90%;
+    }
+}
   
