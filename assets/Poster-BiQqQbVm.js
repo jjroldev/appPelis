@@ -1,1 +1,0 @@
-import{j as r}from"./index-BXawpmsk.js";import{a as o}from"./fetchData-DAcbjTQz.js";import"./objectWithoutPropertiesLoose-Dsqj8S3w.js";function m({poster_path:s}){return r.jsx("div",{className:"wrapperPoster",children:r.jsx("img",{src:o+s,className:"backdropPoster"})})}export{m as default};
