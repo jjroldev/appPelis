@@ -1,9 +1,9 @@
 import './Buscar.css';
-import { BASE_URL } from '../../utils/endPoints';
+import { BASE_URL, getFetchURLs } from '../../utils/endPoints';
 import CardMovie from '../CardMovie/CardMovie';
 import { Movie } from '../../interface/Movie';
 import { NavBar } from '../NavBar/NavBar';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState, useCallback } from 'react';
 import { useSearch } from '../../context/SearchContext';
 import { useNavigate } from 'react-router-dom';
 import { API_KEY } from '../../utils/endPoints';
@@ -13,63 +13,92 @@ import { fetchData } from '../../utils/fetchData';
 import { addFavoriteToProfile } from '../../firebase';
 import { getFavoritesByProfile } from '../../firebase';
 import { useAuth } from '../../context/AuthContext';
-import Spinner from '../Spinner/Spinner';
+import { useMenu } from '../../context/MenuContext';
+import Lupa from '../Lupa/Lupa';
 export default function Buscar() {
 
-  const { searchTerm } = useSearch()
+  const { searchTerm, setSearchTerm } = useSearch()
   const navigate = useNavigate()
   const { language } = useLanguage()
-  const {currentPerfil,currentUser}=useAuth()
+  const { currentPerfil, currentUser } = useAuth()
+  const [width, setWidth] = useState(window.innerWidth)
+
   useEffect(() => {
     window.scroll({ top: 0, left: 0, behavior: "instant" });
+  });
+  const { setOpenMenu } = useMenu()
+
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [])
+
+  useEffect(() => {
+    if (searchTerm === "" && width >= 900) {
+      navigate("/home", { state: { fromBuscar: true } });
+    }
+
+
+  }, [searchTerm, width]);
+
+  useEffect(() => {
+    setOpenMenu(false);
   }, []);
 
 
-  useEffect(() => {
-    if (searchTerm === "") {
-      navigate("/home", { state: { fromBuscar: true } });
-    }
-  }, [searchTerm]);
+  const queryClient = useQueryClient()
 
-  const queryClient=useQueryClient()
 
-  const {  } = useQuery<Movie[]>(
+  const handleSearch = useCallback((value: string) => {
+    setSearchTerm(value);
+  }, [setSearchTerm]);
+
+
+  const { } = useQuery<Movie[]>(
     `favorites-${currentUser?.id}-${currentPerfil?.id}`,
     () => getFavoritesByProfile(currentUser?.id, currentPerfil?.id),
     {
-        enabled: !!currentUser?.id && !!currentPerfil?.id,
+      enabled: !!currentUser?.id && !!currentPerfil?.id,
     }
-);
+  );
 
   const handleAddFavorite = async (movie: Movie | null) => {
     await addFavoriteToProfile(currentUser?.id, currentPerfil?.id, movie);
     await queryClient.invalidateQueries(`favorites-${currentUser?.id}-${currentPerfil?.id}`);
-};
+  };
 
-  const fetchSearch = `${BASE_URL}/search/movie?api_key=${API_KEY}&language=${language}&query=${searchTerm}`;
+  const fetchSearch = searchTerm
+    ? `${BASE_URL}/search/movie?api_key=${API_KEY}&language=${language}&query=${searchTerm}`
+    : getFetchURLs(language).popularMovies;
 
-  const { data: movies, isLoading } = useQuery([searchTerm, URL], () => fetchData(fetchSearch), { refetchOnWindowFocus: false, });
+  const { data: movies, isLoading } = useQuery(
+    [searchTerm || "popularMovies"],
+    () => fetchData(fetchSearch)
+  );
 
   const validMovies = useMemo(() => {
-    return movies?.results?.filter((movie: Movie) => movie.backdrop_path && movie.poster_path)
-  }, [movies?.results])
+    return movies?.results?.filter((movie: Movie) => movie.backdrop_path && movie.poster_path);
+  }, [movies?.results]);
+
 
   if (isLoading) {
     return (
       <>
-        <NavBar logoBuscar={true} menu={true} perfil={true} condicionExpanded={true} />
-        <Spinner />
+        <div className="contenedor">
+          <NavBar logoBuscar={true} menu={true} perfil={true} condicionExpanded={true} />
+        </div>
       </>
     )
   }
 
   const renderMovies = (movies: Movie[]) =>
-    movies.map((movie, index) => <CardMovie key={index} movie={movie} onAddFavorite={()=>handleAddFavorite(movie)}/>);
+    movies.map((movie, index) => <CardMovie key={index} movie={movie} onAddFavorite={() => handleAddFavorite(movie)} />);
 
   const renderContent = () => {
     if (validMovies.length > 0) {
       return <div className="contenedorPeliculasBuscar">{renderMovies(validMovies)}</div>;
-    } else if (searchTerm && movies.length == 0) {
+    } else if (validMovies.length == 0) {
       return (
         <>
           <div className='contenedorPeliculasNoE'>
@@ -84,6 +113,9 @@ export default function Buscar() {
     <div className="contenedor">
       <NavBar perfil={true} menu={true} logoBuscar={true} condicionExpanded={true} />
       <div className="contenedorBuscar">
+        {width < 900 && (
+          <Lupa placeholder='Search Movies' onSubmit={handleSearch} />
+        )}
         {renderContent()}
       </div>
     </div>

@@ -54,11 +54,25 @@
     .favoritasContainer {
         grid-template-columns: repeat(4, 1fr);
     }
+
+    .favorites{
+        padding: 100px 65px 50px 65px;
+    }
 }
 
 @media (max-width: 992px) {
     .favoritasContainer {
         grid-template-columns: repeat(3, 1fr);
+        row-gap: 40px;
+    }
+
+    .favorites{
+        padding: 120px 55px 40px 55px;
+    }
+
+    .tituloFavoritas{
+        font-size: 1.5rem;
+        margin-bottom: 40px;
     }
 }
 
@@ -66,10 +80,8 @@
     .favoritasContainer {
         grid-template-columns: repeat(2, 1fr);
     }
-}
 
-@media (max-width: 576px) {
-    .favoritasContainer {
-        grid-template-columns: 1fr;
+    .favorites{
+        padding: 80px 20px 30px 20px;
     }
 }

@@ -4,11 +4,64 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 0px 45px;
+  padding: 10px 45px !important;
   font-size: 1.3rem;
   z-index: 6;
   background-color: transparent;
   transition: background-color 0.4s ease-in-out;
+}
+
+.hamburguer-menu{
+  background-color: rgb(17, 17, 17);
+  height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
+  position: fixed;
+  z-index: 100000;
+}
+
+.contenedorXMenuH{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 15px;
+}
+
+.contenedorXMenuH i{
+  cursor: pointer;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.cMenuHOpciones{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.opcionMH{
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  background-color: rgb(30, 30, 30);
+}
+.opcionMH a{
+  font-size: 1rem;
+}
+
+.c-perfil-HB{
+  display: flex;
+  gap: 20px;
+  color: #fff;
+}
+.x-menuH{
+  color: #fff;
+}
+
+.logoMenuH{
+  width: 120px;
 }
 
 a {
@@ -57,11 +110,21 @@ a {
   color: rgba(255, 255, 255, .7);
 }
 
+.menu-bar{
+  font-size: 1.7rem;
+  cursor: pointer;
+}
+
 .perfilYLupaContenedor {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 25px;
+}
+
+
+.visibleBar{
+  display: none;
 }
 
 
@@ -78,7 +141,11 @@ a {
 
 @media (max-width: 1000px) {
   .navbar img{
-    width: 14vw;
+    width: 12vw;
+  }
+
+  .navbar{
+    padding: 20px 20px !important;
   }
 
   .navbar .logoGrande {
@@ -89,16 +156,27 @@ a {
   .lupa {
     font-size: 1.2rem;
   }
+
+  .contenedorXMenuH i{
+    font-size: 1.2rem;
+  }
+
+  .opcionMH a{
+    font-size: .8rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .navbar img{
+    width: 20vw;
+  }
+
+  .opcionMH a{
+    font-size: .7rem;
+  }
 }
 
 @media (max-width: 800px) {
-  .navbar{
-    padding: 0;
-  }
-
-  .navbar img{
-    width: 19vw;
-  }
 
   .navbar .logoGrande {
     width: 34vw;
@@ -107,5 +185,35 @@ a {
 
   .lupa {
     font-size: 1rem;
+  }
+
+  .menu-bar{
+    font-size: 1.5rem;
+  }
+
+  .contenedorXMenuH i{
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 600px){
+
+  .navbar img{
+    width: 26vw;
+    margin-left: -10px !important;
+  }
+  .menu-bar{
+    font-size: 1.2rem;
+  }
+
+  .contenedorXMenuH i{
+    font-size: .9rem;
+  }
+}
+
+@media (max-width: 400px){
+
+  .navbar img{
+    width: 30vw;
   }
 }

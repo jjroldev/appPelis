@@ -60,7 +60,7 @@
 }
 
 .contenedorLogo img {
-    width:28vw;
+    width: 28vw;
     margin-bottom: 20px;
     height: auto;
 }
@@ -72,7 +72,7 @@
 }
 
 .overview {
-    font-size: clamp(.65rem, 1.1vw, 1.1rem);
+    font-size: clamp(.8rem, 1.1vw, 1.4rem);
     font-weight: 500;
     max-width: clamp(250px, 40%, 550px);
 }
@@ -82,7 +82,7 @@
     align-items: center;
     gap: 10px;
     padding: 10px 25px;
-    font-size: clamp(.35rem, 2.2vw, 1.2rem);
+    font-size: clamp(.8rem, 2.2vw, 1.2rem);
     font-weight: bold;
     border: none;
     border-radius: 5px;
@@ -125,7 +125,7 @@
 
 @media (max-width: 1024px) {
     .header {
-        height: 70vh;
+        height: 100vh;
     }
 
     .contenedorLogo {
@@ -135,15 +135,15 @@
     }
 
     .botones button {
-        padding: 6px 20px;
+        padding: 12px 20px;
+    }
+
+    .botones button i {
+        font-size: .9rem;
     }
 }
 
 @media (max-width: 768px) {
-    .header {
-        height: 70vh;
-    }
-
 
     .contenedorLogo {
         bottom: 150px;
@@ -151,8 +151,26 @@
         gap: 17px;
     }
 
+    html {
+        font-size: 120%;
+    }
+
+    .contenedorLogo img {
+        width: 55vw;
+    }
+
+    .header::before,
+    .header1::before {
+        background:
+            linear-gradient(to bottom, rgb(17, 17, 17), transparent 20%, transparent 20%, rgb(17, 17, 17));
+    }
+
+    .overview {
+        max-width: 95%;
+    }
+
     .botones button {
-        padding: 6px 15px;
+        padding: 6px 20px;
     }
 
 }
@@ -160,9 +178,7 @@
 
 
 @media (max-width: 480px) {
-    .header {
-        height: 60vh;
-    }
+
 
     .contenedorLogo {
         bottom: 130px;

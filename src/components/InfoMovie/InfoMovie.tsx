@@ -13,6 +13,7 @@ import { responsiveInfo } from '../../utils/ResponsiveCarrousel';
 import CarouselBoostrap from '../CarouselBoostrap/CarouselBoostrap';
 import { useSearch } from '../../context/SearchContext';
 import Spinner from '../Spinner/Spinner';
+import { useMenu } from '../../context/MenuContext';
 export default function InfoMovie() {
     const location = useLocation();
     const { movie: movie1 }: { movie: Movie } = location.state;
@@ -20,7 +21,8 @@ export default function InfoMovie() {
         () => fetchData(getURLMovieDetails(movie1?.id).movieDetails
         ));
 
-    const {setSearchTerm}=useSearch()    
+    const {setSearchTerm}=useSearch()  
+    const{setOpenMenu}=useMenu()
 
     const renderCastMembers = (movie: MovieDetails) => {
         return movie.credits.cast.map((castM) => {
@@ -30,6 +32,7 @@ export default function InfoMovie() {
             return null;
         });
     };
+    
 
     const renderCrewMembers = (movie: MovieDetails) => {
         return movie.credits.crew.map((crewM) => {
@@ -62,6 +65,7 @@ export default function InfoMovie() {
 
     useEffect(() => {
         window.scroll({ top: 0, left: 0, behavior: "instant" });
+        setOpenMenu(false)
         setSearchTerm("")
     }, []);
 

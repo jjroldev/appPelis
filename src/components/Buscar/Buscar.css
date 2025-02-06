@@ -9,7 +9,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 30px;
+    flex-direction: column;
+    padding: 130px 30px;
 }
 .contenedorPeliculasBuscar {
     display: grid;
@@ -21,20 +22,13 @@
     background-color: rgb(17, 17, 17);
 }
 
-.cargando{
-    background-color: rgb(17, 17, 17);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 110vh;
-}
-
 .contenedorPeliculasNoE{
+    padding: 30px;
     height: 100%;
-    min-height: 500px;
+    min-height: 120vh;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: top;
     color: #fff;
     font-size: 1rem;
     width: 100%;
@@ -48,24 +42,35 @@
 @media (max-width: 1024px) {
     .contenedorPeliculasBuscar {
         grid-template-columns: repeat(7,1fr);
-        padding: 80px 70px;
+        padding: 80px 50px;
     }
 }
 
-@media (max-width: 768px) {
+
+@media (max-width: 900px) {
 
     .contenedorPeliculasBuscar {
-        background-color: red;
+        padding: 70px 20px; 
+    }
+    .contenedorPeliculasBuscar {
+        grid-template-columns: repeat(5,1fr);
+        padding: 70px 20px; 
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .contenedorPeliculasBuscar {
         grid-template-columns: repeat(4,1fr);
-        padding: 70px 60px; 
+        padding: 70px 20px; 
     }
 }
 
 @media (max-width: 500px) {
 
     .contenedorPeliculasBuscar {
-        background-color: red;
         grid-template-columns: repeat(3,1fr);
-        padding: 50px 20px; 
+        padding: 50px 5px; 
     }
 }

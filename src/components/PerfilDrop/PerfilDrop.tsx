@@ -6,12 +6,14 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { getPerfilesPorUsuario } from '../../firebase';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
+import { useMenu } from '../../context/MenuContext';
 export default function PerfilDrop() {
 
     const navigate = useNavigate();
 
     const { currentUser, logout, currentPerfil, setCurrentPerfil } = useAuth()
     const { setEmailExists } = useEmail()
+    const{openMenu,setOpenMenu}=useMenu()
 
     
     const { data: perfiles = []} = useQuery<Perfil[]>(
@@ -24,6 +26,7 @@ export default function PerfilDrop() {
     );
 
     const handleNavigate = (perfil: Perfil | null) => {
+        setOpenMenu(!openMenu)
         setCurrentPerfil(perfil)
         navigate('/miLista')
     }

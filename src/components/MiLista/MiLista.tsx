@@ -9,6 +9,7 @@ import { useQuery } from 'react-query';
 import { getFavoritesByProfile } from '../../firebase';
 import { useQueryClient } from "react-query";
 import { useSearch } from '../../context/SearchContext';
+import { useMenu } from '../../context/MenuContext';
 export default function MiLista() {
   const { currentUser, currentPerfil } = useAuth()
   const queryClient = useQueryClient();
@@ -19,17 +20,21 @@ export default function MiLista() {
       enabled: !!currentUser?.id && !!currentPerfil?.id,
     }
   );
-  const {setSearchTerm}=useSearch()
+  const { setSearchTerm } = useSearch()
+  const{setOpenMenu}=useMenu()
 
   useEffect(() => {
     window.scroll({ top: 0, left: 0, behavior: "instant" });
     setSearchTerm("")
-}, []);
+  }, []);
   const handleRemoveFavorite = async (movie: Movie) => {
     await removeFavoriteToProfile(currentUser?.id, currentPerfil?.id, movie);
     await queryClient.invalidateQueries(`favorites-${currentUser?.id}-${currentPerfil?.id}`);
   };
 
+  useEffect(() => {
+    setOpenMenu(false)
+  }, []);
 
   if (isLoading) {
     return (

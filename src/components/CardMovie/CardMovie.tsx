@@ -18,7 +18,6 @@ const CardMovie = React.memo(
         onRemoveFavorite,
         onAddFavorite,
     }: CardMovieProps) => {
-        const [width, setWidth] = useState(window.innerWidth);
         const handleRemove = (event: React.MouseEvent) => {
             event.stopPropagation();
             onRemoveFavorite && onRemoveFavorite(movie);
@@ -28,13 +27,6 @@ const CardMovie = React.memo(
             event.stopPropagation();
             onAddFavorite && onAddFavorite(movie)
         }
-
-        useEffect(() => {
-            const handleResize = () => setWidth(window.innerWidth);
-            window.addEventListener("resize", handleResize);
-            return () => window.removeEventListener("resize", handleResize);
-        }, []);
-
         const [isVisible, setIsVisible] = useState(false);
         const [imageLoaded, setImageLoaded] = useState(false);
         const imgRef = useRef<HTMLDivElement | null>(null);
@@ -66,7 +58,7 @@ const CardMovie = React.memo(
         }, []);
         return (
             <div ref={imgRef} className={`contenedor-poster ${isLarge ? "large" : ""}`}
-                onClick={width < 1000 ? pasarMovie : undefined}>
+                onClick={pasarMovie}>
                 <div className={`cardContainerImage ${isLarge ? "backdrop" : "poster"}`}>
                     <div
                         className={`fondoCardMovie h-full w-full absolute inset-0 ${imageLoaded ? "opacity-0" : "opacity-100"

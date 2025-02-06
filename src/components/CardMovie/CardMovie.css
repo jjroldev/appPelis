@@ -49,6 +49,12 @@
   justify-content: space-between;
   padding: 10px;
   z-index: 100;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out; 
+}
+
+.cardMovie:hover .details-cardMovie {
+  opacity: 1;
 }
 
 .details-cardMovie h2{
@@ -67,8 +73,9 @@
 }
 
 .play-button button {
-  background-color: rgb(0, 0, 0);
   border: none;
+  background-color: rgba(60, 60, 60, 0.8);
+  padding: 15px;
   border-radius: 50%;
   width: clamp(20px, 3vw, 30px);
   height: clamp(20px, 3vw, 30px);
@@ -77,7 +84,7 @@
   justify-content: center;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  color: #fff;
+  color: #ffffff;
 }
 
 .titulo-cardMovie{
@@ -89,6 +96,10 @@
   display: none !important;
 }
 
+.play-button button i{
+  font-size: 1rem;
+}
+
 .corazon:hover{
   color: red !important;
 }
@@ -96,4 +107,11 @@
 
 .fondoCardMovie{
   background-color: #1a1a1a;
+}
+
+
+@media(max-width:700px){
+  .play-button button i{
+    font-size: .6rem;
+  }
 }

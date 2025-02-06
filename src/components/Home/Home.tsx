@@ -10,6 +10,7 @@ import { useSearch } from "../../context/SearchContext";
 import MovieSwiper from "../MovieSwiper/MovieSwiper";
 import { useLanguage } from "../../context/LanguageContext";
 import Spinner from "../Spinner/Spinner";
+import { useMenu } from "../../context/MenuContext";
 export default function Home() {
     const { language } = useLanguage()
     const fetchURLS = useMemo(() => getFetchURLs(language), [language]);
@@ -20,6 +21,7 @@ export default function Home() {
     )
     const [featuredMovie, setFeaturedMovie] = useState<Movie | null>(null);
     const { setSearchTerm } = useSearch()
+    const {setOpenMenu}=useMenu()
 
     const validMovies = useMemo(() => {
         return movies?.results?.filter((movie: Movie) => movie.backdrop_path)
@@ -45,9 +47,9 @@ export default function Home() {
 
     useEffect(() => {
         window.scroll({ top: 0, left: 0, behavior: "instant" });
+        setOpenMenu(false)
         setSearchTerm("");
     }, []);
-    
 
 
     if (isLoading) {

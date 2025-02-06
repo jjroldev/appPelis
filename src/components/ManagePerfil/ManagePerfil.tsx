@@ -45,7 +45,8 @@ export default function ManagePerfil() {
         }
     };
 
-    const handleEliminar = async (perfilId: string) => {
+    const handleEliminar = async (perfilId: string,event: React.MouseEvent) => {
+        event.stopPropagation()
         const response = await deleteProfile(currentUser?.id, perfilId);
         if (response) {
             toast.success("Perfil eliminado exitosamente");
@@ -83,7 +84,7 @@ export default function ManagePerfil() {
                                     <div key={perfil.id} className="contenedorPerfil">
                                         <img className='perfil-img' src="/appPelis/avatar3.png" alt="" onClick={() => handleNavigate(perfil)} />
                                         <h4 className='nombrePerfil'>{perfil.name}</h4>
-                                        <i className="fa-solid fa-x iconoX" onClick={() => handleEliminar(perfil.id)}></i>
+                                        <i className="fa-solid fa-x iconoX" onClick={(event) => handleEliminar(perfil.id,event)}></i>
                                     </div>
                                 ))}
                             </div>

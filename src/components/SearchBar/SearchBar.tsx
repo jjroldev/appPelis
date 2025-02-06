@@ -40,11 +40,16 @@ export default function SearchBar({ condicionExpanded, desdeHome }: SearchBarPro
     }, [lupaActive, condicionExpanded]);
 
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const value = event.target.value;
-        setSearchTerm(value);
-        navigate("/buscar");
+        const value = event.target.value.trim();
+    
+        if (value) {
+            setSearchTerm(value);
+            navigate("/buscar");
+        } else {
+            setSearchTerm("");
+        }
     };
-
+    
     return (
         <div className="search-bar">
             {!lupaActive && (
