@@ -36,7 +36,7 @@ const MovieSwiper = React.memo(
         movies.map((movie) => {
           return <CardMovie key={movie.id} movie={movie} isLarge={isLarge} onAddFavorite={handleAddFavorite} />
         }),
-      [isLarge,handleAddFavorite]
+      [isLarge]
     );
 
     return (
