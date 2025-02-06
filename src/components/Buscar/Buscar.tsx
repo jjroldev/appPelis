@@ -13,6 +13,7 @@ import { fetchData } from '../../utils/fetchData';
 import { addFavoriteToProfile } from '../../firebase';
 import { getFavoritesByProfile } from '../../firebase';
 import { useAuth } from '../../context/AuthContext';
+import Spinner from '../Spinner/Spinner';
 export default function Buscar() {
 
   const { searchTerm } = useSearch()
@@ -57,9 +58,7 @@ export default function Buscar() {
     return (
       <>
         <NavBar logoBuscar={true} menu={true} perfil={true} condicionExpanded={true} />
-        <div className="cargando">
-          <div className="spinner"></div>
-        </div>
+        <Spinner />
       </>
     )
   }

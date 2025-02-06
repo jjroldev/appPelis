@@ -78,11 +78,11 @@ export default function ManagePerfil() {
                     ) : (
                         <div className="PerfilesExistentesContainer">
                             <h2 className="tituloPerfiles">Selecciona un perfil</h2>
-                            <div className='flex flex-row gap-14'>
+                            <div className='perfiles'>
                                 {perfiles.map((perfil) => (
                                     <div key={perfil.id} className="contenedorPerfil">
                                         <img className='perfil-img' src="/appPelis/avatar3.png" alt="" onClick={() => handleNavigate(perfil)} />
-                                        <h4>{perfil.name}</h4>
+                                        <h4 className='nombrePerfil'>{perfil.name}</h4>
                                         <i className="fa-solid fa-x iconoX" onClick={() => handleEliminar(perfil.id)}></i>
                                     </div>
                                 ))}

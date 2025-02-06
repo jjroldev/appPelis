@@ -23,6 +23,7 @@
     position: absolute;
     left: 10px;
     top: 50%;
+    font-size: 1.3rem;
     transform: translateY(-50%);
   }
 
@@ -34,3 +35,66 @@
     top: 50%;
     transform: translateY(-50%);
   }
+
+
+  
+@media (max-width: 1200px) {
+  .contenedorLupaExpanded{
+    width: 300px;
+  }
+
+  .lupaExDelete{
+    font-size: .8rem;
+  }
+  
+}
+
+@media (max-width: 1000px) {
+  .contenedorLupaExpanded{
+    width: 200px;
+  }
+
+  .lupaExpanded{
+    height: 25px;
+    padding-left: 30px;
+
+  }
+  .lupaExpandedIcon {
+    font-size: 1.2rem;
+  }
+
+
+}
+
+@media (max-width: 800px) {
+  .contenedorLupaExpanded{
+    width: 120px;
+  }
+
+
+  .lupaExpandedIcon {
+    font-size: .7rem;
+  }
+
+  .lupaExDelete{
+    font-size: .7rem;
+  }
+
+}
+
+
+@media (max-width: 500px) {
+
+  .contenedorLupaExpanded{
+    width: 80px;
+  }
+
+
+  .lupaExpanded{
+    padding-left: 25px;
+  }
+  input::placeholder,.lupaExpanded{
+    font-size: .7rem;
+  }
+}
+

@@ -35,7 +35,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 60px;
+  gap: 20px;
 }
 
 .textInicio {
@@ -85,9 +85,17 @@ a {
     width: 18vw;
     height: auto;
   }
+
+  .lupa {
+    font-size: 1.2rem;
+  }
 }
 
 @media (max-width: 800px) {
+  .navbar{
+    padding: 0;
+  }
+
   .navbar img{
     width: 19vw;
   }
@@ -95,5 +103,9 @@ a {
   .navbar .logoGrande {
     width: 34vw;
     height: auto;
+  }
+
+  .lupa {
+    font-size: 1rem;
   }
 }

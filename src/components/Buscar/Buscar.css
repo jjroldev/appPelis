@@ -10,7 +10,6 @@
     justify-content: center;
     align-items: center;
     padding: 30px;
-
 }
 .contenedorPeliculasBuscar {
     display: grid;
@@ -49,11 +48,24 @@
 @media (max-width: 1024px) {
     .contenedorPeliculasBuscar {
         grid-template-columns: repeat(7,1fr);
+        padding: 80px 70px;
     }
 }
 
 @media (max-width: 768px) {
+
     .contenedorPeliculasBuscar {
-        grid-template-columns: repeat(5,1fr);
+        background-color: red;
+        grid-template-columns: repeat(4,1fr);
+        padding: 70px 60px; 
+    }
+}
+
+@media (max-width: 500px) {
+
+    .contenedorPeliculasBuscar {
+        background-color: red;
+        grid-template-columns: repeat(3,1fr);
+        padding: 50px 20px; 
     }
 }

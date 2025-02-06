@@ -1,18 +1,14 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import { useNavigate } from "react-router";
-import { BsFillPlayFill } from "react-icons/bs";
-import { FaInfo } from "react-icons/fa";
 import { Movie } from "../../interface/Movie";
-import { URL_IMAGE_BACKDROP,URL_IMAGE_POSTER } from "../../utils/endPoints";
-import { Suspense } from "react";
-import VideoModal from "../ModalVideo/ModalVideo";
+import { URL_IMAGE_BACKDROP, URL_IMAGE_POSTER } from "../../utils/endPoints";
 import "./CardMovie.css";
 interface CardMovieProps {
     movie: Movie;
     isLarge?: boolean;
     doDelete?: boolean;
     onRemoveFavorite?: (movie: Movie) => void;
-    onAddFavorite?:(movie:Movie)=>void;
+    onAddFavorite?: (movie: Movie) => void;
 }
 const CardMovie = React.memo(
     ({
@@ -22,25 +18,28 @@ const CardMovie = React.memo(
         onRemoveFavorite,
         onAddFavorite,
     }: CardMovieProps) => {
-
-        const handleRemove = () => {
+        const [width, setWidth] = useState(window.innerWidth);
+        const handleRemove = (event: React.MouseEvent) => {
+            event.stopPropagation();
             onRemoveFavorite && onRemoveFavorite(movie);
         };
 
-        const handleAdd=()=>{
+        const handleAdd = (event: React.MouseEvent) => {
+            event.stopPropagation();
             onAddFavorite && onAddFavorite(movie)
         }
 
-        const [open, setOpen] = useState(false);
+        useEffect(() => {
+            const handleResize = () => setWidth(window.innerWidth);
+            window.addEventListener("resize", handleResize);
+            return () => window.removeEventListener("resize", handleResize);
+        }, []);
+
         const [isVisible, setIsVisible] = useState(false);
         const [imageLoaded, setImageLoaded] = useState(false);
         const imgRef = useRef<HTMLDivElement | null>(null);
         const navigate = useNavigate();
 
-        const handleOpen = useCallback(() => setOpen(true), []);
-        const handleClose = useCallback(() => setOpen(false), []);
-
-        
         const pasarMovie = useCallback(() => {
             navigate("/info", { state: { movie } });
         }, [navigate, movie]);
@@ -66,7 +65,8 @@ const CardMovie = React.memo(
             };
         }, []);
         return (
-            <div ref={imgRef} className={`contenedor-poster ${isLarge ? "large" : ""}`}>
+            <div ref={imgRef} className={`contenedor-poster ${isLarge ? "large" : ""}`}
+                onClick={width < 1000 ? pasarMovie : undefined}>
                 <div className={`cardContainerImage ${isLarge ? "backdrop" : "poster"}`}>
                     <div
                         className={`fondoCardMovie h-full w-full absolute inset-0 ${imageLoaded ? "opacity-0" : "opacity-100"
@@ -81,24 +81,15 @@ const CardMovie = React.memo(
                         />
                     )}
                     {imageLoaded && (
-                        <div className="hover-details">
+                        <div className="details-cardMovie">
                             <h2 className="titulo-cardMovie">
                                 {isLarge && (movie.title.includes(":") ? movie.title.split(":")[0] : movie.title)}
                             </h2>
                             <div className="play-button">
-                                <button onClick={handleOpen}>
-                                    <BsFillPlayFill size={23} />
-                                </button>
-                                <Suspense fallback={<div />}>
-                                    <VideoModal open={open} onClose={handleClose} movie={movie} />
-                                </Suspense>
-                                <button onClick={pasarMovie}>
-                                    <FaInfo size={16} />
-                                </button>
                                 <button
                                     onClick={handleAdd}
-                                    className={doDelete ? "heartVisible corazon" : "corazon"} 
-                                    >
+                                    className={doDelete ? "heartVisible corazon" : "corazon"}
+                                >
                                     <i className="fa-solid fa-heart">
                                     </i>
                                 </button>

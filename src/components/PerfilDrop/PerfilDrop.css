@@ -15,7 +15,6 @@
   .containerImagePerfil img{
     width: 100%;
     border-radius:4px;
-  
   }
   .dropdown-menu{
     background-color: rgba(0, 0, 0,.8) !important;
@@ -51,3 +50,22 @@
     font-weight: bold;
     color: rgb(255, 255, 255);
   }
+
+@media (max-width: 1200px) {
+  .containerImagePerfil{
+    width: 30px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .containerImagePerfil{
+    width: 28px;
+  }
+}
+
+@media (max-width: 900px) {
+  .containerImagePerfil{
+    width: 25px;
+  }
+}
+
