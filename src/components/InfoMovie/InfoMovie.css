@@ -1,25 +1,25 @@
-.contenedorPrincipalMovie{
-    background-color: rgb(17,17,17);
+.contenedorPrincipalMovie {
+    background-color: rgb(17, 17, 17);
     overflow-x: hidden !important;
 }
 
-.infoMovieContainer{
+.infoMovieContainer {
     color: #fff;
 }
 
-.logoCompanie{
+.logoCompanie {
     width: 150px;
     height: auto;
 }
 
-.detallesReparto{
+.detallesReparto {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
 .detallesReparto h2 {
-    font-size: clamp(1.2rem, 1.5vw, 1.6rem);
+    font-size: clamp(.95rem, 1.5vw, 1.6rem);
     font-weight: bold;
     position: relative;
     padding-bottom: 10px;
@@ -37,43 +37,92 @@
     border-radius: 2px;
 }
 
-.cargandoInfo{
-    background-color: rgb(17,17,17);
+.cargandoInfo {
+    background-color: rgb(17, 17, 17);
 }
 
 
-.detallesInfo{
+.detallesInfo {
     gap: 30px;
     padding-left: 45px;
 }
 
-.carousel-cast .react-multi-carousel-item{
+.carousel-cast .react-multi-carousel-item {
     padding-right: 15px;
 }
 
-.contenedor-imagenes{
+.contenedor-imagenes {
     padding: 60px;
     gap: 90px;
 }
 
-.backdropss{
+.backdropss {
     gap: 30px;
     text-align: center;
     font-weight: bold;
     font-size: 2rem;
 }
 
+.cast-visible .react-multiple-carousel__arrow{
+    display: none;
+}
+
 @media (max-width: 1024px) {
-    .detallesInfo{
+    .detallesInfo {
         gap: 20px;
         padding-left: 25px;
     }
 
-  }
+    .contenedor-imagenes {
+        padding: 20px;
+    }
 
-  @media (max-width: 768px) {
-    .detallesInfo{
+    .carousel-control-next-icon,
+    .carousel-control-prev-icon {
+        width: 60px;
+    }
+
+    .carousel-cast .react-multiple-carousel__arrow::before {
+        font-size: 15px;
+    }
+
+    .carousel-cast .react-multiple-carousel__arrow {
+        min-width: 32px;
+        min-height: 32px;
+    }
+
+}
+
+@media (max-width: 780px) {
+
+    .carousel-control-next-icon,
+    .carousel-control-prev-icon {
+        width: 25px !important;
+    }
+
+    .detallesInfo {
         gap: 10px;
         padding-left: 18px;
     }
-  }
+
+    .carousel-cast .react-multiple-carousel__arrow::before {
+        font-size: 16px;
+    }
+
+    .carousel-cast .react-multiple-carousel__arrow {
+        min-width: 35px;
+        min-height: 35px;
+    }
+}
+
+@media (max-width: 650px) {
+}
+
+
+@media (max-width: 500px) {
+
+    .carousel-control-next-icon,
+    .carousel-control-prev-icon {
+        width: 20px !important;
+    }
+}

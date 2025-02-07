@@ -16,21 +16,22 @@
     font-weight: 700;
     justify-content: space-between;
     color: rgba(231, 231, 231, 0.712);
+    font-size: 1.1rem;
 }
 .generosBanner{
     gap: 30px;
     list-style:circle;
     list-style-position: inside;
     font-weight: 600;
-    font-size: clamp(.65rem, 1.1vw, 1.1rem);
+    font-size: 1.1rem;
 }
 
 .provedores-container {
     display: flex;
     flex-direction: column;
     position: absolute;
-    padding:  0 20px;
-    bottom: 0px;
+    padding:  0 10px;
+    bottom: -30px;
     gap: 15px;
     right: 55px;
     width: 40%;
@@ -38,3 +39,73 @@
 .carouselProviders .react-multi-carousel-item{
     padding-right: 10px;
 }
+
+.carouselProviders .react-multi-carousel-item {
+    padding-right: 15px;
+    z-index: 10;
+}
+
+.carouselProviders .react-multi-carousel-track {
+    padding: 20px 0;
+}
+
+.carouselProviders .react-multiple-carousel__arrow--left {
+    left: 5px;
+}
+
+.carouselProviders .react-multiple-carousel__arrow--right {
+    right: 15px;
+}
+
+.carouselProviders .react-multiple-carousel__arrow::before{
+    font-size: 10px !important;
+    font-weight: bold;
+}
+.carouselProviders .react-multiple-carousel__arrow{
+    min-width: 25px;
+    min-height: 25px;
+}
+
+.carousel-cell .react-multiple-carousel__arrow{
+    display: none;
+}
+
+@media (max-width: 1024px) {
+    .contenedorDetailN {
+        bottom: 60px !important;
+    }
+
+}
+
+@media (max-width: 768px) {
+    .bannerDetails span{
+        font-size: 1rem;
+    }
+    .generosBanner{
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .bannerDetails span{
+        font-size: .9rem;
+    }
+
+    .generosBanner{
+        font-size: .9rem;
+    }
+}
+
+@media (max-width: 400px) {
+
+    .carouselProviders .react-multiple-carousel__arrow::before{
+        font-size: 8px !important;
+    }
+}
+
+
+/* .carouselProviders{
+    overflow: visible !important;
+    overflow-x: hidden !important;
+} */

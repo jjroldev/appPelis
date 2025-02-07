@@ -1,16 +1,22 @@
-import { useState} from "react";
+import { useEffect, useState} from "react";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useEmail } from "../../context/ExistsEmailContext";
 import "./Login.css";
 import { findUserByEmailAndPassword, login } from "../../firebase";
+import { useMenu } from "../../context/MenuContext";
 export default function Login() {
   const { loginAuth } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [open, setOpen] = useState(false);
+  const{setOpenMenu}=useMenu()
 
   const navigate = useNavigate();
+
+  useEffect(()=>{
+    setOpenMenu(false)
+  },[])
 
 
   const { emailExists } = useEmail();

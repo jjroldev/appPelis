@@ -5,7 +5,7 @@ import 'react-multi-carousel/lib/styles.css';
 import { Movie, MovieDetails } from '../../interface/Movie';
 import Carousel from 'react-multi-carousel';
 import { Card } from '../Card/Card';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchData } from '../../utils/fetchData';
 import { useQuery } from 'react-query';
 import { getURLMovieDetails } from '../../utils/endPoints';
@@ -18,8 +18,16 @@ export default function InfoMovie() {
     const location = useLocation();
     const { movie: movie1 }: { movie: Movie } = location.state;
     const { data: movie, isLoading } = useQuery<MovieDetails>(`movieInfo-${movie1?.id}`,
-        () => fetchData(getURLMovieDetails(movie1?.id).movieDetails
-        ));
+        () => fetchData(getURLMovieDetails(movie1?.id).movieDetails));
+    
+    const [width,setWidth]=useState(window.innerWidth)    
+    useEffect(() => {
+            const handleResize = () => setWidth(window.innerWidth);
+            window.addEventListener("resize", handleResize);
+            return () => window.removeEventListener("resize", handleResize);
+        }, []);
+        
+
 
     const {setSearchTerm}=useSearch()  
     const{setOpenMenu}=useMenu()
@@ -48,14 +56,14 @@ export default function InfoMovie() {
         return <div className="detallesReparto">
             <h2>{title}</h2>
             <Carousel
-                swipeable={false}
-                draggable={false}
+                swipeable={true}
+                draggable={true}
                 showDots={false}
                 responsive={responsiveInfo}
                 ssr={true}
                 infinite={true}
                 keyBoardControl={false}
-                className="carousel-cast"
+                className={`carousel-cast ${width<630?"cast-visible":""}`}
             >
                 {renderCredits}
             </Carousel>
@@ -92,7 +100,6 @@ export default function InfoMovie() {
                     </div>
                     <div className='contenedor-imagenes'>
                         <div className='flex flex-col backdropss'>
-                            <h2>Backdrops</h2>
                             <CarouselBoostrap movie={movie} />
                         </div>
                     </div>

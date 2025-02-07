@@ -6,7 +6,7 @@ const Register = lazy(() => import('../Register/Register'))
 export function Base({ isLogin }: { isLogin?: boolean }) {
     return (
         <>
-            <NavBar logoBuscar={false} logoGrande={true} />
+            <NavBar logoBuscar={false} logoGrande={true} mostrarDesplegable={false}/>
 
             <div className="loginContainer">
                 {

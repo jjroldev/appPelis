@@ -27,7 +27,7 @@ export function Banner({ movie, logoBuscar, isDetail = false }: BannerProps) {
         }
     );
 
-    const [width,setWidth]=useState(window.innerWidth)
+    const [width, setWidth] = useState(window.innerWidth)
 
     const queryClient = useQueryClient()
     const navigate = useNavigate();
@@ -81,20 +81,24 @@ export function Banner({ movie, logoBuscar, isDetail = false }: BannerProps) {
         return renderOverviewOrTitle();
     };
 
-
     const renderButtons = () => (
         <div className="botones">
-            <button onClick={handleOpen}>
+            <button className="play" onClick={handleOpen}>
                 <i className="fa-solid fa-play"></i> Play
             </button>
             <VideoModal movie={movie} open={open} onClose={handleClose} />
-            <button onClick={pasarMovie} className="boton-info-banner">
-                <i className="fa-solid fa-circle-info"></i> {width>=1000? "More Information":""}
-            </button>
+            {
+                width >= 900 && location.hash!="/info" &&(
+                    <button onClick={pasarMovie} className="boton-info-banner">
+                        <i className="fa-solid fa-circle-info"></i>More Information
+                    </button>
+                )
+            }
+
             <button onClick={() => {
                 handleAddFavorite(movie)
             }}
-                className="botonMeGustaBanner"
+                className="boton-redondo botonMeGustaBanner"
             >
                 <i className="fa-solid fa-heart">
                 </i>

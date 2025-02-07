@@ -17,7 +17,7 @@ export const responsiveCredits = {
     mobileSmall: {
         breakpoint: { max: 480, min: 0 },
         items: 2,
-        slidesToSlide: 1,
+        slidesToSlide: 2,
     },
 };
 
@@ -36,12 +36,12 @@ export const responsiveInfo = {
     mobileLarge: {
         breakpoint: { max: 768, min: 481 },
         items: 4,
-        slidesToSlide: 3,
+        slidesToSlide: 4,
     },
     mobileSmall: {
         breakpoint: { max: 480, min: 0 },
-        items: 2,
-        slidesToSlide: 1,
+        items: 3,
+        slidesToSlide: 3,
     },
 };
 

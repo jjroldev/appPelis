@@ -12,6 +12,7 @@
 }
 
 .hamburguer-menu{
+  padding-top: 20px;
   background-color: rgb(17, 17, 17);
   height: 100vh;
   width: 100%;
@@ -30,7 +31,7 @@
 
 .contenedorXMenuH i{
   cursor: pointer;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: bold;
 }
 
@@ -111,7 +112,7 @@ a {
 }
 
 .menu-bar{
-  font-size: 1.7rem;
+  font-size: 1.6rem;
   cursor: pointer;
 }
 
@@ -168,7 +169,7 @@ a {
 
 @media (max-width: 900px) {
   .navbar img{
-    width: 20vw;
+    width: 18vw;
   }
 
   .opcionMH a{
@@ -188,7 +189,7 @@ a {
   }
 
   .menu-bar{
-    font-size: 1.5rem;
+    font-size: 1.3rem;
   }
 
   .contenedorXMenuH i{
@@ -199,7 +200,7 @@ a {
 @media (max-width: 600px){
 
   .navbar img{
-    width: 26vw;
+    width: 24vw;
     margin-left: -10px !important;
   }
   .menu-bar{
@@ -214,6 +215,6 @@ a {
 @media (max-width: 400px){
 
   .navbar img{
-    width: 30vw;
+    width: 27vw;
   }
 }

@@ -8,7 +8,7 @@ import { useQuery } from 'react-query';
 import { fetchData } from '../../utils/fetchData';
 import { useEffect, useState } from 'react';
 export default function DetalleBanner({ movie }: { movie: MovieDetails | null }) {
-    const { data} = useQuery(`providers-${movie?.id}`, () => fetchData(getURLMovieDetails(movie?.id).providers))
+    const { data } = useQuery(`providers-${movie?.id}`, () => fetchData(getURLMovieDetails(movie?.id).providers))
     const [movieProviders, setMovieProviders] = useState<any>([])
     const renderGenres = (genres: any[] = []) => {
         return genres.map((genre: any) => (
@@ -17,6 +17,15 @@ export default function DetalleBanner({ movie }: { movie: MovieDetails | null })
             </li>
         ));
     };
+
+    const [width, setWidth] = useState(window.innerWidth)
+
+
+    useEffect(() => {
+        const handleResize = () => setWidth(window.innerWidth);
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     useEffect(() => {
         if (data?.results) {
@@ -43,8 +52,8 @@ export default function DetalleBanner({ movie }: { movie: MovieDetails | null })
         if (!movieProviders) return null
         return (
             <Carousel
-                swipeable={false}
-                draggable={false}
+                swipeable={true}
+                draggable={true}
                 showDots={false}
                 responsive={responsiveCredits}
                 ssr={true}
@@ -86,12 +95,16 @@ export default function DetalleBanner({ movie }: { movie: MovieDetails | null })
                     </ul>
                 </div>
             </div>
-            <div className="provedores-container posters-continer-banner">
-                <div className='postersInfo'>
-                    <CarouselBoostrap movie={movie} isPoster={true} />
-                </div>
-                {renderProviders(movieProviders)}
-            </div>
+            {
+                width >= 900 && (
+                    <div className="provedores-container posters-continer-banner">
+                        <div className='postersInfo'>
+                            <CarouselBoostrap movie={movie} isPoster={true} />
+                        </div>
+                        {renderProviders(movieProviders)}
+                    </div>
+                )
+            }
         </>
     }
     return (

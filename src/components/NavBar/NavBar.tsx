@@ -11,9 +11,10 @@ interface NavBarProps {
     perfil?: boolean;
     logoGrande?: boolean;
     condicionExpanded?: boolean,
+    mostrarDesplegable?: boolean,
 }
 
-export function NavBar({ logoBuscar, menu = false, perfil = false, logoGrande = false, condicionExpanded }: NavBarProps) {
+export function NavBar({ logoBuscar, menu = false, perfil = false, logoGrande = false, condicionExpanded, mostrarDesplegable = true }: NavBarProps) {
     const location = useLocation();
     const { currentPerfil } = useAuth()
     const [scrolled, setScrolled] = useState(false);
@@ -46,9 +47,13 @@ export function NavBar({ logoBuscar, menu = false, perfil = false, logoGrande = 
                         alt="Logo"
                         className={`${logoGrande ? "logoGrande" : ""}`}
                     />
-                    <i className="menu-bar fa-solid fa-bars text-white"
-                        onClick={() => setOpenMenu(!openMenu)}
-                    ></i>
+                    {
+                        mostrarDesplegable && (
+                            <i className="menu-bar fa-solid fa-bars text-white"
+                                onClick={() => setOpenMenu(!openMenu)}
+                            ></i>
+                        )
+                    }
                 </div>
                 {
                     openMenu && (

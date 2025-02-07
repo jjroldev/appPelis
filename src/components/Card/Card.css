@@ -41,3 +41,24 @@
 .nombre-caster{
   font-size: clamp(.8rem, 1.4vw, 1.2rem);
 }
+
+
+@media(max-width:1000px){
+  .detailsCM p{
+    font-size: .8rem;
+  }
+}
+
+
+@media(max-width:800px){
+  .detailsCM p{
+    font-size: .7rem;
+  }
+}
+
+
+@media(max-width:500px){
+  .detailsCM p{
+    font-size: .65rem;
+  }
+}

@@ -12,3 +12,9 @@
     width: 100%;
 }
 
+@media(max-width:1000px){
+    .carousel-bootstrap{
+        width: 100%;
+    }
+}
+

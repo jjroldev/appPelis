@@ -38,6 +38,10 @@
     min-height: 40px;
 }
 
+.carousel-cell .react-multiple-carousel__arrow{
+    display: none;
+}
+
 @media (max-width: 1300px) {
     .carousel-react .react-multiple-carousel__arrow{
         min-width: 35px;

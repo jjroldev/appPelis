@@ -38,6 +38,7 @@
 input::placeholder {
     color: rgba(199, 199, 199, 0.9);
     border: none;
+    font-size: 1rem;
 }
 
 input:focus {
