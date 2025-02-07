@@ -10,7 +10,7 @@ import { getURLMovieDetails } from '../../utils/endPoints';
 function CarouselBoostrap({ movie, isPoster }: { movie: MovieDetails | null, isPoster?: boolean }) {
     const { data: movieWithImages } = useQuery<MovieDetails>(['movieIC',movie?.id],()=>fetchData(getURLMovieDetails(movie?.id).movieDetails))
     return (
-        <div className={`carousel-bootstrap ${isPoster ? "c-b-poster" : ""}`}>
+        <div className={`carousel-bootstrap ${isPoster ? "c-b-poster" : "cb-backdrop"}`}>
             <Carousel fade interval={3000} pause="hover">
                 {
                     !isPoster ? (

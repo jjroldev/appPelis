@@ -1,7 +1,7 @@
 import "./Banner.css";
 import { NavBar } from "../NavBar/NavBar";
 import { URL_IMAGE_lOGO, URL_IMAGE_BANNER, getURLMovieDetails } from "../../utils/endPoints";
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import { useNavigate } from "react-router";
 import { getFavoritesByProfile } from "../../firebase";
 import { lazy } from "react";
@@ -12,7 +12,6 @@ import { useAuth } from "../../context/AuthContext";
 import { useQuery, useQueryClient } from "react-query";
 import { fetchData } from "../../utils/fetchData";
 import { addFavoriteToProfile } from "../../firebase";
-import { useEffect } from "react";
 interface BannerProps {
     movie: Movie | null; logoBuscar: boolean, isDetail?: boolean
 }
@@ -26,9 +25,6 @@ export function Banner({ movie, logoBuscar, isDetail = false }: BannerProps) {
             enabled: !!movie?.id,
         }
     );
-
-    const [width, setWidth] = useState(window.innerWidth)
-
     const queryClient = useQueryClient()
     const navigate = useNavigate();
     const handleOpen = useCallback(() => setOpen(true), []);
@@ -44,12 +40,6 @@ export function Banner({ movie, logoBuscar, isDetail = false }: BannerProps) {
             enabled: !!currentUser?.id && !!currentPerfil?.id,
         }
     );
-
-    useEffect(() => {
-        const handleResize = () => setWidth(window.innerWidth);
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-    }, []);
 
     const handleAddFavorite = async (movie: Movie | null) => {
         await addFavoriteToProfile(currentUser?.id, currentPerfil?.id, movie);
@@ -88,7 +78,7 @@ export function Banner({ movie, logoBuscar, isDetail = false }: BannerProps) {
             </button>
             <VideoModal movie={movie} open={open} onClose={handleClose} />
             {
-                width >= 900 && location.hash!="/info" &&(
+                location.hash!="#/info" &&(
                     <button onClick={pasarMovie} className="boton-info-banner">
                         <i className="fa-solid fa-circle-info"></i>More Information
                     </button>
@@ -98,7 +88,7 @@ export function Banner({ movie, logoBuscar, isDetail = false }: BannerProps) {
             <button onClick={() => {
                 handleAddFavorite(movie)
             }}
-                className="boton-redondo botonMeGustaBanner"
+                className="botonMeGustaBanner"
             >
                 <i className="fa-solid fa-heart">
                 </i>

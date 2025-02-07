@@ -90,7 +90,7 @@ export default function DetalleBanner({ movie }: { movie: MovieDetails | null })
                     </span>
                 </div>
                 <div>
-                    <ul className="generosBanner flex flex-row">
+                    <ul className="generosBanner">
                         {renderGenres(movie?.genres)}
                     </ul>
                 </div>
