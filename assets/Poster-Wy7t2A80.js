@@ -1,0 +1,1 @@
+import{j as r}from"./index-CyazyFac.js";import{a}from"./endPoints-D6Ym8Q8U.js";function t({poster_path:s}){return r.jsx("div",{className:"wrapperPoster",children:r.jsx("img",{src:a+s,className:"backdropPoster"})})}export{t as default};
