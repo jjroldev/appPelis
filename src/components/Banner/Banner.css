@@ -1,7 +1,6 @@
 .header {
     display: flex;
     width: 100%;
-    height: 110vh;
     height: 110dvh;
     position: relative;
     background-color: rgb(17, 17, 17);
@@ -134,7 +133,6 @@
 
 @media (max-width: 1024px) {
     .header {
-        height: 100vh;
         height: 100dvh;
     }
 
