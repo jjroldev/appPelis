@@ -198,4 +198,8 @@
         z-index: 3;
     }
 
+    .play{
+        width: 85px !important;
+    }
+
 }
