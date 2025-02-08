@@ -59,11 +59,7 @@ export function NavBar({ logoBuscar, menu = false, perfil = false, logoGrande = 
                     openMenu && (
                         <div className='hamburguer-menu'>
                             <div className='contenedorXMenuH'>
-                                <img
-                                    src="/appPelis/JUSTFLIX.svg"
-                                    alt="Logo"
-                                    className="logoMenuH"
-                                />
+                               
                                 <i className="fa-solid fa-x x-menuH"
                                     onClick={
                                         () => setOpenMenu(!openMenu)

@@ -25,9 +25,9 @@
 .contenedorXMenuH{
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: right;
+  padding: 20px;
   align-items: center;
-  padding-right: 15px;
 }
 
 .contenedorXMenuH i{

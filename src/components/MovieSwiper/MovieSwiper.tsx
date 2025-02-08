@@ -68,11 +68,14 @@ const MovieSwiper = React.memo(
               draggable={true}
               showDots={false}
               responsive={responsivew}
+              minimumTouchDrag={50}
               ssr={true}
               infinite={true}
               autoPlay={false}
+              centerMode={true}
               className={`carousel-react ${width<600?"carousel-cell":""}`}
             >
+              
               {renderMovies(validMovies)}
             </Carousel>
           </>
