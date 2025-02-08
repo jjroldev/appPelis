@@ -19,25 +19,12 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-const signUp = async (name: string, last_name: string, email: string, password: string) => {
+const signUp = async (email: string, password: string) => {
   try {
-    const response = await createUserWithEmailAndPassword(auth, email, password);
-    const user = response.user;
-
-    const usuario = {
-      id: user.uid,
-      name,
-      last_name,
-      authProvider: "local",
-      email,
-      password,
-    };
-
-    await setDoc(doc(db, "users", user.uid), usuario);
-
-    return usuario;
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      return userCredential;
   } catch (error) {
-    return null;
+      return null;
   }
 };
 
@@ -54,22 +41,6 @@ const getAllUsers = async (): Promise<User[]> => {
     return [];
   }
 };
-
-const findUserByEmailAndPassword = async (email: string): Promise<User | null> => {
-  try {
-    const users = await getAllUsers();
-    const user = users.find(user => user.email === email);
-
-    if (!user) {
-      return null;
-    }
-
-    return user;
-  } catch (error) {
-    return null;
-  }
-};
-
 
 const getPerfilesPorUsuario = async (userId: string|undefined): Promise<Perfil[]> => {
   try {
@@ -113,16 +84,24 @@ const getProfileWithFavorites = async (userId: string, profileId: string): Promi
   }
 };
 
-
-
-const login = async (email: string, password: string) => {
+const login = async (email: string, password: string): Promise<User | null> => {
   try {
-    await signInWithEmailAndPassword(auth, email, password);
-    return true
+    const response = await signInWithEmailAndPassword(auth, email, password);
+    const user = response.user;
+
+    const userDocRef = doc(db, "users", user.uid);
+    const userDoc = await getDoc(userDocRef);
+
+    if (userDoc.exists()) {
+      return { id: user.uid, ...(userDoc.data() as Omit<User, "id">) };
+    } else {
+      return null;
+    }
   } catch (error) {
-    return false
+    return null;
   }
 };
+
 
 const logOut = () => {
   signOut(auth);
@@ -228,5 +207,4 @@ export {
   getPerfilesPorUsuario,
   getProfileWithFavorites
   ,deleteProfile
-  ,findUserByEmailAndPassword
 };

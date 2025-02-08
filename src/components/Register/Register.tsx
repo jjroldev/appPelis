@@ -4,6 +4,9 @@ import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { signUp } from '../../firebase';
 import { useEmail } from '../../context/ExistsEmailContext';
+import { doc,setDoc } from 'firebase/firestore';
+import { db } from '../../firebase';
+import { User } from '../../interface/User';
 export default function Register() {
     const [name, setName] = useState("");
     const [lastName, setLastName] = useState('');
@@ -16,15 +19,39 @@ export default function Register() {
 
     const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const usuario= await signUp(name,lastName,email,password)
-        if (!usuario) {
-            setEmailExists(true)
-            navigate("/login")
-        }else{
+    
+        try {
+            const userCredential = await signUp(email, password);
+            if (!userCredential) {
+                setEmailExists(true);
+                navigate('/login')
+                return;
+            }
+    
+            const authUser = userCredential.user;
+            if (!authUser) {
+                navigate('/login')
+                setEmailExists(true);
+                return;
+            }
+    
+            const userData:User = {
+                id: authUser.uid,
+                name,
+                last_name:lastName,
+                email,
+                password,
+            };
+    
+            await setDoc(doc(db, "users", authUser.uid), userData);
+    
+            loginAuth(userData);
             navigate("/manageProfiles");
-            loginAuth(usuario)
+        } catch (error) {
+            setEmailExists(true);
         }
     };
+    
 
     return (
         <div className="formContainer">

@@ -3,7 +3,11 @@ import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useEmail } from "../../context/ExistsEmailContext";
 import "./Login.css";
-import { findUserByEmailAndPassword, login } from "../../firebase";
+import { login } from "../../firebase";
+import { auth } from "../../firebase";
+import { doc,getDoc } from "firebase/firestore";
+import { db } from "../../firebase";
+import { User } from "../../interface/User";
 import { useMenu } from "../../context/MenuContext";
 export default function Login() {
   const { loginAuth } = useAuth();
@@ -19,25 +23,38 @@ export default function Login() {
   },[])
 
 
-  const { emailExists } = useEmail();
+  const { emailExists ,setEmailExists} = useEmail();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const log = await login(email, password);
     
-    if (log) {
-      const user = await findUserByEmailAndPassword(email);
-      
-      if (user) {
-        login(email,password)
-        loginAuth(user);
+    try {
+      const log = await login(email, password);
+      if (!log) {
+        setOpen(true);
+        return;
+      }
+  
+      const authUser = auth.currentUser;
+      if (!authUser) {
+        setOpen(true);
+        return;
+      }
+  
+      const userRef = doc(db, "users", authUser.uid);
+      const userSnap = await getDoc(userRef);
+  
+      if (userSnap.exists()) {
+        const userData = userSnap.data() as User;
+        loginAuth(userData);
         navigate("/manageProfiles");
       } else {
         setOpen(true);
       }
-    } else {
+    } catch (error) {
       setOpen(true);
     }
   };
+  
   
   return (
     <>
@@ -46,7 +63,7 @@ export default function Login() {
           <div className="headerForm">
             <h2>Login</h2>
           </div>
-          <div className={`${open ? "contentEmailExists" : "notVisible"}`}>
+          <div className={`${open  ? "contentEmailExists" : "notVisible"}`}>
             <h2>The email or password is incorrect</h2>
             <p>Please log in to continue</p>
           </div>
@@ -55,10 +72,10 @@ export default function Login() {
             <p>Please log in to continue</p>
           </div>
           <div className="contenedorInput">
-            <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="email@example.com" minLength={5} />
+            <input onFocus={()=>setEmailExists(false)} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="email@example.com" minLength={5} />
           </div>
           <div className="contenedorInput">
-            <input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Contraseña" minLength={6} maxLength={20} />
+            <input onFocus={()=>setEmailExists(false)} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Contraseña" minLength={6} maxLength={20} />
           </div>
           <div>
             <button className="button-enviar">Login</button>

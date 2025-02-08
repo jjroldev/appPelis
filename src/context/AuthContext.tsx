@@ -1,42 +1,51 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { User } from "../interface/User";
 import { Perfil } from "../interface/Perfil";
-import { auth } from "../firebase";
-import { signOut } from "firebase/auth";
+import { auth, db } from "../firebase";
+import { signOut, onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+
 interface AuthContextProps {
   currentUser: User | null;
-  setCurrentUser: (user: User | null) => void;
   isLoggedIn: boolean;
+  loading: boolean;
   loginAuth: (user: User) => void;
   logout: () => void;
-  currentPerfil:Perfil|null;
-  setCurrentPerfil:(perfil:Perfil|null)=>void
+  currentPerfil: Perfil | null;
+  setCurrentPerfil: (perfil: Perfil | null) => void;
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState<User | null>(() => {
-    const storedUser = sessionStorage.getItem("currentUser");
-    return storedUser ? JSON.parse(storedUser) : null;
-  });
-
-  const [currentPerfil, setCurrentPerfil] = useState<Perfil | null>(
-    () => {
-      const storedUser = sessionStorage.getItem("currentPerfil");
-      return storedUser ? JSON.parse(storedUser) : null;
-    }
-  )
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
-    const storedStatus = sessionStorage.getItem("isLoggedIn");
-    return storedStatus === "true";
-  });
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [currentPerfil, setCurrentPerfil] = useState<Perfil | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    sessionStorage.setItem("isLoggedIn", JSON.stringify(isLoggedIn));
-    sessionStorage.setItem("currentUser", JSON.stringify(currentUser));
-    sessionStorage.setItem("currentPerfil", JSON.stringify(currentPerfil));
-  }, [isLoggedIn, currentUser,currentPerfil]);
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const userDocRef = doc(db, "users", user.uid);
+        const userDoc = await getDoc(userDocRef);
+
+        if (userDoc.exists()) {
+          const userData = userDoc.data() as User;
+          setCurrentUser({ ...userData, id: user.uid });
+          setIsLoggedIn(true);
+        } else {
+          logout();
+        }
+      } else {
+        setCurrentUser(null);
+        setCurrentPerfil(null);
+        setIsLoggedIn(false);
+      }
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const loginAuth = (user: User) => {
     setCurrentUser(user);
@@ -44,17 +53,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   const logout = () => {
-    signOut(auth)
+    signOut(auth);
     setCurrentUser(null);
-    setCurrentPerfil(null)
+    setCurrentPerfil(null);
     setIsLoggedIn(false);
-    sessionStorage.removeItem("isLoggedIn");
-    sessionStorage.removeItem("currentUser");
-    sessionStorage.removeItem("currentPerfil");
   };
 
   return (
-    <AuthContext.Provider value={{ currentUser, setCurrentUser, isLoggedIn, loginAuth, logout,currentPerfil,setCurrentPerfil }}>
+    <AuthContext.Provider value={{ currentUser, isLoggedIn, loading, loginAuth, logout, currentPerfil, setCurrentPerfil }}>
       {children}
     </AuthContext.Provider>
   );

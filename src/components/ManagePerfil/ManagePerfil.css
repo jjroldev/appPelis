@@ -7,6 +7,7 @@
     gap: 30px;
     align-items: center;
     justify-content: center;
+    overflow-y: auto;
 }
 
 .perfilesCargando {
@@ -198,11 +199,16 @@ input::placeholder {
     .nombrePerfil{
         font-size: 1.2rem;
     }
+
 }
 
 @media(max-width:500px){
     .creacionPerfil input,.creacionPerfil button{
         width:70%;
+    }
+
+    .contenedorPerfil {
+        width: 80px;
     }
 }
 

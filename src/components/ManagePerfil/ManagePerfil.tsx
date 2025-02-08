@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
-import { getPerfilesPorUsuario ,createProfile,deleteProfile} from '../../firebase';
+import { getPerfilesPorUsuario, createProfile, deleteProfile } from '../../firebase';
 import './ManagePerfil.css';
 import { Perfil } from '../../interface/Perfil';
 import toast from 'react-hot-toast';
@@ -12,6 +12,7 @@ export default function ManagePerfil() {
     const { currentUser, setCurrentPerfil } = useAuth();
     const [mostrar, setMostrar] = useState(false);
     const [nombrePerfil, setNombrePerfil] = useState("");
+    const [isCreating, setIsCreating] = useState(false);
     const navigate = useNavigate();
 
     const queryClient = useQueryClient();
@@ -25,6 +26,7 @@ export default function ManagePerfil() {
         }
     );
 
+
     const handleCrear = async () => {
         if (!nombrePerfil) {
             toast.error("Ingresa un nombre");
@@ -36,16 +38,25 @@ export default function ManagePerfil() {
             return;
         }
 
-        const nuevoPerfil = await createProfile(currentUser?.id, nombrePerfil);
-        if (nuevoPerfil) {
-            toast.success("Perfil creado exitosamente");
-            setNombrePerfil("");
-            setMostrar(false);
-            queryClient.invalidateQueries(`perfiles-${currentUser?.id}`);
+        setIsCreating(true);
+
+        try {
+            const nuevoPerfil = await createProfile(currentUser?.id, nombrePerfil);
+            if (nuevoPerfil) {
+                toast.success("Perfil creado exitosamente");
+                setNombrePerfil("");
+                setMostrar(false);
+                queryClient.invalidateQueries(`perfiles-${currentUser?.id}`);
+            }
+        } catch (error) {
+            toast.error("Error al crear el perfil");
+        } finally {
+            setIsCreating(false);
         }
     };
 
-    const handleEliminar = async (perfilId: string,event: React.MouseEvent) => {
+
+    const handleEliminar = async (perfilId: string, event: React.MouseEvent) => {
         event.stopPropagation()
         const response = await deleteProfile(currentUser?.id, perfilId);
         if (response) {
@@ -84,19 +95,25 @@ export default function ManagePerfil() {
                                     <div key={perfil.id} className="contenedorPerfil">
                                         <img className='perfil-img' src="/appPelis/avatar3.png" alt="" onClick={() => handleNavigate(perfil)} />
                                         <h4 className='nombrePerfil'>{perfil.name}</h4>
-                                        <i className="fa-solid fa-x iconoX" onClick={(event) => handleEliminar(perfil.id,event)}></i>
+                                        <i className="fa-solid fa-x iconoX" onClick={(event) => handleEliminar(perfil.id, event)}></i>
                                     </div>
                                 ))}
                             </div>
                             <button className='buttonPerfiles' onClick={() => setMostrar(true)}>Crear perfil</button>
                         </div>
                     )
-                ) 
+                )
             ) : (
                 <div className='creacionPerfil'>
                     <img src="/appPelis/avatar3.png" alt="" />
                     <input type="text" placeholder='Nombre del perfil' required onChange={(e) => setNombrePerfil(e.target.value)} />
-                    <button className='buttonPerfilesCrear' onClick={handleCrear}>Crear</button>
+                    <button
+                        className='buttonPerfilesCrear'
+                        onClick={handleCrear}
+                        disabled={isCreating}
+                    >
+                        {isCreating ? "Creando..." : "Crear"}
+                    </button>
                     <button className='buttonListo' onClick={() => setMostrar(false)}>Listo</button>
                 </div>
             )}
