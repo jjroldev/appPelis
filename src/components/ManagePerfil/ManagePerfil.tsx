@@ -6,7 +6,6 @@ import { Perfil } from '../../interface/Perfil';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { useQuery, useQueryClient } from 'react-query';
-import Spinner from '../Spinner/Spinner';
 
 export default function ManagePerfil() {
     const { currentUser, setCurrentPerfil } = useAuth();
@@ -71,12 +70,6 @@ export default function ManagePerfil() {
         setCurrentPerfil(perfil);
         navigate('/home');
     };
-
-    if (isLoading) {
-        return (
-            <Spinner />
-        );
-    }
 
     return (
         <div className="containerPerfiles">

@@ -10,7 +10,7 @@ export const PublicRoutes = () => {
     const { isLoggedIn, loading } = useAuth();
 
     if (loading) {
-        return <Spinner />; // Mostrar un spinner mientras Firebase verifica autenticación
+        return <Spinner />; 
     }
 
     if (isLoggedIn) {

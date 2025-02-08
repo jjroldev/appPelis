@@ -51,8 +51,11 @@ export default function Buscar() {
 
 
   const handleSearch = useCallback((value: string) => {
-    setSearchTerm(value);
-  }, [setSearchTerm]);
+    if (value !== searchTerm) {
+      setSearchTerm(value);
+    }
+  }, [searchTerm, setSearchTerm]);
+  
 
 
   const { } = useQuery<Movie[]>(
@@ -63,14 +66,18 @@ export default function Buscar() {
     }
   );
 
-  const handleAddFavorite = async (movie: Movie | null) => {
+  const handleAddFavorite = useCallback(async (movie: Movie | null) => {
     await addFavoriteToProfile(currentUser?.id, currentPerfil?.id, movie);
     await queryClient.invalidateQueries(`favorites-${currentUser?.id}-${currentPerfil?.id}`);
-  };
+  }, [currentUser?.id, currentPerfil?.id, queryClient]);
+  
 
-  const fetchSearch = searchTerm
-    ? `${BASE_URL}/search/movie?api_key=${API_KEY}&language=${language}&query=${searchTerm}`
-    : getFetchURLs(language).popularMovies;
+  const fetchSearch = useMemo(() => {
+    return searchTerm
+      ? `${BASE_URL}/search/movie?api_key=${API_KEY}&language=${language}&query=${searchTerm}`
+      : getFetchURLs(language).popularMovies;
+  }, [searchTerm, language]);
+  
 
   const { data: movies, isLoading } = useQuery(
     [searchTerm || "popularMovies"],

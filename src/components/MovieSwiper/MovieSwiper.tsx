@@ -14,7 +14,7 @@ const MovieSwiper = React.memo(
   ({ URL, title, isLarge = false }: { URL: string; title: string; isLarge?: boolean }) => {
     const { currentPerfil, currentUser } = useAuth()
 
-    const { data: movies } = useQuery(["movies", URL], () => fetchData(URL),
+    const { data: movies,isLoading} = useQuery(["movies", URL], () => fetchData(URL),
       { staleTime: 1000 * 60 * 5, refetchOnWindowFocus: false, });
     
     const [width,setWidth]=useState(window.innerWidth)
@@ -60,7 +60,7 @@ const MovieSwiper = React.memo(
 
     return (
       <div className="carousel">
-        {validMovies.length > 0 && (
+        {validMovies.length > 0 && !isLoading && (
           <>
             <h2 className="tituloCarousel">{title}</h2>
             <Carousel
@@ -72,7 +72,7 @@ const MovieSwiper = React.memo(
               ssr={true}
               infinite={true}
               autoPlay={false}
-              centerMode={true}
+              centerMode={width<600?false:true}
               className={`carousel-react ${width<600?"carousel-cell":""}`}
             >
               
