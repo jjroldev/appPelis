@@ -16,7 +16,7 @@ export const PrivateRoutes = () => {
     const location = useLocation();
 
     if (loading) {
-        return <Spinner />; // Mostrar un spinner mientras Firebase verifica autenticación
+        return <Spinner />;
     }
 
     if (!isLoggedIn) {

@@ -17,10 +17,16 @@ export default function Home() {
     const { data: movies, isLoading } = useQuery(["moviesHome", language], () => fetchData(fetchURLS.actionMovies), { staleTime: 1000 * 60 * 5 });
     const { setSearchTerm } = useSearch();
     const { setOpenMenu } = useMenu();
-    
+
     const [featuredMovie, setFeaturedMovie] = useState<Movie | null>(null);
     
     const validMovies = useMemo(() => movies?.results?.filter((movie: Movie) => movie.backdrop_path) || [], [movies?.results]);
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+        setOpenMenu(false);
+        setSearchTerm("");
+    }, []);
     
     useEffect(() => {
         if (!isLoading && validMovies.length > 0) {
@@ -30,12 +36,6 @@ export default function Home() {
             sessionStorage.setItem("featuredMovie", JSON.stringify(selectedMovie));
         }
     }, [validMovies, isLoading]);
-    
-    useEffect(() => {
-        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-        setOpenMenu(false);
-        setSearchTerm("");
-    }, []);
     
     if (isLoading) return <Spinner />;
     

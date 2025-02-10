@@ -12,10 +12,8 @@
 }
 
 .hamburguer-menu{
-  padding-top: 20px;
   background-color: rgb(17, 17, 17);
-  height: 100vh;
-  height: 100dvh;
+  height: auto;
   width: 100%;
   box-sizing: border-box;
   position: fixed;
@@ -42,15 +40,16 @@
   gap: 5px;
 }
 
+.cMenuHOpciones a,.opcionMH a{
+  font-size: 1rem;
+}
+
 .opcionMH{
   padding: 20px;
   display: flex;
   align-items: center;
   justify-content: left;
   background-color: rgb(30, 30, 30);
-}
-.opcionMH a{
-  font-size: 1rem;
 }
 
 .c-perfil-HB{
@@ -72,7 +71,7 @@ a {
 }
 
 .navbar.scrolled {
-  background-color: rgb(17, 17, 17);
+  background-color: rgba(17, 17, 17,.9);
 }
 
 
@@ -169,7 +168,7 @@ a {
     font-size: 1.2rem;
   }
 
-  .opcionMH a{
+  .cMenuHOpciones a,.opcionMH a{
     font-size: .8rem;
   }
 
@@ -179,11 +178,6 @@ a {
   .navbar img{
     width: 18vw;
   }
-
-  .opcionMH a{
-    font-size: .7rem;
-  }
-
   .navbar{
     padding-bottom: 2px !important;
     padding-top: 2px !important;

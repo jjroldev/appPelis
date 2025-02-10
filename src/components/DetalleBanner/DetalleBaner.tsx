@@ -82,7 +82,7 @@ export default function DetalleBanner({ movie }: { movie: MovieDetails | null })
       <div className="movieDetailsBanner flex flex-col">
         {movie?.overview && (
           <p className="overview">
-            {movie.overview.slice(0, movie.overview.indexOf(".") + 1)}
+            {movie.overview.slice(0, movie.overview.indexOf(","))+"."}
           </p>
         )}
 

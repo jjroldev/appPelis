@@ -169,7 +169,7 @@
     .contenedorLogo {
         bottom: 170px;
         z-index: 3;
-        gap: 17px;
+        gap: 12px;
     }
 
     .contenedorLogo img {
@@ -208,6 +208,7 @@
     .contenedorLogo {
         bottom: 130px;
         z-index: 3;
+        gap: 8px;
     }
 
     .play{

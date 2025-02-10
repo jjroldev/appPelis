@@ -61,7 +61,7 @@ export function Banner({ movie, logoBuscar, isDetail = false }: BannerProps) {
 
     const renderOverviewOrTitle = () => {
         if (movie?.overview) {
-            return <p className="overview">{movie.overview.split(".")[0]}.</p>;
+            return <p className="overview">{movie.overview.split(",")[0]}.</p>;
         }
         return null;
     };

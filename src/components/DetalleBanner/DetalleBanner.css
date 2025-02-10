@@ -81,6 +81,7 @@
 
     .generosBanner{
         max-width: 58%;
+        gap: 25px;
     }
 
 }
@@ -88,8 +89,12 @@
 @media (max-width: 900px) {
     .generosBanner{
         max-width: 90%;
+        gap: 18px;
     }
 
+    .bannerDetails{
+        gap: 15px;
+    }
 }
 
 
@@ -103,6 +108,7 @@
     }
     .generosBanner{
         font-size: 1rem;
+        gap: 13px;
     }
 }
 
@@ -113,6 +119,7 @@
     }
 
     .generosBanner{
+        gap: 12px;
         font-size: .9rem;
     }
 }
