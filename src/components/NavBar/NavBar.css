@@ -4,7 +4,7 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 10px 45px !important;
+  padding: 7px 45px !important;
   font-size: 1.3rem;
   z-index: 6;
   background-color: transparent;
@@ -139,6 +139,12 @@ a {
     width: 17vw;
     height: auto;
   }
+
+  
+  .navbar{
+    padding-bottom: 4px !important;
+    padding-top: 4px !important;
+  }
 }
 
 @media (max-width: 1000px) {
@@ -166,6 +172,7 @@ a {
   .opcionMH a{
     font-size: .8rem;
   }
+
 }
 
 @media (max-width: 900px) {
@@ -175,6 +182,11 @@ a {
 
   .opcionMH a{
     font-size: .7rem;
+  }
+
+  .navbar{
+    padding-bottom: 2px !important;
+    padding-top: 2px !important;
   }
 }
 

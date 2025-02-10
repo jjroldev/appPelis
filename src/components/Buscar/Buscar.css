@@ -11,16 +11,15 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding: 130px 30px;
+    padding: 80px 0px;
 }
 .contenedorPeliculasBuscar {
     display: grid;
     gap: 15px;
     row-gap: 30px;
-    padding: 100px 80px;
+    padding: 20px !important;
     grid-template-columns: repeat(8,1fr);
     border-radius: 8px;
-    background-color: rgb(17, 17, 17);
 }
 
 .contenedorPeliculasNoE{

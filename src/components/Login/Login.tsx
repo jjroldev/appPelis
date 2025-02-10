@@ -15,15 +15,13 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [open, setOpen] = useState(false);
   const{setOpenMenu}=useMenu()
-
+  const { emailExists ,setEmailExists} = useEmail();
   const navigate = useNavigate();
 
   useEffect(()=>{
     setOpenMenu(false)
   },[])
 
-
-  const { emailExists ,setEmailExists} = useEmail();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     

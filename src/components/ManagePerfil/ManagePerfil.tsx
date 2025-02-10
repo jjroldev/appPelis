@@ -5,7 +5,9 @@ import './ManagePerfil.css';
 import { Perfil } from '../../interface/Perfil';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
+import Spinner from '../Spinner/Spinner';
 
 export default function ManagePerfil() {
     const { currentUser, setCurrentPerfil } = useAuth();
@@ -13,6 +15,16 @@ export default function ManagePerfil() {
     const [nombrePerfil, setNombrePerfil] = useState("");
     const [isCreating, setIsCreating] = useState(false);
     const navigate = useNavigate();
+    const [imagenCargada, setImagenCargada] = useState(false);
+
+    useEffect(() => {
+        const img = new Image();
+        img.src = "/appPelis/avatar3.png";
+
+        img.onload = () => {
+            setImagenCargada(true);
+        };
+    }, []);
 
     const queryClient = useQueryClient();
 
@@ -71,30 +83,40 @@ export default function ManagePerfil() {
         navigate('/home');
     };
 
+    if (isLoading) {
+        return <Spinner />
+    }
+
     return (
         <div className="containerPerfiles">
             {!mostrar ? (
                 !isLoading && (
-                    perfiles.length === 0 ? (
-                        <div className='flex flex-col contenedorManage'>
-                            <h2 className="tituloPerfiles">Crear un perfil</h2>
-                            <button className='buttonPerfiles' onClick={() => setMostrar(true)}>Crea un perfil</button>
-                        </div>
-                    ) : (
-                        <div className="PerfilesExistentesContainer">
-                            <h2 className="tituloPerfiles">Selecciona un perfil</h2>
-                            <div className='perfiles'>
-                                {perfiles.map((perfil) => (
-                                    <div key={perfil.id} className="contenedorPerfil">
-                                        <img className='perfil-img' src="/appPelis/avatar3.png" alt="" onClick={() => handleNavigate(perfil)} />
-                                        <h4 className='nombrePerfil'>{perfil.name}</h4>
-                                        <i className="fa-solid fa-x iconoX" onClick={(event) => handleEliminar(perfil.id, event)}></i>
-                                    </div>
-                                ))}
+                    <>
+                        {
+                            perfiles.length === 0 && (
+                                <div className='flex flex-col contenedorManage'>
+                                    <h2 className="tituloPerfiles">Crear un perfil</h2>
+                                    <button className='buttonPerfiles' onClick={() => setMostrar(true)}>Crea un perfil</button>
+                                </div>
+                            )
+                        }
+                        {perfiles.length!=0 && imagenCargada&&(
+                            <div className="PerfilesExistentesContainer">
+                                <h2 className="tituloPerfiles">Selecciona un perfil</h2>
+                                <div className='perfiles'>
+                                    {perfiles.map((perfil) => (
+                                        <div key={perfil.id} className="contenedorPerfil">
+                                            <img className='perfil-img' src="/appPelis/avatar3.png" alt="" onClick={() => handleNavigate(perfil)} />
+                                            <h4 className='nombrePerfil'>{perfil.name}</h4>
+                                            <i className="fa-solid fa-x iconoX" onClick={(event) => handleEliminar(perfil.id, event)}></i>
+                                        </div>
+                                    ))}
+                                </div>
+                                <button className='buttonPerfiles' onClick={() => setMostrar(true)}>Crear perfil</button>
                             </div>
-                            <button className='buttonPerfiles' onClick={() => setMostrar(true)}>Crear perfil</button>
-                        </div>
-                    )
+                        )
+                        }
+                    </>
                 )
             ) : (
                 <div className='creacionPerfil'>

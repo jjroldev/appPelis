@@ -1,63 +1,44 @@
-import { useState, useEffect } from "react";
-import { Banner } from "../Banner/Banner";
-import './Home.css';
-import { Movie } from "../../interface/Movie";
-import { getFetchURLs } from "../../utils/endPoints";
-import { fetchData } from "../../utils/fetchData";
+import { useState, useEffect, useMemo } from "react";
 import { useQuery } from "react-query";
-import { useMemo } from "react";
-import { useSearch } from "../../context/SearchContext";
+import { Banner } from "../Banner/Banner";
 import MovieSwiper from "../MovieSwiper/MovieSwiper";
-import { useLanguage } from "../../context/LanguageContext";
 import Spinner from "../Spinner/Spinner";
+import { getFetchURLs} from "../../utils/endPoints";
+import { fetchData } from "../../utils/fetchData";
+import { Movie } from "../../interface/Movie";
+import { useSearch } from "../../context/SearchContext";
+import { useLanguage } from "../../context/LanguageContext";
 import { useMenu } from "../../context/MenuContext";
+import "./Home.css";
+
 export default function Home() {
-    const { language } = useLanguage()
+    const { language } = useLanguage();
     const fetchURLS = useMemo(() => getFetchURLs(language), [language]);
-    const { data: movies, isLoading } = useQuery(
-        ["moviesHome", language], 
-        () => fetchData(fetchURLS.actionMovies),
-        { staleTime: 1000 * 60 * 5 }
-    )
+    const { data: movies, isLoading } = useQuery(["moviesHome", language], () => fetchData(fetchURLS.actionMovies), { staleTime: 1000 * 60 * 5 });
+    const { setSearchTerm } = useSearch();
+    const { setOpenMenu } = useMenu();
+    
     const [featuredMovie, setFeaturedMovie] = useState<Movie | null>(null);
-    const { setSearchTerm } = useSearch()
-    const {setOpenMenu}=useMenu()
-
-    const validMovies = useMemo(() => {
-        return movies?.results?.filter((movie: Movie) => movie.backdrop_path)
-    }, [movies?.results])
-
+    
+    const validMovies = useMemo(() => movies?.results?.filter((movie: Movie) => movie.backdrop_path) || [], [movies?.results]);
+    
     useEffect(() => {
         if (!isLoading && validMovies.length > 0) {
-            const storedMovie = sessionStorage.getItem('featuredMovie');
-            
-            if (storedMovie) {
-                setFeaturedMovie(JSON.parse(storedMovie));
-            } else {
-                const randomIndex = Math.floor(Math.random() * validMovies.length);
-                const selectedMovie = validMovies[randomIndex];
-                setFeaturedMovie(selectedMovie);
-    
-                sessionStorage.setItem('featuredMovie', JSON.stringify(selectedMovie));
-            }
+            const storedMovie = sessionStorage.getItem("featuredMovie");
+            const selectedMovie = storedMovie ? JSON.parse(storedMovie) : validMovies[Math.floor(Math.random() * validMovies.length)];
+            setFeaturedMovie(selectedMovie);
+            sessionStorage.setItem("featuredMovie", JSON.stringify(selectedMovie));
         }
-    }, [validMovies]);
+    }, [validMovies, isLoading]);
     
-
-
     useEffect(() => {
-        window.scroll({ top: 0, left: 0, behavior: "instant" });
-        setOpenMenu(false)
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+        setOpenMenu(false);
         setSearchTerm("");
     }, []);
-
-
-    if (isLoading) {
-        return (
-            <Spinner />
-        )
-    }
-
+    
+    if (isLoading) return <Spinner />;
+    
     return (
         <div className="contenedorHome">
             <Banner movie={featuredMovie} logoBuscar={true} />

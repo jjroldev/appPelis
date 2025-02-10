@@ -157,6 +157,11 @@
     .overview {
         max-width: 80%;
     }
+
+    
+    .header {
+        height: 80vh;
+    }
 }
 
 @media (max-width: 768px) {
@@ -180,6 +185,13 @@
 }
 
 
+@media (max-width: 650px) {
+    .header {
+        height: 70vh;
+    }
+}
+
+
 
 @media (max-width: 480px) {
 
@@ -194,7 +206,7 @@
     }
 
     .contenedorLogo {
-        bottom: 160px;
+        bottom: 130px;
         z-index: 3;
     }
 

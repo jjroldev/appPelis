@@ -1,3 +1,35 @@
+#busqueda{
+    width: 100%;
+}
+
+.contenedorLupa{
+    width: 100%;
+    height: 50px;
+    position: relative;
+}
+
+.lupaMovile{
+    height: 100%;
+    width: 100%;
+    padding-left: 40px;
+    color: rgb(204, 204, 204);
+    background-color: rgb(41, 41, 41);
+}
+
+.lupaMovile:focus{
+    border: none;
+    outline: 0;
+}
+
+.lupaIcono{
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    color: rgb(106, 106, 106);
+    transform: translate(-50%,-50%);
+    font-size: 1.3rem;
+}
+
 #busqueda-input,input::placeholder{
     font-size: 1rem;
 }

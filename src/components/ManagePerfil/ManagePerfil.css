@@ -16,14 +16,14 @@
 
 .tituloPerfiles {
     color: #fff;
-    font-size: clamp(1.7rem,5vw,3rem);
+    font-size: clamp(1.7rem, 5vw, 3rem);
     font-weight: bold;
     margin-bottom: 50px;
 }
 
 
-.nombrePerfil{
-    color: rgba(255,255,255,.9);
+.nombrePerfil {
+    color: rgba(255, 255, 255, .9);
     font-size: 1.4rem;
 }
 
@@ -120,8 +120,9 @@
     text-align: center;
 }
 
-.creacionPerfil input,.creacionPerfil button{
-    width:300px;
+.creacionPerfil input,
+.creacionPerfil button {
+    width: 300px;
 }
 
 input::placeholder {
@@ -156,13 +157,87 @@ input::placeholder {
 }
 
 
-.perfiles{
+.perfiles {
     display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(100px,1fr));
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     place-content: center;
     place-items: center;
     gap: 60px;
     width: 50vw;
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeInImages {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.perfiles {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.contenedorPerfil {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.contenedorPerfil img {
+    transition: transform 0.2s ease-in-out, outline 0.2s ease-in-out;
+    opacity: 0;
+    animation: fadeInImages 0.5s ease-in-out forwards;
+}
+
+/* Efecto de hover */
+.contenedorPerfil img:hover {
+    transform: scale(1.05);
+}
+
+.perfiles .contenedorPerfil {
+    opacity: 0;
+    animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+/* Animación escalonada para cada perfil */
+.perfiles .contenedorPerfil:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.perfiles .contenedorPerfil:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.perfiles .contenedorPerfil:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.perfiles .contenedorPerfil:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.perfiles .contenedorPerfil:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+.creacionPerfil {
+    opacity: 0;
+    transform: translateY(-10px);
+    animation: fadeIn 0.5s ease-in-out forwards;
 }
 
 @media (max-width: 1200px) {
@@ -170,7 +245,7 @@ input::placeholder {
         width: 150px;
     }
 
-    .perfiles{
+    .perfiles {
         gap: 50px;
         width: 60vw;
     }
@@ -181,7 +256,7 @@ input::placeholder {
         width: 130px;
     }
 
-    .nombrePerfil{
+    .nombrePerfil {
         font-size: 1.3rem;
     }
 }
@@ -191,20 +266,22 @@ input::placeholder {
         width: 100px;
     }
 
-    .perfiles{
+    .perfiles {
         gap: 30px;
         width: 70vw;
     }
 
-    .nombrePerfil{
+    .nombrePerfil {
         font-size: 1.2rem;
     }
 
 }
 
-@media(max-width:500px){
-    .creacionPerfil input,.creacionPerfil button{
-        width:70%;
+@media(max-width:500px) {
+
+    .creacionPerfil input,
+    .creacionPerfil button {
+        width: 70%;
     }
 
     .contenedorPerfil {
@@ -215,12 +292,12 @@ input::placeholder {
 @media (max-width: 400px) {
 
 
-    .perfiles{
+    .perfiles {
         gap: 20px;
         width: 90vw;
     }
 
-    .nombrePerfil{
+    .nombrePerfil {
         font-size: 1rem;
     }
 }

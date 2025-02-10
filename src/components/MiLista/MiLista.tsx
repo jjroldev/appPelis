@@ -13,6 +13,9 @@ import { useMenu } from '../../context/MenuContext';
 export default function MiLista() {
   const { currentUser, currentPerfil } = useAuth()
   const queryClient = useQueryClient();
+  const { setSearchTerm } = useSearch()
+  const{setOpenMenu}=useMenu()
+
   const { data: movies, isLoading } = useQuery<Movie[]>(
     `favorites-${currentUser?.id}-${currentPerfil?.id}`,
     () => getFavoritesByProfile(currentUser?.id, currentPerfil?.id),
@@ -20,21 +23,20 @@ export default function MiLista() {
       enabled: !!currentUser?.id && !!currentPerfil?.id,
     }
   );
-  const { setSearchTerm } = useSearch()
-  const{setOpenMenu}=useMenu()
 
   useEffect(() => {
     window.scroll({ top: 0, left: 0, behavior: "instant" });
     setSearchTerm("")
   }, []);
-  const handleRemoveFavorite = async (movie: Movie) => {
-    await removeFavoriteToProfile(currentUser?.id, currentPerfil?.id, movie);
-    await queryClient.invalidateQueries(`favorites-${currentUser?.id}-${currentPerfil?.id}`);
-  };
 
   useEffect(() => {
     setOpenMenu(false)
   }, []);
+
+  const handleRemoveFavorite = async (movie: Movie) => {
+    await removeFavoriteToProfile(currentUser?.id, currentPerfil?.id, movie);
+    await queryClient.invalidateQueries(`favorites-${currentUser?.id}-${currentPerfil?.id}`);
+  };
 
   if (isLoading) {
     return (

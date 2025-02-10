@@ -96,7 +96,7 @@
 @media (max-width: 768px) {
 
     .contenedorDetailN {
-        bottom: 120px !important;
+        bottom: 60px !important;
     }
     .bannerDetails span{
         font-size: 1rem;

@@ -1,48 +1,27 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState, useEffect } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import CardMovie from "../CardMovie/CardMovie";
 import { Movie } from "../../interface/Movie";
-import { useQuery, useQueryClient } from 'react-query';
+import { useQuery, useQueryClient } from "react-query";
 import { fetchData } from "../../utils/fetchData";
-import "./MovieSwiper.css";
-import { useAuth } from "../../context/AuthContext";
-import { useEffect } from "react";
 import { responsive } from "../../utils/ResponsiveCarrousel";
+import { useAuth } from "../../context/AuthContext";
 import { addFavoriteToProfile } from "../../firebase";
+import "./MovieSwiper.css";
+
 const MovieSwiper = React.memo(
   ({ URL, title, isLarge = false }: { URL: string; title: string; isLarge?: boolean }) => {
-    const { currentPerfil, currentUser } = useAuth()
+    const { currentPerfil, currentUser } = useAuth();
+    const queryClient = useQueryClient();
 
-    const { data: movies,isLoading} = useQuery(["movies", URL], () => fetchData(URL),
-      { staleTime: 1000 * 60 * 5, refetchOnWindowFocus: false, });
-    
-    const [width,setWidth]=useState(window.innerWidth)
-    const [isLarge1,setIsLarge]=useState(isLarge)
+    const { data: movies, isLoading } = useQuery(["movies", URL], () => fetchData(URL), {
+      staleTime: 1000 * 60 * 5,
+      refetchOnWindowFocus: false,
+    });
 
-    const queryClient = useQueryClient()
-    const validMovies = useMemo(() => {
-      return movies?.results?.filter((movie: Movie) => movie.backdrop_path) || [];
-    }, [movies]);
-
-    const handleAddFavorite = async (movie: Movie) => {
-      await addFavoriteToProfile(currentUser?.id, currentPerfil?.id, movie);
-      await queryClient.invalidateQueries(`favorites-${currentUser?.id}-${currentPerfil?.id}`
-        , {
-          refetchInactive: false,
-        }
-      );
-    };
-    const responsivew = useMemo(() => responsive(isLarge1), [isLarge1]);
-
-    const renderMovies = useCallback(
-      (movies: Movie[]) =>
-        movies.map((movie) => {
-          return <CardMovie key={movie.id} movie={movie} isLarge={isLarge1} onAddFavorite={handleAddFavorite} />
-        }),
-      [isLarge1]
-    );
-
+    const [width, setWidth] = useState(window.innerWidth);
+    const [isLarge1, setIsLarge] = useState(isLarge);
 
     useEffect(() => {
       const handleResize = () => setWidth(window.innerWidth);
@@ -51,12 +30,30 @@ const MovieSwiper = React.memo(
     }, []);
 
     useEffect(() => {
-      if (width <= 1000) {
-        setIsLarge(false)
-      }else{
-        setIsLarge(isLarge)
-      }
-    }, [width])
+      setIsLarge(width > 1000 ? isLarge : false);
+    }, [width]);
+
+    const validMovies = useMemo(
+      () => movies?.results?.filter((movie: Movie) => movie.backdrop_path) || [],
+      [movies]
+    );
+
+    const handleAddFavorite = async (movie: Movie) => {
+      await addFavoriteToProfile(currentUser?.id, currentPerfil?.id, movie);
+      await queryClient.invalidateQueries(`favorites-${currentUser?.id}-${currentPerfil?.id}`, {
+        refetchInactive: false,
+      });
+    };
+
+    const responsivew = useMemo(() => responsive(isLarge1), [isLarge1]);
+
+    const renderMovies = useCallback(
+      (movies: Movie[]) =>
+        movies.map((movie) => (
+          <CardMovie key={movie.id} movie={movie} isLarge={isLarge1} onAddFavorite={handleAddFavorite} />
+        )),
+      [isLarge1]
+    );
 
     return (
       <div className="carousel">
@@ -64,18 +61,17 @@ const MovieSwiper = React.memo(
           <>
             <h2 className="tituloCarousel">{title}</h2>
             <Carousel
-              swipeable={true}
-              draggable={true}
+              swipeable
+              draggable
               showDots={false}
               responsive={responsivew}
               minimumTouchDrag={50}
-              ssr={true}
-              infinite={true}
+              ssr={false}
+              infinite
               autoPlay={false}
-              centerMode={width<600?false:true}
-              className={`carousel-react ${width<600?"carousel-cell":""}`}
+              partialVisible={true}
+              className={`carousel-react ${width < 600 ? "carousel-cell" : ""}`}
             >
-              
               {renderMovies(validMovies)}
             </Carousel>
           </>

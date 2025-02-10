@@ -22,6 +22,7 @@
     .contenedorPeliculas {
         padding-left: 25px;
         margin-top: -90px;
+        gap: 45px;
     }
 
     .cuerpoBanner {
@@ -38,7 +39,9 @@
     .contenedorPeliculas {
         padding-left: 18px;
         margin-top: -85px;
+        gap: 35px;
     }
+    
 
     .cuerpoBanner {
         padding-left: 18px;
@@ -46,5 +49,12 @@
 
     .navbar {
         padding: 0 18px;
+    }
+}
+
+
+@media (max-width: 600px) {
+    .contenedorPeliculas {
+        gap: 25px;
     }
 }
