@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 import Spinner from '../Spinner/Spinner';
+import { useMenu } from '../../context/MenuContext';
 
 export default function ManagePerfil() {
     const { currentUser, setCurrentPerfil } = useAuth();
@@ -16,6 +17,7 @@ export default function ManagePerfil() {
     const [isCreating, setIsCreating] = useState(false);
     const navigate = useNavigate();
     const [imagenCargada, setImagenCargada] = useState(false);
+    const {setOpenMenu}=useMenu()
 
     useEffect(() => {
         const img = new Image();
@@ -24,6 +26,7 @@ export default function ManagePerfil() {
         img.onload = () => {
             setImagenCargada(true);
         };
+        setOpenMenu(false)
     }, []);
 
     const queryClient = useQueryClient();

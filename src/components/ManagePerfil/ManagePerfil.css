@@ -284,9 +284,6 @@ input::placeholder {
         width: 70%;
     }
 
-    .contenedorPerfil {
-        width: 80px;
-    }
 }
 
 @media (max-width: 400px) {
