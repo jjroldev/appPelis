@@ -11,20 +11,20 @@
     font-size: 1.3rem;
 }
 
-.carousel-react .react-multi-carousel-item {
+.react-multi-carousel-item {
     padding-right: 6px;
     z-index: 10;
 }
 
-.carousel-react .react-multiple-carousel__arrow--left {
+.react-multiple-carousel__arrow--left {
     left: 10px;
 }
 
-.carousel-react .react-multiple-carousel__arrow--right {
+.react-multiple-carousel__arrow--right {
     right: 10px;
 }
 
-.carousel-react .react-multiple-carousel__arrow::before{
+.react-multiple-carousel__arrow::before{
     font-size: 13px !important;
     font-weight: bold;
 }
@@ -34,14 +34,14 @@
 }
 
 @media (max-width: 1300px) {
-    .carousel-react .react-multiple-carousel__arrow{
+    .react-multiple-carousel__arrow{
         min-width: 35px;
         min-height: 35px;
     }
 }
 
 @media (max-width: 1200px) {
-    .carousel-react .react-multiple-carousel__arrow{
+    .react-multiple-carousel__arrow{
         min-width: 30px;
         min-height: 30px;
     }
@@ -49,11 +49,11 @@
 
 @media (max-width: 1000px) {
 
-    .carousel-react .react-multiple-carousel__arrow::before{
+    .react-multiple-carousel__arrow::before{
         font-size: 13px;
     }
 
-    .carousel-react .react-multiple-carousel__arrow{
+    .react-multiple-carousel__arrow{
         min-width: 28px;
         min-height: 28px;
     }
@@ -65,11 +65,11 @@
 
 @media (max-width: 900px) {
 
-    .carousel-react .react-multiple-carousel__arrow::before{
+    .react-multiple-carousel__arrow::before{
         font-size: 11px !important;
     }
 
-    .carousel-react .react-multiple-carousel__arrow{
+    .react-multiple-carousel__arrow{
         min-width: 25px;
         min-height: 25px;
     }
@@ -78,7 +78,7 @@
 
 @media (max-width: 800px) {
 
-    .carousel-react .react-multiple-carousel__arrow::before{
+    .react-multiple-carousel__arrow::before{
         font-size: 10px !important;
     }
 
@@ -90,11 +90,11 @@
 
 @media (max-width: 400px) {
 
-    .carousel-react .react-multiple-carousel__arrow::before{
+    .react-multiple-carousel__arrow::before{
         font-size: 8px !important;
     }
 
-    .carousel-react .react-multiple-carousel__arrow{
+    .react-multiple-carousel__arrow{
         min-width: 20px;
         min-height: 20px;
     }

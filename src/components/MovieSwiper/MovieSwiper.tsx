@@ -9,6 +9,7 @@ import { responsive } from "../../utils/ResponsiveCarrousel";
 import "./MovieSwiper.css";
 import { useWindowWidth } from "../../hooks/useWindowWidth";
 import { useFavorites } from "../../hooks/useFavorites";
+import { SkeletonCarousel } from "../SkeletonMovieSwiper/SkeletonCarousel";
 
 const MovieSwiper = React.memo(
   ({ URL, title, isLarge = false }: { URL: string; title: string; isLarge?: boolean }) => {
@@ -42,6 +43,12 @@ const MovieSwiper = React.memo(
       [isLarge1]
     );
 
+    if(isLoading){
+      return (
+        <SkeletonCarousel numMovies={20} isLarge={false} title={title}/>
+      )
+    }
+
     return (
       <div className="carousel">
         {validMovies.length > 0 && !isLoading && (
@@ -57,7 +64,7 @@ const MovieSwiper = React.memo(
               autoPlay={false}
               keyBoardControl={true}
               partialVisible={true}
-              className={`carousel-react ${width < 600 ? "carousel-cell" : ""}`}
+              className={`${width < 600 ? "carousel-cell" : ""}`}
             >
               {renderMovies(validMovies)}
             </Carousel>
