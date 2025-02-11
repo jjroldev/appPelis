@@ -14,17 +14,19 @@ import CarouselBoostrap from "../CarouselBoostrap/CarouselBoostrap";
 import { useSearch } from "../../context/SearchContext";
 import { useMenu } from "../../context/MenuContext";
 import { useWindowWidth } from "../../hooks/useWindowWidth";
-
+import Spinner from "../Spinner/Spinner";
+import MovieSwiper from "../MovieSwiper/MovieSwiper";
 export default function InfoMovie() {
     const location = useLocation();
     const { movie: movie1 }: { movie: Movie } = location.state;
 
     const { data: movie } = useQuery<MovieDetails>(
         `movieInfo-${movie1?.id}`,
-        () => fetchData(getURLMovieDetails(movie1?.id).movieDetails)
+        () => fetchData(getURLMovieDetails(movie1?.id).movieDetails),
+        { refetchOnWindowFocus: false }
     );
 
-    const width =useWindowWidth()
+    const width = useWindowWidth()
 
     const { setSearchTerm } = useSearch();
     const { setOpenMenu } = useMenu();
@@ -57,17 +59,25 @@ export default function InfoMovie() {
                 infinite
                 keyBoardControl={false}
                 className={`carousel-cast ${width < 630 ? "cast-visible" : ""}`}
+                partialVisbile={true}
             >
                 {renderCredits}
             </Carousel>
         </div>
     );
 
+    if (!movie) {
+        return <Spinner />
+    }
+
     return (
         <div className="contenedorPrincipalMovie">
             <Banner movie={movie1} logoBuscar isDetail />
             <div className="infoMovieContainer">
                 <div className="detallesInfo">
+                    <div className="contenedorSimilares">
+                        <MovieSwiper URL={getURLMovieDetails(movie.id, 'es').similar} title="También te puede interesar" />
+                    </div>
                     {movie && movie.credits.cast?.length > 0 && (
                         <CarouselCredits renderCredits={renderCastMembers(movie)} title="CAST" />
                     )}

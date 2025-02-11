@@ -2,7 +2,6 @@ import { useState, useEffect, useMemo } from "react";
 import { useQuery } from "react-query";
 import { Banner } from "../Banner/Banner";
 import MovieSwiper from "../MovieSwiper/MovieSwiper";
-import Spinner from "../Spinner/Spinner";
 import { getFetchURLs } from "../../utils/endPoints";
 import { fetchData } from "../../utils/fetchData";
 import { Movie } from "../../interface/Movie";
@@ -10,14 +9,12 @@ import { useSearch } from "../../context/SearchContext";
 import { useLanguage } from "../../context/LanguageContext";
 import { useMenu } from "../../context/MenuContext";
 import "./Home.css";
-
 export default function Home() {
     const { language } = useLanguage();
     const fetchURLS = useMemo(() => getFetchURLs(language), [language]);
     const { data: movies, isLoading } = useQuery(["moviesHome", language], () => fetchData(fetchURLS.actionMovies), { staleTime: 1000 * 60 * 5 });
     const { setSearchTerm } = useSearch();
     const { setOpenMenu } = useMenu();
-
     const [featuredMovie, setFeaturedMovie] = useState<Movie | null>(null);
 
     const validMovies = useMemo(() => movies?.results?.filter((movie: Movie) => movie.backdrop_path) || [], [movies?.results]);
@@ -37,11 +34,16 @@ export default function Home() {
         }
     }, [validMovies, isLoading]);
 
-    if (isLoading) return <Spinner />;
-
     return (
         <div className="contenedorHome">
-            <Banner movie={featuredMovie} logoBuscar={true} />
+            {
+                featuredMovie ? (
+                    <Banner movie={featuredMovie} logoBuscar={true} />
+                ) : (
+                    <div className="header">
+                    </div>
+                )
+            }
             <div className="contenedorPeliculas">
                 <MovieSwiper
                     URL={fetchURLS.popularMovies}

@@ -1,85 +1,81 @@
+import { memo} from "react";
+// import Carousel from "react-multi-carousel";
 import "./DetalleBanner.css";
 import CarouselBoostrap from "../CarouselBoostrap/CarouselBoostrap";
-import Carousel from "react-multi-carousel";
-import { responsiveCredits } from "../../utils/ResponsiveCarrousel";
-import { getURLMovieDetails, URL_IMAGE_BANNER } from "../../utils/endPoints";
+// import { responsiveCredits } from "../../utils/ResponsiveCarrousel";
+// import { getURLMovieDetails, URL_IMAGE_BACKDROP, URL_IMAGE_BANNER } from "../../utils/endPoints";
 import { MovieDetails } from "../../interface/Movie";
-import { useQuery } from "react-query";
-import { fetchData } from "../../utils/fetchData";
-import { useEffect, useState } from "react";
+// import { useQuery } from "react-query";
+// import { fetchData } from "../../utils/fetchData";
 import { useWindowWidth } from "../../hooks/useWindowWidth";
 
-export default function DetalleBanner({ movie }: { movie: MovieDetails | null }) {
-  const { data } = useQuery(`providers-${movie?.id}`, () =>
-    fetchData(getURLMovieDetails(movie?.id).providers)
-  );
+const DetalleBanner = memo(({ movie }: { movie: MovieDetails | null|undefined }) => {
+  const width = useWindowWidth();
 
-  const [movieProviders, setMovieProviders] = useState<any>([]);
-  const width =useWindowWidth();
+  // const { data } = useQuery(
+  //   `providers-${movie?.id}`,
+  //   () => fetchData(getURLMovieDetails(movie?.id).providers),
+  //   { refetchOnWindowFocus: false }
+  // );
 
-  useEffect(() => {
-    if (data?.results) {
-      const list: any[] = [];
-      const addedProviderIds = new Set<string>();
+  // const movieProviders = useMemo(() => {
+  //   if (!data?.results) return [];
 
-      for (const provider in data.results) {
-        const region = data.results[provider];
+  //   const list: any[] = [];
+  //   const addedProviderIds = new Set<string>();
 
-        ["flatrate", "buy", "rent"].forEach((category) => {
-          if (region[category]) {
-            region[category].forEach((providerF: any) => {
-              if (!addedProviderIds.has(providerF.provider_name)) {
-                addedProviderIds.add(providerF.provider_name);
-                list.push(providerF);
-              }
-            });
-          }
-        });
-      }
-      setMovieProviders(list);
-    }
-  }, [data]);
+  //   for (const provider in data.results) {
+  //     const region = data.results[provider];
+
+  //     ["flatrate", "buy", "rent"].forEach((category) => {
+  //       if (region[category]) {
+  //         region[category].forEach((providerF: any) => {
+  //           if (!addedProviderIds.has(providerF.provider_name)) {
+  //             addedProviderIds.add(providerF.provider_name);
+  //             list.push(providerF);
+  //           }
+  //         });
+  //       }
+  //     });
+  //   }
+  //   return list;
+  // }, [data]);
 
   const renderGenres = (genres: any[] = []) =>
-    genres.map((genre: any) => (
+    genres.map((genre) => (
       <li key={genre.id}>
         <span>{genre.name}</span>
       </li>
     ));
 
-  const renderProviders = (movieProviders: any) => {
-    if (!movieProviders) return null;
-    return (
-      <Carousel
-        swipeable={true}
-        draggable={true}
-        showDots={false}
-        responsive={responsiveCredits}
-        ssr={true}
-        infinite={true}
-        keyBoardControl={true}
-        className="carouselProviders"
-      >
-        {movieProviders.map((provider: any) => (
-          <img
-            key={provider.provider_id}
-            className="provedorLogo"
-            src={URL_IMAGE_BANNER + provider.logo_path}
-            alt={provider.provider_name}
-          />
-        ))}
-      </Carousel>
-    );
-  };
+  // const renderProviders = useMemo(() => {
+  //   if (!movieProviders.length) return null;
+  //   return (
+  //     <Carousel
+  //       swipeable
+  //       draggable
+  //       showDots={false}
+  //       responsive={responsiveCredits}
+  //       ssr
+  //       infinite
+  //       keyBoardControl
+  //       className="carouselProviders"
+  //     >
+  //       {movieProviders.map((provider) => (
+  //         <img
+  //           key={provider.provider_id}
+  //           className="provedorLogo"
+  //           src={URL_IMAGE_BACKDROP + provider.logo_path}
+  //           alt={provider.provider_name}
+  //         />
+  //       ))}
+  //     </Carousel>
+  //   );
+  // }, [movieProviders]);
 
-  const Details = () => (
+  return (
     <>
       <div className="movieDetailsBanner flex flex-col">
-        {movie?.overview && (
-          <p className="overview">
-            {movie.overview.slice(0, movie.overview.indexOf(","))+"."}
-          </p>
-        )}
 
         <div className="bannerDetails flex flex-row">
           <span>TMDB {movie?.vote_average.toFixed(1)}</span>
@@ -97,15 +93,14 @@ export default function DetalleBanner({ movie }: { movie: MovieDetails | null })
       </div>
 
       {width >= 900 && (
-        <div className="provedores-container posters-continer-banner">
-          <div className="postersInfo">
-            <CarouselBoostrap movie={movie} isPoster={true} />
-          </div>
-          {renderProviders(movieProviders)}
+        <div className="posters-container-banner">
+            <CarouselBoostrap movie={movie} />
         </div>
       )}
+
+      
     </>
   );
+});
 
-  return <Details />;
-}
+export default DetalleBanner;

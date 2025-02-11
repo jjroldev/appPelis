@@ -1,5 +1,5 @@
 import "./Buscar.css";
-import { useEffect, useMemo,useCallback } from "react";
+import { useEffect, useMemo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuery, useQueryClient } from "react-query";
 
@@ -12,7 +12,7 @@ import { useLanguage } from "../../context/LanguageContext";
 import { useAuth } from "../../context/AuthContext";
 import { useMenu } from "../../context/MenuContext";
 
-import {NavBar} from "../NavBar/NavBar";
+import { NavBar } from "../NavBar/NavBar";
 import CardMovie from "../CardMovie/CardMovie";
 import Lupa from "../Lupa/Lupa";
 import { Movie } from "../../interface/Movie";
@@ -26,7 +26,7 @@ export default function Buscar() {
   const { language } = useLanguage();
   const { currentPerfil, currentUser } = useAuth();
   const { setOpenMenu } = useMenu();
-  const width=useWindowWidth()
+  const width = useWindowWidth()
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
@@ -50,7 +50,7 @@ export default function Buscar() {
     },
     [searchTerm, setSearchTerm]
   );
-  
+
   useQuery<Movie[]>(
     `favorites-${currentUser?.id}-${currentPerfil?.id}`,
     () => getFavoritesByProfile(currentUser?.id, currentPerfil?.id),

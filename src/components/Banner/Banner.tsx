@@ -27,10 +27,9 @@ interface BannerProps {
 export function Banner({ movie, logoBuscar, isDetail = false }: BannerProps) {
     const { currentPerfil, currentUser } = useAuth();
     const navigate = useNavigate();
-    const {handleAddFavorite}=useFavorites()
+    const { handleAddFavorite } = useFavorites()
 
     const [open, setOpen] = useState(false);
-
     const { data: fetchedDetails } = useQuery<MovieDetails>(
         `movie-${movie?.id}`,
         () => fetchData(getURLMovieDetails(movie?.id).movieDetails),
@@ -55,18 +54,19 @@ export function Banner({ movie, logoBuscar, isDetail = false }: BannerProps) {
 
     const renderOverviewOrTitle = () => {
         if (movie?.overview) {
-            return <p className="overview">{movie.overview.split(",")[0]}.</p>;
+            const overviewL=movie.overview.split('.')
+            return <p className="overview">{overviewL.length>0?
+                overviewL.slice(0,2):movie?.overview + "..."}.</p>;
         }
         return null;
     };
 
     const Logo = () => (
-        logoPath ? (
+        logoPath && (
             <>
                 <img className="logo-banner" src={`${URL_IMAGE_lOGO}${logoPath}`} alt={movie?.title} />
-                {isDetail ? <DetalleBanner movie={fetchedDetails} /> : renderOverviewOrTitle()}
             </>
-        ) : renderOverviewOrTitle()
+        )
     );
 
     function Botones() {
@@ -89,25 +89,16 @@ export function Banner({ movie, logoBuscar, isDetail = false }: BannerProps) {
             </div>
         )
     }
-
-    if (!movie) {
-        return (
-            <div className="header">
-                <NavBar perfil={true} menu={true} logoBuscar={logoBuscar} />
-            </div>
-        )
-    }
-
     return (
         <div className="header">
-            <img className="fondo"
-                src={`${URL_IMAGE_BANNER}${movie?.backdrop_path}`}
-                alt={movie?.title} />
+            <img className="fondo" src={URL_IMAGE_BANNER + movie?.backdrop_path} alt={movie?.title} />
             <NavBar perfil={true} menu={true} logoBuscar={logoBuscar} />
             <div className="cuerpoBanner">
                 <div className={`contenedorLogo ${isDetail ? "contenedorDetailN" : ""}`}>
                     <Logo />
+                    {isDetail && <DetalleBanner movie={fetchedDetails} />}
                     <Botones />
+                    {renderOverviewOrTitle()}
                 </div>
             </div>
         </div>

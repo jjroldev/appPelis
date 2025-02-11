@@ -49,13 +49,13 @@ const MovieSwiper = React.memo(
             <h2 className="tituloCarousel">{title}</h2>
             <Carousel
               swipeable
-              draggable
               showDots={false}
               responsive={responsivew}
-              minimumTouchDrag={50}
+              minimumTouchDrag={20}
               ssr={false}
               infinite
               autoPlay={false}
+              keyBoardControl={true}
               partialVisible={true}
               className={`carousel-react ${width < 600 ? "carousel-cell" : ""}`}
             >

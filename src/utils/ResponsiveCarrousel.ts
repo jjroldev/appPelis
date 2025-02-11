@@ -25,23 +25,27 @@ export const responsiveCredits = {
 export const responsiveInfo = {
     desktop: {
         breakpoint: { max: 3000, min: 1281 },
-        items: 8,
+        items: 9,
         slidesToSlide: 6,
+        partialVisibilityGutter: 12,
     },
     tablet: {
         breakpoint: { max: 1280, min: 769 },
-        items: 6,
+        items: 7,
         slidesToSlide: 5,
+        partialVisibilityGutter: 12,
     },
     mobileLarge: {
         breakpoint: { max: 768, min: 481 },
-        items: 4,
+        items: 5,
         slidesToSlide: 4,
+        partialVisibilityGutter: 12,
     },
     mobileSmall: {
         breakpoint: { max: 480, min: 0 },
         items: 3,
         slidesToSlide: 3,
+        partialVisibilityGutter: 12,
     },
 };
 
@@ -50,7 +54,7 @@ export const responsive = (isLarge?: boolean) => {
     return {
         desktop: { breakpoint: { max: 3000, min: 1281 }, items: isLarge ? 6 : 7, slidesToSlide: isLarge ? 5 : 6 ,partialVisibilityGutter:12,},
         tablet: { breakpoint: { max: 1280, min: 769 }, items: isLarge ? 4 : 6, slidesToSlide: isLarge ? 3 : 5 ,partialVisibilityGutter: 12,},
-        mobileLarge: { breakpoint: { max: 768, min: 481 }, items: isLarge ? 3 : 4, slidesToSlide: isLarge ? 2 : 3 ,partialVisibilityGutter: 12,},
+        mobileLarge: { breakpoint: { max: 768, min: 481 }, items: isLarge ? 3 : 4, slidesToSlide: 8 ,partialVisibilityGutter: 12,},
         mobileSmall: { breakpoint: { max: 480, min: 0 }, items: 3, slidesToSlide: 3,partialVisibilityGutter: 12, },
     }
 }

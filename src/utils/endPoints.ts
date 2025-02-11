@@ -1,7 +1,7 @@
 export const URL_IMAGE_POSTER = "https://image.tmdb.org/t/p/w500";
 export const URL_IMAGE_BACKDROP = "https://image.tmdb.org/t/p/w780";
-export const URL_IMAGE_BANNER = "https://image.tmdb.org/t/p/original";
-export const URL_IMAGE_PROFILE = "https://image.tmdb.org/t/p/h632";
+export const URL_IMAGE_BANNER = "https://image.tmdb.org/t/p/w1280";
+export const URL_IMAGE_PROFILE = "https://image.tmdb.org/t/p/w185";
 export const URL_IMAGE_lOGO = "https://image.tmdb.org/t/p/w500";
 export const BASE_URL = "https://api.themoviedb.org/3";
 export const API_KEY = import.meta.env.VITE_API_KEY as string;
@@ -30,8 +30,9 @@ export const getFetchURLs = (language: string) => ({
 });
 
 
-export const getURLMovieDetails=(id:number|undefined)=>({
+export const getURLMovieDetails=(id:number|undefined,language?:string|undefined)=>({
   movieDetails:`${BASE_URL}/movie/${id}?api_key=${API_KEY}&append_to_response=credits,images`,
   providers: `${BASE_URL}/movie/${id}/watch/providers?api_key=${API_KEY}`,
-  videos: `${BASE_URL}/movie/${id}?api_key=${API_KEY}&append_to_response=videos`
+  videos: `${BASE_URL}/movie/${id}?api_key=${API_KEY}&append_to_response=videos`,
+  similar:`${BASE_URL}/movie/${id}/similar?api_key=${API_KEY}&language=${language}`
 })

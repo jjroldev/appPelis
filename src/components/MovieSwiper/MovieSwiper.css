@@ -8,7 +8,7 @@
 .tituloCarousel {
     color: #fff;
     font-weight: 500;
-    font-size: clamp(.8rem, 1.5vw, 1.3rem);
+    font-size: 1.3rem;
 }
 
 .carousel-react .react-multi-carousel-item {
@@ -57,6 +57,10 @@
         min-width: 28px;
         min-height: 28px;
     }
+
+    .tituloCarousel{
+        font-size: 1.1rem;
+    }
 }
 
 @media (max-width: 900px) {
@@ -76,6 +80,11 @@
 
     .carousel-react .react-multiple-carousel__arrow::before{
         font-size: 10px !important;
+    }
+
+
+    .tituloCarousel{
+        font-size: 1rem;
     }
 }
 
