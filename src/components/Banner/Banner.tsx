@@ -1,10 +1,10 @@
 import { useState, useCallback, lazy } from "react";
 import { useNavigate } from "react-router";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import { useAuth } from "../../context/AuthContext";
 import "./Banner.css";
 import { NavBar } from "../NavBar/NavBar";
-import { addFavoriteToProfile, getFavoritesByProfile } from "../../firebase";
+import { getFavoritesByProfile } from "../../firebase";
 import { fetchData } from "../../utils/fetchData";
 import {
     URL_IMAGE_lOGO,
@@ -13,6 +13,7 @@ import {
 } from "../../utils/endPoints";
 
 import { Movie, MovieDetails } from "../../interface/Movie";
+import { useFavorites } from "../../hooks/useFavorites";
 
 const VideoModal = lazy(() => import("../ModalVideo/ModalVideo"));
 const DetalleBanner = lazy(() => import("../DetalleBanner/DetalleBaner"));
@@ -26,7 +27,7 @@ interface BannerProps {
 export function Banner({ movie, logoBuscar, isDetail = false }: BannerProps) {
     const { currentPerfil, currentUser } = useAuth();
     const navigate = useNavigate();
-    const queryClient = useQueryClient();
+    const {handleAddFavorite}=useFavorites()
 
     const [open, setOpen] = useState(false);
 
@@ -51,13 +52,6 @@ export function Banner({ movie, logoBuscar, isDetail = false }: BannerProps) {
     const pasarMovie = useCallback(() => {
         navigate("/info", { state: { movie } });
     }, [navigate, movie]);
-
-    const handleAddFavorite = async (movie: Movie | null) => {
-        if (movie) {
-            await addFavoriteToProfile(currentUser?.id, currentPerfil?.id, movie);
-            await queryClient.invalidateQueries(`favorites-${currentUser?.id}-${currentPerfil?.id}`);
-        }
-    };
 
     const renderOverviewOrTitle = () => {
         if (movie?.overview) {

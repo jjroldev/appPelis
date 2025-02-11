@@ -4,17 +4,16 @@ import { NavBar } from '../NavBar/NavBar';
 import { Movie } from '../../interface/Movie';
 import "./MiLista.css"
 import { useAuth } from '../../context/AuthContext';
-import { removeFavoriteToProfile } from '../../firebase';
 import { useQuery } from 'react-query';
 import { getFavoritesByProfile } from '../../firebase';
-import { useQueryClient } from "react-query";
 import { useSearch } from '../../context/SearchContext';
 import { useMenu } from '../../context/MenuContext';
+import { useFavorites } from '../../hooks/useFavorites';
 export default function MiLista() {
   const { currentUser, currentPerfil } = useAuth()
-  const queryClient = useQueryClient();
   const { setSearchTerm } = useSearch()
   const{setOpenMenu}=useMenu()
+  const {handleRemoveFavorite}=useFavorites()
 
   const { data: movies, isLoading } = useQuery<Movie[]>(
     `favorites-${currentUser?.id}-${currentPerfil?.id}`,
@@ -33,10 +32,6 @@ export default function MiLista() {
     setOpenMenu(false)
   }, []);
 
-  const handleRemoveFavorite = async (movie: Movie) => {
-    await removeFavoriteToProfile(currentUser?.id, currentPerfil?.id, movie);
-    await queryClient.invalidateQueries(`favorites-${currentUser?.id}-${currentPerfil?.id}`);
-  };
 
   if (isLoading) {
     return (

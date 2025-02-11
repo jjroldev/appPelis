@@ -3,18 +3,17 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import CardMovie from "../CardMovie/CardMovie";
 import { Movie } from "../../interface/Movie";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import { fetchData } from "../../utils/fetchData";
 import { responsive } from "../../utils/ResponsiveCarrousel";
-import { useAuth } from "../../context/AuthContext";
-import { addFavoriteToProfile } from "../../firebase";
 import "./MovieSwiper.css";
 import { useWindowWidth } from "../../hooks/useWindowWidth";
+import { useFavorites } from "../../hooks/useFavorites";
 
 const MovieSwiper = React.memo(
   ({ URL, title, isLarge = false }: { URL: string; title: string; isLarge?: boolean }) => {
-    const { currentPerfil, currentUser } = useAuth();
-    const queryClient = useQueryClient();
+
+    const {handleAddFavorite}=useFavorites()
 
     const { data: movies, isLoading } = useQuery(["movies", URL], () => fetchData(URL), {
       staleTime: 1000 * 60 * 5,
@@ -32,13 +31,6 @@ const MovieSwiper = React.memo(
       () => movies?.results?.filter((movie: Movie) => movie.backdrop_path) || [],
       [movies]
     );
-
-    const handleAddFavorite = async (movie: Movie) => {
-      await addFavoriteToProfile(currentUser?.id, currentPerfil?.id, movie);
-      await queryClient.invalidateQueries(`favorites-${currentUser?.id}-${currentPerfil?.id}`, {
-        refetchInactive: false,
-      });
-    };
 
     const responsivew = useMemo(() => responsive(isLarge1), [isLarge1]);
 

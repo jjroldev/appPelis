@@ -61,15 +61,6 @@ const CardMovie = React.memo(
       };
     }, []);
 
-    function Fondo({ imageLoaded }: { imageLoaded: boolean }) {
-      return (
-        <div
-          className={`fondoCardMovie h-full w-full absolute inset-0 ${imageLoaded ? "opacity-0" : "opacity-100"
-            } transition-opacity duration-500`}
-        ></div>
-      )
-    }
-
     function ImagenCardMovie({ imageLoaded }: { imageLoaded: boolean }) {
       return (
         <img
@@ -99,7 +90,7 @@ const CardMovie = React.memo(
               <i className="fa-solid fa-heart"></i>
             </button>
             {doDelete && (
-              <button onClick={handleRemove}>
+              <button className="corazon" onClick={handleRemove}>
                 <i className="fa-solid fa-trash"></i>
               </button>
             )}
@@ -115,7 +106,10 @@ const CardMovie = React.memo(
         onClick={pasarMovie}
       >
         <div className={`cardContainerImage ${isLarge ? "backdrop" : "poster"}`}>
-          <Fondo imageLoaded={imageLoaded} />
+          <div
+            className={`fondoCardMovie h-full w-full absolute inset-0 ${imageLoaded ? "opacity-0" : "opacity-100"
+              } transition-opacity duration-500`}
+          ></div>
           {isVisible && (
             <ImagenCardMovie imageLoaded={imageLoaded} />
           )}
