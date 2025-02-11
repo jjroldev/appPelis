@@ -1,5 +1,5 @@
 import "./Buscar.css";
-import { useEffect, useMemo, useState, useCallback } from "react";
+import { useEffect, useMemo,useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuery, useQueryClient } from "react-query";
 
@@ -16,6 +16,7 @@ import {NavBar} from "../NavBar/NavBar";
 import CardMovie from "../CardMovie/CardMovie";
 import Lupa from "../Lupa/Lupa";
 import { Movie } from "../../interface/Movie";
+import { useWindowWidth } from "../../hooks/useWindowWidth";
 
 export default function Buscar() {
   const navigate = useNavigate();
@@ -25,17 +26,10 @@ export default function Buscar() {
   const { language } = useLanguage();
   const { currentPerfil, currentUser } = useAuth();
   const { setOpenMenu } = useMenu();
-
-  const [width, setWidth] = useState(window.innerWidth);
+  const width=useWindowWidth()
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
-  }, []);
-
-  useEffect(() => {
-    const handleResize = () => setWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {

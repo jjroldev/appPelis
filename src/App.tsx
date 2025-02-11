@@ -1,43 +1,45 @@
 import './App.css';
-import { Routes, Route, Navigate, HashRouter } from 'react-router-dom';
-import { PrivateRoutes } from './components/PrivateRoutes';
-import { PublicRoutes } from './components/PublicRoutes';
-import { AuthProvider, useAuth } from './context/AuthContext';
-import { EmailProvider } from './context/ExistsEmailContext';
+import { Routes, Route, HashRouter, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
-import { SearchProvider } from './context/SearchContext';
-import { LanguageProvider } from './context/LanguageContext';
+import { Suspense } from 'react';
+import { lazy } from 'react';
+import Spinner from './components/Spinner/Spinner';
+import { ProtectedRoute } from './ProtectedRoute';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { MenuProvider } from './context/MenuContext';
-function AppRoutes() {
-  const { isLoggedIn } = useAuth();
+import { useAuth } from './context/AuthContext';
 
-  return (
-    <Routes>
-      {isLoggedIn ? <Route path="/*" element={<PrivateRoutes />} /> : <Route path="/*" element={<PublicRoutes />} />}
-      <Route path="*" element={<Navigate to={isLoggedIn ? "/home" : "/login"} replace />} />
-    </Routes>
-  );
-}
-
+const PageLogin = lazy(() => import("./components/PageLogin/PageLogin"));
+const PageRegister = lazy(() => import("./components/PageRegister/PageRegister"));
+const MiLista = lazy(() => import("./components/MiLista/MiLista"));
+const Buscar = lazy(() => import("./components/Buscar/Buscar"));
+const Home = lazy(() => import("./components/Home/Home"));
+const ManagePerfil = lazy(() => import("./components/ManagePerfil/ManagePerfil"));
+const InfoMovie = lazy(() => import('./components/InfoMovie/InfoMovie'));
 export default function App() {
-  const queryClient = new QueryClient()
+  const queryClient = new QueryClient();
+  const { isLoggedIn, loading,currentPerfil } = useAuth();
+  if (loading) return null;
+
   return (
     <QueryClientProvider client={queryClient}>
-      <MenuProvider >
-        <LanguageProvider>
-          <AuthProvider>
-            <EmailProvider>
-              <SearchProvider>
-                <HashRouter>
-                  <Toaster position="bottom-right" reverseOrder={false} />
-                  <AppRoutes />
-                </HashRouter>
-              </SearchProvider>
-            </EmailProvider>
-          </AuthProvider>
-        </LanguageProvider>
-      </MenuProvider>
+      <HashRouter>
+        <Toaster position="bottom-right" reverseOrder={false} />
+        <Routes>
+          <Route
+            path="/"
+            element={<Navigate to={isLoggedIn ? (currentPerfil? "/home":"/manageProfiles"):"/login"} replace />}
+          />
+          <Route path="login" element={<Suspense fallback={<Spinner />}><PageLogin /></Suspense>} />
+          <Route path="register" element={ <Suspense fallback={<Spinner />}><PageRegister /></Suspense>} />
+          <Route element={<ProtectedRoute />}>
+            <Route path='home' element={<Suspense fallback={<Spinner />}><Home /></Suspense>} />
+            <Route path='miLista' element={<Suspense fallback={<Spinner />}><MiLista /></Suspense>} />
+            <Route path='buscar' element={<Suspense fallback={<Spinner />}><Buscar /></Suspense>} />
+            <Route path='manageProfiles' element={<Suspense fallback={<Spinner />}><ManagePerfil /></Suspense>} />
+            <Route path='info' element={<Suspense fallback={<Spinner />}><InfoMovie /></Suspense>} />
+          </Route>
+        </Routes>
+      </HashRouter>
     </QueryClientProvider>
   );
 }

@@ -5,6 +5,7 @@
 
 .infoMovieContainer {
     color: #fff;
+    min-height: 120vh;
 }
 
 .logoCompanie {

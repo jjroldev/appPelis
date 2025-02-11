@@ -10,7 +10,7 @@ import { db } from "../../firebase";
 import { User } from "../../interface/User";
 import { useMenu } from "../../context/MenuContext";
 export default function Login() {
-  const { loginAuth } = useAuth();
+  const { loginAuth} = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [open, setOpen] = useState(false);

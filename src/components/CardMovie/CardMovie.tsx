@@ -61,6 +61,53 @@ const CardMovie = React.memo(
       };
     }, []);
 
+    function Fondo({ imageLoaded }: { imageLoaded: boolean }) {
+      return (
+        <div
+          className={`fondoCardMovie h-full w-full absolute inset-0 ${imageLoaded ? "opacity-0" : "opacity-100"
+            } transition-opacity duration-500`}
+        ></div>
+      )
+    }
+
+    function ImagenCardMovie({ imageLoaded }: { imageLoaded: boolean }) {
+      return (
+        <img
+          src={
+            isLarge
+              ? `${URL_IMAGE_BACKDROP}${movie.backdrop_path}`
+              : `${URL_IMAGE_POSTER}${movie.poster_path}`
+          }
+          alt={movie.title}
+          onLoad={() => setImageLoaded(true)}
+          className={`main-image ${imageLoaded ? "visible" : "hidden"}`}
+        />
+      )
+    }
+
+    function HoverDetailsCardMovie({ isLarge, doDelete }: { isLarge: boolean | undefined, doDelete: boolean }) {
+      return (
+        <div className="details-cardMovie">
+          <h2 className="titulo-cardMovie">
+            {isLarge && (movie.title.includes(":") ? movie.title.split(":")[0] : movie.title)}
+          </h2>
+          <div className="play-button">
+            <button
+              onClick={handleAdd}
+              className={doDelete ? "heartVisible corazon" : "corazon"}
+            >
+              <i className="fa-solid fa-heart"></i>
+            </button>
+            {doDelete && (
+              <button onClick={handleRemove}>
+                <i className="fa-solid fa-trash"></i>
+              </button>
+            )}
+          </div>
+        </div>
+      )
+    }
+
     return (
       <div
         ref={imgRef}
@@ -68,44 +115,12 @@ const CardMovie = React.memo(
         onClick={pasarMovie}
       >
         <div className={`cardContainerImage ${isLarge ? "backdrop" : "poster"}`}>
-          <div
-            className={`fondoCardMovie h-full w-full absolute inset-0 ${
-              imageLoaded ? "opacity-0" : "opacity-100"
-            } transition-opacity duration-500`}
-          ></div>
-
+          <Fondo imageLoaded={imageLoaded} />
           {isVisible && (
-            <img
-              src={
-                isLarge
-                  ? `${URL_IMAGE_BACKDROP}${movie.backdrop_path}`
-                  : `${URL_IMAGE_POSTER}${movie.poster_path}`
-              }
-              alt={movie.title}
-              onLoad={() => setImageLoaded(true)}
-              className={`main-image ${imageLoaded ? "visible" : "hidden"}`}
-            />
+            <ImagenCardMovie imageLoaded={imageLoaded} />
           )}
-
           {imageLoaded && (
-            <div className="details-cardMovie">
-              <h2 className="titulo-cardMovie">
-                {isLarge && (movie.title.includes(":") ? movie.title.split(":")[0] : movie.title)}
-              </h2>
-              <div className="play-button">
-                <button
-                  onClick={handleAdd}
-                  className={doDelete ? "heartVisible corazon" : "corazon"}
-                >
-                  <i className="fa-solid fa-heart"></i>
-                </button>
-                {doDelete && (
-                  <button onClick={handleRemove}>
-                    <i className="fa-solid fa-trash"></i>
-                  </button>
-                )}
-              </div>
-            </div>
+            <HoverDetailsCardMovie isLarge={isLarge} doDelete={doDelete} />
           )}
         </div>
       </div>

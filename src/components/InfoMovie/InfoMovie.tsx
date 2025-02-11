@@ -5,7 +5,7 @@ import "react-multi-carousel/lib/styles.css";
 import { Movie, MovieDetails } from "../../interface/Movie";
 import Carousel from "react-multi-carousel";
 import { Card } from "../Card/Card";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { fetchData } from "../../utils/fetchData";
 import { useQuery } from "react-query";
 import { getURLMovieDetails } from "../../utils/endPoints";
@@ -13,7 +13,7 @@ import { responsiveInfo } from "../../utils/ResponsiveCarrousel";
 import CarouselBoostrap from "../CarouselBoostrap/CarouselBoostrap";
 import { useSearch } from "../../context/SearchContext";
 import { useMenu } from "../../context/MenuContext";
-import Spinner from "../Spinner/Spinner";
+import { useWindowWidth } from "../../hooks/useWindowWidth";
 
 export default function InfoMovie() {
     const location = useLocation();
@@ -24,13 +24,7 @@ export default function InfoMovie() {
         () => fetchData(getURLMovieDetails(movie1?.id).movieDetails)
     );
 
-    const [width, setWidth] = useState(window.innerWidth);
-
-    useEffect(() => {
-        const handleResize = () => setWidth(window.innerWidth);
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-    }, []);
+    const width =useWindowWidth()
 
     const { setSearchTerm } = useSearch();
     const { setOpenMenu } = useMenu();
@@ -69,30 +63,25 @@ export default function InfoMovie() {
         </div>
     );
 
-    if (!movie) {
-        return <Spinner />
-    }
-
     return (
-        movie && (
-            <div className="contenedorPrincipalMovie">
-                <Banner movie={movie1} logoBuscar isDetail />
-                <div className="infoMovieContainer">
-                    <div className="detallesInfo">
-                        {movie.credits.cast?.length > 0 && (
-                            <CarouselCredits renderCredits={renderCastMembers(movie)} title="CAST" />
-                        )}
-                        {movie.credits.crew?.length > 0 && (
-                            <CarouselCredits renderCredits={renderCrewMembers(movie)} title="CREW" />
-                        )}
-                    </div>
-                    <div className="contenedor-imagenes">
-                        <div className="flex flex-col backdropss">
-                            <CarouselBoostrap movie={movie} />
-                        </div>
+        <div className="contenedorPrincipalMovie">
+            <Banner movie={movie1} logoBuscar isDetail />
+            <div className="infoMovieContainer">
+                <div className="detallesInfo">
+                    {movie && movie.credits.cast?.length > 0 && (
+                        <CarouselCredits renderCredits={renderCastMembers(movie)} title="CAST" />
+                    )}
+                    {movie && movie.credits.crew?.length > 0 && (
+                        <CarouselCredits renderCredits={renderCrewMembers(movie)} title="CREW" />
+                    )}
+                </div>
+                <div className="contenedor-imagenes">
+                    <div className="flex flex-col backdropss">
+                        <CarouselBoostrap movie={movie} />
                     </div>
                 </div>
             </div>
-        )
+        </div>
+
     );
 }

@@ -9,6 +9,7 @@ import { responsive } from "../../utils/ResponsiveCarrousel";
 import { useAuth } from "../../context/AuthContext";
 import { addFavoriteToProfile } from "../../firebase";
 import "./MovieSwiper.css";
+import { useWindowWidth } from "../../hooks/useWindowWidth";
 
 const MovieSwiper = React.memo(
   ({ URL, title, isLarge = false }: { URL: string; title: string; isLarge?: boolean }) => {
@@ -20,14 +21,8 @@ const MovieSwiper = React.memo(
       refetchOnWindowFocus: false,
     });
 
-    const [width, setWidth] = useState(window.innerWidth);
+    const width=useWindowWidth()
     const [isLarge1, setIsLarge] = useState(isLarge);
-
-    useEffect(() => {
-      const handleResize = () => setWidth(window.innerWidth);
-      window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
-    }, []);
 
     useEffect(() => {
       setIsLarge(width > 1000 ? isLarge : false);

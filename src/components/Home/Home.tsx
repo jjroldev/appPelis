@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import { Banner } from "../Banner/Banner";
 import MovieSwiper from "../MovieSwiper/MovieSwiper";
 import Spinner from "../Spinner/Spinner";
-import { getFetchURLs} from "../../utils/endPoints";
+import { getFetchURLs } from "../../utils/endPoints";
 import { fetchData } from "../../utils/fetchData";
 import { Movie } from "../../interface/Movie";
 import { useSearch } from "../../context/SearchContext";
@@ -19,7 +19,7 @@ export default function Home() {
     const { setOpenMenu } = useMenu();
 
     const [featuredMovie, setFeaturedMovie] = useState<Movie | null>(null);
-    
+
     const validMovies = useMemo(() => movies?.results?.filter((movie: Movie) => movie.backdrop_path) || [], [movies?.results]);
 
     useEffect(() => {
@@ -27,7 +27,7 @@ export default function Home() {
         setOpenMenu(false);
         setSearchTerm("");
     }, []);
-    
+
     useEffect(() => {
         if (!isLoading && validMovies.length > 0) {
             const storedMovie = sessionStorage.getItem("featuredMovie");
@@ -36,9 +36,9 @@ export default function Home() {
             sessionStorage.setItem("featuredMovie", JSON.stringify(selectedMovie));
         }
     }, [validMovies, isLoading]);
-    
+
     if (isLoading) return <Spinner />;
-    
+
     return (
         <div className="contenedorHome">
             <Banner movie={featuredMovie} logoBuscar={true} />

@@ -36,6 +36,9 @@ export function Banner({ movie, logoBuscar, isDetail = false }: BannerProps) {
         { enabled: !!movie }
     );
 
+    const logoPath = fetchedDetails?.images?.logos?.find((l) => l.iso_639_1 === "en")?.file_path ||
+        fetchedDetails?.images?.logos?.[0]?.file_path;
+
     useQuery<Movie[]>(
         `favorites-${currentUser?.id}-${currentPerfil?.id}`,
         () => getFavoritesByProfile(currentUser?.id, currentPerfil?.id),
@@ -56,9 +59,6 @@ export function Banner({ movie, logoBuscar, isDetail = false }: BannerProps) {
         }
     };
 
-    const logoPath = fetchedDetails?.images?.logos?.find((l) => l.iso_639_1 === "en")?.file_path ||
-        fetchedDetails?.images?.logos?.[0]?.file_path;
-
     const renderOverviewOrTitle = () => {
         if (movie?.overview) {
             return <p className="overview">{movie.overview.split(",")[0]}.</p>;
@@ -66,7 +66,7 @@ export function Banner({ movie, logoBuscar, isDetail = false }: BannerProps) {
         return null;
     };
 
-    const renderLogoOrContent = () => (
+    const Logo = () => (
         logoPath ? (
             <>
                 <img className="logo-banner" src={`${URL_IMAGE_lOGO}${logoPath}`} alt={movie?.title} />
@@ -75,35 +75,45 @@ export function Banner({ movie, logoBuscar, isDetail = false }: BannerProps) {
         ) : renderOverviewOrTitle()
     );
 
-    const renderButtons = () => (
-        <div className="botones">
-            <button className="play" onClick={handleOpen}>
-                <i className="fa-solid fa-play"></i> Play
-            </button>
-            <VideoModal movie={movie} open={open} onClose={handleClose} />
-
-            {location.hash !== "#/info" && (
-                <button onClick={pasarMovie} className="boton-info-banner">
-                    <i className="fa-solid fa-circle-info"></i> More Information
+    function Botones() {
+        return (
+            <div className="botones">
+                <button className="play" onClick={handleOpen}>
+                    <i className="fa-solid fa-play"></i> Play
                 </button>
-            )}
+                <VideoModal movie={movie} open={open} onClose={handleClose} />
 
-            <button onClick={() => handleAddFavorite(movie)} className="botonMeGustaBanner">
-                <i className="fa-solid fa-heart"></i>
-            </button>
-        </div>
-    );
+                {location.hash !== "#/info" && (
+                    <button onClick={pasarMovie} className="boton-info-banner">
+                        <i className="fa-solid fa-circle-info"></i> More Information
+                    </button>
+                )}
+
+                <button onClick={() => handleAddFavorite(movie)} className="botonMeGustaBanner">
+                    <i className="fa-solid fa-heart"></i>
+                </button>
+            </div>
+        )
+    }
+
+    if (!movie) {
+        return (
+            <div className="header">
+                <NavBar perfil={true} menu={true} logoBuscar={logoBuscar} />
+            </div>
+        )
+    }
 
     return (
         <div className="header">
-            <img className="fondo" 
-            src={`${URL_IMAGE_BANNER}${movie?.backdrop_path}`} 
-            alt={movie?.title} />
+            <img className="fondo"
+                src={`${URL_IMAGE_BANNER}${movie?.backdrop_path}`}
+                alt={movie?.title} />
             <NavBar perfil={true} menu={true} logoBuscar={logoBuscar} />
             <div className="cuerpoBanner">
                 <div className={`contenedorLogo ${isDetail ? "contenedorDetailN" : ""}`}>
-                    {renderLogoOrContent()}
-                    {renderButtons()}
+                    <Logo />
+                    <Botones />
                 </div>
             </div>
         </div>

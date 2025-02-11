@@ -7,6 +7,7 @@ import { MovieDetails } from "../../interface/Movie";
 import { useQuery } from "react-query";
 import { fetchData } from "../../utils/fetchData";
 import { useEffect, useState } from "react";
+import { useWindowWidth } from "../../hooks/useWindowWidth";
 
 export default function DetalleBanner({ movie }: { movie: MovieDetails | null }) {
   const { data } = useQuery(`providers-${movie?.id}`, () =>
@@ -14,13 +15,7 @@ export default function DetalleBanner({ movie }: { movie: MovieDetails | null })
   );
 
   const [movieProviders, setMovieProviders] = useState<any>([]);
-  const [width, setWidth] = useState(window.innerWidth);
-
-  useEffect(() => {
-    const handleResize = () => setWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  const width =useWindowWidth();
 
   useEffect(() => {
     if (data?.results) {

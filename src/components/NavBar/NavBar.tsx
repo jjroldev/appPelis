@@ -1,8 +1,10 @@
 import './NavBar.css';
 import { useLocation, Link } from "react-router-dom";
-import { useEffect, useState, useRef, lazy } from 'react';
+import {useRef, lazy } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useMenu } from '../../context/MenuContext';
+import { useScroll } from '../../hooks/useScroll';
+import { useWindowWidth } from '../../hooks/useWindowWidth';
 
 const SearchBar = lazy(() => import('../SearchBar/SearchBar'));
 const PerfilDrop = lazy(() => import('../PerfilDrop/PerfilDrop'));
@@ -30,20 +32,8 @@ export function NavBar({
     const { openMenu, setOpenMenu } = useMenu();
 
     const navbarRef = useRef<HTMLDivElement>(null);
-    const [scrolled, setScrolled] = useState(false);
-    const [width, setWidth] = useState(window.innerWidth);
-
-    useEffect(() => {
-        const handleScroll = () => setScrolled(window.scrollY > 0);
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
-
-    useEffect(() => {
-        const handleResize = () => setWidth(window.innerWidth);
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-    }, []);
+    const scrolled = useScroll();
+    const width=useWindowWidth()
 
     function MenuDesplegable() {
         return (
