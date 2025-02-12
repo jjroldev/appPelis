@@ -1,1 +1,0 @@
-import{j as r}from"./index-oL9RyTHw.js";import{d as s}from"./CardMovie-B0k-hVK0.js";function c({backdrop_path:a}){return r.jsx("div",{className:"wrapperBackdrop",children:r.jsx("img",{src:s+a,className:"backdropInfo"})})}export{c as default};
