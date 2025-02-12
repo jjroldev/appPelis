@@ -14,6 +14,7 @@ import {
 
 import { Movie, MovieDetails } from "../../interface/Movie";
 import { useFavorites } from "../../hooks/useFavorites";
+import { useWindowWidth } from "../../hooks/useWindowWidth";
 
 const VideoModal = lazy(() => import("../ModalVideo/ModalVideo"));
 const DetalleBanner = lazy(() => import("../DetalleBanner/DetalleBaner"));
@@ -28,6 +29,8 @@ export function Banner({ movie, logoBuscar, isDetail = false }: BannerProps) {
     const { currentPerfil, currentUser } = useAuth();
     const navigate = useNavigate();
     const { handleAddFavorite } = useFavorites()
+
+    const width=useWindowWidth()
 
     const [open, setOpen] = useState(false);
     const { data: fetchedDetails } = useQuery<MovieDetails>(
@@ -54,9 +57,14 @@ export function Banner({ movie, logoBuscar, isDetail = false }: BannerProps) {
 
     const renderOverviewOrTitle = () => {
         if (movie?.overview) {
-            const overviewL=movie.overview.split('.')
-            return <p className="overview">{overviewL.length>0?
-                overviewL.slice(0,2):movie?.overview + "..."}.</p>;
+            return (
+                <p className="overview">
+                    {width>600?
+                    movie?.overview.slice(0, 250): 
+                    movie?.overview.slice(0, 150)
+                    + "..."}
+                </p>
+            )
         }
         return null;
     };

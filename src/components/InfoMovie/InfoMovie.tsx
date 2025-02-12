@@ -8,7 +8,7 @@ import { Card } from "../Card/Card";
 import { useEffect } from "react";
 import { fetchData } from "../../utils/fetchData";
 import { useQuery } from "react-query";
-import { getURLMovieDetails } from "../../utils/endPoints";
+import {getURLMovieDetails } from "../../utils/endPoints";
 import { responsiveInfo } from "../../utils/ResponsiveCarrousel";
 import CarouselBoostrap from "../CarouselBoostrap/CarouselBoostrap";
 import { useSearch } from "../../context/SearchContext";
@@ -16,10 +16,11 @@ import { useMenu } from "../../context/MenuContext";
 import { useWindowWidth } from "../../hooks/useWindowWidth";
 import Spinner from "../Spinner/Spinner";
 import MovieSwiper from "../MovieSwiper/MovieSwiper";
+import { useLanguage } from "../../context/LanguageContext";
 export default function InfoMovie() {
     const location = useLocation();
     const { movie: movie1 }: { movie: Movie } = location.state;
-
+    const { language } = useLanguage()
     const { data: movie } = useQuery<MovieDetails>(
         `movieInfo-${movie1?.id}`,
         () => fetchData(getURLMovieDetails(movie1?.id).movieDetails),
@@ -59,7 +60,8 @@ export default function InfoMovie() {
                 infinite
                 keyBoardControl={false}
                 className={`carousel-cast ${width < 630 ? "cast-visible" : ""}`}
-                partialVisbile={true}
+                partialVisible={true}
+                minimumTouchDrag={0}
             >
                 {renderCredits}
             </Carousel>
@@ -76,7 +78,12 @@ export default function InfoMovie() {
             <div className="infoMovieContainer">
                 <div className="detallesInfo">
                     <div className="contenedorSimilares">
-                        <MovieSwiper URL={getURLMovieDetails(movie.id, 'es').similar} title="También te puede interesar" />
+                        <MovieSwiper
+                            URL={
+                                getURLMovieDetails(movie.id, language).similar
+                            }
+                            title="También te puede interesar"
+                        />
                     </div>
                     {movie && movie.credits.cast?.length > 0 && (
                         <CarouselCredits renderCredits={renderCastMembers(movie)} title="CAST" />

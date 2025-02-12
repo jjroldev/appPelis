@@ -38,8 +38,7 @@
     height: 100%;
     background: 
         /* linear-gradient(to right, rgb(17, 17, 17), transparent 10%, transparent 90%, rgb(17, 17, 17)),  */
-        linear-gradient(to bottom, rgb(17, 17, 17), transparent 20%, transparent 70%, rgb(17, 17, 17)), 
-        rgba(0, 0, 0, 0.25);
+        linear-gradient(to bottom, rgb(17, 17, 17), transparent 20%, transparent 70%, rgb(17, 17, 17)); 
     z-index: 1;
 }
 
@@ -65,7 +64,7 @@
 
 .contenedorLogo img {
     width: 28vw;
-    margin-bottom: 8px;
+    margin-bottom: 14px;
     height: auto;
 }
 
@@ -77,8 +76,8 @@
 
 .overview {
     font-size: 1.2rem;
-    font-weight: 400;
-    max-width: 55%;
+    font-weight: 500;
+    max-width: 40%;
 }
 
 
@@ -102,6 +101,10 @@
     z-index: 5;
 }
 
+.botones button i{
+    font-size: 2rem;
+}
+
 .botones button:first-child {
     background-color: #fff;
     color: #000;
@@ -123,12 +126,27 @@
 .botonMeGustaBanner {
     background-color: rgba(0, 0, 0, .5);
     color: #fff;
+    border-radius: 5px;
+}
+
+.botonMeGustaBanner i{
+    font-size: 1.52rem !important;
 }
 
 .botonMeGustaBanner:hover {
     color: red;
 }
 
+@media (max-width: 1200px) {
+    .overview {
+        font-size: 1.1rem;
+    }
+
+    .botones button i{
+        font-size: 1.9rem;
+    }
+    
+}
 
 @media (max-width: 1024px) {
     .header {
@@ -152,6 +170,13 @@
     .cuerpoBanner {
         padding: 25px;
     }
+
+
+    .botones button i{
+        font-size: 1.6rem;
+    }
+    
+
 }
 
 @media (max-width: 900px) {
@@ -164,6 +189,16 @@
     .header {
         height: 80vh;
     }
+
+
+    .botones button i{
+        font-size: 1.3rem;
+    }
+
+    .botonMeGustaBanner i{
+        font-size: 1.2rem !important;
+    }
+    
 }
 
 @media (max-width: 768px) {
@@ -183,14 +218,17 @@
         background:
             linear-gradient(to bottom, rgb(17, 17, 17), transparent 20%, transparent 0%, rgb(17, 17, 17));
     }
-
 }
-
 
 @media (max-width: 650px) {
     .header {
         height: 70vh;
     }
+
+    .contenedorLogo {
+        bottom: 130px;
+    }
+
 }
 
 
@@ -203,13 +241,11 @@
 
 
     .overview {
-        max-width: 85%;
+        max-width: 90%;
         font-size: .9rem;
     }
 
     .contenedorLogo {
-        bottom: 130px;
-        z-index: 3;
         gap: 8px;
     }
 

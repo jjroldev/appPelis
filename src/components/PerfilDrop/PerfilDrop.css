@@ -18,7 +18,18 @@
 .dropdown-menu {
   background-color: rgba(0, 0, 0, 0.7) !important;
   color: #fff;
+  padding-top: 0 !important;
   margin-top: 18px !important;
+}
+
+.dropdown-menu::before {
+  content: "";
+  position: absolute;
+  top: -18px;
+  left: 0;
+  width: 100%;
+  height: 18px;
+  background: transparent;
 }
 
 .drop {
@@ -43,10 +54,6 @@
 
 .drop span:hover {
   text-decoration: underline !important;
-}
-
-.dropdown-menu {
-  padding: 0px !important;
 }
 
 .bold {

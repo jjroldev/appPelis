@@ -8,13 +8,11 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { useMenu } from '../../context/MenuContext';
 import { useState } from 'react';
-
 export default function PerfilDrop() {
     const navigate = useNavigate();
     const { currentUser, logout, currentPerfil, setCurrentPerfil } = useAuth();
     const { setEmailExists } = useEmail();
     const { openMenu, setOpenMenu } = useMenu();
-
     const [showDropdown, setShowDropdown] = useState(false);
 
     const { data: perfiles = [] } = useQuery<Perfil[]>(
@@ -37,11 +35,13 @@ export default function PerfilDrop() {
         <div
             className="contenedorPerfilImagen"
             onMouseEnter={() => setShowDropdown(true)}
-            onClick={() => setShowDropdown(!showDropdown)}
+            onMouseLeave={() => setShowDropdown(false)}
+            onClick={()=>setShowDropdown(!showDropdown)}
         >
             <div className="containerImagePerfil">
                 <img src="/appPelis/avatar3.png" alt="Perfil" />
             </div>
+
             <NavDropdown
                 title=""
                 id="navbarScrollingDropdown"
@@ -75,6 +75,7 @@ export default function PerfilDrop() {
 
                 <NavDropdown.Item className="drop" onClick={() => {
                     setEmailExists(false);
+                    setOpenMenu(false)
                     logout();
                 }}>
                     <span className="logOut">Sign out</span>

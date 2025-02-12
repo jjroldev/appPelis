@@ -1,9 +1,9 @@
-import { URL_IMAGE_BANNER } from '../../utils/endPoints'
+import { URL_IMAGE_BACKDROPC } from '../../utils/endPoints'
 import './Backdrop.css'
 function Backdrop({backdrop_path}:{backdrop_path:string}){
     return(
         <div className="wrapperBackdrop">
-            <img src={URL_IMAGE_BANNER+backdrop_path} className="backdropInfo"/>
+            <img src={URL_IMAGE_BACKDROPC+backdrop_path} className="backdropInfo"/>
         </div>
     )
 }
