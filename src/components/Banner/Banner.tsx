@@ -12,7 +12,7 @@ import {
     getURLMovieDetails
 } from "../../utils/endPoints";
 
-import { Movie, MovieDetails } from "../../interface/Movie";
+import { Movie } from "../../interface/Movie";
 import { useFavorites } from "../../hooks/useFavorites";
 import { useWindowWidth } from "../../hooks/useWindowWidth";
 
@@ -20,12 +20,12 @@ const VideoModal = lazy(() => import("../ModalVideo/ModalVideo"));
 const DetalleBanner = lazy(() => import("../DetalleBanner/DetalleBaner"));
 
 interface BannerProps {
-    movie: Movie | null;
+    movieId: string | null |undefined;
     logoBuscar: boolean;
     isDetail?: boolean;
 }
 
-export function Banner({ movie, logoBuscar, isDetail = false }: BannerProps) {
+export function Banner({ movieId, logoBuscar, isDetail = false }: BannerProps) {
     const { currentPerfil, currentUser } = useAuth();
     const navigate = useNavigate();
     const { handleAddFavorite } = useFavorites()
@@ -33,14 +33,14 @@ export function Banner({ movie, logoBuscar, isDetail = false }: BannerProps) {
     const width=useWindowWidth()
 
     const [open, setOpen] = useState(false);
-    const { data: fetchedDetails } = useQuery<MovieDetails>(
-        `movie-${movie?.id}`,
-        () => fetchData(getURLMovieDetails(movie?.id).movieDetails),
-        { enabled: !!movie }
+    const { data: movie } = useQuery<Movie>(
+        `movie-${movieId}`,
+        () => fetchData(getURLMovieDetails(movieId).movieDetails),
+        { enabled: !!movieId }
     );
 
-    const logoPath = fetchedDetails?.images?.logos?.find((l) => l.iso_639_1 === "en")?.file_path ||
-        fetchedDetails?.images?.logos?.[0]?.file_path;
+    const logoPath = movie?.images?.logos?.find((l) => l.iso_639_1 === "en")?.file_path ||
+        movie?.images?.logos?.[0]?.file_path;
 
     useQuery<Movie[]>(
         `favorites-${currentUser?.id}-${currentPerfil?.id}`,
@@ -52,8 +52,8 @@ export function Banner({ movie, logoBuscar, isDetail = false }: BannerProps) {
     const handleClose = useCallback(() => setOpen(false), []);
 
     const pasarMovie = useCallback(() => {
-        navigate("/info", { state: { movie } });
-    }, [navigate, movie]);
+        navigate(`/${movie?.id}`);
+    }, [navigate, movie?.id]);
 
     const renderOverviewOrTitle = () => {
         if (movie?.overview) {
@@ -62,7 +62,8 @@ export function Banner({ movie, logoBuscar, isDetail = false }: BannerProps) {
                     {width>600?
                     movie?.overview.slice(0, 250): 
                     movie?.overview.slice(0, 150)
-                    + "..."}
+                    }
+                    ...
                 </p>
             )
         }
@@ -97,6 +98,12 @@ export function Banner({ movie, logoBuscar, isDetail = false }: BannerProps) {
             </div>
         )
     }
+
+    if(!movieId || !movie){
+        return(
+            <div className="header"></div>
+        )
+    }
     return (
         <div className="header">
             <img className="fondo" src={URL_IMAGE_BANNER + movie?.backdrop_path} alt={movie?.title} />
@@ -104,7 +111,7 @@ export function Banner({ movie, logoBuscar, isDetail = false }: BannerProps) {
             <div className="cuerpoBanner">
                 <div className={`contenedorLogo ${isDetail ? "contenedorDetailN" : ""}`}>
                     <Logo />
-                    {isDetail && <DetalleBanner movie={fetchedDetails} />}
+                    {isDetail && <DetalleBanner movie={movie} />}
                     <Botones />
                     {renderOverviewOrTitle()}
                 </div>

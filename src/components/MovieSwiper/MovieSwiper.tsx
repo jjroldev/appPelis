@@ -12,12 +12,13 @@ import { useFavorites } from "../../hooks/useFavorites";
 import { SkeletonCarousel } from "../SkeletonMovieSwiper/SkeletonCarousel";
 import { getFetchURLs } from "../../utils/endPoints";
 import { useLanguage } from "../../context/LanguageContext";
-
 const MovieSwiper = React.memo(
   ({ URL, title, isLarge = false }: { URL: string; title: string; isLarge?: boolean }) => {
 
     const {handleAddFavorite}=useFavorites()
     const {language}=useLanguage()
+    // const [isScrolled, setIsScrolled] = useState(false);
+
 
     const { data: movies, isLoading } = useQuery(["movies", URL], () => fetchData(URL), {
       refetchOnWindowFocus: false,
@@ -66,13 +67,15 @@ const MovieSwiper = React.memo(
               swipeable
               showDots={false}
               responsive={responsivew}
-              minimumTouchDrag={0}
               ssr={false}
               infinite
               autoPlay={false}
               keyBoardControl={true}
+              // centerMode={isScrolled}
               partialVisible={true}
               className={`${width < 600 ? "carousel-cell" : ""}`}
+              slidesToSlide={8}
+              // beforeChange={(nextSlide) => setIsScrolled(nextSlide > 0)}
             >
               {validMovies.length>0? 
               renderMovies(validMovies):

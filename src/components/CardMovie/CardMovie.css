@@ -50,10 +50,11 @@
   padding: 10px;
   z-index: 100;
   opacity: 0;
-  transition: opacity 0.3s ease-in-out; 
+  transition: opacity 0.3s ease-in-out,transform 0.3s ease-in-out; 
 }
 
 .cardMovie:hover .details-cardMovie {
+  transform: scale(1.01);
   opacity: 1;
 }
 

@@ -31,9 +31,8 @@ export const getFetchURLs = (language: string) => ({
 });
 
 
-export const getURLMovieDetails=(id:number|undefined,language?:string|undefined)=>({
-  movieDetails:`${BASE_URL}/movie/${id}?api_key=${API_KEY}&append_to_response=credits,images`,
+export const getURLMovieDetails=(id:string|undefined|null,language?:string|undefined)=>({
+  movieDetails:`${BASE_URL}/movie/${id}?api_key=${API_KEY}&append_to_response=videos,credits,images`,
   providers: `${BASE_URL}/movie/${id}/watch/providers?api_key=${API_KEY}`,
-  videos: `${BASE_URL}/movie/${id}?api_key=${API_KEY}&append_to_response=videos`,
   similar:`${BASE_URL}/movie/${id}/similar?api_key=${API_KEY}&language=${language}`
 })

@@ -24,24 +24,24 @@
     right: 10px;
 }
 
-.react-multiple-carousel__arrow::before{
+.react-multiple-carousel__arrow::before {
     font-size: 13px !important;
     font-weight: bold;
 }
 
-.carousel-cell .react-multiple-carousel__arrow{
+.carousel-cell .react-multiple-carousel__arrow {
     display: none;
 }
 
 @media (max-width: 1300px) {
-    .react-multiple-carousel__arrow{
+    .react-multiple-carousel__arrow {
         min-width: 35px;
         min-height: 35px;
     }
 }
 
 @media (max-width: 1200px) {
-    .react-multiple-carousel__arrow{
+    .react-multiple-carousel__arrow {
         min-width: 30px;
         min-height: 30px;
     }
@@ -49,27 +49,27 @@
 
 @media (max-width: 1000px) {
 
-    .react-multiple-carousel__arrow::before{
+    .react-multiple-carousel__arrow::before {
         font-size: 13px;
     }
 
-    .react-multiple-carousel__arrow{
+    .react-multiple-carousel__arrow {
         min-width: 28px;
         min-height: 28px;
     }
 
-    .tituloCarousel{
+    .tituloCarousel {
         font-size: 1.1rem;
     }
 }
 
 @media (max-width: 900px) {
 
-    .react-multiple-carousel__arrow::before{
+    .react-multiple-carousel__arrow::before {
         font-size: 11px !important;
     }
 
-    .react-multiple-carousel__arrow{
+    .react-multiple-carousel__arrow {
         min-width: 25px;
         min-height: 25px;
     }
@@ -78,23 +78,23 @@
 
 @media (max-width: 800px) {
 
-    .react-multiple-carousel__arrow::before{
+    .react-multiple-carousel__arrow::before {
         font-size: 10px !important;
     }
 
 
-    .tituloCarousel{
+    .tituloCarousel {
         font-size: 1rem;
     }
 }
 
 @media (max-width: 400px) {
 
-    .react-multiple-carousel__arrow::before{
+    .react-multiple-carousel__arrow::before {
         font-size: 8px !important;
     }
 
-    .react-multiple-carousel__arrow{
+    .react-multiple-carousel__arrow {
         min-width: 20px;
         min-height: 20px;
     }

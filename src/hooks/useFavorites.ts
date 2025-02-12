@@ -14,7 +14,7 @@ export function useFavorites() {
     { enabled: !!currentUser?.id && !!currentPerfil?.id }
   );
 
-  const handleAddFavorite = async (movie: Movie | null) => {
+  const handleAddFavorite = async (movie: Movie | undefined) => {
     await addFavoriteToProfile(currentUser?.id, currentPerfil?.id, movie);
     await queryClient.invalidateQueries(
       `favorites-${currentUser?.id}-${currentPerfil?.id}`

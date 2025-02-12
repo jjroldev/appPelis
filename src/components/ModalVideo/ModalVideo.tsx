@@ -1,9 +1,6 @@
 import Modal from "@mui/material/Modal";
 import YouTube from "react-youtube";
-import { Movie } from "../../interface/Movie";
-import { useQuery } from "react-query";
-import { fetchData } from "../../utils/fetchData";
-import { getURLMovieDetails } from "../../utils/endPoints";
+import {Movie } from "../../interface/Movie";
 import { useEffect, useState } from "react";
 import { Trailer } from "../../interface/Trailer";
 import './ModalVideo.css';
@@ -11,7 +8,7 @@ import './ModalVideo.css';
 interface VideoModalProps {
     open: boolean;
     onClose: () => void;
-    movie: Movie | null;
+    movie: Movie| undefined;
 }
 
 const VideoModal: React.FC<VideoModalProps> = ({ open, onClose, movie }) => {
@@ -27,29 +24,23 @@ const VideoModal: React.FC<VideoModalProps> = ({ open, onClose, movie }) => {
         justifyContent: "center",
     };
 
-    const { data, isLoading } = useQuery(
-        `video-${movie?.id}`, 
-        () => fetchData(getURLMovieDetails(movie?.id).videos), 
-        { enabled: !!movie }
-    );
-
     const [trailer, setTrailer] = useState<Trailer | null>(null);
     const [isTrailerLoading, setIsTrailerLoading] = useState(true);
-
+    
     useEffect(() => {
-        if (data?.videos?.results?.length) {
+        if (movie?.videos?.results?.length) {
             const foundTrailer = 
-                data.videos.results.find((vid: any) => vid.name === "Official Trailer") || 
-                data.videos.results[0];
+                movie.videos.results.find((vid: any) => vid.name === "Official Trailer") || 
+                movie.videos.results[0];
 
             setTrailer(foundTrailer || null);
         } else {
             setTrailer(null);
         }
         setIsTrailerLoading(false);
-    }, [data]);
+    }, [movie]);
 
-    if(isLoading || isTrailerLoading){
+    if( isTrailerLoading){
         return(
             <div style={styleBase}>
                 </div>
@@ -66,8 +57,7 @@ const VideoModal: React.FC<VideoModalProps> = ({ open, onClose, movie }) => {
                         top: "50%",
                         left: "50%",
                         transform: "translate(-50%, -50%)",
-                        width: "100%",
-                        maxWidth: "75%",
+                        width: "80%",
                         aspectRatio: "16/9",
                         backgroundColor: "transparent",
                         overflow: "hidden",

@@ -36,14 +36,7 @@ export default function Home() {
 
     return (
         <div className="contenedorHome">
-            {
-                featuredMovie ? (
-                    <Banner movie={featuredMovie} logoBuscar={true} />
-                ) : (
-                    <div className="header">
-                    </div>
-                )
-            }
+            <Banner movieId={featuredMovie?.id} logoBuscar={true} />
             <div className="contenedorPeliculas">
                 <MovieSwiper
                     URL={fetchURLS.popularMovies}

@@ -1,8 +1,8 @@
 import "./InfoMovie.css";
-import { useLocation } from "react-router";
+import {useParams } from "react-router";
 import { Banner } from "../Banner/Banner";
 import "react-multi-carousel/lib/styles.css";
-import { Movie, MovieDetails } from "../../interface/Movie";
+import {Movie } from "../../interface/Movie";
 import Carousel from "react-multi-carousel";
 import { Card } from "../Card/Card";
 import { useEffect } from "react";
@@ -18,12 +18,11 @@ import Spinner from "../Spinner/Spinner";
 import MovieSwiper from "../MovieSwiper/MovieSwiper";
 import { useLanguage } from "../../context/LanguageContext";
 export default function InfoMovie() {
-    const location = useLocation();
-    const { movie: movie1 }: { movie: Movie } = location.state;
+    const {movieId}=useParams()
     const { language } = useLanguage()
-    const { data: movie } = useQuery<MovieDetails>(
-        `movieInfo-${movie1?.id}`,
-        () => fetchData(getURLMovieDetails(movie1?.id).movieDetails),
+    const { data: movie } = useQuery<Movie>(
+        `movieInfo-${movieId}`,
+        () => fetchData(getURLMovieDetails(movieId).movieDetails),
         { refetchOnWindowFocus: false }
     );
 
@@ -38,12 +37,12 @@ export default function InfoMovie() {
         setSearchTerm("");
     }, []);
 
-    const renderCastMembers = (movie: MovieDetails) =>
+    const renderCastMembers = (movie: Movie) =>
         movie.credits.cast.map((castM) =>
             castM.profile_path ? <Card key={castM.id} castMember={castM} /> : null
         );
 
-    const renderCrewMembers = (movie: MovieDetails) =>
+    const renderCrewMembers = (movie: Movie) =>
         movie.credits.crew.map((crewM) =>
             crewM.profile_path ? <Card key={crewM.id} castMember={crewM} isCrew /> : null
         );
@@ -74,7 +73,7 @@ export default function InfoMovie() {
 
     return (
         <div className="contenedorPrincipalMovie">
-            <Banner movie={movie1} logoBuscar isDetail />
+            <Banner movieId={movieId} logoBuscar isDetail />
             <div className="infoMovieContainer">
                 <div className="detallesInfo">
                     <div className="contenedorSimilares">

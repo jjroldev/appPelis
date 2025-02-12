@@ -1,21 +1,3 @@
-export interface Movie {
-  adult: boolean;
-  backdrop_path: string;
-  genre_ids: number[];
-  id: number;
-  original_language: string;
-  original_title: string;
-  overview: string;
-  popularity: number;
-  poster_path: string;
-  release_date: string;
-  title: string;
-  video: boolean;
-  vote_average: number;
-  vote_count: number;
-}
-
-
 import { Trailer } from "./Trailer";
 import { Logo } from "./Logo";
 export interface CastMember {
@@ -55,7 +37,7 @@ iso_639_1: string;
 name: string;
 }
 
-export interface MovieDetails {
+export interface Movie {
 adult: boolean;
 backdrop_path: string;
 budget: number;
@@ -65,7 +47,7 @@ credits: {
 };
 genres: Genre[];
 homepage: string;
-id: number;
+id: string;
 images: {
   backdrops: Logo[];
   posters: Logo[];

@@ -36,7 +36,7 @@ export default function App() {
             <Route path='miLista' element={<Suspense fallback={<Spinner />}><MiLista /></Suspense>} />
             <Route path='buscar' element={<Suspense fallback={<Spinner />}><Buscar /></Suspense>} />
             <Route path='manageProfiles' element={<Suspense fallback={<Spinner />}><ManagePerfil /></Suspense>} />
-            <Route path='info' element={<Suspense fallback={<Spinner />}><InfoMovie /></Suspense>} />
+            <Route path="/:movieId" element={<Suspense fallback={<Spinner />}><InfoMovie /></Suspense>} />
           </Route>
         </Routes>
       </HashRouter>

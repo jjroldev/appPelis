@@ -147,8 +147,7 @@ const deleteProfile = async (userId: string|undefined, profileId: string) => {
   }
 };
 
-
-const addFavoriteToProfile = async (userId: string|undefined, profileId: string|undefined, movie: Movie|null) => {
+const addFavoriteToProfile = async (userId: string|undefined, profileId: string|undefined, movie: Movie|null|undefined) => {
   try {
     const movieRef = doc(db, `users/${userId}/profiles/${profileId}/favorites/${movie?.id}`);
     await setDoc(movieRef, movie);

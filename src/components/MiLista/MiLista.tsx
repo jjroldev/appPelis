@@ -25,11 +25,8 @@ export default function MiLista() {
 
   useEffect(() => {
     window.scroll({ top: 0, left: 0, behavior: "instant" });
-    setSearchTerm("")
-  }, []);
-
-  useEffect(() => {
     setOpenMenu(false)
+    setSearchTerm("")
   }, []);
 
 

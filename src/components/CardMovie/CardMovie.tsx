@@ -27,8 +27,8 @@ const CardMovie = React.memo(
     const [imageLoaded, setImageLoaded] = useState(false);
 
     const pasarMovie = useCallback(() => {
-      navigate("/info", { state: { movie } });
-    }, [navigate, movie]);
+      navigate(`/${movie.id}`);
+    }, [navigate, movie.id]);
 
     const handleRemove = (event: React.MouseEvent) => {
       event.stopPropagation();
@@ -108,7 +108,7 @@ const CardMovie = React.memo(
         <div className={`cardContainerImage ${isLarge ? "backdrop" : "poster"}`}>
           <div
             className={`fondoCardMovie h-full w-full absolute inset-0 ${imageLoaded ? "opacity-0" : "opacity-100"
-              } transition-opacity duration-500`}
+              } transition-opacity duration-400`}
           ></div>
           {isVisible && (
             <ImagenCardMovie imageLoaded={imageLoaded} />
