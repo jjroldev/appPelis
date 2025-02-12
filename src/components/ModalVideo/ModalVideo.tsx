@@ -6,7 +6,8 @@ import { fetchData } from "../../utils/fetchData";
 import { getURLMovieDetails } from "../../utils/endPoints";
 import { useEffect, useState } from "react";
 import { Trailer } from "../../interface/Trailer";
-import './ModalVideo.css'
+import './ModalVideo.css';
+
 interface VideoModalProps {
     open: boolean;
     onClose: () => void;
@@ -14,37 +15,63 @@ interface VideoModalProps {
 }
 
 const VideoModal: React.FC<VideoModalProps> = ({ open, onClose, movie }) => {
-    const {data}=useQuery(`video-${movie?.id}`,()=>fetchData(getURLMovieDetails(movie?.id).videos))
-    const [trailer,setTrailer]=useState<Trailer>()
-    useEffect(()=>{
-        if (data?.videos && data?.videos?.results) {
-            const foundTrailer =
-              data?.videos?.results.find(
-                (vid: any) => vid.name === "Official Trailer"
-              ) || data?.videos?.results[8];
-  
-            if (foundTrailer) {
-              setTrailer(foundTrailer);
-            }
-          }
-    },[data])
+    const styleBase: React.CSSProperties = {
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        backgroundColor: "transparent",
+        overflow: "hidden",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+    };
+
+    const { data, isLoading } = useQuery(
+        `video-${movie?.id}`, 
+        () => fetchData(getURLMovieDetails(movie?.id).videos), 
+        { enabled: !!movie }
+    );
+
+    const [trailer, setTrailer] = useState<Trailer | null>(null);
+    const [isTrailerLoading, setIsTrailerLoading] = useState(true);
+
+    useEffect(() => {
+        if (data?.videos?.results?.length) {
+            const foundTrailer = 
+                data.videos.results.find((vid: any) => vid.name === "Official Trailer") || 
+                data.videos.results[0];
+
+            setTrailer(foundTrailer || null);
+        } else {
+            setTrailer(null);
+        }
+        setIsTrailerLoading(false);
+    }, [data]);
+
+    if(isLoading || isTrailerLoading){
+        return(
+            <div style={styleBase}>
+                </div>
+        )
+    }
+
     return (
         <Modal open={open} onClose={onClose}>
             {trailer ? (
                 <div
-                className="modal-video-container"
+                    className="modal-video-container"
                     style={{
                         position: "absolute",
                         top: "50%",
                         left: "50%",
                         transform: "translate(-50%, -50%)",
                         width: "100%",
-                        maxHeight:"85%",
-                        maxWidth: "85%",
+                        maxWidth: "75%",
                         aspectRatio: "16/9",
                         backgroundColor: "transparent",
                         overflow: "hidden",
-                        boxSizing:"border-box"
+                        boxSizing: "border-box"
                     }}
                 >
                     <YouTube
@@ -66,19 +93,7 @@ const VideoModal: React.FC<VideoModalProps> = ({ open, onClose, movie }) => {
                     />
                 </div>
             ) : (
-                <div
-                    style={{
-                        position: "absolute",
-                        top: "50%",
-                        left: "50%",
-                        transform: "translate(-50%, -50%)",
-                        backgroundColor: "transparent",
-                        overflow: "hidden",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                    }}
-                >
+                <div style={styleBase}>
                     <p style={{ color: "white", textAlign: "center" }}>
                         No trailer available
                     </p>
