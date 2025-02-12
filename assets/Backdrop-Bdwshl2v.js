@@ -1,0 +1,1 @@
+import{j as r}from"./index-DGcxzClU.js";import{d as s}from"./CardMovie--HN_EPjx.js";function c({backdrop_path:a}){return r.jsx("div",{className:"wrapperBackdrop",children:r.jsx("img",{src:s+a,className:"backdropInfo"})})}export{c as default};
