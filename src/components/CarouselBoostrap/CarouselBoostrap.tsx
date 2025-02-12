@@ -1,5 +1,5 @@
 import Carousel from "react-bootstrap/Carousel";
-import { MovieDetails } from "../../interface/Movie";
+import { Movie } from "../../interface/Movie";
 import { lazy, memo, useMemo } from "react";
 import { useQuery } from "react-query";
 import { fetchData } from "../../utils/fetchData";
@@ -8,8 +8,8 @@ import "./CarouselBoostrap.css";
 
 const Backdrop = lazy(() => import("../BackDrop/Backdrop"));
 
-const CarouselBoostrap = memo(({ movie }: { movie: MovieDetails | null | undefined}) => {
-  const { data: movieWithImages } = useQuery<MovieDetails>(
+const CarouselBoostrap = memo(({ movie }: { movie: Movie | null | undefined}) => {
+  const { data: movieWithImages } = useQuery<Movie>(
     ["movieIC", movie?.id],
     () => fetchData(getURLMovieDetails(movie?.id).movieDetails),
     { refetchOnWindowFocus: false }

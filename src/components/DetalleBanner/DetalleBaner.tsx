@@ -4,12 +4,12 @@ import "./DetalleBanner.css";
 import CarouselBoostrap from "../CarouselBoostrap/CarouselBoostrap";
 // import { responsiveCredits } from "../../utils/ResponsiveCarrousel";
 // import { getURLMovieDetails, URL_IMAGE_BACKDROP, URL_IMAGE_BANNER } from "../../utils/endPoints";
-import { MovieDetails } from "../../interface/Movie";
+import { Movie } from "../../interface/Movie";
 // import { useQuery } from "react-query";
 // import { fetchData } from "../../utils/fetchData";
 import { useWindowWidth } from "../../hooks/useWindowWidth";
 
-const DetalleBanner = memo(({ movie }: { movie: MovieDetails | null|undefined }) => {
+const DetalleBanner = memo(({ movie }: { movie:  Movie | null|undefined }) => {
   const width = useWindowWidth();
 
   // const { data } = useQuery(
