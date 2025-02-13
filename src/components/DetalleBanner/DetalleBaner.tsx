@@ -1,45 +1,12 @@
-import { memo} from "react";
-// import Carousel from "react-multi-carousel";
+import { memo } from "react";
 import "./DetalleBanner.css";
 import CarouselBoostrap from "../CarouselBoostrap/CarouselBoostrap";
-// import { responsiveCredits } from "../../utils/ResponsiveCarrousel";
-// import { getURLMovieDetails, URL_IMAGE_BACKDROP, URL_IMAGE_BANNER } from "../../utils/endPoints";
 import { Movie } from "../../interface/Movie";
-// import { useQuery } from "react-query";
-// import { fetchData } from "../../utils/fetchData";
 import { useWindowWidth } from "../../hooks/useWindowWidth";
+import { Serie } from "../../interface/Serie";
 
-const DetalleBanner = memo(({ movie }: { movie:  Movie | null|undefined }) => {
+const DetalleBanner = memo(({ item }: { item: Movie | Serie }) => {
   const width = useWindowWidth();
-
-  // const { data } = useQuery(
-  //   `providers-${movie?.id}`,
-  //   () => fetchData(getURLMovieDetails(movie?.id).providers),
-  //   { refetchOnWindowFocus: false }
-  // );
-
-  // const movieProviders = useMemo(() => {
-  //   if (!data?.results) return [];
-
-  //   const list: any[] = [];
-  //   const addedProviderIds = new Set<string>();
-
-  //   for (const provider in data.results) {
-  //     const region = data.results[provider];
-
-  //     ["flatrate", "buy", "rent"].forEach((category) => {
-  //       if (region[category]) {
-  //         region[category].forEach((providerF: any) => {
-  //           if (!addedProviderIds.has(providerF.provider_name)) {
-  //             addedProviderIds.add(providerF.provider_name);
-  //             list.push(providerF);
-  //           }
-  //         });
-  //       }
-  //     });
-  //   }
-  //   return list;
-  // }, [data]);
 
   const renderGenres = (genres: any[] = []) =>
     genres.map((genre) => (
@@ -48,57 +15,47 @@ const DetalleBanner = memo(({ movie }: { movie:  Movie | null|undefined }) => {
       </li>
     ));
 
-  // const renderProviders = useMemo(() => {
-  //   if (!movieProviders.length) return null;
-  //   return (
-  //     <Carousel
-  //       swipeable
-  //       draggable
-  //       showDots={false}
-  //       responsive={responsiveCredits}
-  //       ssr
-  //       infinite
-  //       keyBoardControl
-  //       className="carouselProviders"
-  //     >
-  //       {movieProviders.map((provider) => (
-  //         <img
-  //           key={provider.provider_id}
-  //           className="provedorLogo"
-  //           src={URL_IMAGE_BACKDROP + provider.logo_path}
-  //           alt={provider.provider_name}
-  //         />
-  //       ))}
-  //     </Carousel>
-  //   );
-  // }, [movieProviders]);
+  const getReleaseDate = () => {
+    if ('release_date' in item) {
+      return item?.release_date.split("-")[0];
+    }
+    if ('first_air_date' in item) {
+      return item?.first_air_date.split("-")[0];
+    }
+    return "";
+  };
+
+  const getRuntimeOrSeasons = () => {
+    if ('runtime' in item) {
+      return item?.runtime
+        ? `${Math.floor(item.runtime / 60)}h ${item.runtime % 60}min`
+        : "";
+    }
+    if ('numberOfSeasons' in item) {
+      return `${item?.numberOfSeasons} season(s)`;
+    }
+    return "";
+  };
 
   return (
     <>
-      <div className="movieDetailsBanner flex flex-col">
-
+      <div className="itemDetailsBanner flex flex-col">
         <div className="bannerDetails flex flex-row">
-          <span>TMDB {movie?.vote_average.toFixed(1)}</span>
-          <span>{movie?.release_date.split("-")[0]}</span>
-          <span>
-            {movie?.runtime
-              ? `${Math.floor(movie.runtime / 60)}h ${movie.runtime % 60}min`
-              : "Runtime no disponible"}
-          </span>
+          <span>TMDB {item?.vote_average.toFixed(1)}</span>
+          <span>{getReleaseDate()}</span>
+          <span>{getRuntimeOrSeasons()}</span>
         </div>
 
         <div>
-          <ul className="generosBanner">{renderGenres(movie?.genres)}</ul>
+          <ul className="generosBanner">{renderGenres(item?.genres)}</ul>
         </div>
       </div>
 
       {width >= 900 && (
         <div className="posters-container-banner">
-            <CarouselBoostrap movie={movie} />
+          <CarouselBoostrap item={item} />
         </div>
       )}
-
-      
     </>
   );
 });

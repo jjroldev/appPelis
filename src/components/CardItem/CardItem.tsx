@@ -2,24 +2,27 @@ import React, { useState, useCallback, useRef, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { Movie } from "../../interface/Movie";
 import { URL_IMAGE_BACKDROP, URL_IMAGE_POSTER } from "../../utils/endPoints";
-import "./CardMovie.css";
+import { Serie } from "../../interface/Serie";
+import './CardItem.css'
 
-interface CardMovieProps {
-  movie: Movie;
+interface CardItemProps {
+  item: Movie | Serie;
   isLarge?: boolean;
   doDelete?: boolean;
-  onRemoveFavorite?: (movie: Movie) => void;
-  onAddFavorite?: (movie: Movie) => void;
+  onRemoveFavorite?: (item: Movie | Serie) => void;
+  onAddFavorite?: (item: Movie | Serie) => void;
 }
 
-const CardMovie = React.memo(
+const CardItem = React.memo(
   ({
-    movie,
+    item,
     isLarge,
     doDelete = false,
     onRemoveFavorite,
     onAddFavorite,
-  }: CardMovieProps) => {
+  }: CardItemProps) => {
+
+    const itemTitle = 'title' in item ? item.title : item.name;
     const navigate = useNavigate();
     const imgRef = useRef<HTMLDivElement | null>(null);
 
@@ -27,17 +30,19 @@ const CardMovie = React.memo(
     const [imageLoaded, setImageLoaded] = useState(false);
 
     const pasarMovie = useCallback(() => {
-      navigate(`/${movie.id}`);
-    }, [navigate, movie.id]);
+      const tipo = "title" in item ? "movie" : "serie";
+      navigate(`/${tipo}/${item.id}`);
+    }, [navigate, item.id]);
+
 
     const handleRemove = (event: React.MouseEvent) => {
       event.stopPropagation();
-      onRemoveFavorite && onRemoveFavorite(movie);
+      onRemoveFavorite && onRemoveFavorite(item);
     };
 
     const handleAdd = (event: React.MouseEvent) => {
       event.stopPropagation();
-      onAddFavorite && onAddFavorite(movie);
+      onAddFavorite && onAddFavorite(item);
     };
 
     useEffect(() => {
@@ -66,10 +71,10 @@ const CardMovie = React.memo(
         <img
           src={
             isLarge
-              ? `${URL_IMAGE_BACKDROP}${movie.backdrop_path}`
-              : `${URL_IMAGE_POSTER}${movie.poster_path}`
+              ? `${URL_IMAGE_BACKDROP}${item.backdrop_path}`
+              : `${URL_IMAGE_POSTER}${item.poster_path}`
           }
-          alt={movie.title}
+          alt={itemTitle}
           onLoad={() => setImageLoaded(true)}
           className={`main-image ${imageLoaded ? "visible" : "hidden"}`}
         />
@@ -78,9 +83,9 @@ const CardMovie = React.memo(
 
     function HoverDetailsCardMovie({ isLarge, doDelete }: { isLarge: boolean | undefined, doDelete: boolean }) {
       return (
-        <div className="details-cardMovie">
-          <h2 className="titulo-cardMovie">
-            {isLarge && (movie.title.includes(":") ? movie.title.split(":")[0] : movie.title)}
+        <div className="details-cardItem">
+          <h2 className="titulo-cardItem">
+            {isLarge && (itemTitle.includes(":") ? itemTitle.split(":")[0] : itemTitle)}
           </h2>
           <div className="play-button">
             <button
@@ -107,7 +112,7 @@ const CardMovie = React.memo(
       >
         <div className={`cardContainerImage ${isLarge ? "backdrop" : "poster"}`}>
           <div
-            className={`fondoCardMovie h-full w-full absolute inset-0 ${imageLoaded ? "opacity-0" : "opacity-100"
+            className={`fondoCardItem h-full w-full absolute inset-0 ${imageLoaded ? "opacity-0" : "opacity-100"
               } transition-opacity duration-400`}
           ></div>
           {isVisible && (
@@ -122,4 +127,4 @@ const CardMovie = React.memo(
   }
 );
 
-export default CardMovie;
+export default CardItem;

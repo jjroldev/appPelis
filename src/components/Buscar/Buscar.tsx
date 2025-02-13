@@ -3,7 +3,7 @@ import { useEffect, useMemo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuery, useQueryClient } from "react-query";
 
-import { BASE_URL, getFetchURLs, API_KEY } from "../../utils/endPoints";
+import { BASE_URL, getFetchURLs, API_KEY, getFetchSeriesURLs } from "../../utils/endPoints";
 import { fetchData } from "../../utils/fetchData";
 import { addFavoriteToProfile, getFavoritesByProfile } from "../../firebase";
 
@@ -13,10 +13,11 @@ import { useAuth } from "../../context/AuthContext";
 import { useMenu } from "../../context/MenuContext";
 
 import { NavBar } from "../NavBar/NavBar";
-import CardMovie from "../CardMovie/CardMovie";
+import CardItem from "../CardItem/CardItem";
 import Lupa from "../Lupa/Lupa";
 import { Movie } from "../../interface/Movie";
 import { useWindowWidth } from "../../hooks/useWindowWidth";
+import { Serie } from "../../interface/Serie";
 
 export default function Buscar() {
   const navigate = useNavigate();
@@ -51,7 +52,8 @@ export default function Buscar() {
     [searchTerm, setSearchTerm]
   );
 
-  useQuery<Movie[]>(
+  //esto se pone para actualizar mi lista
+  useQuery<Movie[] | Serie[]>(
     `favorites-${currentUser?.id}-${currentPerfil?.id}`,
     () => getFavoritesByProfile(currentUser?.id, currentPerfil?.id),
     { enabled: !!currentUser?.id && !!currentPerfil?.id }
@@ -67,26 +69,43 @@ export default function Buscar() {
     [currentUser?.id, currentPerfil?.id, queryClient]
   );
 
-  const fetchSearch = useMemo(
-    () =>
-      searchTerm
-        ? `${BASE_URL}/search/movie?api_key=${API_KEY}&language=${language}&query=${searchTerm}`
-        : getFetchURLs(language).popularMovies,
+  const fetchSearchMovies = useMemo(() => 
+    searchTerm
+      ? `${BASE_URL}/search/movie?api_key=${API_KEY}&language=${language}&query=${searchTerm}`
+      : getFetchURLs(language).topRatedMovies,
+    [searchTerm, language]
+  );
+  
+  const fetchSearchSeries = useMemo(() => 
+    searchTerm
+      ? `${BASE_URL}/search/tv?api_key=${API_KEY}&language=${language}&query=${searchTerm}`
+      : getFetchSeriesURLs(language).topRatedSeries,
     [searchTerm, language]
   );
 
-  const { data: movies, isLoading } = useQuery(
-    [searchTerm || "popularMovies"],
-    () => fetchData(fetchSearch)
+  const { data: moviesData, isLoading: loadingMovies } = useQuery(
+    [searchTerm , "search-movies"],
+    () => fetchData(fetchSearchMovies)
   );
 
-  const validMovies = useMemo(
-    () =>
-      movies?.results?.filter(
-        (movie: Movie) => movie.backdrop_path && movie.poster_path
-      ),
-    [movies?.results]
+  const { data: seriesData, isLoading: loadingSeries } = useQuery(
+    [searchTerm , "search-series"],
+    () => fetchData(fetchSearchSeries)
   );
+
+  const isLoading = loadingMovies || loadingSeries;
+
+  const validResults = useMemo(() => {
+    const movies = moviesData?.results?.filter(
+      (movie: Movie) => movie.backdrop_path && movie.poster_path
+    ) || [];
+
+    const series = seriesData?.results?.filter(
+      (serie: Serie) => serie.backdrop_path && serie.poster_path
+    ) || [];
+
+    return [...movies, ...series].sort(() => Math.random() - 0.5);
+  }, [moviesData?.results, seriesData?.results]);
 
   if (isLoading) {
     return (
@@ -96,17 +115,17 @@ export default function Buscar() {
     );
   }
 
-  const renderMovies = (movies: Movie[]) =>
-    movies.map((movie, index) => (
-      <CardMovie key={index} movie={movie} onAddFavorite={() => handleAddFavorite(movie)} />
+  const renderMovies = (items: Movie[]) =>
+    items.map((item, index) => (
+      <CardItem key={index} item={item} onAddFavorite={() => handleAddFavorite(item)} />
     ));
 
   const renderContent = () => {
-    if (validMovies.length > 0) {
-      return <div className="contenedorPeliculasBuscar">{renderMovies(validMovies)}</div>;
+    if (validResults.length > 0) {
+      return <div className="contenedorItemsBuscar">{renderMovies(validResults)}</div>;
     } else {
       return (
-        <div className="contenedorPeliculasNoE">
+        <div className="contenedorItemsNoE">
           <p>La búsqueda de {searchTerm} no arrojó coincidencias.</p>
         </div>
       );
@@ -117,7 +136,7 @@ export default function Buscar() {
     <div className="contenedor">
       <NavBar perfil={true} menu={true} logoBuscar={true} condicionExpanded={true} />
       <div className="contenedorBuscar">
-        {width < 900 && <Lupa placeholder="Search Movies" onSubmit={handleSearch} />}
+        {width < 900 && <Lupa placeholder="Search movies, series, tv series..." onSubmit={handleSearch} />}
         {renderContent()}
       </div>
     </div>

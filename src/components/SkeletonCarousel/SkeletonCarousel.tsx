@@ -1,11 +1,11 @@
 import Carousel from "react-multi-carousel"
-import { SkeletonCard } from "./SkeletonCard";
+import { SkeletonCardItem } from "./SkeletonCardItem";
 import { responsive } from "../../utils/ResponsiveCarrousel";
-export function SkeletonCarousel({ isLarge,numMovies ,title}: { isLarge: boolean,numMovies:number,title:string }) {
+export function SkeletonCarousel({ isLarge,numItems ,title}: { isLarge: boolean,numItems:number,title:string }) {
 
-    const renderSkeletonCard = (numMovies: number) => {
-        return Array.from({ length: numMovies }).map((_, index) => (
-            <SkeletonCard key={index} isLarge={isLarge} />
+    const renderSkeletonCardItem = (numItems: number) => {
+        return Array.from({ length: numItems }).map((_, index) => (
+            <SkeletonCardItem key={index} isLarge={isLarge} />
         ));
     };
     
@@ -24,7 +24,7 @@ export function SkeletonCarousel({ isLarge,numMovies ,title}: { isLarge: boolean
                     autoPlay={false}
                     className="carousel-react"
                 >
-                    {renderSkeletonCard(numMovies)}
+                    {renderSkeletonCardItem(numItems)}
                 </Carousel>
             </div>
         </>

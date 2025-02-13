@@ -1,5 +1,5 @@
 import { Skeleton } from "@mui/material"
-export function SkeletonCard({ isLarge }: { isLarge: boolean }) {
+export function SkeletonCardItem({ isLarge }: { isLarge: boolean }) {
     return (
         <div className={`contenedor-poster ${isLarge ? "large" : ""}`}>
             <div className={`cardContainerImage ${isLarge ? "backdrop" : "poster"}`}>

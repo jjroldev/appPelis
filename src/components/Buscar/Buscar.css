@@ -13,7 +13,7 @@
     flex-direction: column;
     padding: 80px 0px;
 }
-.contenedorPeliculasBuscar {
+.contenedorItemsBuscar {
     display: grid;
     gap: 15px;
     row-gap: 30px;
@@ -22,7 +22,7 @@
     border-radius: 8px;
 }
 
-.contenedorPeliculasNoE{
+.contenedorItemsNoE{
     padding: 30px;
     height: 100%;
     min-height: 120vh;
@@ -41,7 +41,7 @@
 }
 
 @media (max-width: 1024px) {
-    .contenedorPeliculasBuscar {
+    .contenedorItemsBuscar {
         grid-template-columns: repeat(7,1fr);
         padding: 80px 50px;
     }
@@ -50,10 +50,10 @@
 
 @media (max-width: 900px) {
 
-    .contenedorPeliculasBuscar {
+    .contenedorItemsBuscar {
         padding: 70px 20px; 
     }
-    .contenedorPeliculasBuscar {
+    .contenedorItemsBuscar {
         grid-template-columns: repeat(5,1fr);
         padding: 70px 20px; 
     }
@@ -62,7 +62,7 @@
 
 @media (max-width: 700px) {
 
-    .contenedorPeliculasBuscar {
+    .contenedorItemsBuscar {
         grid-template-columns: repeat(4,1fr);
         padding: 70px 20px; 
     }
@@ -70,7 +70,7 @@
 
 @media (max-width: 500px) {
 
-    .contenedorPeliculasBuscar {
+    .contenedorItemsBuscar {
         grid-template-columns: repeat(3,1fr);
         padding: 50px 5px; 
     }

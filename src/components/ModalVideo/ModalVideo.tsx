@@ -4,14 +4,15 @@ import {Movie } from "../../interface/Movie";
 import { useEffect, useState } from "react";
 import { Trailer } from "../../interface/Trailer";
 import './ModalVideo.css';
+import { Serie } from "../../interface/Serie";
 
 interface VideoModalProps {
     open: boolean;
     onClose: () => void;
-    movie: Movie| undefined;
+    item: Movie| undefined|Serie;
 }
 
-const VideoModal: React.FC<VideoModalProps> = ({ open, onClose, movie }) => {
+const VideoModal: React.FC<VideoModalProps> = ({ open, onClose, item }) => {
     const styleBase: React.CSSProperties = {
         position: "absolute",
         top: "50%",
@@ -28,17 +29,17 @@ const VideoModal: React.FC<VideoModalProps> = ({ open, onClose, movie }) => {
     const [isTrailerLoading, setIsTrailerLoading] = useState(true);
     
     useEffect(() => {
-        if (movie?.videos?.results?.length) {
+        if (item?.videos?.results?.length) {
             const foundTrailer = 
-                movie.videos.results.find((vid: any) => vid.name === "Official Trailer") || 
-                movie.videos.results[0];
+                item.videos.results.find((vid: any) => vid.name === "Official Trailer") || 
+                item.videos.results[0];
 
             setTrailer(foundTrailer || null);
         } else {
             setTrailer(null);
         }
         setIsTrailerLoading(false);
-    }, [movie]);
+    }, [item]);
 
     if( isTrailerLoading){
         return(

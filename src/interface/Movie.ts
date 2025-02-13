@@ -1,18 +1,12 @@
 import { Trailer } from "./Trailer";
 import { Logo } from "./Logo";
 export interface CastMember {
-adult: boolean;
-gender: number;
 id: number;
-known_for_department: string;
 name: string;
-original_name: string;
-popularity: number;
 profile_path: string;
 credit_id: string;
 character?: string;
 job?: string;
-order?: number;
 }
 
 export interface Genre {
@@ -38,7 +32,6 @@ name: string;
 }
 
 export interface Movie {
-adult: boolean;
 backdrop_path: string;
 budget: number;
 credits: {
@@ -63,13 +56,9 @@ poster_path: string;
 production_companies: ProductionCompany[];
 production_countries: ProductionCountry[];
 release_date: string;
-revenue: number;
 runtime: number;
 spoken_languages: SpokenLanguage[];
-status: string;
-tagline: string;
 title: string;
-video: boolean;
 videos: {
   results: Trailer[];
 };

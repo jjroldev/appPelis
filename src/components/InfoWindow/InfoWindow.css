@@ -1,9 +1,9 @@
-.contenedorPrincipalMovie {
+.contenedorPrincipalItem {
     background-color: rgb(17, 17, 17);
     overflow-x: hidden !important;
 }
 
-.infoMovieContainer {
+.infoItemContainer {
     color: #fff;
     min-height: 120vh;
 }
@@ -53,7 +53,7 @@
 }
 
 .carousel-cast .react-multi-carousel-item {
-    padding-right: 8px;
+    padding-right: 6px;
 }
 
 .contenedor-imagenes {

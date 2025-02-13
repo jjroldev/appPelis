@@ -1,4 +1,4 @@
-.contenedorHome {
+.contenedorWindow {
     height: 100%;
     background-color: rgb(17, 17, 17);
     display: flex;
@@ -7,9 +7,9 @@
     overflow-x: hidden;
 }
 
-.contenedorPeliculas {
+.contenedorItems {
     padding: 20px 0 20px 50px;
-    margin-top: -135px;
+    margin-top: -115px;
     display: flex;
     flex-direction: column;
     gap: 55px;
@@ -19,7 +19,7 @@
     min-height: 800px;
 }
 @media (max-width: 1024px) {
-    .contenedorPeliculas {
+    .contenedorItems {
         padding-left: 25px;
         margin-top: -90px;
         gap: 45px;
@@ -36,7 +36,7 @@
 }
 
 @media (max-width: 768px) {
-    .contenedorPeliculas {
+    .contenedorItems {
         padding-left: 18px;
         margin-top: -85px;
         gap: 35px;
@@ -54,7 +54,7 @@
 
 
 @media (max-width: 600px) {
-    .contenedorPeliculas {
+    .contenedorItems {
         gap: 25px;
     }
 }

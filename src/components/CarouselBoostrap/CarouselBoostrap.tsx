@@ -3,22 +3,29 @@ import { Movie } from "../../interface/Movie";
 import { lazy, memo, useMemo } from "react";
 import { useQuery } from "react-query";
 import { fetchData } from "../../utils/fetchData";
-import { getURLMovieDetails } from "../../utils/endPoints";
+import { getSeriesDetailsURL, getURLMovieDetails } from "../../utils/endPoints";
 import "./CarouselBoostrap.css";
+import { Serie } from "../../interface/Serie";
 
 const Backdrop = lazy(() => import("../BackDrop/Backdrop"));
 
-const CarouselBoostrap = memo(({ movie }: { movie: Movie | null | undefined}) => {
-  const { data: movieWithImages } = useQuery<Movie>(
-    ["movieIC", movie?.id],
-    () => fetchData(getURLMovieDetails(movie?.id).movieDetails),
+const CarouselBoostrap = memo(({ item }: { item: Movie | Serie | null | undefined }) => {
+
+  const isMovie = item && "title" in item;
+  const fetchURL = isMovie
+    ? getURLMovieDetails(item?.id).movieDetails
+    : getSeriesDetailsURL(item?.id);
+
+  const { data: items } = useQuery<Movie | Serie>(
+    ["mediaDetails", item?.id],
+    () => fetchData(fetchURL),
     { refetchOnWindowFocus: false }
   );
 
   const images = useMemo(() => {
-    if (!movieWithImages?.images) return [];
-    return  movieWithImages.images.backdrops;
-  }, [movieWithImages]);
+    if (!items || !("images" in items)) return [];
+    return items.images?.backdrops || [];
+  }, [items]);
 
   return (
     <div className={`carousel-bootstrap cb-backdrop`}>
@@ -32,5 +39,6 @@ const CarouselBoostrap = memo(({ movie }: { movie: Movie | null | undefined}) =>
     </div>
   );
 });
+
 
 export default CarouselBoostrap;

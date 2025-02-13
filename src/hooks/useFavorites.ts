@@ -3,26 +3,27 @@ import { addFavoriteToProfile, getFavoritesByProfile } from "../firebase";
 import { useAuth } from "../context/AuthContext";
 import { Movie } from "../interface/Movie";
 import { removeFavoriteToProfile } from "../firebase";
+import { Serie } from "../interface/Serie";
 
 export function useFavorites() {
   const { currentPerfil, currentUser } = useAuth();
   const queryClient = useQueryClient();
 
-  const { data: favorites } = useQuery<Movie[]>(
+  const { data: favorites } = useQuery<Movie[]|Serie[]>(
     `favorites-${currentUser?.id}-${currentPerfil?.id}`,
     () => getFavoritesByProfile(currentUser?.id, currentPerfil?.id),
     { enabled: !!currentUser?.id && !!currentPerfil?.id }
   );
 
-  const handleAddFavorite = async (movie: Movie | undefined) => {
-    await addFavoriteToProfile(currentUser?.id, currentPerfil?.id, movie);
+  const handleAddFavorite = async (item: Movie | undefined | Serie) => {
+    await addFavoriteToProfile(currentUser?.id, currentPerfil?.id, item);
     await queryClient.invalidateQueries(
       `favorites-${currentUser?.id}-${currentPerfil?.id}`
     );
   };
 
-  const handleRemoveFavorite = async (movie: Movie) => {
-    await removeFavoriteToProfile(currentUser?.id, currentPerfil?.id, movie);
+  const handleRemoveFavorite = async (item: Movie | Serie) => {
+    await removeFavoriteToProfile(currentUser?.id, currentPerfil?.id, item);
     await queryClient.invalidateQueries(`favorites-${currentUser?.id}-${currentPerfil?.id}`);
   };
 

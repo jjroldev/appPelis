@@ -5,6 +5,7 @@ import { Movie } from "./interface/Movie";
 import { Perfil } from "./interface/Perfil";
 import { User } from "./interface/User";
 import toast from "react-hot-toast";
+import { Serie } from "./interface/Serie";
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY as string,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN as string,
@@ -147,37 +148,86 @@ const deleteProfile = async (userId: string|undefined, profileId: string) => {
   }
 };
 
-const addFavoriteToProfile = async (userId: string|undefined, profileId: string|undefined, movie: Movie|null|undefined) => {
+const addFavoriteToProfile = async (
+  userId: string | undefined,
+  profileId: string | undefined,
+  item: Movie | Serie| null | undefined
+) => {
   try {
-    const movieRef = doc(db, `users/${userId}/profiles/${profileId}/favorites/${movie?.id}`);
-    await setDoc(movieRef, movie);
-    toast.success(`Película ${movie?.title} añadida a favoritos`)
+    if (!userId || !profileId || !item) return;
+
+    const itemRef = doc(db, `users/${userId}/profiles/${profileId}/favorites/${item.id}`);
+
+    const itemSnap = await getDoc(itemRef);
+
+    if ('title' in item) {
+      // Es una Movie
+      if (itemSnap.exists()) {
+        toast.error(`La película "${item.title}" ya está en favoritos`);
+        return;
+      }
+
+      await setDoc(itemRef, item);
+      toast.success(`Película "${item.title}" añadida a favoritos`);
+    } else if ('name' in item) {
+      // Es una Serie
+      if (itemSnap.exists()) {
+        toast.error(`La serie "${item.name}" ya está en favoritos`);
+        return;
+      }
+
+      await setDoc(itemRef, item);
+      toast.success(`Serie "${item.name}" añadida a favoritos`);
+    }
   } catch (error) {
-    toast.error(`Error al añadir ${movie?.title} a favoritos`)
+    toast.error(`Error al añadir a favoritos`);
   }
 };
+
 
 const removeFavoriteToProfile = async (
   userId: string | undefined,
   profileId: string | undefined,
-  movie: Movie | undefined
+  item: Movie | Serie | undefined
 ) => {
   try {
+    if (!userId || !profileId || !item) return;
 
-    const movieRef = doc(db, `users/${userId}/profiles/${profileId}/favorites/${movie?.id}`);
-  
-    await deleteDoc(movieRef);
-    toast.success(`Película ${movie?.title} eliminada de favoritos`);
+    const itemRef = doc(db, `users/${userId}/profiles/${profileId}/favorites/${item.id}`);
+
+    const itemSnap = await getDoc(itemRef);
+
+
+    if ('title' in item) {
+      // Es una Movie
+      if (!itemSnap.exists()) {
+        toast.error(`La película "${item.title}" ya está eliminada de favoritos`);
+        return;
+      }
+      toast.success(`Película ${item.title} eliminada de favoritos`);
+      await deleteDoc(itemRef);
+
+    } else if ('name' in item) {
+      // Es una Serie
+      if (!itemSnap.exists()) {
+        toast.error(`La serie "${item.name}" ya se eliminó`);
+        return;
+      }
+      toast.success(`Serie ${item.name} eliminada de favoritos`);
+      await deleteDoc(itemRef);
+
+    }
+
     return true;
   } catch (error) {
-    toast.error(`Error al eliminar ${movie?.title} de favoritos`);
+    toast.error(`Error al eliminar de favoritos`);
     return false;
   }
 };
 
 
 
-const getFavoritesByProfile = async (userId: string | undefined, profileId: string | undefined): Promise<Movie[]> => {
+const getFavoritesByProfile = async (userId: string | undefined, profileId: string | undefined): Promise<Movie[] | Serie[]> => {
   try {
     const favoritesRef = collection(db, `users/${userId}/profiles/${profileId}/favorites`);
     const querySnapshot = await getDocs(favoritesRef);

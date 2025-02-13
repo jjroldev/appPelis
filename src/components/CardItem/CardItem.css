@@ -35,7 +35,7 @@
   opacity: 0.9;
 }
 
-.details-cardMovie {
+.details-cardItem {
   cursor: pointer;
   text-align: center;
   position: absolute;
@@ -53,18 +53,18 @@
   transition: opacity 0.3s ease-in-out,transform 0.3s ease-in-out; 
 }
 
-.cardMovie:hover .details-cardMovie {
+.cardItem:hover .details-cardItem {
   transform: scale(1.01);
   opacity: 1;
 }
 
-.details-cardMovie h2{
+.details-cardItem h2{
   font-weight: bold;
   font-size: clamp(.7rem, 1.5vw, 1rem);
   color: #ffffff;
 }
 
-.cardContainerImage:hover .details-cardMovie {
+.cardContainerImage:hover .details-cardItem {
   opacity: 1;
 }
 
@@ -88,7 +88,7 @@
   color: #ffffff;
 }
 
-.titulo-cardMovie{
+.titulo-cardItem{
   color: #fff;
 }
 
@@ -106,7 +106,7 @@
 }
 
 
-.fondoCardMovie{
+.fondoCardItem{
   background-color: #1a1a1a;
 }
 

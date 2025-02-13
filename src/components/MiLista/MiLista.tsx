@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import CardMovie from '../CardMovie/CardMovie';
+import CardItem from '../CardItem/CardItem';
 import { NavBar } from '../NavBar/NavBar';
 import { Movie } from '../../interface/Movie';
 import "./MiLista.css"
@@ -9,13 +9,14 @@ import { getFavoritesByProfile } from '../../firebase';
 import { useSearch } from '../../context/SearchContext';
 import { useMenu } from '../../context/MenuContext';
 import { useFavorites } from '../../hooks/useFavorites';
+import { Serie } from '../../interface/Serie';
 export default function MiLista() {
   const { currentUser, currentPerfil } = useAuth()
   const { setSearchTerm } = useSearch()
   const{setOpenMenu}=useMenu()
   const {handleRemoveFavorite}=useFavorites()
 
-  const { data: movies, isLoading } = useQuery<Movie[]>(
+  const { data: items, isLoading } = useQuery<Movie[] |Serie[]>(
     `favorites-${currentUser?.id}-${currentPerfil?.id}`,
     () => getFavoritesByProfile(currentUser?.id, currentPerfil?.id),
     {
@@ -51,12 +52,12 @@ export default function MiLista() {
       <div className="favorites">
         <h2 className="tituloFavoritas">Mi Lista</h2>
         <div className='contenedorFavoritas'>
-          <div className={`favoritasContainer ${movies?.length === 0 ? 'empty' : ''}`}>
+          <div className={`favoritasContainer ${items?.length === 0 ? 'empty' : ''}`}>
             {!isLoading && (
-              movies?.map((movie) => (
-                <CardMovie
-                  key={movie.id}
-                  movie={movie}
+              items?.map((item) => (
+                <CardItem
+                  key={item.id}
+                  item={item}
                   isLarge={true}
                   doDelete={true}
                   onRemoveFavorite={handleRemoveFavorite}
@@ -64,8 +65,8 @@ export default function MiLista() {
               ))
             )}
 
-            {movies?.length == 0 &&
-              <div className="noFavorites">No hay películas favoritas</div>
+            {items?.length == 0 &&
+              <div className="noFavorites">No hay favoritas</div>
             }
           </div>
         </div>

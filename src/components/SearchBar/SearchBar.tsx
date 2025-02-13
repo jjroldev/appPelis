@@ -40,7 +40,7 @@ export default function SearchBar({ condicionExpanded, desdeHome }: SearchBarPro
     }, [lupaActive, condicionExpanded]);
 
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const value = event.target.value.trim();
+        const value = event.target.value;
     
         if (value) {
             setSearchTerm(value);
@@ -64,7 +64,7 @@ export default function SearchBar({ condicionExpanded, desdeHome }: SearchBarPro
                     <input
                         type="text"
                         className="lupaExpanded"
-                        placeholder="Buscar películas ..."
+                        placeholder="Search movies, series, tv series..."
                         ref={inputRef}
                         value={searchTerm}
                         onChange={handleSearch}

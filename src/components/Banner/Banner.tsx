@@ -1,67 +1,74 @@
 import { useState, useCallback, lazy } from "react";
 import { useNavigate } from "react-router";
 import { useQuery } from "react-query";
-import { useAuth } from "../../context/AuthContext";
 import "./Banner.css";
 import { NavBar } from "../NavBar/NavBar";
-import { getFavoritesByProfile } from "../../firebase";
 import { fetchData } from "../../utils/fetchData";
+import { Skeleton } from "@mui/material";
 import {
     URL_IMAGE_lOGO,
     URL_IMAGE_BANNER,
-    getURLMovieDetails
+    getURLMovieDetails,
+    getSeriesDetailsURL,
+    getMovieLogosURL,
+    getSeriesLogosURL
 } from "../../utils/endPoints";
 
 import { Movie } from "../../interface/Movie";
+import { Serie } from "../../interface/Serie";
 import { useFavorites } from "../../hooks/useFavorites";
 import { useWindowWidth } from "../../hooks/useWindowWidth";
+import { useLanguage } from "../../context/LanguageContext";
 
 const VideoModal = lazy(() => import("../ModalVideo/ModalVideo"));
 const DetalleBanner = lazy(() => import("../DetalleBanner/DetalleBaner"));
 
 interface BannerProps {
-    movieId: string | null |undefined;
+    itemId: string | null | undefined;
     logoBuscar: boolean;
     isDetail?: boolean;
+    type: string
 }
 
-export function Banner({ movieId, logoBuscar, isDetail = false }: BannerProps) {
-    const { currentPerfil, currentUser } = useAuth();
+export function Banner({ itemId, logoBuscar, isDetail = false, type }: BannerProps) {
     const navigate = useNavigate();
     const { handleAddFavorite } = useFavorites()
+    const { language } = useLanguage()
 
-    const width=useWindowWidth()
+    const width = useWindowWidth()
 
-    const [open, setOpen] = useState(false);
-    const { data: movie } = useQuery<Movie>(
-        `movie-${movieId}`,
-        () => fetchData(getURLMovieDetails(movieId).movieDetails),
-        { enabled: !!movieId }
+    const [open, setOpen] = useState<any>(false);
+    const { data: item } = useQuery<Movie | Serie>(
+        `movie-${itemId}`,
+        () =>
+            type === "movie" ?
+                fetchData(getURLMovieDetails(itemId).movieDetails) :
+                fetchData(getSeriesDetailsURL(itemId)),
+        { enabled: !!itemId }
     );
 
-    const logoPath = movie?.images?.logos?.find((l) => l.iso_639_1 === "en")?.file_path ||
-        movie?.images?.logos?.[0]?.file_path;
+    const { data: dataImages } = useQuery<any>(`logo-item-${type}-${itemId}`, () =>
+        type == "movie" ? fetchData(getMovieLogosURL(itemId)) : fetchData(getSeriesLogosURL(itemId))
+        ,
+        { enabled: !!itemId })
 
-    useQuery<Movie[]>(
-        `favorites-${currentUser?.id}-${currentPerfil?.id}`,
-        () => getFavoritesByProfile(currentUser?.id, currentPerfil?.id),
-        { enabled: !!currentUser?.id && !!currentPerfil?.id }
-    );
+    const logoPath = item?.images?.logos?.find((l) => l.iso_639_1 === language)?.file_path ||
+        item?.images?.logos?.[0]?.file_path || dataImages?.logos[0]?.file_path || null;
 
     const handleOpen = useCallback(() => setOpen(true), []);
     const handleClose = useCallback(() => setOpen(false), []);
 
-    const pasarMovie = useCallback(() => {
-        navigate(`/${movie?.id}`);
-    }, [navigate, movie?.id]);
+    const pasarItem = useCallback(() => {
+        navigate(`/${type}/${item?.id}`);
+    }, [navigate, item?.id]);
 
     const renderOverviewOrTitle = () => {
-        if (movie?.overview) {
+        if (item?.overview) {
             return (
                 <p className="overview">
-                    {width>600?
-                    movie?.overview.slice(0, 250): 
-                    movie?.overview.slice(0, 150)
+                    {width > 600 ?
+                        item?.overview.slice(0, 250) :
+                        item?.overview.slice(0, 150)
                     }
                     ...
                 </p>
@@ -69,11 +76,10 @@ export function Banner({ movieId, logoBuscar, isDetail = false }: BannerProps) {
         }
         return null;
     };
-
     const Logo = () => (
         logoPath && (
             <>
-                <img className="logo-banner" src={`${URL_IMAGE_lOGO}${logoPath}`} alt={movie?.title} />
+                <img className="logo-banner" src={`${URL_IMAGE_lOGO}${logoPath}`} />
             </>
         )
     );
@@ -84,34 +90,44 @@ export function Banner({ movieId, logoBuscar, isDetail = false }: BannerProps) {
                 <button className="play" onClick={handleOpen}>
                     <i className="fa-solid fa-play"></i> Play
                 </button>
-                <VideoModal movie={movie} open={open} onClose={handleClose} />
+                <VideoModal item={item} open={open} onClose={handleClose} />
 
                 {location.hash !== "#/info" && (
-                    <button onClick={pasarMovie} className="boton-info-banner">
+                    <button onClick={pasarItem} className="boton-info-banner">
                         <i className="fa-solid fa-circle-info"></i> More Information
                     </button>
                 )}
 
-                <button onClick={() => handleAddFavorite(movie)} className="botonMeGustaBanner">
+                <button onClick={() => handleAddFavorite(item)} className="botonMeGustaBanner">
                     <i className="fa-solid fa-heart"></i>
                 </button>
             </div>
         )
     }
 
-    if(!movieId || !movie){
-        return(
-            <div className="header"></div>
+    if (!itemId || !item) {
+        return (
+            <div className="header">
+                <NavBar perfil={true} menu={true} logoBuscar={logoBuscar} />
+                <Skeleton
+                    sx={{ bgcolor: 'grey.900' }}
+                    variant="rectangular"
+                    width={"100%"}
+                    height={"100%"}
+                />
+            </div>
         )
     }
     return (
         <div className="header">
-            <img className="fondo" src={URL_IMAGE_BANNER + movie?.backdrop_path} alt={movie?.title} />
+            <img className="fondo" src={`${URL_IMAGE_BANNER}${item?.backdrop_path}`} />
             <NavBar perfil={true} menu={true} logoBuscar={logoBuscar} />
             <div className="cuerpoBanner">
                 <div className={`contenedorLogo ${isDetail ? "contenedorDetailN" : ""}`}>
                     <Logo />
-                    {isDetail && <DetalleBanner movie={movie} />}
+                    {isDetail && (
+                        <DetalleBanner item={item} />
+                    )}
                     <Botones />
                     {renderOverviewOrTitle()}
                 </div>
