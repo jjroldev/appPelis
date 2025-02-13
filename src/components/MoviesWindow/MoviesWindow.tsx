@@ -3,14 +3,24 @@ import { useFeaturedMovie } from '../../hooks/useFeaturedMovie'
 import { Banner } from '../Banner/Banner'
 import CarouselURL from '../CarouselURL/CarouselURL'
 import { useLanguage } from '../../context/LanguageContext'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { getFetchURLs } from '../../utils/endPoints'
 import '../Home/Home.css'
+import { useMenu } from '../../context/MenuContext'
+import { useSearch } from '../../context/SearchContext'
 export default function MoviesWindow() {
 
     const featuredMovie = useFeaturedMovie("feautedMovieMW", "moviesW","movie")
     const { language } = useLanguage()
     const fetchURLS = useMemo(() => getFetchURLs(language), [language]);
+    const {setOpenMenu}=useMenu()
+    const {setSearchTerm}=useSearch()
+
+    useEffect(()=>{
+        window.scroll({ top: 0, left: 0, behavior: "instant" });
+        setSearchTerm("")
+        setOpenMenu(false)
+    },[])
 
     return (
         <div className="contenedorWindow">

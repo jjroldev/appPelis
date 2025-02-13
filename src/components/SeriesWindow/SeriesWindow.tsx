@@ -1,20 +1,30 @@
 import { useFeaturedMovie } from '../../hooks/useFeaturedMovie'
 import { Banner } from '../Banner/Banner'
 import { useLanguage } from '../../context/LanguageContext'
-import { useMemo } from 'react'
-import { getFetchSeriesURLs} from '../../utils/endPoints'
+import { useMemo ,useEffect} from 'react'
+import { getFetchSeriesURLs } from '../../utils/endPoints'
+import { useMenu } from '../../context/MenuContext'
 import '../Home/Home.css'
 import './SeriesWindow.css'
 import CarouselURL from '../CarouselURL/CarouselURL'
+import { useSearch } from '../../context/SearchContext'
 export default function SeriesWindow() {
 
-    const featuredSerie = useFeaturedMovie("feautedSerieSW", "seriesW","serie")
+    const featuredSerie = useFeaturedMovie("feautedSerieSW", "seriesW", "serie")
     const { language } = useLanguage()
     const fetchURLS = useMemo(() => getFetchSeriesURLs(language), [language]);
+    const {setSearchTerm}=useSearch()
+    const { setOpenMenu } = useMenu()
+
+    useEffect(() => {
+        window.scroll({ top: 0, left: 0, behavior: "instant" });
+        setSearchTerm("")
+        setOpenMenu(false)
+    }, [])
 
     return (
         <div className="contenedorWindow">
-            <Banner itemId={featuredSerie?.id} logoBuscar={true} type='serie'/>
+            <Banner itemId={featuredSerie?.id} logoBuscar={true} type='serie' />
             <div className="contenedorItems">
                 <CarouselURL
                     URL={fetchURLS.popularSeries}
@@ -27,7 +37,7 @@ export default function SeriesWindow() {
                 />
                 <CarouselURL
                     URL={fetchURLS.actionAdventureSeries}
-                    title="Movies of action and adventure"
+                    title="Series of action and adventure"
                 />
                 <CarouselURL
                     URL={fetchURLS.familySeries}

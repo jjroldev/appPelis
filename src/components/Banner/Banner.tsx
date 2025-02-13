@@ -1,4 +1,4 @@
-import { useState, useCallback, lazy } from "react";
+import { useState, useCallback } from "react";
 import { useNavigate } from "react-router";
 import { useQuery } from "react-query";
 import "./Banner.css";
@@ -13,16 +13,13 @@ import {
     getMovieLogosURL,
     getSeriesLogosURL
 } from "../../utils/endPoints";
-
+import DetalleBanner from "../DetalleBanner/DetalleBaner";
+import VideoModal from "../ModalVideo/ModalVideo";
 import { Movie } from "../../interface/Movie";
 import { Serie } from "../../interface/Serie";
 import { useFavorites } from "../../hooks/useFavorites";
 import { useWindowWidth } from "../../hooks/useWindowWidth";
 import { useLanguage } from "../../context/LanguageContext";
-
-const VideoModal = lazy(() => import("../ModalVideo/ModalVideo"));
-const DetalleBanner = lazy(() => import("../DetalleBanner/DetalleBaner"));
-
 interface BannerProps {
     itemId: string | null | undefined;
     logoBuscar: boolean;
@@ -47,10 +44,11 @@ export function Banner({ itemId, logoBuscar, isDetail = false, type }: BannerPro
         { enabled: !!itemId }
     );
 
-    const { data: dataImages } = useQuery<any>(`logo-item-${type}-${itemId}`, () =>
-        type == "movie" ? fetchData(getMovieLogosURL(itemId)) : fetchData(getSeriesLogosURL(itemId))
-        ,
-        { enabled: !!itemId })
+    const { data: dataImages } = useQuery<any>(
+        `logo-item-${type}-${itemId}`,
+        () => type == "movie" ? fetchData(getMovieLogosURL(itemId)) : fetchData(getSeriesLogosURL(itemId)),
+        { enabled: !!itemId, staleTime: 1000 * 60 * 5 }
+      );
 
     const logoPath = item?.images?.logos?.find((l) => l.iso_639_1 === language)?.file_path ||
         item?.images?.logos?.[0]?.file_path || dataImages?.logos[0]?.file_path || null;
@@ -77,12 +75,15 @@ export function Banner({ itemId, logoBuscar, isDetail = false, type }: BannerPro
         return null;
     };
     const Logo = () => (
-        logoPath && (
-            <>
-                <img className="logo-banner" src={`${URL_IMAGE_lOGO}${logoPath}`} />
-            </>
-        )
-    );
+        logoPath ? (
+          <img
+            className="logo-banner"
+            src={`${URL_IMAGE_lOGO}${logoPath}`}
+            alt="Logo"
+          />
+        ) : null
+      );
+      
 
     function Botones() {
         return (

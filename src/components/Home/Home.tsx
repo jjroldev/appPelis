@@ -5,15 +5,16 @@ import { useSearch } from "../../context/SearchContext";
 import { useMenu } from "../../context/MenuContext";
 import "./Home.css";
 import { useFeaturedMovie } from "../../hooks/useFeaturedMovie";
-import { getFetchURLs } from "../../utils/endPoints";
+import { getFetchSeriesURLs, getFetchURLs } from "../../utils/endPoints";
 import { useLanguage } from "../../context/LanguageContext";
 import { CarouselFavorites } from "../CarouselFavorites/CarouselFavorites";
 export default function Home() {
     const { setSearchTerm } = useSearch();
     const { setOpenMenu } = useMenu();
-    const {language}=useLanguage()
+    const { language } = useLanguage()
     const fetchURLS = useMemo(() => getFetchURLs(language), [language]);
-    const featuredMovie =useFeaturedMovie("feautedMovieHome","moviesHome","movie")
+    const fetchSeriesURLS = useMemo(() => getFetchSeriesURLs(language), [language]);
+    const featuredMovie = useFeaturedMovie("feautedMovieHome", "moviesHome", "movie")
     useEffect(() => {
         window.scrollTo({ top: 0, left: 0, behavior: "instant" });
         setOpenMenu(false);
@@ -22,61 +23,93 @@ export default function Home() {
 
     return (
         <div className="contenedorWindow">
-            <Banner itemId={featuredMovie?.id} logoBuscar={true}  type="movie"/>
+            <Banner itemId={featuredMovie?.id} logoBuscar={true} type="movie" />
             <div className="contenedorItems">
-                <CarouselFavorites isLarge title="My List"/>
+                <CarouselFavorites isLarge title="My List" />
                 <CarouselURL
                     URL={fetchURLS.popularMovies}
                     title="Popular Movies"
                     isLarge
                 />
+
+                <CarouselURL
+                    URL={fetchSeriesURLS.comedySeries}
+                    title="Comedy series"
+                    isLarge
+                />
+                <CarouselURL
+                    URL={fetchSeriesURLS.topRatedSeries}
+                    title="Best voted series"
+                    isLarge
+                />
+                <CarouselURL
+                    URL={fetchSeriesURLS.actionAdventureSeries}
+                    title="Series of action and adventure"
+                />
                 <CarouselURL
                     URL={fetchURLS.topRatedMovies}
-                    title="Best Voted"
+                    title="Best voted movies"
                     isLarge
                 />
                 <CarouselURL
                     URL={fetchURLS.actionMovies}
-                    title="Action"
+                    title="Action movies"
                 />
                 <CarouselURL
                     URL={fetchURLS.adventureMovies}
-                    title="Adventure"
+                    title="Adventure movies"
                     isLarge
                 />
                 <CarouselURL
                     URL={fetchURLS.animationMovies}
-                    title="Animation"
+                    title="Animation movies"
                     isLarge
                 />
                 <CarouselURL
+                    URL={fetchSeriesURLS.crimeSeries}
+                    title="Crime series"
+                    isLarge
+                />
+                <CarouselURL
+                    URL={fetchSeriesURLS.documentarySeries}
+                    title="Documentary series"
+                    isLarge
+                />
+
+                <CarouselURL
                     URL={fetchURLS.comedyMovies}
-                    title="Comedy"
+                    title="Comedy movies"
                     isLarge
                 />
                 <CarouselURL
                     URL={fetchURLS.crimeMovies}
-                    title="Crime"
+                    title="Crime movies"
                     isLarge
                 />
                 <CarouselURL
                     URL={fetchURLS.documentaryMovies}
-                    title="Documentary"
+                    title="Documentary movies"
+                    isLarge
+                />
+
+                <CarouselURL
+                    URL={fetchSeriesURLS.dramaSeries}
+                    title="Drama series"
                     isLarge
                 />
                 <CarouselURL
                     URL={fetchURLS.dramaMovies}
-                    title="Drama"
+                    title="Drama movies"
                     isLarge
                 />
                 <CarouselURL
                     URL={fetchURLS.familyMovies}
-                    title="Family"
+                    title="Movies to watch with family"
                     isLarge
                 />
                 <CarouselURL
                     URL={fetchURLS.fantasyMovies}
-                    title="Fantasy"
+                    title="Fantasy movies"
                     isLarge
                 />
                 <CarouselURL
@@ -86,6 +119,11 @@ export default function Home() {
                 <CarouselURL
                     URL={fetchURLS.horrorMovies}
                     title="Horror"
+                />
+
+                <CarouselURL
+                    URL={fetchSeriesURLS.realitySeries}
+                    title="Reality series"
                 />
                 <CarouselURL
                     URL={fetchURLS.musicMovies}
@@ -97,6 +135,12 @@ export default function Home() {
                     title="Mystery"
                     isLarge
                 />
+
+                <CarouselURL
+                    URL={fetchSeriesURLS.mysterySeries}
+                    title="Mystey series"
+                    isLarge
+                />
                 <CarouselURL
                     URL={fetchURLS.romanceMovies}
                     title="Romance"
@@ -105,6 +149,12 @@ export default function Home() {
                 <CarouselURL
                     URL={fetchURLS.scienceFictionMovies}
                     title="Science Fiction"
+                    isLarge
+                />
+
+                <CarouselURL
+                    URL={fetchSeriesURLS.warPoliticsSeries}
+                    title="Series of war"
                     isLarge
                 />
                 <CarouselURL

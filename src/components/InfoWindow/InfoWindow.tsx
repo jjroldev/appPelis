@@ -96,6 +96,12 @@ export default function InfoWindow({type}:{type:string}) {
                         <CarouselBoostrap item={item} />
                     </div>
                 </div>
+                {/* {
+                    type=="serie" && (
+                        <div>
+                        </div>
+                    )
+                } */}
             </div>
         </div>
 

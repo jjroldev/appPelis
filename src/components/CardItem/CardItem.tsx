@@ -52,7 +52,7 @@ const CardItem = React.memo(
             setIsVisible(true);
           }
         },
-        { threshold: 0.01 }
+        { threshold: 0.1 }
       );
 
       if (imgRef.current) {

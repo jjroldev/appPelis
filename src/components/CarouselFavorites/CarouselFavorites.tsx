@@ -65,6 +65,7 @@ export function CarouselFavorites({ isLarge, title }: CarouselFProps) {
                 responsive={responsivew}
                 ssr={false}
                 autoPlay={false}
+                partialVisible
                 keyBoardControl={true}
                 className={`${width < 600 ? "carousel-cell" : ""}`}
                 slidesToSlide={8}
