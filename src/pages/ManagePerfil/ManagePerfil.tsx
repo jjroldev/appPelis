@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
-import Spinner from '../Spinner/Spinner';
+import Spinner from '../../components/Spinner/Spinner';
 import { useMenu } from '../../context/MenuContext';
 
 export default function ManagePerfil() {

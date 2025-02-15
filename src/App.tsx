@@ -7,15 +7,15 @@ import { ProtectedRoute } from './ProtectedRoute';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { useAuth } from './context/AuthContext';
 
-const PageLogin = lazy(() => import("./components/PageLogin/PageLogin"));
-const PageRegister = lazy(() => import("./components/PageRegister/PageRegister"));
+const PageLogin = lazy(() => import("./pages/PageLogin/PageLogin"));
+const PageRegister = lazy(() => import("./pages/PageRegister/PageRegister"));
 const MiLista = lazy(() => import("./components/MiLista/MiLista"));
-const Buscar = lazy(() => import("./components/Buscar/Buscar"));
-const Home = lazy(() => import("./components/Home/Home"));
-const ManagePerfil = lazy(() => import("./components/ManagePerfil/ManagePerfil"));
-const InfoWindow = lazy(() => import('./components/InfoWindow/InfoWindow'));
-const MoviesWindow = lazy(() => import('./components/MoviesWindow/MoviesWindow'))
-const SeriesWindow = lazy(() => import('./components/SeriesWindow/SeriesWindow'))
+const Buscar = lazy(() => import("./pages/Buscar/Buscar"));
+const Home = lazy(() => import("./pages/Home/Home"));
+const ManagePerfil = lazy(() => import("./pages/ManagePerfil/ManagePerfil"));
+const InfoWindow = lazy(() => import('./pages/InfoWindow/InfoWindow'));
+const MoviesWindow = lazy(() => import('./pages/MoviesWindow/MoviesWindow'))
+const SeriesWindow = lazy(() => import('./pages/SeriesWindow/SeriesWindow'))
 
 export default function App() {
   const queryClient = new QueryClient();

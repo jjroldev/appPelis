@@ -10,8 +10,8 @@ import {
     URL_IMAGE_BANNER,
     getURLMovieDetails,
     getSeriesDetailsURL,
-    getMovieLogosURL,
-    getSeriesLogosURL
+    getMovieImagesURL,
+    getSeriesImagesURL
 } from "../../utils/endPoints";
 import DetalleBanner from "../DetalleBanner/DetalleBaner";
 import VideoModal from "../ModalVideo/ModalVideo";
@@ -32,6 +32,7 @@ export function Banner({ itemId, logoBuscar, isDetail = false, type }: BannerPro
     const { handleAddFavorite } = useFavorites()
     const { language } = useLanguage()
 
+
     const width = useWindowWidth()
 
     const [open, setOpen] = useState<any>(false);
@@ -46,7 +47,7 @@ export function Banner({ itemId, logoBuscar, isDetail = false, type }: BannerPro
 
     const { data: dataImages } = useQuery<any>(
         `logo-item-${type}-${itemId}`,
-        () => type == "movie" ? fetchData(getMovieLogosURL(itemId)) : fetchData(getSeriesLogosURL(itemId)),
+        () => type == "movie" ? fetchData(getMovieImagesURL(itemId)) : fetchData(getSeriesImagesURL(itemId)),
         { enabled: !!itemId, staleTime: 1000 * 60 * 5 }
       );
 
@@ -65,7 +66,7 @@ export function Banner({ itemId, logoBuscar, isDetail = false, type }: BannerPro
             return (
                 <p className="overview">
                     {width > 600 ?
-                        item?.overview.slice(0, 250) :
+                        item?.overview.slice(0, 350) :
                         item?.overview.slice(0, 150)
                     }
                     ...

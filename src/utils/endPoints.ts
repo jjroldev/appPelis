@@ -61,11 +61,18 @@ export const getURLMovieDetails=(id:string|undefined|null,language?:string|undef
   similar:`${BASE_URL}/movie/${id}/similar?api_key=${API_KEY}&language=${language}`
 })
 
-export const getMovieLogosURL =(movieId: string | null |undefined)=> 
+export const getMovieImagesURL =(movieId: string | null |undefined)=> 
   `${BASE_URL}/movie/${movieId}/images?api_key=${API_KEY}&include_image_language=en,null`;
 
 export const getSeriesDetailsURL = (seriesId: string | null |undefined) => 
   `${BASE_URL}/tv/${seriesId}?api_key=${API_KEY}&append_to_response=videos,credits,images`;
+
+export const getImagesEpisode=(series_id:string |undefined,season_number:number,episode_number:number)=>
+  `${BASE_URL}/tv/${series_id}/season/${season_number}/episode/${episode_number}/images?api_key=${API_KEY}`
+
+export const getImagesSeason = (series_id: string | undefined, season_number: number) =>
+  `${BASE_URL}/tv/${series_id}/season/${season_number}/images?api_key=${API_KEY}`;
+
 
 export const getSeasonDetailsURL = (seriesId: string | null |undefined, seasonNumber: number, language: string) => 
   `${BASE_URL}/tv/${seriesId}/season/${seasonNumber}?api_key=${API_KEY}&language=${language}`;
@@ -83,8 +90,12 @@ export const getSimilarSeriesURL = (seriesId: string | null |undefined, language
   `${BASE_URL}/tv/${seriesId}/similar?api_key=${API_KEY}&language=${language}`;
 
 
-export const getSeriesLogosURL =(seriesId: string | null |undefined)=> 
+export const getSeriesImagesURL =(seriesId: string | null |undefined)=> 
   `${BASE_URL}/tv/${seriesId}/images?api_key=${API_KEY}&include_image_language=en,null`;
 
 export const getSeriesVideosURL = (seriesId:string | null |undefined)=>
   `${BASE_URL}/tv/${seriesId}/videos?api_key=${API_KEY}&language=en`
+
+
+export const getCollectionDetailsURL = (collectionId: string | undefined) =>
+  `${BASE_URL}/collection/${collectionId}?api_key=${API_KEY}`;

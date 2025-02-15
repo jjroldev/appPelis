@@ -9,7 +9,6 @@ import { responsive } from "../../utils/ResponsiveCarrousel";
 import "./CarouselURL.css";
 import { useWindowWidth } from "../../hooks/useWindowWidth";
 import { useFavorites } from "../../hooks/useFavorites";
-import { SkeletonCarousel } from "../SkeletonCarousel/SkeletonCarousel";
 import { getFetchSeriesURLs, getFetchURLs } from "../../utils/endPoints";
 import { useLanguage } from "../../context/LanguageContext";
 import { Serie } from "../../interface/Serie";
@@ -26,11 +25,11 @@ const CarouselURL = React.memo(
     const { handleAddFavorite } = useFavorites()
     const { language } = useLanguage()
 
-    const { data: items, isLoading } = useQuery(["items", URL], () => fetchData(URL), {
+    const { data: items } = useQuery(["items", URL,title], () => fetchData(URL), {
       refetchOnWindowFocus: false,
     });
 
-    const { data: topRatedItems, isLoading: isLoadingP } = useQuery(["items", "top_rated"],
+    const { data: topRatedItems} = useQuery(["items", "top_rated"],
       () => URL.includes("tv") ? fetchData(getFetchSeriesURLs(language).topRatedSeries) :
         fetchData(getFetchURLs(language).topRatedMovies)
       , {
@@ -63,14 +62,10 @@ const CarouselURL = React.memo(
       [isLarge1]
     );
 
-    if (isLoading || isLoadingP) {
-      return (
-        <SkeletonCarousel numItems={20} isLarge={false} title={title} />
-      )
-    }
-
+ 
     return (
-      <div className="carousel">
+      validItems.length>0 ?(
+        <div className="carousel">
         <h2 className="tituloCarousel">{title}</h2>
         <Carousel
           swipeable
@@ -84,11 +79,11 @@ const CarouselURL = React.memo(
           className={`${width < 600 ? "carousel-cell" : ""}`}
           slidesToSlide={8}
         >
-          {validItems.length > 0 ?
-            renderItems(validItems) :
-            renderItems(validItemsP)}
+          {items ? renderItems(validItems) : renderItems(validItemsP)}
+
         </Carousel>
       </div>
+      ):null
     );
   }
 );

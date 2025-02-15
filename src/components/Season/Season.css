@@ -1,0 +1,44 @@
+.containerSeason{
+    display: flex;
+    flex-direction: column;
+}
+
+.contenedorSeleccionSeason{
+    display: flex;
+    justify-content: right;
+    padding: 60px;
+}
+
+.contenedorSeleccionSeason select{
+    color: white;
+    background-color: rgb(0, 0, 0);
+    gap: 10px;
+    padding: 10px;
+}
+
+.contenedorEpisodios{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    justify-content: center;
+}
+
+.containerSeason {
+    margin-right: 45px;
+}
+
+
+@media (max-width: 1024px) {
+    .containerSeason {
+        margin-right: 25px;
+    }
+
+}
+
+@media (max-width: 780px) {
+
+    .containerSeason {
+        margin-right: 18px;
+    }
+
+}

@@ -1,32 +1,32 @@
-import "./InfoWindow.css";
-import {useParams } from "react-router";
-import { Banner } from "../Banner/Banner";
+import "./InfoMovie.css";
+import { useParams } from "react-router";
+import { Banner } from "../../components/Banner/Banner";
 import "react-multi-carousel/lib/styles.css";
-import {Movie } from "../../interface/Movie";
+import { Movie } from "../../interface/Movie";
 import Carousel from "react-multi-carousel";
-import { Card } from "../Card/Card";
+import { Card } from "../../components/Card/Card";
 import { useEffect } from "react";
+import CarouselCollection from "../../components/CarouselCollection/CarouselCollection";
 import { fetchData } from "../../utils/fetchData";
 import { useQuery } from "react-query";
-import {getSeriesDetailsURL, getSimilarSeriesURL, getURLMovieDetails } from "../../utils/endPoints";
+import {getURLMovieDetails } from "../../utils/endPoints";
 import { responsiveInfo } from "../../utils/ResponsiveCarrousel";
-import CarouselBoostrap from "../CarouselBoostrap/CarouselBoostrap";
+import CarouselBoostrap from "../../components/CarouselBoostrap/CarouselBoostrap";
 import { useSearch } from "../../context/SearchContext";
 import { useMenu } from "../../context/MenuContext";
 import { useWindowWidth } from "../../hooks/useWindowWidth";
-import MovieSwiper from "../CarouselURL/CarouselURL";
+import CarouselURL from "../../components/CarouselURL/CarouselURL";
 import { useLanguage } from "../../context/LanguageContext";
-import { Serie } from "../../interface/Serie";
-export default function InfoWindow({type}:{type:string}) {
-    const {movieId,seriesId}=useParams()
-    const id = type==="movie"?movieId:seriesId
+export default function InfoMovie() {
+    const { movieId } = useParams()
     const { language } = useLanguage()
-    const { data: item } = useQuery<Movie>(
-        `itemInfo-${id}`,
-        () => type=="movie"?fetchData(getURLMovieDetails(id).movieDetails):
-        fetchData(getSeriesDetailsURL(id)),
-        { refetchOnWindowFocus: false ,enabled:!!id}
+    const { data: item} = useQuery<Movie>(
+        `movieInfo-${movieId}`,
+        () => fetchData(getURLMovieDetails(movieId).movieDetails),
+        { refetchOnWindowFocus: false, enabled: !!movieId }
     );
+
+    console.log(item)
 
     const width = useWindowWidth()
 
@@ -37,14 +37,14 @@ export default function InfoWindow({type}:{type:string}) {
         window.scroll({ top: 0, left: 0, behavior: "instant" });
         setOpenMenu(false);
         setSearchTerm("");
-    }, [id]);
+    }, [movieId]);
 
-    const renderCastMembers = (item:Movie|Serie) =>
+    const renderCastMembers = (item: Movie) =>
         item.credits.cast.map((castM) =>
             castM.profile_path ? <Card key={castM.id} castMember={castM} /> : null
         );
 
-    const renderCrewMembers = (item:Movie|Serie) =>
+    const renderCrewMembers = (item: Movie) =>
         item.credits.crew.map((crewM) =>
             crewM.profile_path ? <Card key={crewM.id} castMember={crewM} isCrew /> : null
         );
@@ -69,20 +69,21 @@ export default function InfoWindow({type}:{type:string}) {
         </div>
     );
 
-
     return (
         <div className="contenedorPrincipalItem">
-            <Banner itemId={id} logoBuscar isDetail type={type}/>
+            <Banner itemId={movieId} logoBuscar isDetail type={"movie"} />
             <div className="infoItemContainer">
                 <div className="detallesInfo">
                     <div className="contenedorSimilares">
-                        <MovieSwiper
-                            URL={
-                                type=='movie'?getURLMovieDetails(item?.id, language).similar:
-                                getSimilarSeriesURL(item?.id,language)
-                            }
-                            title="También te puede interesar"
-                        />
+                        {item?.belongs_to_collection && <CarouselCollection title="Collection" item={item} />}
+                        {item &&
+                            <CarouselURL
+                                URL={
+                                    getURLMovieDetails(item?.id, language).similar 
+                                }
+                                title="También te puede interesar"
+                                isLarge={false}
+                            />}
                     </div>
                     {item && item.credits.cast?.length > 0 && (
                         <CarouselCredits renderCredits={renderCastMembers(item)} title="CAST" />
@@ -96,12 +97,6 @@ export default function InfoWindow({type}:{type:string}) {
                         <CarouselBoostrap item={item} />
                     </div>
                 </div>
-                {/* {
-                    type=="serie" && (
-                        <div>
-                        </div>
-                    )
-                } */}
             </div>
         </div>
 

@@ -23,6 +23,7 @@ export function SkeletonCarousel({ isLarge,numItems ,title}: { isLarge: boolean,
                     infinite={true}
                     autoPlay={false}
                     className="carousel-react"
+                    partialVisible={true}
                 >
                     {renderSkeletonCardItem(numItems)}
                 </Carousel>

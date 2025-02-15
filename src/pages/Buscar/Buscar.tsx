@@ -12,9 +12,9 @@ import { useLanguage } from "../../context/LanguageContext";
 import { useAuth } from "../../context/AuthContext";
 import { useMenu } from "../../context/MenuContext";
 
-import { NavBar } from "../NavBar/NavBar";
-import CardItem from "../CardItem/CardItem";
-import Lupa from "../Lupa/Lupa";
+import { NavBar } from "../../components/NavBar/NavBar";
+import CardItem from "../../components/CardItem/CardItem";
+import Lupa from "../../components/Lupa/Lupa";
 import { Movie } from "../../interface/Movie";
 import { useWindowWidth } from "../../hooks/useWindowWidth";
 import { Serie } from "../../interface/Serie";
