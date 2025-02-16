@@ -5,6 +5,7 @@ import { useMemo, useEffect, useState } from 'react';
 import { getFetchSeriesURLs } from '../../utils/endPoints';
 import { useMenu } from '../../context/MenuContext';
 import '../Home/Home.css';
+import React from 'react';
 import './SeriesWindow.css';
 import CarouselURL from '../../components/CarouselURL/CarouselURL';
 import { useSearch } from '../../context/SearchContext';
@@ -49,13 +50,14 @@ export default function SeriesWindow() {
             <Banner itemId={featuredSerie?.id} logoBuscar={true} type='serie' />
             <div className="contenedorItems">
                 {sections.slice(0, visibleSections).map((section, index) => (
-                    <>
+                    <React.Fragment key={section.URL || index}>
                         {index === visibleSections - 2 && visibleSections < sections.length && (
-                            <div ref={observerRef} style={{ height: "50px", margin: "20px 0" }}></div>
+                            <div ref={observerRef} style={{ height: "0px", margin: "20px 0" }}></div>
                         )}
-                        <CarouselURL key={index} URL={section.URL} title={section.title} isLarge={section.isLarge} />
-                    </>
+                        <CarouselURL URL={section.URL} title={section.title} isLarge={section.isLarge} />
+                    </React.Fragment>
                 ))}
+
             </div>
         </div>
     );

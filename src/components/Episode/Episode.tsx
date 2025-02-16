@@ -48,31 +48,33 @@ export default function EpisodeC({ episode }: EpisodeProps) {
         <div className="flex flex-col containerEpisode">
             <div className='container-episode'>
                 <div className='wrapper-img-episode'>
-                    {image_path ? (
+                    {image_path && (
                         <img src={URL_IMAGE_STILL + image_path} alt={episode.name} />
-                    ) : (
-                        <div className="placeholder-img">No Image Available</div>
-                    )}
+                    ) }
                 </div>
                 <div className="info-episode">
-                    <h4>S {episode.season_number} E {episode.episode_number} - {episode.name}</h4>
+                    <h4>{episode.episode_number}.  {episode.name}</h4>
                     <div className='flex flex-row detailsDate'>
                         {new Date(episode.air_date).toLocaleDateString("en-US", {
                             year: "numeric",
                             month: "long",
                             day: "numeric",
                         })}
-                        {width > 735 && <p>{formatRuntime(episode.runtime)}</p> }
+                        {width > 735 && <p>{formatRuntime(episode.runtime)}</p>}
                     </div>
-                    {width <= 735 && <p>{formatRuntime(episode.runtime)}</p> }
-                    {width > 990 && <p>{episode.overview}</p>}
+                    {width <= 735 && <p>{formatRuntime(episode.runtime)}</p>}
+                    {width > 990 &&episode.overview &&<p>{episode.overview}</p>}
                 </div>
-                <div className="containerPlay">
-                    <i className="fa-solid fa-play"></i>
-                </div>
+                {
+                    width > 580 && (
+                        <div className="containerPlay">
+                            <i className="fa-solid fa-play"></i>
+                        </div>
+                    )
+                }
             </div>
             {
-                width <990 && (
+                width < 990 &&  episode.overview &&(
                     <div className='overViewEpisodeC'>
                         <p className='overViewEpisode'>{episode.overview}</p>
                     </div>

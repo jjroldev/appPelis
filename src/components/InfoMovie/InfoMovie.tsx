@@ -25,9 +25,6 @@ export default function InfoMovie() {
         () => fetchData(getURLMovieDetails(movieId).movieDetails),
         { refetchOnWindowFocus: false, enabled: !!movieId }
     );
-
-    console.log(item)
-
     const width = useWindowWidth()
 
     const { setSearchTerm } = useSearch();

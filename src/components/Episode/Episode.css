@@ -54,7 +54,7 @@
     flex-direction: column;
     gap: 10px;
     align-items: left;
-    padding: 20px;
+    padding-left: 20px;
     justify-content: center;
 }
 
@@ -62,12 +62,11 @@
     display: flex;
     gap: 15px;
     font-size: 1.3rem;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .info-episode h4 {
     font-size: 1.45rem;
-    text-transform: uppercase;
     font-weight: bold;
 }
 
@@ -120,11 +119,11 @@
     }
 
     .info-episode h4 {
-        font-size: 1.30rem;
+        font-size: 1.87rem;
     }
 
     .overViewEpisode {
-        font-size: 1.1rem;
+        font-size: 1.08rem;
     }
     
 }
@@ -137,11 +136,11 @@
     }
 
     .containerPlay i {
-        font-size: 1.9rem;
+        font-size: 1.7rem;
     }
 
     .info-episode h4 {
-        font-size: 1.2rem;
+        font-size: 1.17rem;
     }
 
     .info-episode {
@@ -163,6 +162,7 @@
 
     .info-episode h4 {
         font-size: 1.1rem;
+        font-weight: 500;
     }
 
     .containerPlay i {
@@ -179,7 +179,7 @@
     }
 
     .wrapper-img-episode {
-        width: 40%;
+        width: 45%;
     }
 
 }
@@ -203,4 +203,11 @@
         font-size: .9rem;
     }
 
+}
+
+
+@media (max-width: 550px) {
+    .wrapper-img-episode {
+        width: 65%;
+    }
 }

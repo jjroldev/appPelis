@@ -16,12 +16,11 @@ interface SeasonProps {
 export default function SeasonC({ seriesId, numeroTemporadas }: SeasonProps) {
     const { language } = useLanguage();
     const [numSeason, setNumSeason] = useState<number>(1);
-    const [visibleEpisodes, setVisibleEpisodes] = useState<number>(5);
+    const [visibleEpisodes, setVisibleEpisodes] = useState<number>(8);
 
-    const { data: season } = useQuery<Season>(
+    const { data: season, isLoading } = useQuery<Season>(
         `seasons-${seriesId}-${numSeason}`,
-        () => fetchData(getSeasonDetailsURL(seriesId, numSeason, language)),
-        { refetchOnWindowFocus: false }
+        () => fetchData(getSeasonDetailsURL(seriesId, numSeason, language))
     );
 
     const visibleEpisodesList = useMemo(() => {
@@ -30,7 +29,7 @@ export default function SeasonC({ seriesId, numeroTemporadas }: SeasonProps) {
 
     const loadMoreEpisodes = useCallback(() => {
         if (season && visibleEpisodes < season.episodes.length) {
-            setVisibleEpisodes((prev) => Math.min(prev + 5, season.episodes.length));
+            setVisibleEpisodes((prev) => Math.min(prev + 8, season.episodes.length));
         }
     }, [season, visibleEpisodes]);
 
@@ -41,7 +40,7 @@ export default function SeasonC({ seriesId, numeroTemporadas }: SeasonProps) {
             <div className="contenedorSeleccionSeason">
                 <select onChange={(e) => {
                     setNumSeason(Number(e.target.value));
-                    setTimeout(() => setVisibleEpisodes(5), 0);
+                    setTimeout(() => setVisibleEpisodes(8), 0);
                 }}>
                     {numeroTemporadas && [...Array(numeroTemporadas)].map((_, index) => (
                         <option key={index} value={index + 1}>Temporada {index + 1}</option>
@@ -49,16 +48,16 @@ export default function SeasonC({ seriesId, numeroTemporadas }: SeasonProps) {
                 </select>
             </div>
             <div className='contenedorEpisodios'>
-                {season ? (
-                    visibleEpisodesList.map((episode,index) => (
-                        <EpisodeC key={index} episode={episode} />
-                    ))
-                ) : (
+                {isLoading ? (
                     <>
                         <EpisodeSkeleton />
                         <EpisodeSkeleton />
                         <EpisodeSkeleton />
                     </>
+                ) : (
+                    visibleEpisodesList.map((episode, index) => (
+                        <EpisodeC key={index} episode={episode} />
+                    ))
                 )}
                 <div ref={loadMoreRef} style={{ height: '50px', margin: '20px 0' }}></div>
             </div>

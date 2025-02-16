@@ -9,7 +9,7 @@ import { getFetchSeriesURLs, getFetchURLs } from "../../utils/endPoints";
 import { useLanguage } from "../../context/LanguageContext";
 import { CarouselFavorites } from "../../components/CarouselFavorites/CarouselFavorites";
 import { useRefVisible } from "../../hooks/useRef";
-
+import React from "react";
 export default function Home() {
     const { setSearchTerm } = useSearch();
     const { setOpenMenu } = useMenu();
@@ -19,7 +19,7 @@ export default function Home() {
     const featuredMovie = useFeaturedMovie("feautedMovieHome", "moviesHome", "movie");
 
     const [visibleSections, setVisibleSections] = useState(5);
-    
+
     const sections = useMemo(() => [
         { URL: fetchURLS.popularMovies, title: "Popular Movies", isLarge: true },
         { URL: fetchSeriesURLS.comedySeries, title: "Comedy Series", isLarge: true },
@@ -70,13 +70,14 @@ export default function Home() {
                 <CarouselFavorites isLarge={true} title="My List" />
 
                 {sections.slice(0, visibleSections).map((section, index) => (
-                    <>
+                    <React.Fragment key={section.URL || index}>
                         {index === visibleSections - 2 && visibleSections < sections.length && (
-                            <div ref={loadMoreRef} style={{ height: "50px", margin: "20px 0" }}></div>
+                            <div ref={loadMoreRef} style={{ height: "100px", margin: "20px 0" }}></div>
                         )}
-                        <CarouselURL key={index} URL={section.URL} title={section.title} isLarge={section.isLarge} />
-                    </>
+                        <CarouselURL URL={section.URL} title={section.title} isLarge={section.isLarge} />
+                    </React.Fragment>
                 ))}
+
             </div>
         </div>
     );

@@ -12,7 +12,7 @@ import { useFavorites } from "../../hooks/useFavorites";
 import { getFetchSeriesURLs, getFetchURLs } from "../../utils/endPoints";
 import { useLanguage } from "../../context/LanguageContext";
 import { Serie } from "../../interface/Serie";
-
+import { SkeletonCarousel } from "../SkeletonCarousel/SkeletonCarousel";
 interface CarouselURLProps {
   URL: string,
   title: string,
@@ -52,6 +52,7 @@ const CarouselURL = React.memo(
       () => topRatedItems?.results?.filter((movie: Movie) => movie.backdrop_path) || [],
       [items]
     );
+
     const responsivew = useMemo(() => responsive(isLarge1), [isLarge1]);
 
     const renderItems = useCallback(
@@ -61,10 +62,9 @@ const CarouselURL = React.memo(
         )),
       [isLarge1]
     );
-
  
     return (
-      validItems.length>0 ?(
+      validItems.length || validItemsP.length ?(
         <div className="carousel">
         <h2 className="tituloCarousel">{title}</h2>
         <Carousel
@@ -79,11 +79,11 @@ const CarouselURL = React.memo(
           className={`${width < 600 ? "carousel-cell" : ""}`}
           slidesToSlide={8}
         >
-          {items ? renderItems(validItems) : renderItems(validItemsP)}
+          {items?.results?.length ? renderItems(validItems) : renderItems(validItemsP)}
 
         </Carousel>
       </div>
-      ):null
+      ):<SkeletonCarousel numItems={20} title={title} isLarge={false} />
     );
   }
 );

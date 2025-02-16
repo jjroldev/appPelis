@@ -19,16 +19,12 @@
 .contenedorEpisodios {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 5px;
     justify-content: center;
 }
 
 .containerSeason {
     margin-right: 45px;
-}
-
-option{
-    font-size: .2rem;
 }
 
 @media (max-width: 1024px) {
@@ -45,15 +41,7 @@ option{
     }
 }
 
-@media (max-width: 780px) {
-
-    .containerSeason {
-        margin-right: 18px;
-    }
-
-}
-
-@media (max-width: 6500px) {
+@media (max-width: 650px) {
 
     .contenedorSeleccionSeason {
         padding: 20px 0;

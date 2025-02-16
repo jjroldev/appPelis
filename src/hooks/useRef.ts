@@ -13,7 +13,7 @@ export function useRefVisible(callback: () => void) {
                     setTimeout(() => setHasTriggered(false), 500);
                 }
             },
-            { threshold: 0.2 }
+            { threshold: 0.6 }
         );
 
         if (observerRef.current) {

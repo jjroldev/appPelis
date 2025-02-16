@@ -3,7 +3,7 @@ import './Episode.css';
 
 export default function EpisodeSkeleton() {
     return (
-        <div className='container-episode'>
+        <div className='container-episode' style={{height:"250px"}}>
             <Skeleton
                     sx={{ bgcolor: 'grey.900' }}
                     variant="rectangular"
