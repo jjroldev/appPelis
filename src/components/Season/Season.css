@@ -1,22 +1,22 @@
-.containerSeason{
+.containerSeason {
     display: flex;
     flex-direction: column;
 }
 
-.contenedorSeleccionSeason{
+.contenedorSeleccionSeason {
     display: flex;
     justify-content: right;
-    padding: 60px;
+    padding: 60px 0;
 }
 
-.contenedorSeleccionSeason select{
+.contenedorSeleccionSeason select {
     color: white;
     background-color: rgb(0, 0, 0);
     gap: 10px;
     padding: 10px;
 }
 
-.contenedorEpisodios{
+.contenedorEpisodios {
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -27,12 +27,22 @@
     margin-right: 45px;
 }
 
+option{
+    font-size: .2rem;
+}
 
 @media (max-width: 1024px) {
     .containerSeason {
         margin-right: 25px;
     }
 
+    .contenedorSeleccionSeason {
+        padding: 40px 0;
+    }
+
+    .contenedorSeleccionSeason select  option{
+        font-size: .9rem !important;
+    }
 }
 
 @media (max-width: 780px) {
@@ -41,4 +51,11 @@
         margin-right: 18px;
     }
 
+}
+
+@media (max-width: 6500px) {
+
+    .contenedorSeleccionSeason {
+        padding: 20px 0;
+    }
 }

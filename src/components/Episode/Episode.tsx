@@ -5,6 +5,7 @@ import { useQuery } from 'react-query';
 import { fetchData } from '../../utils/fetchData';
 import { useParams } from 'react-router';
 import { useEffect, useState } from 'react';
+import { useWindowWidth } from '../../hooks/useWindowWidth';
 
 interface EpisodeProps {
     episode: Episode
@@ -13,7 +14,7 @@ interface EpisodeProps {
 export default function EpisodeC({ episode }: EpisodeProps) {
     const { seriesId } = useParams();
     const [randomImageIndex, setRandomImageIndex] = useState<number | null>(null);
-
+    const width = useWindowWidth()
     const { data, isLoading } = useQuery(`images-${seriesId}`, () => fetchData(getSeriesImagesURL(seriesId)), {
         enabled: !!seriesId && episode.still_path == null,
         staleTime: 1000 * 60 * 30,
@@ -40,33 +41,43 @@ export default function EpisodeC({ episode }: EpisodeProps) {
     const image_path = episode.still_path
         ? episode.still_path
         : data?.backdrops?.length && randomImageIndex !== null
-        ? data.backdrops[randomImageIndex].file_path
-        : "";
+            ? data.backdrops[randomImageIndex].file_path
+            : "";
 
     return (
-        <div className='container-episode'>
-            <div className='wrapper-img-episode'>
-                {image_path ? (
-                    <img src={URL_IMAGE_STILL + image_path} alt={episode.name} />
-                ) : (
-                    <div className="placeholder-img">No Image Available</div>
-                )}
-            </div>
-            <div className="info-episode">
-                <h4>S {episode.season_number} E {episode.episode_number} - {episode.name}</h4>
-                <div className='flex flex-row detailsDate'>
-                    {new Date(episode.air_date).toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                    })}
-                    <p>{formatRuntime(episode.runtime)}</p>
+        <div className="flex flex-col containerEpisode">
+            <div className='container-episode'>
+                <div className='wrapper-img-episode'>
+                    {image_path ? (
+                        <img src={URL_IMAGE_STILL + image_path} alt={episode.name} />
+                    ) : (
+                        <div className="placeholder-img">No Image Available</div>
+                    )}
                 </div>
-                <p>{episode.overview}</p>
+                <div className="info-episode">
+                    <h4>S {episode.season_number} E {episode.episode_number} - {episode.name}</h4>
+                    <div className='flex flex-row detailsDate'>
+                        {new Date(episode.air_date).toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                        })}
+                        {width > 735 && <p>{formatRuntime(episode.runtime)}</p> }
+                    </div>
+                    {width <= 735 && <p>{formatRuntime(episode.runtime)}</p> }
+                    {width > 990 && <p>{episode.overview}</p>}
+                </div>
+                <div className="containerPlay">
+                    <i className="fa-solid fa-play"></i>
+                </div>
             </div>
-            <div className="containerPlay">
-                <i className="fa-solid fa-play"></i>
-            </div>
+            {
+                width <990 && (
+                    <div className='overViewEpisodeC'>
+                        <p className='overViewEpisode'>{episode.overview}</p>
+                    </div>
+                )
+            }
         </div>
     );
 }
