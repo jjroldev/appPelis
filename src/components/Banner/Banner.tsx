@@ -4,7 +4,6 @@ import { useQuery } from "react-query";
 import "./Banner.css";
 import { NavBar } from "../NavBar/NavBar";
 import { fetchData } from "../../utils/fetchData";
-import { Skeleton } from "@mui/material";
 import { getCertifiedReleaseItem } from "../../utils/helpers";
 import {
     URL_IMAGE_lOGO,
@@ -112,12 +111,9 @@ export function Banner({ itemId, logoBuscar, isDetail = false, type }: BannerPro
         return (
             <div className="header">
                 <NavBar perfil={true} menu={true} logoBuscar={logoBuscar} />
-                <Skeleton
-                    sx={{ bgcolor: 'grey.900' }}
-                    variant="rectangular"
-                    width={"100%"}
-                    height={"100%"}
-                />
+                <div
+                    className={`fondoCardItem h-full w-full absolute inset-0 opacity-100 transition-opacity duration-400`}
+                ></div>
             </div>
         )
     }
@@ -130,7 +126,7 @@ export function Banner({ itemId, logoBuscar, isDetail = false, type }: BannerPro
                     <div className="flex flex-row gap-3 items-center">
                         <Logo />
                         {
-                            getCertifiedReleaseItem(item) && width<=600 &&(
+                            getCertifiedReleaseItem(item) && width <= 600 && (
                                 <span className="edadParaPublico inline-block max-h-fit">{getCertifiedReleaseItem(item)}+</span>
                             )
                         }

@@ -4,7 +4,6 @@ import { Movie } from "../../interface/Movie";
 import { URL_IMAGE_BACKDROP, URL_IMAGE_POSTER } from "../../utils/endPoints";
 import { Serie } from "../../interface/Serie";
 import './CardItem.css'
-
 interface CardItemProps {
   item: Movie | Serie;
   isLarge?: boolean;

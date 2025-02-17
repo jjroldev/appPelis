@@ -82,10 +82,10 @@ export default function InfoMovie() {
                                 isLarge={false}
                             />}
                     </div>
-                    {item && item.credits.cast?.length > 0 && (
+                    {item && item.credits.cast?.length > 0 && item?.credits?.cast[0]?.profile_path&&(
                         <CarouselCredits renderCredits={renderCastMembers(item)} title="CAST" />
                     )}
-                    {item && item.credits.crew?.length > 0 && (
+                    {item && item.credits.crew?.length > 0 &&item?.credits?.crew[0]?.profile_path&& (
                         <CarouselCredits renderCredits={renderCrewMembers(item)} title="CREW" />
                     )}
                 </div>

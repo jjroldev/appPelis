@@ -45,7 +45,7 @@ export default function EpisodeC({ episode, serie_backdrop }: EpisodeProps) {
     const image_path = episode.still_path
         ? episode.still_path
         : data?.backdrops?.length && randomImageIndex !== null
-            ? data.backdrops[randomImageIndex].file_path
+            ? data?.backdrops[randomImageIndex]?.file_path
             : serie_backdrop;
 
     return (
