@@ -1,0 +1,1 @@
+.loginContainer{height:100vh;height:100dvh;width:100vw;background-color:#000;display:flex;align-items:end;justify-content:center;position:relative}.heroImg{position:absolute;height:100%;width:100%;object-fit:cover}.loginContainer:before{content:"";position:absolute;top:0;left:0;right:0;bottom:0;background-color:#00000080;z-index:1}
