@@ -56,16 +56,16 @@ export const getFetchSeriesURLs = (language: string) => ({
 
 
 export const getURLMovieDetails=(id:string|undefined|null,language?:string|undefined)=>({
-  movieDetails:`${BASE_URL}/movie/${id}?api_key=${API_KEY}&append_to_response=videos,credits,images`,
+  movieDetails:`${BASE_URL}/movie/${id}?api_key=${API_KEY}&append_to_response=videos,credits,images,release_dates`,
   providers: `${BASE_URL}/movie/${id}/watch/providers?api_key=${API_KEY}`,
   similar:`${BASE_URL}/movie/${id}/similar?api_key=${API_KEY}&language=${language}`
 })
 
 export const getMovieImagesURL =(movieId: string | null |undefined)=> 
-  `${BASE_URL}/movie/${movieId}/images?api_key=${API_KEY}&include_image_language=en,null`;
+  `${BASE_URL}/movie/${movieId}/images?api_key=${API_KEY}`;
 
 export const getSeriesDetailsURL = (seriesId: string | null |undefined) => 
-  `${BASE_URL}/tv/${seriesId}?api_key=${API_KEY}&append_to_response=videos,credits,images`;
+  `${BASE_URL}/tv/${seriesId}?api_key=${API_KEY}&append_to_response=videos,credits,images,content_ratings`;
 
 export const getImagesEpisode=(series_id:string |undefined,season_number:number,episode_number:number)=>
   `${BASE_URL}/tv/${series_id}/season/${season_number}/episode/${episode_number}/images?api_key=${API_KEY}`

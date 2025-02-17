@@ -2,6 +2,7 @@ import { memo } from "react";
 import CarouselBoostrap from "../CarouselBoostrap/CarouselBoostrap";
 import { Movie } from "../../interface/Movie";
 import { useWindowWidth } from "../../hooks/useWindowWidth";
+import { getCertifiedReleaseItem } from "../../utils/helpers";
 
 const DetalleBannerMovie = memo(({ movie }: { movie: Movie }) => {
   const width = useWindowWidth();
@@ -11,7 +12,7 @@ const DetalleBannerMovie = memo(({ movie }: { movie: Movie }) => {
       <li key={genre.id}>
         <span>{genre.name}</span>
       </li>
-    ));
+  ));
 
   return (
     <>
@@ -20,7 +21,11 @@ const DetalleBannerMovie = memo(({ movie }: { movie: Movie }) => {
           <span>TMDB {movie?.vote_average.toFixed(1)}</span>
           <span>{movie?.release_date.split("-")[0]}</span>
           <span>{`${Math.floor(movie.runtime / 60)}h ${movie.runtime % 60}min`}</span>
-          <span></span>
+          {
+            getCertifiedReleaseItem(movie) &&(
+              <span className="edadParaPublico">{getCertifiedReleaseItem(movie)}+</span>
+            )
+          }
         </div>
 
         <div>

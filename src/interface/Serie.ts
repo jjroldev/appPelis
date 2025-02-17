@@ -27,6 +27,7 @@ export interface Serie {
         cast: CastMember[];
         crew: CastMember[];
     };
+    content_ratings:DataFetchContentRaitings
 }
 
 interface Creator {
@@ -44,16 +45,16 @@ export interface Season {
     poster_path: string;
     season_number: number;
     vote_average: number;
-    episodes:Episode[]
+    episodes: Episode[]
 }
 
 export interface Episode {
-    id:string;
+    id: string;
     air_date: string;
     crew: CastMember[];
     name: string;
     overview: string;
-    episode_number:number;
+    episode_number: number;
     runtime: number;
     season_number: number;
     vote_average: number;
@@ -63,4 +64,14 @@ export interface Episode {
         logos: Logo[];
     };
     still_path: string;
+}
+
+
+export interface DataFetchContentRaitings {
+    results: Release_Date[]
+}
+
+export interface Release_Date {
+    rating:string;
+    iso_3166_1:string;
 }

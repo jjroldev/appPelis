@@ -43,8 +43,8 @@ export function Banner({ itemId, logoBuscar, isDetail = false, type }: BannerPro
                 fetchData(getURLMovieDetails(itemId).movieDetails) :
                 fetchData(getSeriesDetailsURL(itemId)),
         { enabled: !!itemId }
-    );
-
+    );   
+    
     const { data: dataImages } = useQuery<any>(
         `logo-item-${type}-${itemId}`,
         () => type == "movie" ? fetchData(getMovieImagesURL(itemId)) : fetchData(getSeriesImagesURL(itemId)),

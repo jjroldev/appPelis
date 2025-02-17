@@ -8,10 +8,11 @@ import { useEffect, useState } from 'react';
 import { useWindowWidth } from '../../hooks/useWindowWidth';
 
 interface EpisodeProps {
-    episode: Episode
+    episode: Episode,
+    serie_backdrop: string
 }
 
-export default function EpisodeC({ episode }: EpisodeProps) {
+export default function EpisodeC({ episode, serie_backdrop }: EpisodeProps) {
     const { seriesId } = useParams();
     const [randomImageIndex, setRandomImageIndex] = useState<number | null>(null);
     const width = useWindowWidth()
@@ -27,9 +28,12 @@ export default function EpisodeC({ episode }: EpisodeProps) {
         }
     }, [data, randomImageIndex]);
 
+
     if (isLoading) return null;
 
     const formatRuntime = (minutes: number) => {
+        if (!minutes) return null
+
         if (minutes < 60) {
             return `${minutes} min`;
         }
@@ -42,15 +46,15 @@ export default function EpisodeC({ episode }: EpisodeProps) {
         ? episode.still_path
         : data?.backdrops?.length && randomImageIndex !== null
             ? data.backdrops[randomImageIndex].file_path
-            : "";
+            : serie_backdrop;
 
     return (
         <div className="flex flex-col containerEpisode">
             <div className='container-episode'>
                 <div className='wrapper-img-episode'>
                     {image_path && (
-                        <img src={URL_IMAGE_STILL + image_path} alt={episode.name} />
-                    ) }
+                        <img src={URL_IMAGE_STILL + image_path || serie_backdrop} alt={episode.name} />
+                    )}
                 </div>
                 <div className="info-episode">
                     <h4>{episode.episode_number}.  {episode.name}</h4>
@@ -60,10 +64,18 @@ export default function EpisodeC({ episode }: EpisodeProps) {
                             month: "long",
                             day: "numeric",
                         })}
-                        {width > 735 && <p>{formatRuntime(episode.runtime)}</p>}
+                        {width > 990 && <p>{formatRuntime(episode.runtime)}</p>}
                     </div>
-                    {width <= 735 && <p>{formatRuntime(episode.runtime)}</p>}
-                    {width > 990 &&episode.overview &&<p>{episode.overview}</p>}
+                    {width <=990 && <p>{formatRuntime(episode.runtime)}</p>}
+                    {width > 990 && episode.overview &&
+                        <p>{
+                            episode.overview.length >= 300 ? (
+                                episode.overview.slice(0, 300 + 1) + "..."
+                            ) : (
+                                episode.overview
+                            )
+                        }
+                        </p>}
                 </div>
                 {
                     width > 580 && (
@@ -74,9 +86,17 @@ export default function EpisodeC({ episode }: EpisodeProps) {
                 }
             </div>
             {
-                width < 990 &&  episode.overview &&(
+                width <= 990 && episode.overview && (
                     <div className='overViewEpisodeC'>
-                        <p className='overViewEpisode'>{episode.overview}</p>
+                        <p className='overViewEpisode'>
+                            {
+                                episode.overview.length >= 300 ? (
+                                    episode.overview.slice(0, 300 + 1) + "..."
+                                ) : (
+                                    episode.overview
+                                )
+                            }
+                        </p>
                     </div>
                 )
             }

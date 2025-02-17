@@ -34,7 +34,7 @@ export interface SpokenLanguage {
 
 export interface BelongsCollection {
   id: string;
-  parts: Movie[] |Serie[] | undefined
+  parts: Movie[] | Serie[] | undefined
 }
 
 export interface Movie {
@@ -63,6 +63,7 @@ export interface Movie {
   production_companies: ProductionCompany[];
   production_countries: ProductionCountry[];
   release_date: string;
+  release_dates: DataFetchReleaseDate
   runtime: number;
   spoken_languages: SpokenLanguage[];
   title: string;
@@ -71,4 +72,19 @@ export interface Movie {
   };
   vote_average: number;
   vote_count: number;
+}
+
+export interface DataFetchReleaseDate {
+  results: DataReleaseDate[]
+}
+
+export interface DataReleaseDate{
+  iso_3166_1:string;
+  release_dates:Release_Date[]
+}
+
+export interface Release_Date {
+  certification:string;
+  iso_3166_1:string;
+  note:string
 }

@@ -1,7 +1,7 @@
 .contenedor{
     overflow-y: visible;
     overflow-x: hidden;
-    background-color: rgb(17, 17, 17);
+    background-color: #000;
     min-height: 120vh;
     min-height: 120dvh;
 }

@@ -1,5 +1,4 @@
-.containerEpisode{
-    border-radius: 8px;
+.containerEpisode {
     transition: all .3s ease-in-out;
     padding: 20px;
     gap: 20px;
@@ -11,7 +10,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%; 
+    width: 100%;
     height: 100%;
     box-sizing: border-box;
 }
@@ -34,25 +33,28 @@
 }
 
 .wrapper-img-episode {
-    width: 35%;
+    width: 25%;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: left !important;
+    justify-content: left !important;
+    background-color: rgb(255, 221, 0);
+    margin: auto;
+    height: 170px;
 }
 
 .wrapper-img-episode img {
     width: 100%;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 8px;
     height: 100%;
     object-position: top;
 }
 
 .info-episode {
-    width: 55%;
+    width: 70%;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
     align-items: left;
     padding-left: 20px;
     justify-content: center;
@@ -61,32 +63,31 @@
 .detailsDate {
     display: flex;
     gap: 15px;
-    font-size: 1.3rem;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .info-episode h4 {
-    font-size: 1.45rem;
-    font-weight: bold;
+    font-weight: 700;
 }
 
-.info-episode p, .overViewEpisode {
-    font-size: 1.3rem;
+.info-episode p,
+.overViewEpisode {
+    font-size: 1.2rem;
     color: #ababab;
 }
 
 .containerPlay {
-    width: 10%;
+    width: 5%;
     padding: 10px;
     display: flex;
-    align-items: center;
+    align-items: top;
     justify-content: center;
 }
 
 .containerPlay i {
     cursor: pointer;
-    font-size: 3rem;
     transition: all .3s ease-in-out;
+    margin-top: 5px;
 }
 
 .containerPlay i:hover {
@@ -94,63 +95,107 @@
 }
 
 
-@media (max-width: 1150px) {
+.info-episode h4 {
+    font-size: 1.2rem;
+}
 
-    .containerPlay i {
-        font-size: 2.2rem;
+.info-episode p,
+.overViewEpisode,
+.detailsDate {
+    font-size: 1.1rem;
+}
+
+
+.containerPlay i {
+    font-size: 1.8rem;
+}
+@media (max-width: 1370px) {
+    .wrapper-img-episode {
+        height: 170px;
     }
 
-
-    .info-episode h4 {
-        font-size: 1.35rem;
-    }
-
-    .info-episode p, .overViewEpisode,.detailsDate {
-        font-size: 1.1rem;
+    .info-episode{
+        gap: 0;
     }
 }
 
 
+@media (max-width: 1200px) {
+    .wrapper-img-episode {
+        height: 150px;
+    }
+
+}
 
 @media (max-width: 1050px) {
 
     .wrapper-img-episode {
-        width: 45%;
-    }
-
-    .info-episode h4 {
-        font-size: 1.87rem;
-    }
-
-    .overViewEpisode {
-        font-size: 1.08rem;
-    }
-    
-}
-
-
-
-@media (max-width: 880px) {
-    .wrapper-img-episode {
-        width: 60%;
-    }
-
-    .containerPlay i {
-        font-size: 1.7rem;
+        width: 37%;
     }
 
     .info-episode h4 {
         font-size: 1.17rem;
     }
 
+    .overViewEpisode {
+        font-size: 1rem;
+    }
+
+    .containerPlay i {
+        font-size: 1.6rem;
+    }
+
+
+    .containerEpisode {
+        gap: 15px;
+    }
+
+}
+
+@media (max-width: 905px) {
+    .wrapper-img-episode {
+        height: 130px;
+    }
+
+}
+
+
+
+@media (max-width: 854px) {
+    .wrapper-img-episode {
+        width: 50%;
+        height: 140px;
+    }
+
+    .containerPlay i {
+        font-size: 1.4rem;
+    }
+
+    .info-episode h4 {
+        font-size: 1.1rem;
+    }
+
     .info-episode {
         padding: 12px;
     }
 
-    .containerEpisode{
-        padding: 5px;
+    .info-episode p,
+    .detailsDate {
+        font-size: 1rem;
     }
-    
+
+    .containerEpisode {
+        gap: 10px;
+        padding: 15px;
+    }
+}
+
+
+@media (max-width: 750px) {
+    .wrapper-img-episode {
+        height: 120px;
+    }
+
 }
 
 
@@ -165,10 +210,6 @@
         font-weight: 500;
     }
 
-    .containerPlay i {
-        font-size: 1.7rem;
-    }
-
     .info-episode {
         padding: 9px;
     }
@@ -178,10 +219,9 @@
         text-transform: capitalize;
     }
 
-    .wrapper-img-episode {
-        width: 45%;
+    .containerEpisode {
+        padding: 10px;
     }
-
 }
 
 
@@ -199,15 +239,22 @@
         font-size: 1.5rem;
     }
 
-    .info-episode p,.detailsDate{
+    .info-episode p,
+    .detailsDate {
         font-size: .9rem;
     }
-
 }
 
 
 @media (max-width: 550px) {
     .wrapper-img-episode {
-        width: 65%;
+        width: 60%;
+        height: 100px;
+    }
+}
+
+@media (max-width: 385px) {
+    .wrapper-img-episode {
+        width: 60%;
     }
 }

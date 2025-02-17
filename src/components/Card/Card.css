@@ -48,3 +48,11 @@
     font-size: 1rem;
   }
 }
+
+
+@media(max-width:550px){
+  .detailsCM p{
+    font-size: .8rem;
+  }
+}
+

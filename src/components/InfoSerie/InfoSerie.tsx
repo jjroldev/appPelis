@@ -89,8 +89,10 @@ export default function InfoSerie() {
                     {item && item.credits.crew?.length > 0 && (
                         <CarouselCredits renderCredits={renderCrewMembers(item)} title="CREW" />
                     )}
-                    <SeasonC seriesId={seriesId} numeroTemporadas={item?.number_of_seasons} />
+                    {item && width>1260 &&( <SeasonC series={item} numeroTemporadas={item?.number_of_seasons} />)}
                 </div>
+                {item && width<=1260 &&( <SeasonC series={item} numeroTemporadas={item?.number_of_seasons} />)}
+
             </div>
         </div>
 

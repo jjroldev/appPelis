@@ -1,22 +1,20 @@
 import { useFeaturedMovie } from '../../hooks/useFeaturedMovie';
 import { Banner } from '../../components/Banner/Banner';
 import { useLanguage } from '../../context/LanguageContext';
-import { useMemo, useEffect, useState } from 'react';
+import { useMemo, useEffect, useRef, useState } from 'react';
 import { getFetchSeriesURLs } from '../../utils/endPoints';
 import { useMenu } from '../../context/MenuContext';
 import '../Home/Home.css';
-import React from 'react';
 import './SeriesWindow.css';
 import CarouselURL from '../../components/CarouselURL/CarouselURL';
 import { useSearch } from '../../context/SearchContext';
-import { useRefVisible } from '../../hooks/useRef';
+
 export default function SeriesWindow() {
     const featuredSerie = useFeaturedMovie("feautedSerieSW", "seriesW", "serie");
     const { language } = useLanguage();
     const fetchURLS = useMemo(() => getFetchSeriesURLs(language), [language]);
     const { setSearchTerm } = useSearch();
     const { setOpenMenu } = useMenu();
-    const [visibleSections, setVisibleSections] = useState(5);
 
     useEffect(() => {
         window.scroll({ top: 0, left: 0, behavior: "instant" });
@@ -24,7 +22,7 @@ export default function SeriesWindow() {
         setOpenMenu(false);
     }, []);
 
-    const sections = useMemo(() => [
+    const carousels = useMemo(() => [
         { URL: fetchURLS.popularSeries, title: "Popular Series" },
         { URL: fetchURLS.topRatedSeries, title: "Best Voted", isLarge: true },
         { URL: fetchURLS.actionAdventureSeries, title: "Series of action and adventure" },
@@ -38,26 +36,40 @@ export default function SeriesWindow() {
         { URL: fetchURLS.kidsSeries, title: "Kids series" },
         { URL: fetchURLS.realitySeries, title: "Reality series" },
         { URL: fetchURLS.mysterySeries, title: "Mystery series", isLarge: true },
-        { URL: fetchURLS.warPoliticsSeries, title: "Series of war", isLarge: true }
+        { URL: fetchURLS.warPoliticsSeries, title: "Series of war", isLarge: true },
     ], [fetchURLS]);
 
-    const observerRef = useRefVisible(() => {
-        setVisibleSections((prev) => Math.min(prev + 5, sections.length));
-    });
+    const [visibleCarousels, setVisibleCarousels] = useState(5);
+    const loadMoreRef = useRef(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting) {
+                    setVisibleCarousels((prev) => Math.min(prev + 7, carousels.length));
+                }
+            },
+            { rootMargin: "150px" }
+        );
+
+        const target = loadMoreRef.current;
+        if (target) observer.observe(target);
+
+        return () => {
+            if (target) observer.unobserve(target);
+        };
+    }, [carousels]);
 
     return (
         <div className="contenedorWindow">
             <Banner itemId={featuredSerie?.id} logoBuscar={true} type='serie' />
             <div className="contenedorItems">
-                {sections.slice(0, visibleSections).map((section, index) => (
-                    <React.Fragment key={section.URL || index}>
-                        {index === visibleSections - 2 && visibleSections < sections.length && (
-                            <div ref={observerRef} style={{ height: "0px", margin: "20px 0" }}></div>
-                        )}
-                        <CarouselURL URL={section.URL} title={section.title} isLarge={section.isLarge} />
-                    </React.Fragment>
+                {carousels.slice(0, visibleCarousels).map((carousel, index) => (
+                    <CarouselURL key={index} {...carousel} />
                 ))}
-
+                {visibleCarousels < carousels.length && (
+                    <div ref={loadMoreRef} style={{ height: '10px', background: 'transparent' }} />
+                )}
             </div>
         </div>
     );

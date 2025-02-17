@@ -1,18 +1,11 @@
 .hamburguer-menu {
-    background-color: rgb(17, 17, 17);
-    height: auto;
+    background-color: rgba(0, 0, 0,.5);
     width: 100%;
-    box-sizing: border-box;
+    z-index: 9;
     position: fixed;
-    z-index: 100000;
-}
-
-.contenedorXMenuH {
-    width: 100%;
-    display: flex;
-    justify-content: right;
-    padding: 20px;
-    align-items: center;
+    bottom: 0;
+    left: 0;
+    height: 100vh;
 }
 
 .menu-bar {
@@ -20,17 +13,13 @@
     cursor: pointer;
 }
 
-.contenedorXMenuH i {
-    cursor: pointer;
-    font-size: 1.2rem;
-    font-weight: bold;
-}
-
-
 .cMenuHOpciones {
+    height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
 }
 
 .cMenuHOpciones a,
@@ -43,7 +32,6 @@
     display: flex;
     align-items: center;
     justify-content: left;
-    background-color: rgb(30, 30, 30);
 }
 
 .c-perfil-HB {
@@ -63,13 +51,9 @@
 
 @media (max-width: 1000px) {
 
-    .contenedorXMenuH i {
-        font-size: 1.2rem;
-    }
-
     .cMenuHOpciones a,
     .opcionMH a {
-        font-size: .8rem;
+        font-size: .9rem;
     }
 
 }
@@ -80,10 +64,6 @@
     .menu-bar {
         font-size: 1.3rem;
     }
-
-    .contenedorXMenuH i {
-        font-size: 1rem;
-    }
 }
 
 @media (max-width: 600px) {
@@ -92,7 +72,4 @@
         font-size: 1.2rem;
     }
 
-    .contenedorXMenuH i {
-        font-size: .9rem;
-    }
 }

@@ -1,26 +1,24 @@
-import { useEffect, useMemo, useState } from "react";
-import { Banner } from "../../components/Banner/Banner";
-import CarouselURL from "../../components/CarouselURL/CarouselURL";
+import { useEffect, useMemo, useState, useRef } from "react";
 import { useSearch } from "../../context/SearchContext";
 import { useMenu } from "../../context/MenuContext";
 import "./Home.css";
 import { useFeaturedMovie } from "../../hooks/useFeaturedMovie";
 import { getFetchSeriesURLs, getFetchURLs } from "../../utils/endPoints";
 import { useLanguage } from "../../context/LanguageContext";
+import CarouselURL from "../../components/CarouselURL/CarouselURL";
 import { CarouselFavorites } from "../../components/CarouselFavorites/CarouselFavorites";
-import { useRefVisible } from "../../hooks/useRef";
-import React from "react";
+import { Banner } from "../../components/Banner/Banner";
+
 export default function Home() {
     const { setSearchTerm } = useSearch();
     const { setOpenMenu } = useMenu();
     const { language } = useLanguage();
+
     const fetchURLS = useMemo(() => getFetchURLs(language), [language]);
     const fetchSeriesURLS = useMemo(() => getFetchSeriesURLs(language), [language]);
     const featuredMovie = useFeaturedMovie("feautedMovieHome", "moviesHome", "movie");
 
-    const [visibleSections, setVisibleSections] = useState(5);
-
-    const sections = useMemo(() => [
+    const allCarousels = useMemo(() => [
         { URL: fetchURLS.popularMovies, title: "Popular Movies", isLarge: true },
         { URL: fetchSeriesURLS.comedySeries, title: "Comedy Series", isLarge: true },
         { URL: fetchSeriesURLS.topRatedSeries, title: "Best Voted Series", isLarge: true },
@@ -36,48 +34,58 @@ export default function Home() {
         { URL: fetchURLS.documentaryMovies, title: "Documentary Movies", isLarge: true },
         { URL: fetchSeriesURLS.dramaSeries, title: "Drama Series", isLarge: true },
         { URL: fetchURLS.dramaMovies, title: "Drama Movies", isLarge: true },
-        { URL: fetchURLS.familyMovies, title: "Family Movies", isLarge: true },
+        { URL: fetchURLS.familyMovies, title: "Movies to Watch with Family", isLarge: true },
         { URL: fetchURLS.fantasyMovies, title: "Fantasy Movies", isLarge: true },
-        { URL: fetchURLS.historyMovies, title: "History Movies" },
-        { URL: fetchURLS.horrorMovies, title: "Horror Movies" },
+        { URL: fetchURLS.historyMovies, title: "History" },
+        { URL: fetchURLS.horrorMovies, title: "Horror" },
         { URL: fetchSeriesURLS.realitySeries, title: "Reality Series" },
-        { URL: fetchURLS.musicMovies, title: "Music Movies", isLarge: true },
-        { URL: fetchURLS.mysteryMovies, title: "Mystery Movies", isLarge: true },
+        { URL: fetchURLS.musicMovies, title: "Music", isLarge: true },
+        { URL: fetchURLS.mysteryMovies, title: "Mystery", isLarge: true },
         { URL: fetchSeriesURLS.mysterySeries, title: "Mystery Series", isLarge: true },
-        { URL: fetchURLS.romanceMovies, title: "Romance Movies", isLarge: true },
-        { URL: fetchURLS.scienceFictionMovies, title: "Science Fiction Movies", isLarge: true },
-        { URL: fetchSeriesURLS.warPoliticsSeries, title: "War Series", isLarge: true },
-        { URL: fetchURLS.thrillerMovies, title: "Thriller Movies", isLarge: true },
+        { URL: fetchURLS.romanceMovies, title: "Romance", isLarge: true },
+        { URL: fetchURLS.scienceFictionMovies, title: "Science Fiction", isLarge: true },
+        { URL: fetchSeriesURLS.warPoliticsSeries, title: "Series of War", isLarge: true },
+        { URL: fetchURLS.thrillerMovies, title: "Thriller", isLarge: true },
     ], [fetchURLS, fetchSeriesURLS]);
 
+    const [visibleCarousels, setVisibleCarousels] = useState<number>(5);
+    const loadMoreRef = useRef<HTMLDivElement | null>(null);
+
     useEffect(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
         setOpenMenu(false);
         setSearchTerm("");
     }, []);
 
-    const loadMoreSections = () => {
-        setVisibleSections((prev) => Math.min(prev + 5, sections.length));
-    };
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting) {
+                    setVisibleCarousels((prev) => Math.min(prev + 7, allCarousels.length));
+                }
+            },
+            { rootMargin: "150px" }
+        );
 
-    const loadMoreRef = useRefVisible(() => {
-        loadMoreSections();
-    });
+        const target = loadMoreRef.current;
+        if (target) observer.observe(target);
+
+        return () => {
+            if (target) observer.unobserve(target);
+        };
+    }, [allCarousels]);
 
     return (
         <div className="contenedorWindow">
             <Banner itemId={featuredMovie?.id} logoBuscar={true} type="movie" />
             <div className="contenedorItems">
-                <CarouselFavorites isLarge={true} title="My List" />
-
-                {sections.slice(0, visibleSections).map((section, index) => (
-                    <React.Fragment key={section.URL || index}>
-                        {index === visibleSections - 2 && visibleSections < sections.length && (
-                            <div ref={loadMoreRef} style={{ height: "100px", margin: "20px 0" }}></div>
-                        )}
-                        <CarouselURL URL={section.URL} title={section.title} isLarge={section.isLarge} />
-                    </React.Fragment>
+                <CarouselFavorites isLarge title="My List" />
+                {allCarousels.slice(0, visibleCarousels).map((carousel, index) => (
+                    <CarouselURL key={index} {...carousel} />
                 ))}
-
+                {visibleCarousels < allCarousels.length && (
+                    <div ref={loadMoreRef} style={{ height: '20px', background: 'transparent' }} />
+                )}
             </div>
         </div>
     );

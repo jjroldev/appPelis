@@ -6,7 +6,7 @@
   width: 100%;
   padding: 0px 45px !important;
   font-size: 1.3rem;
-  z-index: 6;
+  z-index: 10;
   background-color: transparent;
   transition: background-color 0.2s ease-in-out;
 }
@@ -17,7 +17,7 @@ a {
 }
 
 .navbar.scrolled {
-  background-color: rgba(17, 17, 17,.9);
+  background-color: rgba(0, 0, 0, 0.9);
 }
 
 .navOpciones {

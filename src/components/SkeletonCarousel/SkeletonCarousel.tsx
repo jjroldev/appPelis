@@ -1,25 +1,18 @@
 import Carousel from "react-multi-carousel"
 import { SkeletonCardItem } from "./SkeletonCardItem";
 import { responsive } from "../../utils/ResponsiveCarrousel";
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { useWindowWidth } from "../../hooks/useWindowWidth";
-export function SkeletonCarousel({ isLarge,numItems ,title}: { isLarge: boolean,numItems:number,title:string }) {
-    const [isLarge1,setIsLarge]=useState(isLarge)
-    const width=useWindowWidth()
+export function SkeletonCarousel({ isLarge=true,numItems ,title}: { isLarge: boolean | undefined,numItems:number,title:string }) {
+
+    const responsivew = useMemo(() => responsive(isLarge), [isLarge]);
+    const width = useWindowWidth()
+    
     const renderSkeletonCardItem = (numItems: number) => {
         return Array.from({ length: numItems }).map((_, index) => (
-            <SkeletonCardItem key={index} isLarge={isLarge1} />
+            <SkeletonCardItem key={index} isLarge={isLarge} />
         ));
     };
-
-
-    useEffect(()=>{
-        if(width<1000){
-            setIsLarge(false)
-            console.log(isLarge1)
-        }
-    },[width,isLarge])
-
 
     return (
         <>
@@ -29,11 +22,11 @@ export function SkeletonCarousel({ isLarge,numItems ,title}: { isLarge: boolean,
                     swipeable={false}
                     draggable={false}
                     showDots={false}
-                    responsive={responsive(isLarge1)}
+                    responsive={responsivew}
                     ssr={true}
                     infinite={true}
                     autoPlay={false}
-                    className="carousel-react"
+                    className={`${width < 600 ? "carousel-cell" : ""}`}
                     partialVisible={true}
                 >
                     {renderSkeletonCardItem(numItems)}

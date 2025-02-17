@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState, useEffect } from "react";
+import React, { useCallback, useMemo } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import CardItem from "../CardItem/CardItem";
@@ -13,79 +13,81 @@ import { getFetchSeriesURLs, getFetchURLs } from "../../utils/endPoints";
 import { useLanguage } from "../../context/LanguageContext";
 import { Serie } from "../../interface/Serie";
 import { SkeletonCarousel } from "../SkeletonCarousel/SkeletonCarousel";
+
 interface CarouselURLProps {
-  URL: string,
-  title: string,
-  isLarge?: boolean,
+  URL: string;
+  title: string;
+  isLarge?: boolean;
 }
 
-const CarouselURL = React.memo(
-  ({ URL, title, isLarge = false }: CarouselURLProps) => {
+const CarouselURL = React.memo(({ URL, title, isLarge }: CarouselURLProps) => {
+  const { handleAddFavorite } = useFavorites();
+  const { language } = useLanguage();
+  const width = useWindowWidth();
 
-    const { handleAddFavorite } = useFavorites()
-    const { language } = useLanguage()
-
-    const { data: items } = useQuery(["items", URL,title], () => fetchData(URL), {
+  const { data: items, isLoading: isLoadingItems } = useQuery(
+    ["items", URL, title], 
+    () => fetchData(URL), 
+    { refetchOnWindowFocus: false }
+  );
+  
+  const { data: topRatedItems, isLoading: isLoadingTopRated } = useQuery(
+    ["items", "top_rated"],
+    () =>
+      URL.includes("tv")
+        ? fetchData(getFetchSeriesURLs(language).topRatedSeries)
+        : fetchData(getFetchURLs(language).topRatedMovies),
+    {
       refetchOnWindowFocus: false,
-    });
+      enabled: !isLoadingItems && !items?.results?.length,
+    }
+  );
+  
+  const validItems = useMemo(
+    () => items?.results?.filter((item: Movie | Serie) => item.backdrop_path) || [],
+    [items]
+  );
+  
+  const validItemsP = useMemo(
+    () => topRatedItems?.results?.filter((movie: Movie) => movie.backdrop_path) || [],
+    [topRatedItems]
+  );
+  
 
-    const { data: topRatedItems} = useQuery(["items", "top_rated"],
-      () => URL.includes("tv") ? fetchData(getFetchSeriesURLs(language).topRatedSeries) :
-        fetchData(getFetchURLs(language).topRatedMovies)
-      , {
-        refetchOnWindowFocus: false,
-      });
+  const responsivew = useMemo(() => responsive(width > 1000 ? isLarge : false), [width, isLarge]);
 
-    const width = useWindowWidth()
-    const [isLarge1, setIsLarge] = useState(isLarge);
+  const renderItems = useCallback(
+    (items: Movie[] | Serie[]) =>
+      items.map((item) => (
+        <CardItem key={item.id} item={item} isLarge={width > 1000 ? isLarge : false} onAddFavorite={handleAddFavorite} />
+      )),
+    [width, isLarge, handleAddFavorite]
+  );
 
-    useEffect(() => {
-      setIsLarge(width > 1000 ? isLarge : false);
-    }, [width]);
+  if (isLoadingItems || (isLoadingTopRated && !validItems.length)) {
+    return <SkeletonCarousel numItems={5} isLarge={width > 1000 ? isLarge : false} title={title} />;
+  }  
 
-    const validItems = useMemo(
-      () => items?.results?.filter((item: Movie | Serie) => item.backdrop_path) || [],
-      [items]
-    );
+  return validItems.length || validItemsP.length ? (
+    <div className="carousel">
+      <h2 className="tituloCarousel">{title}</h2>
+      <Carousel
+        swipeable
+        showDots={false}
+        responsive={responsivew}
+        ssr={false}
+        infinite
+        autoPlay={false}
+        keyBoardControl={true}
+        partialVisible={true}
+        className={`${width < 600 ? "carousel-cell" : ""}`}
+        slidesToSlide={8}
+      >
+        {items?.results?.length ? renderItems(validItems) : renderItems(validItemsP)}
+      </Carousel>
+    </div>
+  ) : null;
+});
 
-    const validItemsP = useMemo(
-      () => topRatedItems?.results?.filter((movie: Movie) => movie.backdrop_path) || [],
-      [items]
-    );
-
-    const responsivew = useMemo(() => responsive(isLarge1), [isLarge1]);
-
-    const renderItems = useCallback(
-      (items: Movie[] | Serie[]) =>
-        items.map((item) => (
-          <CardItem key={item.id} item={item} isLarge={isLarge1} onAddFavorite={handleAddFavorite} />
-        )),
-      [isLarge1]
-    );
- 
-    return (
-      validItems.length || validItemsP.length ?(
-        <div className="carousel">
-        <h2 className="tituloCarousel">{title}</h2>
-        <Carousel
-          swipeable
-          showDots={false}
-          responsive={responsivew}
-          ssr={false}
-          infinite
-          autoPlay={false}
-          keyBoardControl={true}
-          partialVisible={true}
-          className={`${width < 600 ? "carousel-cell" : ""}`}
-          slidesToSlide={8}
-        >
-          {items?.results?.length ? renderItems(validItems) : renderItems(validItemsP)}
-
-        </Carousel>
-      </div>
-      ):<SkeletonCarousel numItems={20} title={title} isLarge={false} />
-    );
-  }
-);
 
 export default CarouselURL;

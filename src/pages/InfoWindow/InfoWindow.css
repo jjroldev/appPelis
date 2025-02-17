@@ -1,5 +1,5 @@
 .contenedorPrincipalItem {
-    background-color: rgb(17, 17, 17);
+    background-color: #000;
     overflow-x: hidden !important;
 }
 
@@ -46,7 +46,7 @@
 }
 
 .cargandoInfo {
-    background-color: rgb(17, 17, 17);
+    background-color: #000;
 }
 
 

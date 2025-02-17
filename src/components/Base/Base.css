@@ -2,7 +2,7 @@
     height: 100vh;
     height: 100dvh;
     width: 100vw;
-    background-color: rgb(17,17,17);
+    background-color: #000;
     display: flex;
     align-items: end;
     justify-content: center;
