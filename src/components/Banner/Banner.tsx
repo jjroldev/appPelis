@@ -5,6 +5,7 @@ import "./Banner.css";
 import { NavBar } from "../NavBar/NavBar";
 import { fetchData } from "../../utils/fetchData";
 import { Skeleton } from "@mui/material";
+import { getCertifiedReleaseItem } from "../../utils/helpers";
 import {
     URL_IMAGE_lOGO,
     URL_IMAGE_BANNER,
@@ -43,13 +44,13 @@ export function Banner({ itemId, logoBuscar, isDetail = false, type }: BannerPro
                 fetchData(getURLMovieDetails(itemId).movieDetails) :
                 fetchData(getSeriesDetailsURL(itemId)),
         { enabled: !!itemId }
-    );   
-    
+    );
+
     const { data: dataImages } = useQuery<any>(
         `logo-item-${type}-${itemId}`,
         () => type == "movie" ? fetchData(getMovieImagesURL(itemId)) : fetchData(getSeriesImagesURL(itemId)),
         { enabled: !!itemId, staleTime: 1000 * 60 * 5 }
-      );
+    );
 
     const logoPath = item?.images?.logos?.find((l) => l.iso_639_1 === language)?.file_path ||
         item?.images?.logos?.[0]?.file_path || dataImages?.logos[0]?.file_path || null;
@@ -77,14 +78,14 @@ export function Banner({ itemId, logoBuscar, isDetail = false, type }: BannerPro
     };
     const Logo = () => (
         logoPath ? (
-          <img
-            className="logo-banner"
-            src={`${URL_IMAGE_lOGO}${logoPath}`}
-            alt="Logo"
-          />
+            <img
+                className="logo-banner"
+                src={`${URL_IMAGE_lOGO}${logoPath}`}
+                alt="Logo"
+            />
         ) : null
-      );
-      
+    );
+
 
     function Botones() {
         return (
@@ -126,7 +127,14 @@ export function Banner({ itemId, logoBuscar, isDetail = false, type }: BannerPro
             <NavBar perfil={true} menu={true} logoBuscar={logoBuscar} />
             <div className="cuerpoBanner">
                 <div className={`contenedorLogo ${isDetail ? "contenedorDetailN" : ""}`}>
-                    <Logo />
+                    <div className="flex flex-row gap-3 items-center">
+                        <Logo />
+                        {
+                            getCertifiedReleaseItem(item) && width<=600 &&(
+                                <span className="edadParaPublico inline-block max-h-fit">{getCertifiedReleaseItem(item)}+</span>
+                            )
+                        }
+                    </div>
                     {isDetail && (
                         <DetalleBanner item={item} />
                     )}

@@ -89,4 +89,17 @@
     .tituloSerie {
         font-size: 1.25rem;
     }
+
+}
+
+@media (max-width: 470px) {
+
+    .contenedorSeleccionSeason {
+        flex-direction: column;
+    }
+
+    .contenedorSeleccionSeason select {
+        max-width: 150px;
+    }
+
 }

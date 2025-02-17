@@ -69,8 +69,8 @@ export default function EpisodeC({ episode, serie_backdrop }: EpisodeProps) {
                     {width <=990 && <p>{formatRuntime(episode.runtime)}</p>}
                     {width > 990 && episode.overview &&
                         <p>{
-                            episode.overview.length >= 300 ? (
-                                episode.overview.slice(0, 300 + 1) + "..."
+                            episode.overview.length >= (width>600 ? 300:150) ? (
+                                episode.overview.slice(0, (width>600 ? 300:150) + 1) + "..."
                             ) : (
                                 episode.overview
                             )
@@ -90,8 +90,8 @@ export default function EpisodeC({ episode, serie_backdrop }: EpisodeProps) {
                     <div className='overViewEpisodeC'>
                         <p className='overViewEpisode'>
                             {
-                                episode.overview.length >= 300 ? (
-                                    episode.overview.slice(0, 300 + 1) + "..."
+                                episode.overview.length >= (width>600 ? 300:150) ? (
+                                    episode.overview.slice(0, (width>600 ? 300:150) + 1) + "..."
                                 ) : (
                                     episode.overview
                                 )

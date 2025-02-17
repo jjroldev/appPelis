@@ -1,0 +1,65 @@
+
+.container-episode-skeleton {
+    width: 100vw;
+    height: 170px;
+}
+
+@media (max-width: 1370px) {
+    .container-episode-skeleton {
+        height: 170px;
+    }
+}
+
+
+@media (max-width: 1200px) {
+    .container-episode-skeleton {
+        height: 150px;
+    }
+
+}
+
+@media (max-width: 1050px) {
+
+    .container-episode-skeleton {
+        width: 37%;
+    }
+
+}
+
+@media (max-width: 905px) {
+    .container-episode-skeleton {
+        height: 130px;
+    }
+}
+
+
+
+@media (max-width: 854px) {
+    .container-episode-skeleton {
+        width: 50%;
+        height: 140px;
+    }
+}
+
+
+@media (max-width: 750px) {
+    .container-episode-skeleton {
+        height: 120px;
+    }
+
+}
+
+
+@media (max-width: 550px) {
+
+    .container-episode-skeleton {
+        width: 60%;
+        height: 100px;
+    }
+}
+
+@media (max-width: 385px) {
+    .container-episode-skeleton {
+        width: 60%;
+    }
+}

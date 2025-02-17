@@ -22,7 +22,7 @@ const DetalleBannerMovie = memo(({ movie }: { movie: Movie }) => {
           <span>{movie?.release_date.split("-")[0]}</span>
           <span>{`${Math.floor(movie.runtime / 60)}h ${movie.runtime % 60}min`}</span>
           {
-            getCertifiedReleaseItem(movie) &&(
+            getCertifiedReleaseItem(movie) && width>600&&(
               <span className="edadParaPublico">{getCertifiedReleaseItem(movie)}+</span>
             )
           }

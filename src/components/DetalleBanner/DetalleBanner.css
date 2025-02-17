@@ -18,7 +18,8 @@
     font-size: 1.15rem;
 }
 .generosBanner{
-    gap: 30px;
+    column-gap: 30px;
+    row-gap: -10px;
     list-style:circle;
     list-style-position: inside;
     font-weight: 600;
@@ -34,6 +35,7 @@
     border-radius: 4px;
     padding: 2px 9px;
     color: #fff !important;
+    font-weight: bold;
 }
 
 .posters-container-banner {
@@ -95,11 +97,15 @@
 @media (max-width: 900px) {
     .generosBanner{
         max-width: 90%;
-        gap: 18px;
+        column-gap: 18px;
     }
 
     .bannerDetails{
         gap: 15px;
+    }
+
+    .edadParaPublico{
+        font-size: .9rem;
     }
 }
 
@@ -114,7 +120,8 @@
     }
     .generosBanner{
         font-size: 1rem;
-        gap: 13px;
+        column-gap: 13px;
+        row-gap: 6px;
     }
 }
 
@@ -125,8 +132,12 @@
     }
 
     .generosBanner{
-        gap: 12px;
+        column-gap: 12px;
         font-size: .9rem;
+    }
+
+    .edadParaPublico{
+        font-size: .8rem;
     }
 }
 

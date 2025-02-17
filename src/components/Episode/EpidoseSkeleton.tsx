@@ -1,8 +1,8 @@
 import { Skeleton } from '@mui/material';
-import './Episode.css';
+import './EpisodeSkeleton.css'
 export default function EpisodeSkeleton() {
     return (
-        <div className='container-episode' style={{ height: "250px" }}>
+        <div className='container-episode-skeleton'>
             <Skeleton
                 sx={{ bgcolor: 'grey.900' }}
                 variant="rectangular"

@@ -8,7 +8,6 @@ import { useState, useEffect, useRef } from 'react';
 import EpisodeC from '../../components/Episode/Episode';
 import EpisodeSkeleton from '../../components/Episode/EpidoseSkeleton';
 import { useWindowWidth } from '../../hooks/useWindowWidth';
-import { getCertifiedReleaseItem } from '../../utils/helpers';
 
 interface SeasonProps {
     series: Serie;
@@ -54,16 +53,8 @@ export default function SeasonC({ series, numeroTemporadas }: SeasonProps) {
 
     return (
         <div className={`containerSeason ${width >= 1260 && "CSSinMargin"}`}>
-            <div className="contenedorSeleccionSeason">
-                <div className="flex flex-row gap-7.5">
-                    <h3 className='tituloSerie'>{series.name}
-                    </h3>
-                    {
-                        getCertifiedReleaseItem(series) && (
-                            <span className="edadParaPublico inline-block max-h-fit">{getCertifiedReleaseItem(series)}+</span>
-                        )
-                    }
-                </div>
+            <div className="contenedorSeleccionSeason gap-1">
+                <h3 className='tituloSerie'>{series.name}</h3>
                 <select onChange={(e) => setNumSeason(Number(e.target.value))}>
                     {numeroTemporadas && [...Array(numeroTemporadas)].map((_, index) => (
                         <option key={index} value={index + 1}>Temporada {index + 1}</option>
