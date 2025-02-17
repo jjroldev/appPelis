@@ -20,7 +20,7 @@ export default function SeasonC({ series, numeroTemporadas }: SeasonProps) {
     const width = useWindowWidth();
     const [numSeason, setNumSeason] = useState<number>(1);
 
-    const { data: season } = useQuery<Season>(
+    const { data: season, isLoading } = useQuery<Season>(
         `seasons-${series.id}-${numSeason}`,
         () => fetchData(getSeasonDetailsURL(series.id, numSeason, language))
     );
@@ -71,7 +71,7 @@ export default function SeasonC({ series, numeroTemporadas }: SeasonProps) {
                 </select>
             </div>
             <div className='contenedorEpisodios'>
-                {!season?.episodes ? (
+                {isLoading ? (
                     <>
                         <EpisodeSkeleton />
                         <EpisodeSkeleton />
@@ -79,14 +79,22 @@ export default function SeasonC({ series, numeroTemporadas }: SeasonProps) {
                     </>
                 ) : (
                     <>
-                        {season.episodes.slice(0, visibleEpisodes).map((episode, index) => (
+                        {season && season.episodes.slice(0, visibleEpisodes).map((episode, index) => (
                             <EpisodeC key={index} episode={episode} serie_backdrop={series.backdrop_path} />
                         ))}
-                        {visibleEpisodes < season.episodes.length && (
+                        {season && visibleEpisodes < season.episodes.length && (
                             <div ref={loadMoreRef} style={{ height: '20px', background: 'transparent' }} />
                         )}
                     </>
                 )}
+
+                {
+                    !season?.episodes.length && (
+                        <div className='w-full text-center'>
+                            <p className='overcoming text-center'>overcoming .....</p>
+                        </div>
+                    )
+                }
             </div>
         </div>
     );

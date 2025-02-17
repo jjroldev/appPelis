@@ -65,7 +65,7 @@ const CarouselURL = React.memo(({ URL, title, isLarge }: CarouselURLProps) => {
   );
 
   if (isLoadingItems || (isLoadingTopRated && !validItems.length)) {
-    return <SkeletonCarousel numItems={5} isLarge={width > 1000 ? isLarge : false} title={title} />;
+    return <SkeletonCarousel numItems={10} isLarge={width > 1000 ? isLarge : false} title={title} />;
   }  
 
   return validItems.length || validItemsP.length ? (
