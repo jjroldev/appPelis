@@ -9,11 +9,8 @@ import { responsive } from "../../utils/ResponsiveCarrousel";
 import "./CarouselURL.css";
 import { useWindowWidth } from "../../hooks/useWindowWidth";
 import { useFavorites } from "../../hooks/useFavorites";
-import { getFetchSeriesURLs, getFetchURLs } from "../../utils/endPoints";
-import { useLanguage } from "../../context/LanguageContext";
 import { Serie } from "../../interface/Serie";
 import { SkeletonCarousel } from "../SkeletonCarousel/SkeletonCarousel";
-
 interface CarouselURLProps {
   URL: string;
   title: string;
@@ -22,37 +19,17 @@ interface CarouselURLProps {
 
 const CarouselURL = React.memo(({ URL, title, isLarge }: CarouselURLProps) => {
   const { handleAddFavorite } = useFavorites();
-  const { language } = useLanguage();
   const width = useWindowWidth();
 
-  const { data: items, isLoading: isLoadingItems } = useQuery(
-    ["items", URL, title], 
-    () => fetchData(URL), 
+  const { data: items } = useQuery(
+    ["items", URL, title],
+    () => fetchData(URL),
     { refetchOnWindowFocus: false }
   );
-  
-  const { data: topRatedItems, isLoading: isLoadingTopRated } = useQuery(
-    ["items", "top_rated"],
-    () =>
-      URL.includes("tv")
-        ? fetchData(getFetchSeriesURLs(language).topRatedSeries)
-        : fetchData(getFetchURLs(language).topRatedMovies),
-    {
-      refetchOnWindowFocus: false,
-      enabled: !isLoadingItems && !items?.results?.length,
-    }
-  );
-  
   const validItems = useMemo(
     () => items?.results?.filter((item: Movie | Serie) => item.backdrop_path) || [],
     [items]
   );
-  
-  const validItemsP = useMemo(
-    () => topRatedItems?.results?.filter((movie: Movie) => movie.backdrop_path) || [],
-    [topRatedItems]
-  );
-  
 
   const responsivew = useMemo(() => responsive(width > 1000 ? isLarge : false), [width, isLarge]);
 
@@ -64,11 +41,12 @@ const CarouselURL = React.memo(({ URL, title, isLarge }: CarouselURLProps) => {
     [width, isLarge, handleAddFavorite]
   );
 
-  if (isLoadingItems || (isLoadingTopRated && !validItems.length)) {
+  if (!validItems.length) {
     return <SkeletonCarousel numItems={10} isLarge={width > 1000 ? isLarge : false} title={title} />;
-  }  
+  }
 
-  return validItems.length || validItemsP.length ? (
+
+  return (
     <div className="carousel">
       <h2 className="tituloCarousel">{title}</h2>
       <Carousel
@@ -83,10 +61,10 @@ const CarouselURL = React.memo(({ URL, title, isLarge }: CarouselURLProps) => {
         className={`${width < 600 ? "carousel-cell" : ""}`}
         slidesToSlide={8}
       >
-        {items?.results?.length ? renderItems(validItems) : renderItems(validItemsP)}
+        {renderItems(validItems)}
       </Carousel>
     </div>
-  ) : null;
+  )
 });
 
 

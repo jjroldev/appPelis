@@ -53,12 +53,6 @@ a {
   gap: 25px;
 }
 
-
-.visibleBar{
-  display: none;
-}
-
-
 @media (max-width: 1200px) {
   .navbar{
     padding-bottom: 4px !important;

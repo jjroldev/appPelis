@@ -12,12 +12,12 @@ import { useLanguage } from "../../context/LanguageContext";
 import { useAuth } from "../../context/AuthContext";
 import { useMenu } from "../../context/MenuContext";
 
-import { NavBar } from "../../components/NavBar/NavBar";
 import CardItem from "../../components/CardItem/CardItem";
 import Lupa from "../../components/Lupa/Lupa";
 import { Movie } from "../../interface/Movie";
 import { useWindowWidth } from "../../hooks/useWindowWidth";
 import { Serie } from "../../interface/Serie";
+import BarMenu from "../../components/BarMenu/BarMenu";
 
 export default function Buscar() {
   const navigate = useNavigate();
@@ -69,14 +69,14 @@ export default function Buscar() {
     [currentUser?.id, currentPerfil?.id, queryClient]
   );
 
-  const fetchSearchMovies = useMemo(() => 
+  const fetchSearchMovies = useMemo(() =>
     searchTerm
       ? `${BASE_URL}/search/movie?api_key=${API_KEY}&language=${language}&query=${searchTerm}`
       : getFetchURLs(language).topRatedMovies,
     [searchTerm, language]
   );
-  
-  const fetchSearchSeries = useMemo(() => 
+
+  const fetchSearchSeries = useMemo(() =>
     searchTerm
       ? `${BASE_URL}/search/tv?api_key=${API_KEY}&language=${language}&query=${searchTerm}`
       : getFetchSeriesURLs(language).topRatedSeries,
@@ -84,12 +84,12 @@ export default function Buscar() {
   );
 
   const { data: moviesData, isLoading: loadingMovies } = useQuery(
-    [searchTerm , "search-movies"],
+    [searchTerm, "search-movies"],
     () => fetchData(fetchSearchMovies)
   );
 
   const { data: seriesData, isLoading: loadingSeries } = useQuery(
-    [searchTerm , "search-series"],
+    [searchTerm, "search-series"],
     () => fetchData(fetchSearchSeries)
   );
 
@@ -110,7 +110,7 @@ export default function Buscar() {
   if (isLoading) {
     return (
       <div className="contenedor">
-        <NavBar logoBuscar={true} menu={true} perfil={true} condicionExpanded={true} />
+        <BarMenu />
       </div>
     );
   }
@@ -134,7 +134,7 @@ export default function Buscar() {
 
   return (
     <div className="contenedor">
-      <NavBar perfil={true} menu={true} logoBuscar={true} condicionExpanded={true} />
+      <BarMenu />
       <div className="contenedorBuscar">
         {width < 900 && <Lupa placeholder="Search movies, series, tv series..." onSubmit={handleSearch} />}
         {renderContent()}

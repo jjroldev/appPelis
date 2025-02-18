@@ -68,7 +68,7 @@ export default function MoviesWindow() {
 
     return (
         <div className="contenedorWindow">
-            <Banner itemId={featuredMovie?.id} logoBuscar={true} type='movie' />
+            <Banner itemId={featuredMovie?.id} type='movie' />
             <div className="contenedorItems">
                 {carousels.slice(0, visibleCarousels).map((carousel, index) => (
                     <CarouselURL key={index} {...carousel} />

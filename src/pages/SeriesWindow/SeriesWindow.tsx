@@ -62,7 +62,7 @@ export default function SeriesWindow() {
 
     return (
         <div className="contenedorWindow">
-            <Banner itemId={featuredSerie?.id} logoBuscar={true} type='serie' />
+            <Banner itemId={featuredSerie?.id} type='serie' />
             <div className="contenedorItems">
                 {carousels.slice(0, visibleCarousels).map((carousel, index) => (
                     <CarouselURL key={index} {...carousel} />

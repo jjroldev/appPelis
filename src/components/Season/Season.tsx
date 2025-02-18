@@ -4,12 +4,11 @@ import { Season, Serie } from '../../interface/Serie';
 import { fetchData } from '../../utils/fetchData';
 import { getSeasonDetailsURL } from '../../utils/endPoints';
 import { useLanguage } from '../../context/LanguageContext';
-import { useState, useEffect, useRef } from 'react';
-import EpisodeC from '../../components/Episode/Episode';
+import { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import EpisodeSkeleton from '../../components/Episode/EpidoseSkeleton';
 import { useWindowWidth } from '../../hooks/useWindowWidth';
 import { motion } from "framer-motion";
-
+const EpisodeC = lazy(() => import('../Episode/Episode'))
 interface SeasonProps {
     series: Serie;
     numeroTemporadas: number | undefined;
@@ -92,7 +91,13 @@ export default function SeasonC({ series, numeroTemporadas }: SeasonProps) {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: 0.1 }}
                             >
-                                <EpisodeC episode={episode} serie_backdrop={series.backdrop_path} />
+                                {
+                                    episode && (
+                                        <Suspense fallback={<></>}>
+                                            <EpisodeC episode={episode} serie_backdrop={series.backdrop_path} />
+                                        </Suspense>
+                                    )
+                                }
                             </motion.div>))}
                         {visibleEpisodes < season?.episodes?.length && (
                             <div ref={loadMoreRef} style={{ height: '20px', background: 'transparent' }} />

@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
-import CardItem from '../CardItem/CardItem';
-import { NavBar } from '../NavBar/NavBar';
+import CardItem from '../../components/CardItem/CardItem';
 import { Movie } from '../../interface/Movie';
 import "./MiLista.css"
 import { useAuth } from '../../context/AuthContext';
@@ -10,13 +9,14 @@ import { useSearch } from '../../context/SearchContext';
 import { useMenu } from '../../context/MenuContext';
 import { useFavorites } from '../../hooks/useFavorites';
 import { Serie } from '../../interface/Serie';
+import BarMenu from '../../components/BarMenu/BarMenu';
 export default function MiLista() {
   const { currentUser, currentPerfil } = useAuth()
   const { setSearchTerm } = useSearch()
-  const{setOpenMenu}=useMenu()
-  const {handleRemoveFavorite}=useFavorites()
+  const { setOpenMenu } = useMenu()
+  const { handleRemoveFavorite } = useFavorites()
 
-  const { data: items, isLoading } = useQuery<Movie[] |Serie[]>(
+  const { data: items, isLoading } = useQuery<Movie[] | Serie[]>(
     `favorites-${currentUser?.id}-${currentPerfil?.id}`,
     () => getFavoritesByProfile(currentUser?.id, currentPerfil?.id),
     {
@@ -34,7 +34,7 @@ export default function MiLista() {
   if (isLoading) {
     return (
       <>
-        <NavBar logoBuscar={true} menu={true} perfil={true} />
+        <BarMenu />
         <div className="favorites">
           <div className="contenedorFavoritas">
             <h2 className="tituloFavoritas">Mi Lista</h2>
@@ -48,7 +48,7 @@ export default function MiLista() {
 
   return (
     <>
-      <NavBar logoBuscar={true} menu={true} perfil={true} />
+      <BarMenu />
       <div className="favorites">
         <h2 className="tituloFavoritas">Mi Lista</h2>
         <div className='contenedorFavoritas'>

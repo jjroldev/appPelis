@@ -1,8 +1,7 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, Suspense, lazy } from "react";
 import { useNavigate } from "react-router";
 import { useQuery } from "react-query";
 import "./Banner.css";
-import { NavBar } from "../NavBar/NavBar";
 import { fetchData } from "../../utils/fetchData";
 import { getCertifiedReleaseItem } from "../../utils/helpers";
 import {
@@ -13,21 +12,21 @@ import {
     getMovieImagesURL,
     getSeriesImagesURL
 } from "../../utils/endPoints";
-import DetalleBanner from "../DetalleBanner/DetalleBaner";
-import VideoModal from "../ModalVideo/ModalVideo";
+const DetalleBanner = lazy(() => import('../DetalleBanner/DetalleBaner'))
+const VideoModal = lazy(()=>import('../ModalVideo/ModalVideo'))
 import { Movie } from "../../interface/Movie";
 import { Serie } from "../../interface/Serie";
 import { useFavorites } from "../../hooks/useFavorites";
 import { useWindowWidth } from "../../hooks/useWindowWidth";
 import { useLanguage } from "../../context/LanguageContext";
+import BarMenu from "../BarMenu/BarMenu";
 interface BannerProps {
     itemId: string | null | undefined;
-    logoBuscar: boolean;
     isDetail?: boolean;
     type: string
 }
 
-export function Banner({ itemId, logoBuscar, isDetail = false, type }: BannerProps) {
+export function Banner({ itemId, isDetail = false, type }: BannerProps) {
     const navigate = useNavigate();
     const { handleAddFavorite } = useFavorites()
     const { language } = useLanguage()
@@ -92,8 +91,13 @@ export function Banner({ itemId, logoBuscar, isDetail = false, type }: BannerPro
                 <button className="play" onClick={handleOpen}>
                     <i className="fa-solid fa-play"></i> Play
                 </button>
-                <VideoModal item={item} open={open} onClose={handleClose} />
-
+                {
+                    open && (
+                        <Suspense fallback={<></>}>
+                            <VideoModal item={item} open={open} onClose={handleClose} />
+                        </Suspense>
+                    )
+                }
                 {location.hash !== "#/info" && (
                     <button onClick={pasarItem} className="boton-info-banner">
                         <i className="fa-solid fa-circle-info"></i> More Information
@@ -110,7 +114,7 @@ export function Banner({ itemId, logoBuscar, isDetail = false, type }: BannerPro
     if (!itemId || !item) {
         return (
             <div className="header">
-                <NavBar perfil={true} menu={true} logoBuscar={logoBuscar} />
+                <BarMenu />
                 <div
                     className={`fondoCardItem h-full w-full absolute inset-0 opacity-100 transition-opacity duration-400`}
                 ></div>
@@ -120,7 +124,7 @@ export function Banner({ itemId, logoBuscar, isDetail = false, type }: BannerPro
     return (
         <div className="header">
             <img className="fondo" src={`${URL_IMAGE_BANNER}${item?.backdrop_path}`} />
-            <NavBar perfil={true} menu={true} logoBuscar={logoBuscar} />
+            <BarMenu />
             <div className="cuerpoBanner">
                 <div className={`contenedorLogo ${isDetail ? "contenedorDetailN" : ""}`}>
                     <div className="flex flex-row gap-3 items-center">
@@ -132,7 +136,9 @@ export function Banner({ itemId, logoBuscar, isDetail = false, type }: BannerPro
                         }
                     </div>
                     {isDetail && (
-                        <DetalleBanner item={item} />
+                        <Suspense fallback={<></>}>
+                            <DetalleBanner item={item} />
+                        </Suspense>
                     )}
                     <Botones />
                     {renderOverviewOrTitle()}

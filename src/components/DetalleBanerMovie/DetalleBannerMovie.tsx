@@ -1,9 +1,9 @@
-import { memo } from "react";
-import CarouselBoostrap from "../CarouselBoostrap/CarouselBoostrap";
+import { memo, lazy } from "react";
 import { Movie } from "../../interface/Movie";
 import { useWindowWidth } from "../../hooks/useWindowWidth";
 import { getCertifiedReleaseItem } from "../../utils/helpers";
-
+import { Suspense } from "react";
+const CarouselBoostrap = lazy(() => import('../CarouselBoostrap/CarouselBoostrap'))
 const DetalleBannerMovie = memo(({ movie }: { movie: Movie }) => {
   const width = useWindowWidth();
 
@@ -12,7 +12,7 @@ const DetalleBannerMovie = memo(({ movie }: { movie: Movie }) => {
       <li key={genre.id}>
         <span>{genre.name}</span>
       </li>
-  ));
+    ));
 
   return (
     <>
@@ -22,7 +22,7 @@ const DetalleBannerMovie = memo(({ movie }: { movie: Movie }) => {
           <span>{movie?.release_date.split("-")[0]}</span>
           <span>{`${Math.floor(movie.runtime / 60)}h ${movie.runtime % 60}min`}</span>
           {
-            getCertifiedReleaseItem(movie) && width>600&&(
+            getCertifiedReleaseItem(movie) && width > 600 && (
               <span className="edadParaPublico">{getCertifiedReleaseItem(movie)}+</span>
             )
           }
@@ -35,7 +35,9 @@ const DetalleBannerMovie = memo(({ movie }: { movie: Movie }) => {
 
       {width >= 900 && (
         <div className="posters-container-banner">
-          <CarouselBoostrap item={movie} />
+          <Suspense fallback={<></>}>
+            <CarouselBoostrap item={movie} />
+          </Suspense>
         </div>
       )}
     </>

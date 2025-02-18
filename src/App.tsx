@@ -9,7 +9,7 @@ import { useAuth } from './context/AuthContext';
 
 const PageLogin = lazy(() => import("./pages/PageLogin/PageLogin"));
 const PageRegister = lazy(() => import("./pages/PageRegister/PageRegister"));
-const MiLista = lazy(() => import("./components/MiLista/MiLista"));
+const MiLista = lazy(() => import("./pages/MiLista/MiLista"));
 const Buscar = lazy(() => import("./pages/Buscar/Buscar"));
 const Home = lazy(() => import("./pages/Home/Home"));
 const ManagePerfil = lazy(() => import("./pages/ManagePerfil/ManagePerfil"));
@@ -20,7 +20,7 @@ const SeriesWindow = lazy(() => import('./pages/SeriesWindow/SeriesWindow'))
 export default function App() {
   const queryClient = new QueryClient();
   const { isLoggedIn, loading, currentPerfil } = useAuth();
-  if (loading) return null;
+  if (loading) return <Spinner />;
 
   return (
     <QueryClientProvider client={queryClient}>

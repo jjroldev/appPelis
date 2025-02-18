@@ -77,7 +77,7 @@ export default function Home() {
 
     return (
         <div className="contenedorWindow">
-            <Banner itemId={featuredMovie?.id} logoBuscar={true} type="movie" />
+            <Banner itemId={featuredMovie?.id} type="movie" />
             <div className="contenedorItems">
                 <CarouselFavorites isLarge title="My List" />
                 {allCarousels.slice(0, visibleCarousels).map((carousel, index) => (

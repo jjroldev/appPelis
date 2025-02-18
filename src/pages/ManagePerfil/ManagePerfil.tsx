@@ -16,16 +16,9 @@ export default function ManagePerfil() {
     const [nombrePerfil, setNombrePerfil] = useState("");
     const [isCreating, setIsCreating] = useState(false);
     const navigate = useNavigate();
-    const [imagenCargada, setImagenCargada] = useState(false);
     const {setOpenMenu}=useMenu()
 
     useEffect(() => {
-        const img = new Image();
-        img.src = "/appPelis/avatar3.png";
-
-        img.onload = () => {
-            setImagenCargada(true);
-        };
         setOpenMenu(false)
     }, []);
 
@@ -103,7 +96,7 @@ export default function ManagePerfil() {
                                 </div>
                             )
                         }
-                        {perfiles.length!=0 && imagenCargada&&(
+                        {perfiles.length!=0 &&(
                             <div className="PerfilesExistentesContainer">
                                 <h2 className="tituloPerfiles">Selecciona un perfil</h2>
                                 <div className='perfiles'>
