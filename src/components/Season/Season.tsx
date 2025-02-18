@@ -40,7 +40,7 @@ export default function SeasonC({ series, numeroTemporadas }: SeasonProps) {
                     setVisibleEpisodes((prev) => Math.min(prev + 8, season.episodes.length));
                 }
             },
-            { threshold: 0.5 }
+            {rootMargin:"450px" }
         );
 
         const target = loadMoreRef.current;
@@ -100,7 +100,7 @@ export default function SeasonC({ series, numeroTemporadas }: SeasonProps) {
                                 }
                             </motion.div>))}
                         {visibleEpisodes < season?.episodes?.length && (
-                            <div ref={loadMoreRef} style={{ height: '20px', background: 'transparent' }} />
+                            <div ref={loadMoreRef} style={{ height: '200px', background: 'transparent' }} />
                         )}
                     </>
                 )}

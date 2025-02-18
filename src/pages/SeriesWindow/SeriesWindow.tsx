@@ -10,7 +10,7 @@ import CarouselURL from '../../components/CarouselURL/CarouselURL';
 import { useSearch } from '../../context/SearchContext';
 
 export default function SeriesWindow() {
-    const featuredSerie = useFeaturedMovie("feautedSerieSW", "seriesW", "serie");
+    const featuredSerie = useFeaturedMovie("feautedSerieSW", "itemsBanner", "serie");
     const { language } = useLanguage();
     const fetchURLS = useMemo(() => getFetchSeriesURLs(language), [language]);
     const { setSearchTerm } = useSearch();
@@ -49,7 +49,7 @@ export default function SeriesWindow() {
                     setVisibleCarousels((prev) => Math.min(prev + 7, carousels.length));
                 }
             },
-            { rootMargin: "150px" }
+            { rootMargin: "450px" }
         );
 
         const target = loadMoreRef.current;
@@ -68,7 +68,7 @@ export default function SeriesWindow() {
                     <CarouselURL key={index} {...carousel} />
                 ))}
                 {visibleCarousels < carousels.length && (
-                    <div ref={loadMoreRef} style={{ height: '10px', background: 'transparent' }} />
+                    <div ref={loadMoreRef} style={{ height: '200px', background: 'transparent' }} />
                 )}
             </div>
         </div>

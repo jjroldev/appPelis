@@ -35,7 +35,7 @@ export default function Buscar() {
 
   useEffect(() => {
     if (searchTerm === "" && width >= 900) {
-      navigate("/home", { state: { fromBuscar: true } });
+      navigate(-1);
     }
   }, [searchTerm, width, navigate]);
 
@@ -134,7 +134,7 @@ export default function Buscar() {
 
   return (
     <div className="contenedor">
-      <BarMenu />
+      <BarMenu/>
       <div className="contenedorBuscar">
         {width < 900 && <Lupa placeholder="Search movies, series, tv series..." onSubmit={handleSearch} />}
         {renderContent()}

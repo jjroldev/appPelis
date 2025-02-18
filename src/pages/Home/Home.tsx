@@ -1,13 +1,13 @@
-import { useEffect, useMemo, useState, useRef } from "react";
+import { useEffect, useMemo, useState, useRef, Suspense, lazy } from "react";
 import { useSearch } from "../../context/SearchContext";
 import { useMenu } from "../../context/MenuContext";
 import "./Home.css";
 import { useFeaturedMovie } from "../../hooks/useFeaturedMovie";
 import { getFetchSeriesURLs, getFetchURLs } from "../../utils/endPoints";
 import { useLanguage } from "../../context/LanguageContext";
-import CarouselURL from "../../components/CarouselURL/CarouselURL";
-import { CarouselFavorites } from "../../components/CarouselFavorites/CarouselFavorites";
 import { Banner } from "../../components/Banner/Banner";
+const CarouselFavorites = lazy(() => import("../../components/CarouselFavorites/CarouselFavorites"))
+const CarouselURL = lazy(() => import("../../components/CarouselURL/CarouselURL"))
 
 export default function Home() {
     const { setSearchTerm } = useSearch();
@@ -16,7 +16,7 @@ export default function Home() {
 
     const fetchURLS = useMemo(() => getFetchURLs(language), [language]);
     const fetchSeriesURLS = useMemo(() => getFetchSeriesURLs(language), [language]);
-    const featuredMovie = useFeaturedMovie("feautedMovieHome", "moviesHome", "movie");
+    const featuredMovie = useFeaturedMovie("feautedMovieHome", "itemsBanner", "movie");
 
     const allCarousels = useMemo(() => [
         { URL: fetchURLS.popularMovies, title: "Popular Movies", isLarge: true },
@@ -64,7 +64,7 @@ export default function Home() {
                     setVisibleCarousels((prev) => Math.min(prev + 7, allCarousels.length));
                 }
             },
-            { rootMargin: "150px" }
+            { rootMargin: "450px" }
         );
 
         const target = loadMoreRef.current;
@@ -79,12 +79,14 @@ export default function Home() {
         <div className="contenedorWindow">
             <Banner itemId={featuredMovie?.id} type="movie" />
             <div className="contenedorItems">
-                <CarouselFavorites isLarge title="My List" />
-                {allCarousels.slice(0, visibleCarousels).map((carousel, index) => (
-                    <CarouselURL key={index} {...carousel} />
-                ))}
+                <Suspense fallback={<></>}>
+                    <CarouselFavorites isLarge title="My List" />
+                    {allCarousels.slice(0, visibleCarousels).map((carousel, index) => (
+                        <CarouselURL key={index} {...carousel} />
+                    ))}
+                </Suspense>
                 {visibleCarousels < allCarousels.length && (
-                    <div ref={loadMoreRef} style={{ height: '20px', background: 'transparent' }} />
+                    <div ref={loadMoreRef} style={{ height: '200px', background: 'transparent' }} />
                 )}
             </div>
         </div>

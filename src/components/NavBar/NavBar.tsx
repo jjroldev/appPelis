@@ -7,13 +7,8 @@ import Logo from '../Logo/Logo';
 const SearchBar = lazy(() => import('../SearchBar/SearchBar'));
 const PerfilDrop = lazy(() => import('../PerfilDrop/PerfilDrop'));
 const MenuOptions = lazy(() => import('./MenuOptions'))
-interface NavBarProps {
-    condicionExpanded?: boolean;
-}
 
-export default function NavBar({
-    condicionExpanded,
-}: NavBarProps) {
+export default function NavBar() {
 
     const location = useLocation();
 
@@ -31,8 +26,11 @@ export default function NavBar({
             <div className="perfilYLupaContenedor">
                 <Suspense fallback={<></>}>
                     <SearchBar
-                        condicionExpanded={condicionExpanded}
-                        desdeHome={location.state?.fromBuscar || false}
+                        desdeHome={location.pathname=="/buscar" || location.pathname=="/home" 
+                            || location.pathname=="/movies"
+                            || location.pathname=="/series"
+                            || location.pathname=="/miLista"
+                            || false}
                     />
                     <PerfilDrop />
                 </Suspense>

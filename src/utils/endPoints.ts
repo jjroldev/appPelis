@@ -1,7 +1,7 @@
 export const URL_IMAGE_POSTER = "https://image.tmdb.org/t/p/w300";
 export const URL_IMAGE_BACKDROP = "https://image.tmdb.org/t/p/w780";
 export const URL_IMAGE_BACKDROPC = "https://image.tmdb.org/t/p/w1280";
-export const URL_IMAGE_BANNER = "https://image.tmdb.org/t/p/w1280";
+export const URL_IMAGE_BANNER = "https://image.tmdb.org/t/p/original";
 export const URL_IMAGE_PROFILE = "https://image.tmdb.org/t/p/w185";
 export const URL_IMAGE_lOGO = "https://image.tmdb.org/t/p/w500";
 export const URL_IMAGE_STILL = "https://image.tmdb.org/t/p/w300";
@@ -99,3 +99,8 @@ export const getSeriesVideosURL = (seriesId:string | null |undefined)=>
 
 export const getCollectionDetailsURL = (collectionId: string | undefined) =>
   `${BASE_URL}/collection/${collectionId}?api_key=${API_KEY}`;
+
+
+export const getVideosEpisodeURL = (series_id:string | undefined,season_number:number,episode_number:number)=>{
+  return `${BASE_URL}/tv/${series_id}/season/${season_number}/episode/${episode_number}/videos?api_key=${API_KEY}&language=en`
+}

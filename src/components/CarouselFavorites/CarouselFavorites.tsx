@@ -16,7 +16,7 @@ interface CarouselFProps {
   title: string;
 }
 
-export function CarouselFavorites({ isLarge, title }: CarouselFProps) {
+export default function CarouselFavorites({ isLarge, title }: CarouselFProps) {
   const { handleRemoveFavorite } = useFavorites();
   const width = useWindowWidth();
   const { currentPerfil, currentUser } = useAuth();

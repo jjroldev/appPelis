@@ -1,5 +1,6 @@
 import { Movie } from "../interface/Movie";
 import { Serie } from "../interface/Serie";
+import { Videos } from "../interface/VideosEpisode";
 export const getCertifiedReleaseItem= (item: Serie |Movie |undefined, country: string = "US") => {
     if (item && "content_ratings" in item) {
         const contentRCountry = item.content_ratings.results.filter((data) => (
@@ -19,4 +20,30 @@ export const getCertifiedReleaseItem= (item: Serie |Movie |undefined, country: s
         return certification
     }
     return null
+};
+
+export function getIdVideoEpisode(videos:Videos | undefined){
+    return videos?.results?.filter((data)=>(
+        data?.key!=null
+    ))[0]?.key
+}
+
+
+export function getVideoItem(item: Movie | Serie | undefined){
+    const foundTrailer = 
+                item?.videos?.results?.find((vid: any) => vid.name === "Official Trailer") || 
+                item?.videos?.results[0];
+    return foundTrailer?.key   
+}
+
+
+export const formatRuntime = (minutes: number) => {
+    if (!minutes) return null
+
+    if (minutes < 60) {
+        return `${minutes} min`;
+    }
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    return mins > 0 ? `${hours} h ${mins} min` : `${hours} h`;
 };

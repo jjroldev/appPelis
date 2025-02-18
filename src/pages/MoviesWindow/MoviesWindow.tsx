@@ -10,7 +10,7 @@ import { useMenu } from '../../context/MenuContext';
 import { useSearch } from '../../context/SearchContext';
 import { useRef, useState } from 'react';
 export default function MoviesWindow() {
-    const featuredMovie = useFeaturedMovie("feautedMovieMW", "moviesW", "movie");
+    const featuredMovie = useFeaturedMovie("feautedMovieMW", "itemsBanner", "movie");
     const { language } = useLanguage();
     const fetchURLS = useMemo(() => getFetchURLs(language), [language]);
     const { setOpenMenu } = useMenu();
@@ -54,7 +54,7 @@ export default function MoviesWindow() {
                     setVisibleCarousels((prev) => Math.min(prev + 7, carousels.length));
                 }
             },
-            { rootMargin: "150px" }
+            { rootMargin: "450px" }
         );
 
         const target = loadMoreRef.current;
@@ -74,7 +74,7 @@ export default function MoviesWindow() {
                     <CarouselURL key={index} {...carousel} />
                 ))}
                 {visibleCarousels < carousels.length && (
-                    <div ref={loadMoreRef} style={{ height: '20px', background: 'transparent' }} />
+                    <div ref={loadMoreRef} style={{ height: '200px', background: 'transparent' }} />
                 )}
             </div>
         </div>

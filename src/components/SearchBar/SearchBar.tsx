@@ -4,12 +4,11 @@ import "./SearchBar.css";
 import { useSearch } from "../../context/SearchContext";
 
 interface SearchBarProps {
-    condicionExpanded?: boolean;
     desdeHome?: boolean;
 }
 
-export default function SearchBar({ condicionExpanded, desdeHome }: SearchBarProps) {
-    const [lupaActive, setLupaActive] = useState(desdeHome || condicionExpanded || false);
+export default function SearchBar({ desdeHome }: SearchBarProps) {
+    const [lupaActive, setLupaActive] = useState(desdeHome || false);
     const lupaContainerRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
     const navigate = useNavigate();
@@ -23,11 +22,13 @@ export default function SearchBar({ condicionExpanded, desdeHome }: SearchBarPro
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
+            const target = event.target as Node;
+            const navbar = document.querySelector(".navbar");
             if (
                 lupaActive && 
                 lupaContainerRef.current && 
-                !lupaContainerRef.current.contains(event.target as Node) &&
-                !condicionExpanded
+                !lupaContainerRef.current.contains(target) && 
+                (!navbar || !navbar.contains(target))
             ) {
                 setLupaActive(false);
             }
@@ -37,7 +38,7 @@ export default function SearchBar({ condicionExpanded, desdeHome }: SearchBarPro
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
-    }, [lupaActive, condicionExpanded]);
+    }, [lupaActive]);
 
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
@@ -72,7 +73,7 @@ export default function SearchBar({ condicionExpanded, desdeHome }: SearchBarPro
                     <i 
                         className="fa-solid fa-magnifying-glass lupaExpandedIcon" 
                         onClick={() => {
-                            if (!condicionExpanded) setLupaActive(false);
+                            setLupaActive(false);
                         }}
                     ></i>
                     {

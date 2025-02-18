@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { useQuery } from "react-query";
 import "./Banner.css";
 import { fetchData } from "../../utils/fetchData";
-import { getCertifiedReleaseItem } from "../../utils/helpers";
+import { getCertifiedReleaseItem, getVideoItem } from "../../utils/helpers";
 import {
     URL_IMAGE_lOGO,
     URL_IMAGE_BANNER,
@@ -94,7 +94,7 @@ export function Banner({ itemId, isDetail = false, type }: BannerProps) {
                 {
                     open && (
                         <Suspense fallback={<></>}>
-                            <VideoModal item={item} open={open} onClose={handleClose} />
+                            <VideoModal videoKey={getVideoItem(item)} open={open} onClose={handleClose} />
                         </Suspense>
                     )
                 }

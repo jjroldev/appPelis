@@ -9,7 +9,7 @@ export default function BarMenu() {
             {
                 width >= 900 ? (
                     // <Suspense fallback={<></>}></Suspense>
-                    <NavBar />
+                    <NavBar/>
                 ) : (
 
                     <MenuDesplegable />
