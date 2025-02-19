@@ -47,7 +47,7 @@ export default function CreateProfile() {
     
         try {
             const nuevoPerfil = await createProfile(currentUser?.id, nombrePerfil,
-                checked ? "kid-1.png" : `avatar1.png`, checked ? "kid" : `adult`
+                checked ? "kid-1.png" : `adult-1.png`, checked ? "kid" : `adult`
             );
             if (nuevoPerfil) {
                 toast.success("Perfil creado exitosamente");
@@ -72,7 +72,7 @@ export default function CreateProfile() {
             </div>
             <form className="formContainer h-screen" method='post'>
                 <div className="wrapper-img-cp">
-                    <img src={checked ? "/appPelis/kid-1.png" : `/appPelis/avatar1.png`} alt="" />
+                    <img src={checked ? "/appPelis/kid-1.png" : `/appPelis/adult-1.png`} alt="" />
                     <i className="fa-solid fa-pencil pencil-icon"></i>
                 </div>
                 <input className='inputTextFormCP' type="text" placeholder='Enter name' ref={inputRef}

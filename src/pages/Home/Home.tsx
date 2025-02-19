@@ -48,7 +48,7 @@ export default function Home() {
         { URL: fetchURLS.thrillerMovies, title: "Thriller", isLarge: true },
     ], [fetchURLS, fetchSeriesURLS]);
 
-    const [visibleCarousels, setVisibleCarousels] = useState<number>(5);
+    const [visibleCarousels, setVisibleCarousels] = useState<number>(1);
     const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
@@ -64,7 +64,7 @@ export default function Home() {
                     setVisibleCarousels((prev) => Math.min(prev + 7, allCarousels.length));
                 }
             },
-            { rootMargin: "450px" }
+            { rootMargin: "100px" }
         );
 
         const target = loadMoreRef.current;
@@ -86,7 +86,7 @@ export default function Home() {
                     ))}
                 </Suspense>
                 {visibleCarousels < allCarousels.length && (
-                    <div ref={loadMoreRef} style={{ height: '200px', background: 'transparent' }} />
+                    <div ref={loadMoreRef} style={{ height: '120px', background: 'transparent' }} />
                 )}
             </div>
         </div>

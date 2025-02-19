@@ -53,7 +53,7 @@ const CarouselURL = React.memo(({ URL, title, isLarge }: CarouselURLProps) => {
         swipeable
         showDots={false}
         responsive={responsivew}
-        ssr={false}
+        ssr={true}
         infinite
         autoPlay={false}
         keyBoardControl={true}

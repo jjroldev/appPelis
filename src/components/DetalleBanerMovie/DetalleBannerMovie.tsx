@@ -3,6 +3,7 @@ import { Movie } from "../../interface/Movie";
 import { useWindowWidth } from "../../hooks/useWindowWidth";
 import { getCertifiedReleaseItem } from "../../utils/helpers";
 import { Suspense } from "react";
+import { motion } from 'framer-motion';
 const CarouselBoostrap = lazy(() => import('../CarouselBoostrap/CarouselBoostrap'))
 const DetalleBannerMovie = memo(({ movie }: { movie: Movie }) => {
   const width = useWindowWidth();
@@ -15,7 +16,10 @@ const DetalleBannerMovie = memo(({ movie }: { movie: Movie }) => {
     ));
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}>
       <div className="itemDetailsBanner flex flex-col">
         <div className="bannerDetails flex flex-row">
           <span>TMDB {movie?.vote_average.toFixed(1)}</span>
@@ -40,7 +44,7 @@ const DetalleBannerMovie = memo(({ movie }: { movie: Movie }) => {
           </Suspense>
         </div>
       )}
-    </>
+    </motion.div>
   );
 });
 

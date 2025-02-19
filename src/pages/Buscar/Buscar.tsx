@@ -93,6 +93,7 @@ export default function Buscar() {
     () => fetchData(fetchSearchSeries)
   );
 
+
   const isLoading = loadingMovies || loadingSeries;
 
   const validResults = useMemo(() => {

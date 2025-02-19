@@ -6,7 +6,7 @@ import { fetchData } from "../../utils/fetchData";
 import { getSeriesDetailsURL, getURLMovieDetails } from "../../utils/endPoints";
 import "./CarouselBoostrap.css";
 import { Serie } from "../../interface/Serie";
-
+import { motion } from 'framer-motion'
 const Backdrop = lazy(() => import("../BackDrop/Backdrop"));
 
 const CarouselBoostrap = memo(({ item }: { item: Movie | Serie | null | undefined }) => {
@@ -28,15 +28,22 @@ const CarouselBoostrap = memo(({ item }: { item: Movie | Serie | null | undefine
   }, [items]);
 
   return (
-    <div className={`carousel-bootstrap cb-backdrop`}>
-      <Carousel fade interval={3000} pause="hover">
-        {images.map((image, index) => (
-          <Carousel.Item key={index}>
-            <Backdrop backdrop_path={image.file_path} />
-          </Carousel.Item>
-        ))}
-      </Carousel>
-    </div>
+
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}>
+      <div className={`carousel-bootstrap cb-backdrop`}>
+        <Carousel fade interval={3000} pause="hover">
+          {images.map((image, index) => (
+            <Carousel.Item key={index}>
+              <Backdrop backdrop_path={image.file_path} />
+            </Carousel.Item>
+          ))}
+        </Carousel>
+
+      </div>
+    </motion.div>
   );
 });
 

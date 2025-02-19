@@ -26,7 +26,7 @@ export default function ManagePerfil() {
             enabled: !!currentUser?.id
         }
     );
-    
+
     const handleEliminar = async (perfilId: string, event: React.MouseEvent) => {
         event.stopPropagation()
         const response = await deleteProfile(currentUser?.id, perfilId);
@@ -65,7 +65,9 @@ export default function ManagePerfil() {
                             </div>
                         ))}
                     </div>
-                    <button className='buttonPerfiles' onClick={() => navigate('/createProfile')}>Crear perfil</button>
+                    <div className="container-button-crearProfile">
+                        <button className='buttonPerfiles' onClick={() => navigate('/createProfile')}>Crear perfil</button>
+                    </div>
                 </div>
             )
             }

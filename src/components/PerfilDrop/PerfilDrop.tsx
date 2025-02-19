@@ -24,7 +24,6 @@ export default function PerfilDrop() {
 
     const handleNavigate = (perfil: Perfil | null) => {
         setCurrentPerfil(perfil);
-        navigate('/miLista');
         setShowDropdown(false);
     };
 

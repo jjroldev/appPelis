@@ -8,7 +8,6 @@ import { useAuth } from './context/AuthContext';
 import { useQuery } from 'react-query';
 import { getPerfilesPorUsuario } from './firebase';
 import { Perfil } from './interface/Perfil';
-
 const PageLogin = lazy(() => import("./pages/PageLogin/PageLogin"));
 const PageRegister = lazy(() => import("./pages/PageRegister/PageRegister"));
 const MiLista = lazy(() => import("./pages/MiLista/MiLista"));
@@ -32,7 +31,7 @@ export default function App() {
     }
   );
 
-  if (loading) return null;
+  if (loading) return <Spinner />;
 
   return (
     <HashRouter>

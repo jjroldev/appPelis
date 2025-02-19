@@ -15,6 +15,7 @@ import {
 const DetalleBanner = lazy(() => import('../DetalleBanner/DetalleBaner'))
 const VideoModal = lazy(() => import('../ModalVideo/ModalVideo'))
 import { Movie } from "../../interface/Movie";
+import {motion} from 'framer-motion'
 import { Serie } from "../../interface/Serie";
 import { useFavorites } from "../../hooks/useFavorites";
 import { useWindowWidth } from "../../hooks/useWindowWidth";
@@ -124,7 +125,14 @@ export function Banner({ itemId, isDetail = false, type }: BannerProps) {
     }
     return (
         <div className="header">
-            <img className="fondo" src={`${URL_IMAGE_BANNER}${item?.backdrop_path}`} />
+            <motion.img
+                src={`${URL_IMAGE_BANNER}${item?.backdrop_path}`}
+                className="fondo"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+            >
+            </motion.img>
             <BarMenu />
             <div className="cuerpoBanner">
                 <div className={`contenedorLogo ${isDetail ? "contenedorDetailN" : ""}`}>

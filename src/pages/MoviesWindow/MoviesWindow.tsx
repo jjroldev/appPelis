@@ -44,7 +44,7 @@ export default function MoviesWindow() {
     ], [fetchURLS]);
 
 
-    const [visibleCarousels, setVisibleCarousels] = useState<number>(5);
+    const [visibleCarousels, setVisibleCarousels] = useState<number>(1);
     const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
@@ -54,7 +54,7 @@ export default function MoviesWindow() {
                     setVisibleCarousels((prev) => Math.min(prev + 7, carousels.length));
                 }
             },
-            { rootMargin: "450px" }
+            { rootMargin: "100px" }
         );
 
         const target = loadMoreRef.current;
@@ -74,7 +74,7 @@ export default function MoviesWindow() {
                     <CarouselURL key={index} {...carousel} />
                 ))}
                 {visibleCarousels < carousels.length && (
-                    <div ref={loadMoreRef} style={{ height: '200px', background: 'transparent' }} />
+                    <div ref={loadMoreRef} style={{ height: '120px', background: 'transparent' }} />
                 )}
             </div>
         </div>

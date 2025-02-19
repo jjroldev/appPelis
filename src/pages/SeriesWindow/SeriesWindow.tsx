@@ -39,7 +39,7 @@ export default function SeriesWindow() {
         { URL: fetchURLS.warPoliticsSeries, title: "Series of war", isLarge: true },
     ], [fetchURLS]);
 
-    const [visibleCarousels, setVisibleCarousels] = useState(5);
+    const [visibleCarousels, setVisibleCarousels] = useState(1);
     const loadMoreRef = useRef(null);
 
     useEffect(() => {
@@ -49,7 +49,7 @@ export default function SeriesWindow() {
                     setVisibleCarousels((prev) => Math.min(prev + 7, carousels.length));
                 }
             },
-            { rootMargin: "450px" }
+            { rootMargin: "100px" }
         );
 
         const target = loadMoreRef.current;
@@ -68,7 +68,7 @@ export default function SeriesWindow() {
                     <CarouselURL key={index} {...carousel} />
                 ))}
                 {visibleCarousels < carousels.length && (
-                    <div ref={loadMoreRef} style={{ height: '200px', background: 'transparent' }} />
+                    <div ref={loadMoreRef} style={{ height: '120px', background: 'transparent' }} />
                 )}
             </div>
         </div>
