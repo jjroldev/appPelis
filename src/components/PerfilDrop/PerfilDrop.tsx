@@ -33,10 +33,10 @@ export default function PerfilDrop() {
             className="contenedorPerfilImagen"
             onMouseEnter={() => setShowDropdown(true)}
             onMouseLeave={() => setShowDropdown(false)}
-            onClick={()=>setShowDropdown(!showDropdown)}
+            onClick={() => setShowDropdown(!showDropdown)}
         >
             <div className="containerImagePerfil">
-                <img src="/appPelis/avatar3.png" alt="Perfil" />
+                <img src={`/appPelis/${currentPerfil?.imagen}`} alt="Perfil" />
             </div>
 
             <NavDropdown
@@ -44,20 +44,11 @@ export default function PerfilDrop() {
                 id="navbarScrollingDropdown"
                 show={showDropdown}
             >
-                {currentPerfil && (
-                    <NavDropdown.Item className="drop" onClick={() => handleNavigate(currentPerfil)}>
-                        <div className="containerImagePerfil">
-                            <img src="/appPelis/avatar3.png" alt="Perfil" />
-                        </div>
-                        <span>{currentPerfil.name}</span>
-                    </NavDropdown.Item>
-                )}
-
                 {perfiles?.map((perfil) => (
                     perfil.id !== currentPerfil?.id && (
                         <NavDropdown.Item key={perfil.id} className="drop" onClick={() => handleNavigate(perfil)}>
                             <div className="containerImagePerfil">
-                                <img src="/appPelis/avatar4.jpg" alt="Perfil" />
+                                <img src={`/appPelis/${perfil.imagen}`} alt="Perfil" />
                             </div>
                             <span>{perfil.name}</span>
                         </NavDropdown.Item>

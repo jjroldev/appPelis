@@ -13,7 +13,7 @@ import {
     getSeriesImagesURL
 } from "../../utils/endPoints";
 const DetalleBanner = lazy(() => import('../DetalleBanner/DetalleBaner'))
-const VideoModal = lazy(()=>import('../ModalVideo/ModalVideo'))
+const VideoModal = lazy(() => import('../ModalVideo/ModalVideo'))
 import { Movie } from "../../interface/Movie";
 import { Serie } from "../../interface/Serie";
 import { useFavorites } from "../../hooks/useFavorites";
@@ -51,7 +51,8 @@ export function Banner({ itemId, isDetail = false, type }: BannerProps) {
     );
 
     const logoPath = item?.images?.logos?.find((l) => l.iso_639_1 === language)?.file_path ||
-        item?.images?.logos?.[0]?.file_path || dataImages?.logos[0]?.file_path || null;
+        (item?.images?.logos?.length ? item?.images?.logos[0]?.file_path : null) ||
+        (dataImages?.logos?.length ? dataImages?.logos[0]?.file_path : null) || null;
 
     const handleOpen = useCallback(() => setOpen(true), []);
     const handleClose = useCallback(() => setOpen(false), []);

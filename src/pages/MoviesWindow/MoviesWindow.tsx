@@ -10,7 +10,7 @@ import { useMenu } from '../../context/MenuContext';
 import { useSearch } from '../../context/SearchContext';
 import { useRef, useState } from 'react';
 export default function MoviesWindow() {
-    const featuredMovie = useFeaturedMovie("feautedMovieMW", "itemsBanner", "movie");
+    const featuredMovie = useFeaturedMovie("feautedMovieMW", "itemsBannerMovies", "movie");
     const { language } = useLanguage();
     const fetchURLS = useMemo(() => getFetchURLs(language), [language]);
     const { setOpenMenu } = useMenu();

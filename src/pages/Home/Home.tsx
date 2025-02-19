@@ -16,7 +16,7 @@ export default function Home() {
 
     const fetchURLS = useMemo(() => getFetchURLs(language), [language]);
     const fetchSeriesURLS = useMemo(() => getFetchSeriesURLs(language), [language]);
-    const featuredMovie = useFeaturedMovie("feautedMovieHome", "itemsBanner", "movie");
+    const featuredMovie = useFeaturedMovie("feautedMovieHome", "itemsBannerHome", "movie");
 
     const allCarousels = useMemo(() => [
         { URL: fetchURLS.popularMovies, title: "Popular Movies", isLarge: true },

@@ -20,7 +20,7 @@ const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [currentPerfil, setCurrentPerfil] = useState<Perfil | null>(() => {
-    const storedPerfil = localStorage.getItem("currentPerfil");
+    const storedPerfil = sessionStorage.getItem("currentPerfil");
     return storedPerfil ? JSON.parse(storedPerfil) : null;
   });  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
@@ -51,9 +51,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   useEffect(() => {
     if (currentPerfil) {
-      localStorage.setItem("currentPerfil", JSON.stringify(currentPerfil));
+      sessionStorage.setItem("currentPerfil", JSON.stringify(currentPerfil));
     } else {
-      localStorage.removeItem("currentPerfil");
+      sessionStorage.removeItem("currentPerfil");
     }
   }, [currentPerfil]);
 
@@ -67,7 +67,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setCurrentUser(null);
     setCurrentPerfil(null);
     setIsLoggedIn(false);
-    localStorage.removeItem("currentPerfil");
+    sessionStorage.removeItem("currentPerfil");
   };
 
   return (

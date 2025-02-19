@@ -2,7 +2,6 @@ import "./InfoSerie.css";
 import { useParams } from "react-router";
 import { Banner } from "../../components/Banner/Banner";
 import "react-multi-carousel/lib/styles.css";
-import { Card } from "../../components/Card/Card";
 import { useEffect } from "react";
 import { fetchData } from "../../utils/fetchData";
 import { useQuery } from "react-query";
@@ -37,16 +36,6 @@ export default function InfoSerie() {
         setSearchTerm("");
     }, [seriesId]);
 
-    const renderCastMembers = (item: Serie) =>
-        item.credits.cast.map((castM) =>
-            castM.profile_path ? <Card key={castM.id} castMember={castM} /> : null
-        );
-
-    const renderCrewMembers = (item: Serie) =>
-        item.credits.crew.map((crewM) =>
-            crewM.profile_path ? <Card key={crewM.id} castMember={crewM} isCrew /> : null
-        );
-
     return (
         <div className="contenedorPrincipalItem">
             <Banner itemId={seriesId} isDetail type={"serie"} />
@@ -69,12 +58,7 @@ export default function InfoSerie() {
                         }
                     </div>
                     <Suspense fallback={<></>}>
-                        {item && item.credits.cast?.length > 0 && item?.credits?.cast[0]?.profile_path && (
-                            <CarouselCredits renderCredits={renderCastMembers(item)} title="CAST" />
-                        )}
-                        {item && item.credits.crew?.length > 0 && item?.credits?.crew[0]?.profile_path && (
-                            <CarouselCredits renderCredits={renderCrewMembers(item)} title="CREW" />
-                        )}
+                        <CarouselCredits item={item} title="CREW" />
                     </Suspense>
                     {item && width > 1260 && (
                         <Suspense fallback={<></>}>

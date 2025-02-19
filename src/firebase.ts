@@ -108,7 +108,7 @@ const logOut = () => {
   signOut(auth);
 };
 
-const createProfile = async (userId: string | undefined, profileName: string) => {
+const createProfile = async (userId: string | undefined, profileName: string,imagen:string,type:string) => {
   try {
     const profilesRef = collection(db, `users/${userId}/profiles`);
 
@@ -124,6 +124,8 @@ const createProfile = async (userId: string | undefined, profileName: string) =>
     await setDoc(profileRef, {
       profile_id: profileRef.id,
       name: profileName,
+      imagen: imagen,
+      type:type
     });
 
     return true;

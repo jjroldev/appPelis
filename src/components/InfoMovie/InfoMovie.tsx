@@ -3,7 +3,6 @@ import { useParams } from "react-router";
 import { Banner } from "../../components/Banner/Banner";
 import "react-multi-carousel/lib/styles.css";
 import { Movie } from "../../interface/Movie";
-import { Card } from "../../components/Card/Card";
 import { useEffect } from "react";
 import { fetchData } from "../../utils/fetchData";
 import { useQuery } from "react-query";
@@ -34,15 +33,6 @@ export default function InfoMovie() {
         setSearchTerm("");
     }, [movieId]);
 
-    const renderCastMembers = (item: Movie) =>
-        item.credits.cast.map((castM) =>
-            castM.profile_path ? <Card key={castM.id} castMember={castM} /> : null
-        );
-
-    const renderCrewMembers = (item: Movie) =>
-        item.credits.crew.map((crewM) =>
-            crewM.profile_path ? <Card key={crewM.id} castMember={crewM} isCrew /> : null
-        );
 
     return (
         <div className="contenedorPrincipalItem">
@@ -64,13 +54,9 @@ export default function InfoMovie() {
                                 isLarge={false}
                             />}
                     </div>
+
                     <Suspense fallback={<></>}>
-                        {item && item.credits.cast?.length > 0 && item?.credits?.cast[0]?.profile_path && (
-                            <CarouselCredits renderCredits={renderCastMembers(item)} title="CAST" />
-                        )}
-                        {item && item.credits.crew?.length > 0 && item?.credits?.crew[0]?.profile_path && (
-                            <CarouselCredits renderCredits={renderCrewMembers(item)} title="CREW" />
-                        )}
+                        <CarouselCredits item={item} title="CAST" />
                     </Suspense>
                 </div>
                 <div className="contenedor-imagenes">

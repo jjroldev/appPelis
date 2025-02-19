@@ -4,7 +4,7 @@ import { getSeriesImagesURL, getVideosEpisodeURL, URL_IMAGE_STILL } from '../../
 import { useQuery } from 'react-query';
 import { fetchData } from '../../utils/fetchData';
 import { useParams } from 'react-router';
-import { useEffect, useState, useCallback, lazy ,Suspense} from 'react';
+import { useEffect, useState, useCallback, lazy, Suspense ,useRef} from 'react';
 import { useWindowWidth } from '../../hooks/useWindowWidth';
 import { formatRuntime, getIdVideoEpisode } from '../../utils/helpers';
 import { Videos } from '../../interface/VideosEpisode';
@@ -21,6 +21,7 @@ export default function EpisodeC({ episode, serie_backdrop }: EpisodeProps) {
     const [open, setOpen] = useState<any>(false);
     const handleOpen = useCallback(() => setOpen(true), []);
     const handleClose = useCallback(() => setOpen(false), []);
+    const modalRef = useRef<HTMLDivElement | null>(null);
 
     const { data, isLoading } = useQuery(`images-${seriesId}`, () => fetchData(getSeriesImagesURL(seriesId)), {
         enabled: !!seriesId && episode.still_path == null,
@@ -37,10 +38,6 @@ export default function EpisodeC({ episode, serie_backdrop }: EpisodeProps) {
     const { data: videos } = useQuery<Videos>(`videos-${episode.id}`, () =>
         fetchData(getVideosEpisodeURL(seriesId, episode.season_number, episode.episode_number)))
 
-    useEffect(()=>{
-        console.log(videos)
-    },[episode.id,episode.season_number])
-
     if (isLoading) return null;
 
     const image_path = episode.still_path
@@ -50,11 +47,13 @@ export default function EpisodeC({ episode, serie_backdrop }: EpisodeProps) {
             : serie_backdrop;
 
     return (
-        <div className="flex flex-col containerEpisode" onClick={width<=580 ? handleOpen : undefined}>
+        <div className="flex flex-col containerEpisode" onClick={handleOpen}>
             {
                 open && (
                     <Suspense fallback={<></>}>
-                        <VideoModal videoKey={getIdVideoEpisode(videos)} open={open} onClose={handleClose} />
+                        <div ref={modalRef} onClick={(e)=>{e.stopPropagation()}}>
+                            <VideoModal videoKey={getIdVideoEpisode(videos)} open={open} onClose={handleClose} />
+                        </div>
                     </Suspense>
                 )
             }

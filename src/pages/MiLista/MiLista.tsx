@@ -37,7 +37,7 @@ export default function MiLista() {
         <BarMenu />
         <div className="favorites">
           <div className="contenedorFavoritas">
-            <h2 className="tituloFavoritas">Mi Lista</h2>
+            <h2 className="tituloFavoritas">{currentPerfil?.name.toUpperCase()}</h2>
             <div className={`favoritasContainerSpinner`}>
             </div>
           </div>
@@ -50,7 +50,7 @@ export default function MiLista() {
     <>
       <BarMenu />
       <div className="favorites">
-        <h2 className="tituloFavoritas">Mi Lista</h2>
+        <h2 className="tituloFavoritas">{currentPerfil?.name.toUpperCase()}</h2>
         <div className='contenedorFavoritas'>
           <div className={`favoritasContainer ${items?.length === 0 ? 'empty' : ''}`}>
             {!isLoading && (
