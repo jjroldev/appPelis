@@ -1,0 +1,1 @@
+import{j as r}from"./index-B1tU7ms9.js";import{p as s}from"./BarMenu-DfqKlPVS.js";function c({backdrop_path:a}){return r.jsx("div",{className:"wrapperBackdrop",children:r.jsx("img",{src:s+a,className:"backdropInfo"})})}export{c as default};
