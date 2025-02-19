@@ -55,18 +55,33 @@ export default function ManagePerfil() {
         <div className="containerPerfiles">
             {perfiles.length != 0 && (
                 <div className="PerfilesExistentesContainer">
-                    <h2 className="tituloPerfiles">Select Perfil</h2>
+                    <h2 className="tituloPerfiles">Who's watching?</h2>
                     <div className='perfiles'>
                         {perfiles.map((perfil) => (
-                            <div key={perfil.id} className="contenedorPerfil">
-                                <img className='perfil-img' src={`/appPelis/${perfil.imagen}`} alt="" onClick={() => handleNavigate(perfil)} />
+                            <div key={perfil.id} className="containerP" onClick={() => handleNavigate(perfil)}>
+                                <div className="contenedorPerfil">
+                                    <img className='perfil-img' src={`/appPelis/${perfil.imagen}`} alt="" />
+                                    <i className="fa-solid fa-x iconoX" onClick={(event) => handleEliminar(perfil.id, event)}></i>
+                                </div>
                                 <h4 className='nombrePerfil'>{perfil.name}</h4>
-                                <i className="fa-solid fa-x iconoX" onClick={(event) => handleEliminar(perfil.id, event)}></i>
                             </div>
                         ))}
+
+                        {
+                            perfiles.length < 5 && (
+                                <div className="containerP" onClick={() => navigate('/createProfile')}>
+                                    <div className="contenedorPerfil">
+                                        <div className="crearPerfilDiv bg-gray-800 w-full h-full">
+                                            <i className="fa-solid fa-plus"></i>
+                                        </div>
+                                    </div>
+                                    <h4 className='nombrePerfil'>Add new</h4>
+                                </div>
+                            )
+                        }
                     </div>
                     <div className="container-button-crearProfile">
-                        <button className='buttonPerfiles' onClick={() => navigate('/createProfile')}>Crear perfil</button>
+                        <button className='buttonPerfiles bg-gray-800' onClick={() => { }}>Edit profile</button>
                     </div>
                 </div>
             )

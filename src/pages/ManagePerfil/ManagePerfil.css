@@ -7,7 +7,7 @@
     gap: 10px;
     align-items: center;
     overflow-y: auto;
-    padding:60px 20px;
+    padding: 60px 20px;
 }
 
 .PerfilesExistentesContainer {
@@ -22,25 +22,27 @@
 
 .tituloPerfiles {
     color: #fff;
-    font-size: clamp(1.7rem, 5vw, 2.8rem);
-    font-weight: 700;
+    font-size: 2.7rem;
+    font-weight: 500;
     margin-bottom: 50px;
 }
 
 .nombrePerfil {
-    color: rgba(255, 255, 255, .9);
+    color: #999;
     font-size: 1.4rem;
+    font-weight: 600;
+    white-space: nowrap; 
+    transition:all .2s ease-in-out;
 }
 
 .buttonPerfiles {
     height: 60px;
     width: 170px;
     margin: 0 auto;
-    background-color: #2a2a2a;
     border-radius: 5px;
     color: #fff;
     margin-top: 50px;
-    transition: .3s ease-in-out;
+    transition: .2s ease-in-out;
     font-weight: 700;
     font-size: 1.3rem;
 }
@@ -63,10 +65,16 @@
 
 .contenedorPerfil:hover .iconoX {
     opacity: 1;
+    transition: all .2s ease-in-out;
+}
+
+.contenedorPerfil:hover .iconoX:hover {
+    transform: scale(2);
+    font-weight: bold;
 }
 
 .contenedorPerfil img {
-    object-fit: contain;
+    object-fit: cover;
     height: 100%;
     width: 100%;
     border-radius: 8px;
@@ -76,26 +84,47 @@ input::placeholder {
     color: rgb(202, 202, 202);
 }
 
-.contenedorPerfil {
-    width: 160px;
-    height: 160px;
+.crearPerfilDiv{
     position: relative;
+    border-radius: 50%;
+    transition: .2s ease-in-out;
+}
+
+.crearPerfilDiv i{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+.containerP{
     display: flex;
     flex-direction: column;
     gap: 10px;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+}
+
+.containerP:hover .nombrePerfil {
+    color: #fff;
+}
+.contenedorPerfil {
+    width: 140px;
+    height: 140px;
+    position: relative;
     color: #949494;
 }
 
 .contenedorPerfil img {
-    width: 100%;
-    transition: .01s ease-in-out;
-    cursor: pointer;
-}
-
-.contenedorPerfil img:hover {
     outline: 3px solid #fff;
+    border-radius: 50%;
+    width: 100%;
+    transition: .2s ease-in-out;
+    cursor: pointer;
 }
 
 .perfiles {
@@ -104,16 +133,17 @@ input::placeholder {
     align-items: center;
     justify-content: center;
     gap: 60px;
+    height: 100%;
     width: 100%;
 }
 
 
-.container-button-crearProfile{
+.container-button-crearProfile {
     display: flex;
     align-items: end;
     justify-content: center;
     width: 100%;
-    height: 100%;
+    height: 20%;
 }
 
 @keyframes fadeIn {
@@ -149,11 +179,11 @@ input::placeholder {
 .contenedorPerfil img {
     transition: transform 0.2s ease-in-out, outline 0.2s ease-in-out;
     opacity: 0;
-    animation: fadeInImages 0.5s ease-in-out forwards;
+    animation: fadeInImages 0.4s ease-in-out forwards;
 }
 
 /* Efecto de hover */
-.contenedorPerfil img:hover {
+.containerP:hover .contenedorPerfil img,.containerP:hover .crearPerfilDiv {
     transform: scale(1.05);
 }
 
@@ -183,39 +213,93 @@ input::placeholder {
     animation-delay: 0.5s;
 }
 
+.perfiles .contenedorPerfil:nth-child(6) {
+    animation-delay: 0.5s;
+}
+
 @media (max-width: 1200px) {
     .contenedorPerfil {
-        width: 150px;
+        width: 140px;
+        height: 140px;
     }
 
     .perfiles {
         gap: 50px;
-        width: 60vw;
     }
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1100px) {
     .contenedorPerfil {
-        width: 130px;
+        width: 120px;
+        height: 120px;
     }
 
     .nombrePerfil {
         font-size: 1.3rem;
     }
+
+    .tituloPerfiles {
+        font-size: 2.3rem;
+    }
+
+
+    .buttonPerfiles {
+        height: 50px;
+        width: 150px;
+        font-size: 1.2rem;
+    }
+
+    .PerfilesExistentesContainer {
+        gap: 0px;
+    }
+    
+
 }
 
-@media (max-width: 800px) {
+@media (max-width: 900px) {
     .contenedorPerfil {
         width: 100px;
+        height: 100px;
     }
 
     .perfiles {
         gap: 30px;
-        width: 70vw;
     }
 
     .nombrePerfil {
         font-size: 1.2rem;
+    }
+
+    .tituloPerfiles {
+        font-size: 2rem;
+    }
+
+
+    .buttonPerfiles {
+        height: 45px;
+        width: 145px;
+        font-size: 1.2rem;
+    }
+
+    .crearPerfilDiv i{
+        font-size: 2.1rem;
+    }
+
+}
+
+@media (max-width: 600px) {
+    .contenedorPerfil {
+        width: 85px;
+        height: 85px;
+    }
+
+    .tituloPerfiles {
+        font-size: 1.9rem;
+    }
+
+
+    .crearPerfilDiv i{
+        font-size: 1.7rem;
     }
 
 }
@@ -224,11 +308,14 @@ input::placeholder {
 
 
     .perfiles {
-        gap: 20px;
-        width: 90vw;
+        gap: 50px;
     }
 
     .nombrePerfil {
         font-size: 1rem;
+    }
+
+    .tituloPerfiles {
+        font-size: 1.8rem;
     }
 }

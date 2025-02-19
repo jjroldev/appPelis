@@ -112,6 +112,13 @@ const createProfile = async (userId: string | undefined, profileName: string,ima
   try {
     const profilesRef = collection(db, `users/${userId}/profiles`);
 
+    const profilesSnapshot = await getDocs(profilesRef);
+
+    if (profilesSnapshot.size >= 5) {
+      toast.error("Has alcanzado el límite de 5 perfiles.");
+      return false;
+    }
+
     const q = query(profilesRef, where("name", "==", profileName));
     const querySnapshot = await getDocs(q);
 

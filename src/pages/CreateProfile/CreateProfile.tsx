@@ -16,7 +16,7 @@ export default function CreateProfile() {
     const [checked, setChecked] = useState(false);
     const { currentUser } = useAuth()
     // const [imgPerfilSelect,setImgPerfilSelect]= useState('avatar1.png')
-    const queryClient= useQueryClient()
+    const queryClient = useQueryClient()
     const { data: perfiles = [] } = useQuery<Perfil[]>(
         `perfiles-${currentUser?.id}`,
         () => getPerfilesPorUsuario(currentUser?.id),
@@ -39,12 +39,13 @@ export default function CreateProfile() {
     }, []);
 
     const handleCrear = async () => {
+
         if (!nombrePerfil) {
             toast.error("Ingresa un nombre");
             return;
         }
         setIsCreating(true);
-    
+
         try {
             const nuevoPerfil = await createProfile(currentUser?.id, nombrePerfil,
                 checked ? "kid-1.png" : `adult-1.png`, checked ? "kid" : `adult`
@@ -52,10 +53,10 @@ export default function CreateProfile() {
             if (nuevoPerfil) {
                 toast.success("Perfil creado exitosamente");
                 setNombrePerfil("");
-    
+
                 const perfilesActualizados = await getPerfilesPorUsuario(currentUser?.id);
                 queryClient.setQueryData(`perfiles-${currentUser?.id}`, perfilesActualizados);
-    
+
                 navigate('/manageProfiles');
             }
         } catch (error) {
@@ -64,7 +65,7 @@ export default function CreateProfile() {
             setIsCreating(false);
         }
     };
-    
+
     return (
         <div className='creacionPerfil'>
             <div className="wrapper-title-CP">
@@ -96,7 +97,7 @@ export default function CreateProfile() {
                         className={`button-CP bSaveC ${!nombrePerfil ? "disabled-button-SC" : ""}`}
                         onClick={handleCrear}
                         disabled={isCreating || !nombrePerfil}
-                    >{isCreating ? "Creating..." : "Save changes"}
+                    >{perfiles.length < 5 ? isCreating ? "Creating..." : "Save changes" : "Save changes"}
                     </button>
                 </div>
             </form>
