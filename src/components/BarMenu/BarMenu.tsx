@@ -1,20 +1,15 @@
-import { lazy, Suspense } from "react"
+import { lazy } from "react"
 import { useWindowWidth } from "../../hooks/useWindowWidth"
 const NavBar = lazy(() => import('../NavBar/NavBar'))
 const MenuDesplegable = lazy(() => import("../MenuDesplegable/MenuDesplegable"))
 export default function BarMenu() {
     const width = useWindowWidth()
     return (
-        <Suspense fallback={<></>}>
-            {
-                width >= 900 ? (
-                    // <Suspense fallback={<></>}></Suspense>
-                    <NavBar/>
-                ) : (
+        width >= 900 ? (
+            <NavBar />
+        ) : (
 
-                    <MenuDesplegable />
-                )
-            }
-        </Suspense>
+            <MenuDesplegable />
+        )
     )
 }

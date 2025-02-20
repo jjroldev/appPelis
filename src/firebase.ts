@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import {getDoc, deleteDoc, getDocs, doc, setDoc,collection, getFirestore, query, where } from 'firebase/firestore';
+import { getDoc, deleteDoc, getDocs, doc, setDoc, collection, getFirestore, query, where } from 'firebase/firestore';
 import { Movie } from "./interface/Movie";
 import { Perfil } from "./interface/Perfil";
 import { User } from "./interface/User";
@@ -22,10 +22,10 @@ const db = getFirestore(app);
 
 const signUp = async (email: string, password: string) => {
   try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      return userCredential;
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    return userCredential;
   } catch (error) {
-      return null;
+    return null;
   }
 };
 
@@ -43,7 +43,7 @@ const getAllUsers = async (): Promise<User[]> => {
   }
 };
 
-const getPerfilesPorUsuario = async (userId: string|undefined): Promise<Perfil[]> => {
+const getPerfilesPorUsuario = async (userId: string | undefined): Promise<Perfil[]> => {
   try {
     const profilesRef = collection(db, `users/${userId}/profiles`);
     const querySnapshot = await getDocs(profilesRef);
@@ -61,7 +61,7 @@ interface ProfileWithFavorites extends Perfil {
   favorites: Movie[];
 }
 
-const getProfileWithFavorites = async (userId: string, profileId: string): Promise<ProfileWithFavorites | null> => {
+const getProfileWithFavorites = async (userId: string | undefined, profileId: string | undefined): Promise<ProfileWithFavorites | null> => {
   try {
     const profileRef = doc(db, `users/${userId}/profiles/${profileId}`);
     const profileSnap = await getDoc(profileRef);
@@ -108,7 +108,7 @@ const logOut = () => {
   signOut(auth);
 };
 
-const createProfile = async (userId: string | undefined, profileName: string,imagen:string,type:string) => {
+const createProfile = async (userId: string | undefined, profileName: string, imagen: string, type: string) => {
   try {
     const profilesRef = collection(db, `users/${userId}/profiles`);
 
@@ -132,7 +132,7 @@ const createProfile = async (userId: string | undefined, profileName: string,ima
       profile_id: profileRef.id,
       name: profileName,
       imagen: imagen,
-      type:type
+      type: type
     });
 
     return true;
@@ -141,7 +141,41 @@ const createProfile = async (userId: string | undefined, profileName: string,ima
   }
 };
 
-const deleteProfile = async (userId: string|undefined, profileId: string) => {
+
+const editProfileName = async (
+  userId: string | undefined,
+  profileId: string | undefined,
+  newName: string
+): Promise<boolean> => {
+  try {
+    if (!userId || !profileId || !newName) {
+      toast.error("Invalid data");
+      return false;
+    }
+
+    const profileRef = doc(db, `users/${userId}/profiles/${profileId}`);
+
+    const profilesRef = collection(db, `users/${userId}/profiles`);
+    const q = query(profilesRef, where("name", "==", newName));
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+      toast.error("A profile with this name already exists");
+      return false;
+    }
+
+    await setDoc(profileRef, { name: newName }, { merge: true });
+
+    toast.success("Profile name updated successfully");
+    return true;
+  } catch (error) {
+    toast.error("Error updating profile name");
+    return false;
+  }
+};
+
+
+const deleteProfile = async (userId: string | undefined, profileId: string | undefined) => {
   try {
     const favoritesRef = collection(db, `users/${userId}/profiles/${profileId}/favorites`);
     const favoritesSnapshot = await getDocs(favoritesRef);
@@ -160,7 +194,7 @@ const deleteProfile = async (userId: string|undefined, profileId: string) => {
 const addFavoriteToProfile = async (
   userId: string | undefined,
   profileId: string | undefined,
-  item: Movie | Serie| null | undefined
+  item: Movie | Serie | null | undefined
 ) => {
   try {
     if (!userId || !profileId || !item) return;
@@ -264,5 +298,5 @@ export {
   getAllUsers,
   getPerfilesPorUsuario,
   getProfileWithFavorites
-  ,deleteProfile
+  , deleteProfile,editProfileName
 };

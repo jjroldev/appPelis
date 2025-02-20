@@ -1,10 +1,9 @@
 import { useAuth } from '../../context/AuthContext';
-import { getPerfilesPorUsuario, deleteProfile } from '../../firebase';
+import { getPerfilesPorUsuario } from '../../firebase';
 import './ManagePerfil.css';
 import { Perfil } from '../../interface/Perfil';
-import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 import Spinner from '../../components/Spinner/Spinner';
 import { useMenu } from '../../context/MenuContext';
@@ -12,7 +11,7 @@ export default function ManagePerfil() {
     const { currentUser, setCurrentPerfil } = useAuth();
     const navigate = useNavigate();
     const { setOpenMenu } = useMenu()
-
+    const [edit, setEdit] = useState<boolean>(false)
     useEffect(() => {
         setOpenMenu(false)
     }, []);
@@ -27,65 +26,71 @@ export default function ManagePerfil() {
         }
     );
 
-    const handleEliminar = async (perfilId: string, event: React.MouseEvent) => {
-        event.stopPropagation()
-        const response = await deleteProfile(currentUser?.id, perfilId);
-        if (response) {
-            toast.success("Perfil eliminado exitosamente");
-            queryClient.invalidateQueries(`perfiles-${currentUser?.id}`);
-        } else {
-            toast.error("Error al eliminar el perfil");
-        }
-    };
+    useEffect(() => {
+        queryClient.invalidateQueries(`perfiles-${currentUser?.id}`);
+    }, []);
+
 
     const handleNavigate = (perfil: Perfil) => {
         setCurrentPerfil(perfil);
-        navigate('/home');
+        if (edit) {
+            navigate(`/editProfile/${perfil.id}`)
+        } else {
+            navigate('/home');
+        }
     };
+
+    const toggleEdit = () => {
+        setEdit(!edit);
+    };
+
 
     if (isLoading) {
         return <Spinner />
     }
 
-    if (!isLoading && perfiles.length === 0) {
-        navigate('/createProfile');
-    }
-
     return (
         <div className="containerPerfiles">
-            {perfiles.length != 0 && (
-                <div className="PerfilesExistentesContainer">
-                    <h2 className="tituloPerfiles">Who's watching?</h2>
-                    <div className='perfiles'>
-                        {perfiles.map((perfil) => (
-                            <div key={perfil.id} className="containerP" onClick={() => handleNavigate(perfil)}>
-                                <div className="contenedorPerfil">
-                                    <img className='perfil-img' src={`/appPelis/${perfil.imagen}`} alt="" />
-                                    <i className="fa-solid fa-x iconoX" onClick={(event) => handleEliminar(perfil.id, event)}></i>
-                                </div>
-                                <h4 className='nombrePerfil'>{perfil.name}</h4>
+            <div className="PerfilesExistentesContainer">
+                <h2 className="tituloPerfiles">Who's watching?</h2>
+                <div className='perfiles'>
+                    {perfiles.map((perfil) => (
+                        <div key={perfil.id} className="containerP" onClick={() => handleNavigate(perfil)}>
+                            <div className="contenedorPerfil">
+                                <img className='perfil-img' src={`/appPelis/${perfil.imagen}`} alt="" />
                             </div>
-                        ))}
-
-                        {
-                            perfiles.length < 5 && (
-                                <div className="containerP" onClick={() => navigate('/createProfile')}>
-                                    <div className="contenedorPerfil">
-                                        <div className="crearPerfilDiv bg-gray-800 w-full h-full">
-                                            <i className="fa-solid fa-plus"></i>
-                                        </div>
+                            <h4 className='nombrePerfil'>{perfil.name}</h4>
+                            {
+                                edit && (
+                                    <div className="containerEdit">
+                                        <i className="fa-solid fa-pencil"></i>
                                     </div>
-                                    <h4 className='nombrePerfil'>Add new</h4>
+                                )
+                            }
+                        </div>
+                    ))}
+
+                    {
+                        perfiles.length < 5 && (
+                            <div className="containerP" onClick={() => navigate('/createProfile')}>
+                                <div className="contenedorPerfil">
+                                    <div className="crearPerfilDiv bg-gray-800 w-full h-full">
+                                        <i className="fa-solid fa-plus"></i>
+                                    </div>
                                 </div>
-                            )
-                        }
-                    </div>
-                    <div className="container-button-crearProfile">
-                        <button className='buttonPerfiles bg-gray-800' onClick={() => { }}>Edit profile</button>
-                    </div>
+                                <h4 className='nombrePerfil'>Add new</h4>
+                            </div>
+                        )
+                    }
                 </div>
-            )
-            }
+                <div className="container-button-crearProfile p-2">
+                    <button className={`buttonPerfiles bg-gray-800 ${!perfiles.length?"disabled-button-MP":""}`} onClick={toggleEdit}
+                    disabled={!perfiles.length}
+                    >
+                        {edit ? "Done" : "Edit profile"}
+                    </button>
+                </div>
+            </div>
         </div>
     );
 }

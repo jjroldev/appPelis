@@ -88,9 +88,8 @@ export default function CreateProfile() {
                 </div>
 
                 <div className="wrapper-buttons-CP w-full h-full flex items-end justify-center gap-6.5">
-                    <button type='button' className={`button-CP ${!perfiles.length ? "disabled-button-SC" : ""}`}
+                    <button type='button' className={`button-CP`}
                         onClick={() => navigate('/manageProfiles')}
-                        disabled={!perfiles.length}
                     >Cancel</button>
 
                     <button type='submit'

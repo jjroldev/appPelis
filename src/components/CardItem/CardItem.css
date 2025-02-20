@@ -4,6 +4,7 @@
   border-radius: 3px;
   overflow: hidden;
   transition: transform 0.3s ease-in-out;
+  z-index: 20000000000000000000000000000000000000 !important;
 }
 
 .contenedor-poster:hover {

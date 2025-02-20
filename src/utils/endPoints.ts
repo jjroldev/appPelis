@@ -1,5 +1,5 @@
 export const URL_IMAGE_POSTER = "https://image.tmdb.org/t/p/w300";
-export const URL_IMAGE_BACKDROP = "https://image.tmdb.org/t/p/w780";
+export const URL_IMAGE_BACKDROP = "https://image.tmdb.org/t/p/w500";
 export const URL_IMAGE_BACKDROPC = "https://image.tmdb.org/t/p/w1280";
 export const URL_IMAGE_BANNER = "https://image.tmdb.org/t/p/original";
 export const URL_IMAGE_PROFILE = "https://image.tmdb.org/t/p/w185";

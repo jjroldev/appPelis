@@ -18,7 +18,7 @@ const InfoWindow = lazy(() => import('./pages/InfoWindow/InfoWindow'));
 const MoviesWindow = lazy(() => import('./pages/MoviesWindow/MoviesWindow'));
 const SeriesWindow = lazy(() => import('./pages/SeriesWindow/SeriesWindow'));
 const CreateProfile = lazy(() => import('./pages/CreateProfile/CreateProfile'));
-
+const EditProfile = lazy(()=>import('./pages/EditProfile/EditProfile'))
 export default function App() {
   const { isLoggedIn, loading, currentPerfil, currentUser } = useAuth();
 
@@ -35,7 +35,7 @@ export default function App() {
 
   return (
     <HashRouter>
-      <Toaster position="top-right" reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} />
       <Suspense fallback={<Spinner />}>
         <Routes>
           <Route
@@ -53,6 +53,7 @@ export default function App() {
           <Route element={<ProtectedRoute isAllowed={isLoggedIn} redirectTo="/login" />}>
             <Route path="manageProfiles" element={<ManagePerfil />} />
             <Route path="createProfile" element={<CreateProfile />} />
+            <Route path="editProfile/:profileId" element={<EditProfile />} />
             <Route element={<ProtectedRoute isAllowed={currentPerfil != null} redirectTo="/manageProfiles" />}>
               <Route path="home" element={<Home />} />
               <Route path="miLista" element={<MiLista />} />

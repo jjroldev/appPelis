@@ -15,7 +15,7 @@ import {
 const DetalleBanner = lazy(() => import('../DetalleBanner/DetalleBaner'))
 const VideoModal = lazy(() => import('../ModalVideo/ModalVideo'))
 import { Movie } from "../../interface/Movie";
-import {motion} from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Serie } from "../../interface/Serie";
 import { useFavorites } from "../../hooks/useFavorites";
 import { useWindowWidth } from "../../hooks/useWindowWidth";
@@ -115,24 +115,28 @@ export function Banner({ itemId, isDetail = false, type }: BannerProps) {
 
     if (!itemId || !item) {
         return (
-            <div className="header">
-                <BarMenu />
-                <div
-                    className={`fondoCardItem h-full w-full absolute inset-0 opacity-100 transition-opacity duration-400`}
-                ></div>
-            </div>
-        )
-    }
-    return (
-        <div className="header">
-            <motion.img
-                src={`${URL_IMAGE_BANNER}${item?.backdrop_path}`}
-                className="fondo"
+            <motion.div className="header"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
             >
-            </motion.img>
+                <BarMenu />
+                <div
+                    className={`fondoCardItem h-full w-full absolute inset-0 opacity-100 transition-opacity duration-400`}
+                ></div>
+            </motion.div>
+        )
+    }
+    return (
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="header">
+            <img
+                src={`${URL_IMAGE_BANNER}${item?.backdrop_path}`}
+                className="fondo"
+            />
             <BarMenu />
             <div className="cuerpoBanner">
                 <div className={`contenedorLogo ${isDetail ? "contenedorDetailN" : ""}`}>
@@ -153,6 +157,6 @@ export function Banner({ itemId, isDetail = false, type }: BannerProps) {
                     {renderOverviewOrTitle()}
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 }
