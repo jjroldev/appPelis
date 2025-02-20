@@ -7,6 +7,8 @@ import { getPerfilesPorUsuario } from '../../firebase';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+
 export default function PerfilDrop() {
     const navigate = useNavigate();
     const { currentUser, logout, currentPerfil, setCurrentPerfil } = useAuth();
@@ -38,11 +40,8 @@ export default function PerfilDrop() {
                 <img src={`/appPelis/${currentPerfil?.imagen}`} alt="Perfil" />
             </div>
 
-            <NavDropdown
-                title=""
-                id="navbarScrollingDropdown"
-                show={showDropdown}
-            >
+            <NavDropdown title="" id="navbarScrollingDropdown" show={showDropdown}>
+
                 {perfiles?.map((perfil) => (
                     perfil.id !== currentPerfil?.id && (
                         <NavDropdown.Item key={perfil.id} className="drop" onClick={() => handleNavigate(perfil)}>
@@ -53,19 +52,30 @@ export default function PerfilDrop() {
                         </NavDropdown.Item>
                     )
                 ))}
+                {showDropdown && (
+                    <AnimatePresence>
+                        <motion.div
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            transition={{ duration: 0.3 }}
+                            className="dropdown-motion"
+                        >
+                            <NavDropdown.Item className="drop" onClick={() => navigate('/manageProfiles')}>
+                                <span>Administrar perfiles</span>
+                            </NavDropdown.Item>
 
-                <NavDropdown.Item className="drop" onClick={() => navigate('/manageProfiles')}>
-                    <span>Administrar perfiles</span>
-                </NavDropdown.Item>
+                            <NavDropdown.Divider />
 
-                <NavDropdown.Divider />
-
-                <NavDropdown.Item className="drop" onClick={() => {
-                    setEmailExists(false);
-                    logout();
-                }}>
-                    <span className="logOut">Sign out</span>
-                </NavDropdown.Item>
+                            <NavDropdown.Item className="drop" onClick={() => {
+                                setEmailExists(false);
+                                logout();
+                            }}>
+                                <span className="logOut">Sign out</span>
+                            </NavDropdown.Item>
+                        </motion.div>
+                    </AnimatePresence>
+                )}
             </NavDropdown>
         </div>
     );

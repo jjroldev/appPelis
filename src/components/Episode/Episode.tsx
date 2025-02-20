@@ -6,7 +6,7 @@ import { fetchData } from '../../utils/fetchData';
 import { useParams } from 'react-router';
 import { useEffect, useState, useCallback, lazy, Suspense ,useRef} from 'react';
 import { useWindowWidth } from '../../hooks/useWindowWidth';
-import { formatRuntime, getIdVideoEpisode } from '../../utils/helpers';
+import { formatRuntime, getIdVideoEpisode } from '../../utils/helpers.tsx';
 import { Videos } from '../../interface/VideosEpisode';
 const VideoModal = lazy(() => import('../ModalVideo/ModalVideo'))
 interface EpisodeProps {

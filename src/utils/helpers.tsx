@@ -1,6 +1,7 @@
 import { Movie } from "../interface/Movie";
 import { Serie } from "../interface/Serie";
 import { Videos } from "../interface/VideosEpisode";
+import CardItem from "../components/CardItem/CardItem";
 export const getCertifiedReleaseItem= (item: Serie |Movie |undefined, country: string = "US") => {
     if (item && "content_ratings" in item) {
         const contentRCountry = item.content_ratings.results.filter((data) => (
@@ -46,4 +47,10 @@ export const formatRuntime = (minutes: number) => {
     const hours = Math.floor(minutes / 60);
     const mins = minutes % 60;
     return mins > 0 ? `${hours} h ${mins} min` : `${hours} h`;
+};
+
+export const renderItems = (items: Movie[] | Serie[], isLarge: boolean | undefined, width: number, handleAddFavorite: (item: Movie | Serie) => void) => {
+    return items.map((item:Movie|Serie) => (
+        <CardItem key={item.id} item={item} isLarge={width > 1000 ? isLarge : false} onAddFavorite={handleAddFavorite} />
+    ));
 };
