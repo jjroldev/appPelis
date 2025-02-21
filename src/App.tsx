@@ -18,8 +18,8 @@ const InfoWindow = lazy(() => import('./pages/InfoWindow/InfoWindow'));
 const MoviesWindow = lazy(() => import('./pages/MoviesWindow/MoviesWindow'));
 const SeriesWindow = lazy(() => import('./pages/SeriesWindow/SeriesWindow'));
 const CreateProfile = lazy(() => import('./pages/CreateProfile/CreateProfile'));
-const EditProfile = lazy(()=>import('./pages/EditProfile/EditProfile'))
-const Watch=lazy(()=>import('./pages/Watch/Watch'))
+const EditProfile = lazy(() => import('./pages/EditProfile/EditProfile'))
+const Watch = lazy(() => import('./pages/Watch/Watch'))
 export default function App() {
   const { isLoggedIn, loading, currentPerfil, currentUser } = useAuth();
 
@@ -41,11 +41,15 @@ export default function App() {
         <Routes>
           <Route
             path="/"
-            element={<Navigate to={isLoggedIn ?
-              (currentPerfil && perfiles.length
-                ? "/home"
-                : "/manageProfiles") : "/login"}
-              replace />}
+            element={
+              isLoggedIn
+                ? currentPerfil && perfiles.length > 0
+                  ? <Navigate to="/home" replace />
+                  : perfiles.length === 0
+                    ? <Spinner />
+                    : <Navigate to="/manageProfiles" replace />
+                : <Navigate to="/login" replace />
+            }
           />
 
           <Route path="login" element={<PageLogin />} />

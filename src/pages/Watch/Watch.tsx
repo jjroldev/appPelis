@@ -5,7 +5,7 @@ export default function Watch() {
     const { videoId } = useParams();
     const navigate = useNavigate()
     return (
-        <div className="watch-container h-screen bg-black">
+        <div className="watch-container bg-black">
             <iframe
                 className="watch-iframe h-full w-full"
                 src={`https://www.youtube.com/embed/${videoId}?autoplay=1&controls=1&playsinline=0`}
