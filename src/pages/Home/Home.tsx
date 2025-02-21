@@ -61,7 +61,7 @@ export default function Home() {
         const observer = new IntersectionObserver(
             (entries) => {
                 if (entries[0].isIntersecting) {
-                    setVisibleCarousels((prev) => Math.min(prev + 7, allCarousels.length));
+                    setVisibleCarousels((prev) => Math.min(prev + 8, allCarousels.length));
                 }
             },
             { rootMargin: "100px" }

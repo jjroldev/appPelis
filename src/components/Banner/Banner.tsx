@@ -125,6 +125,9 @@ export function Banner({ itemId, isDetail = false, type }: BannerProps) {
                 transition={{ duration: 0.2, ease: "easeOut" }}
             >
                 <BarMenu />
+                <div
+                    className={`fondoCardItem h-full w-full absolute inset-0 opacity-100 transition-opacity duration-400`}
+                ></div>
             </motion.div>
         );
     }
