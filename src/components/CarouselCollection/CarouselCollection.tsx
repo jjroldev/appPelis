@@ -58,7 +58,7 @@ const CarouselCollection = React.memo(({ title, isLarge = false, item }: Carouse
         showDots={false}
         responsive={responsivew}
         ssr={false}
-        infinite
+        infinite={false}
         autoPlay={false}
         keyBoardControl={true}
         partialVisible={true}

@@ -13,7 +13,6 @@ const VideoModal: React.FC<VideoModalProps> = ({ open, onClose, videoKey }) => {
         left: "50%",
         transform: "translate(-50%, -50%)",
         backgroundColor: "transparent",
-        overflow: "hidden",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -33,7 +32,6 @@ const VideoModal: React.FC<VideoModalProps> = ({ open, onClose, videoKey }) => {
                             width: "80%",
                             aspectRatio: "16/9",
                             backgroundColor: "transparent",
-                            overflow: "hidden",
                             boxSizing: "border-box"
                         }}
                     >
