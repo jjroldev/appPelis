@@ -39,7 +39,7 @@ export default function SeriesWindow() {
         { URL: fetchURLS.warPoliticsSeries, title: "Series of war", isLarge: true },
     ], [fetchURLS]);
 
-    const [visibleCarousels, setVisibleCarousels] = useState(1);
+    const [visibleCarousels, setVisibleCarousels] = useState(5);
     const loadMoreRef = useRef(null);
 
     useEffect(() => {

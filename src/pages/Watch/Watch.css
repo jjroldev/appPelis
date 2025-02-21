@@ -1,0 +1,13 @@
+.watch-container{
+    position: relative;
+}
+
+.flecha{
+    position: absolute;
+    font-size: 2rem;
+    top: 100px;
+    left: 40px;
+    color: #fff;
+    cursor: pointer;
+    font-weight: bold;
+}

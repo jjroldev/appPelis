@@ -44,7 +44,7 @@ export default function MoviesWindow() {
     ], [fetchURLS]);
 
 
-    const [visibleCarousels, setVisibleCarousels] = useState<number>(1);
+    const [visibleCarousels, setVisibleCarousels] = useState<number>(5);
     const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {

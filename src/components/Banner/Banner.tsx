@@ -19,9 +19,9 @@ import { useFavorites } from "../../hooks/useFavorites";
 import { useWindowWidth } from "../../hooks/useWindowWidth";
 import { useLanguage } from "../../context/LanguageContext";
 import BarMenu from "../BarMenu/BarMenu";
+import toast from "react-hot-toast";
 
 const DetalleBanner = lazy(() => import("../DetalleBanner/DetalleBaner"));
-const VideoModal = lazy(() => import("../ModalVideo/ModalVideo"));
 
 interface BannerProps {
     itemId: string | null | undefined;
@@ -34,7 +34,6 @@ export function Banner({ itemId, isDetail = false, type }: BannerProps) {
     const { handleAddFavorite } = useFavorites();
     const { language } = useLanguage();
     const width = useWindowWidth();
-    const [open, setOpen] = useState(false);
     const [logoLoaded, setLogoLoaded] = useState(false);
 
 
@@ -46,8 +45,6 @@ export function Banner({ itemId, isDetail = false, type }: BannerProps) {
                 : fetchData(getSeriesDetailsURL(itemId)),
         { enabled: !!itemId }
     );
-    console.log(item)
-
 
     const { data: dataImages } = useQuery<any>(
         `logo-item-${type}-${itemId}`,
@@ -90,18 +87,21 @@ export function Banner({ itemId, isDetail = false, type }: BannerProps) {
         ) : null;
 
 
+    const handleNavigateVideo = () => {
+        if (getVideoItem(item)) {
+            navigate(`/watch/${getVideoItem(item)}`)
+        } else {
+            toast.error("No existe un trailer para la serie/pelicula seleccionada")
+        }
+    }
+
+
     function Botones() {
         return (
             <div className="botones">
-                <button className="play" onClick={() => setOpen(true)}>
+                <button className="play" onClick={ handleNavigateVideo}>
                     <i className="fa-solid fa-play"></i> Play
                 </button>
-
-                {open && (
-                    <Suspense fallback={<></>}>
-                        <VideoModal videoKey={getVideoItem(item)} open={open} onClose={() => setOpen(false)} />
-                    </Suspense>
-                )}
 
                 {location.hash !== "#/info" && (
                     <button onClick={pasarItem} className="boton-info-banner">

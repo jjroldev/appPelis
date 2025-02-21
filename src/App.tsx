@@ -19,6 +19,7 @@ const MoviesWindow = lazy(() => import('./pages/MoviesWindow/MoviesWindow'));
 const SeriesWindow = lazy(() => import('./pages/SeriesWindow/SeriesWindow'));
 const CreateProfile = lazy(() => import('./pages/CreateProfile/CreateProfile'));
 const EditProfile = lazy(()=>import('./pages/EditProfile/EditProfile'))
+const Watch=lazy(()=>import('./pages/Watch/Watch'))
 export default function App() {
   const { isLoggedIn, loading, currentPerfil, currentUser } = useAuth();
 
@@ -62,6 +63,7 @@ export default function App() {
               <Route path="series" element={<SeriesWindow />} />
               <Route path="movie/:movieId" element={<InfoWindow type="movie" />} />
               <Route path="serie/:seriesId" element={<InfoWindow type="serie" />} />
+              <Route path="watch/:videoId" element={<Watch />} />
             </Route>
           </Route>
 

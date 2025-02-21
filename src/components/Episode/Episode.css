@@ -107,6 +107,14 @@
 .containerPlay i {
     font-size: 1.8rem;
 }
+
+.play-icon{
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 1.8rem;
+    color: #fff;
+}
 @media (max-width: 1370px) {
     .wrapper-img-episode {
         height: 170px;

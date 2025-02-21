@@ -1,7 +1,7 @@
 import { memo, lazy } from "react";
 import { Movie } from "../../interface/Movie";
 import { useWindowWidth } from "../../hooks/useWindowWidth";
-import { getCertifiedReleaseItem } from "../../utils/helpers.tsx";
+import { formatRuntime, getCertifiedReleaseItem } from "../../utils/helpers.tsx";
 const CarouselBoostrap = lazy(() => import('../CarouselBoostrap/CarouselBoostrap'))
 const DetalleBannerMovie = memo(({ movie }: { movie: Movie }) => {
   const width = useWindowWidth();
@@ -19,7 +19,7 @@ const DetalleBannerMovie = memo(({ movie }: { movie: Movie }) => {
         <div className="bannerDetails flex flex-row">
           <span>IMDb {movie?.vote_average.toFixed(1)}</span>
           <span>{movie?.release_date.split("-")[0]}</span>
-          <span>{`${Math.floor(movie.runtime / 60)}h ${movie.runtime % 60}min`}</span>
+          <span>{formatRuntime(movie.runtime)}</span>
           {
             getCertifiedReleaseItem(movie) && width > 600 && (
               <span className="edadParaPublico">{getCertifiedReleaseItem(movie)}+</span>

@@ -3,12 +3,12 @@ import { Episode } from '../../interface/Serie';
 import { getSeriesImagesURL, getVideosEpisodeURL, URL_IMAGE_STILL } from '../../utils/endPoints';
 import { useQuery } from 'react-query';
 import { fetchData } from '../../utils/fetchData';
-import { useParams } from 'react-router';
-import { useEffect, useState, useCallback, lazy, Suspense ,useRef} from 'react';
+import { useNavigate, useParams } from 'react-router';
+import { useEffect, useState } from 'react';
 import { useWindowWidth } from '../../hooks/useWindowWidth';
 import { formatRuntime, getIdVideoEpisode } from '../../utils/helpers.tsx';
 import { Videos } from '../../interface/VideosEpisode';
-const VideoModal = lazy(() => import('../ModalVideo/ModalVideo'))
+import toast from 'react-hot-toast';
 interface EpisodeProps {
     episode: Episode,
     serie_backdrop: string
@@ -18,10 +18,7 @@ export default function EpisodeC({ episode, serie_backdrop }: EpisodeProps) {
     const { seriesId } = useParams();
     const [randomImageIndex, setRandomImageIndex] = useState<number | null>(null);
     const width = useWindowWidth()
-    const [open, setOpen] = useState<any>(false);
-    const handleOpen = useCallback(() => setOpen(true), []);
-    const handleClose = useCallback(() => setOpen(false), []);
-    const modalRef = useRef<HTMLDivElement | null>(null);
+    const navigate = useNavigate()
 
     const { data, isLoading } = useQuery(`images-${seriesId}`, () => fetchData(getSeriesImagesURL(seriesId)), {
         enabled: !!seriesId && episode.still_path == null,
@@ -46,22 +43,26 @@ export default function EpisodeC({ episode, serie_backdrop }: EpisodeProps) {
             ? data?.backdrops[randomImageIndex]?.file_path
             : serie_backdrop;
 
+    const handleOpen = () => {
+        if (getIdVideoEpisode(videos)) {
+            navigate(`/watch/${getIdVideoEpisode(videos)}`)
+        } else {
+            toast.error("No existe un trailer para este episodio")
+        }
+    }
+
     return (
         <div className="flex flex-col containerEpisode" onClick={handleOpen}>
-            {
-                open && (
-                    <Suspense fallback={<></>}>
-                        <div ref={modalRef} onClick={(e)=>{e.stopPropagation()}}>
-                            <VideoModal videoKey={getIdVideoEpisode(videos)} open={open} onClose={handleClose} />
-                        </div>
-                    </Suspense>
-                )
-            }
             <div className='container-episode'>
-                <div className='wrapper-img-episode'>
+                <div className='wrapper-img-episode relative'>
                     {image_path && (
                         <img src={URL_IMAGE_STILL + image_path || serie_backdrop} alt={episode.name} />
                     )}
+                    {
+                        width <= 580 && (
+                            <i className="fa-solid fa-play play-icon absolute"></i>
+                        )
+                    }
                 </div>
                 <div className="info-episode">
                     <h4>{episode.episode_number}.  {episode.name}</h4>
@@ -87,7 +88,7 @@ export default function EpisodeC({ episode, serie_backdrop }: EpisodeProps) {
                 {
                     width > 580 && (
                         <div className="containerPlay">
-                            <i className="fa-solid fa-play" onClick={handleOpen}></i>
+                            <i className="fa-solid fa-play"></i>
                         </div>
                     )
                 }
