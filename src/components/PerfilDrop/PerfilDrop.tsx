@@ -24,8 +24,9 @@ export default function PerfilDrop() {
         }
     );
 
-    const handleNavigate = (perfil: Perfil | null) => {
+    const handleSetCurrentPerfil = (perfil: Perfil | null) => {
         setCurrentPerfil(perfil);
+        window.location.reload()
         setShowDropdown(false);
     };
 
@@ -44,7 +45,7 @@ export default function PerfilDrop() {
 
                 {perfiles?.map((perfil) => (
                     perfil.id !== currentPerfil?.id && (
-                        <NavDropdown.Item key={perfil.id} className="drop" onClick={() => handleNavigate(perfil)}>
+                        <NavDropdown.Item key={perfil.id} className="drop" onClick={() => handleSetCurrentPerfil(perfil)}>
                             <div className="containerImagePerfil">
                                 <img src={`/appPelis/${perfil.imagen}`} alt="Perfil" />
                             </div>
