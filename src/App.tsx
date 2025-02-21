@@ -32,7 +32,7 @@ export default function App() {
     }
   );
 
-  if (loading) return <Spinner />;
+  if (loading) return null;
 
   return (
     <HashRouter>
@@ -41,15 +41,11 @@ export default function App() {
         <Routes>
           <Route
             path="/"
-            element={
-              isLoggedIn
-                ? currentPerfil && perfiles.length > 0
-                  ? <Navigate to="/home" replace />
-                  : perfiles.length === 0
-                    ? <Spinner />
-                    : <Navigate to="/manageProfiles" replace />
-                : <Navigate to="/login" replace />
-            }
+            element={<Navigate to={isLoggedIn ?
+              (currentPerfil && perfiles.length
+                ? "/home"
+                : "/manageProfiles") : "/login"}
+              replace />}
           />
 
           <Route path="login" element={<PageLogin />} />
