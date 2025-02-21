@@ -103,6 +103,23 @@
     font-size: 1.1rem;
 }
 
+.containerPlayMobile{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 40px;
+    height: 40px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    background-color: rgba(0,0,0,.6);
+}
+.containerPlayMobile i{
+    font-size: 1rem;
+}
 
 .containerPlay i {
     font-size: 1.8rem;

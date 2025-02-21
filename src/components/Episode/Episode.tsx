@@ -60,7 +60,9 @@ export default function EpisodeC({ episode, serie_backdrop }: EpisodeProps) {
                     )}
                     {
                         width <= 580 && (
-                            <i className="fa-solid fa-play play-icon absolute"></i>
+                            <div className='containerPlayMobile absolute'>
+                                <i className="fa-solid fa-play play-icon absolute" />
+                            </div>
                         )
                     }
                 </div>

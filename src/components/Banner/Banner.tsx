@@ -3,7 +3,9 @@ import { useNavigate } from "react-router";
 import { useQuery } from "react-query";
 import "./Banner.css";
 import { fetchData } from "../../utils/fetchData";
-import { getCertifiedReleaseItem, getVideoItem } from "../../utils/helpers.tsx";
+import { getVideoItem } from "../../utils/helpers.tsx";
+import { Typography, Skeleton } from "@mui/material";
+import { getCertifiedReleaseItem } from "../../utils/helpers.tsx";
 import {
     URL_IMAGE_lOGO,
     URL_IMAGE_BANNER,
@@ -64,7 +66,7 @@ export function Banner({ itemId, isDetail = false, type }: BannerProps) {
         navigate(`/${type}/${item?.id}`);
     }, [navigate, item?.id]);
 
-    const renderOverviewOrTitle = () =>
+    const renderOverview = () =>
         item?.overview ? (
             <p className="overview">
                 {width > 600 ? item.overview.slice(0, 350) : item.overview.slice(0, 150)}...
@@ -72,8 +74,8 @@ export function Banner({ itemId, isDetail = false, type }: BannerProps) {
         ) : null;
 
 
-    const Logo = () =>
-        logoPath ? (
+    const Logo = ({ item }: { item: Serie | Movie | undefined }) =>
+        logoPath && !isLoading ? (
             <img
                 className="logo-banner"
                 src={`${URL_IMAGE_lOGO}${logoPath}`}
@@ -84,7 +86,7 @@ export function Banner({ itemId, isDetail = false, type }: BannerProps) {
                     transition: "opacity 0.6s ease-in-out",
                 }}
             />
-        ) : null;
+        ) : <h2 className="titleItemNoLogo">{item ? ("title" in item ? item.title : item.name) : "No Title"}</h2>
 
 
     const handleNavigateVideo = () => {
@@ -99,7 +101,7 @@ export function Banner({ itemId, isDetail = false, type }: BannerProps) {
     function Botones() {
         return (
             <div className="botones">
-                <button className="play" onClick={ handleNavigateVideo}>
+                <button className="play" onClick={handleNavigateVideo}>
                     <i className="fa-solid fa-play"></i> Play
                 </button>
 
@@ -141,31 +143,47 @@ export function Banner({ itemId, isDetail = false, type }: BannerProps) {
         >
             <img
                 src={`${URL_IMAGE_BANNER}${item?.backdrop_path}`}
-                className="fondo"
+                className={`fondo ${width <= 650 ? "fondoMobile" : ""}`}
                 onLoad={(e) => (e.currentTarget.style.opacity = "1")}
                 style={{ opacity: 0, transition: "opacity 0.2s ease-in-out" }}
             />
 
+            {
+                getCertifiedReleaseItem(item) && (
+                    <span className="edadParaPublicoBanner absolute top-30 right-0 z-10">{getCertifiedReleaseItem(item)}+</span>
+                )
+            }
+
             <BarMenu />
             <div className="cuerpoBanner">
                 <div className={`contenedorLogo ${isDetail ? "contenedorDetailN" : ""}`}>
-                    <div className="flex flex-row gap-3 items-center">
-                        <Logo />
-                        {getCertifiedReleaseItem(item) && width <= 600 && (
-                            <span className="edadParaPublico inline-block max-h-fit">
-                                {getCertifiedReleaseItem(item)}+
-                            </span>
-                        )}
+                    <div className="flex flex-row items-center">
+                        <Logo item={item} />
                     </div>
 
-                    {isDetail && (
+                    {isDetail && width >= 650 && (
                         <Suspense fallback={<></>}>
                             <DetalleBanner item={item} />
                         </Suspense>
                     )}
 
                     <Botones />
-                    {renderOverviewOrTitle()}
+                    {renderOverview()}
+
+                    {isDetail && width < 650 && (
+                        <Suspense fallback={
+                            <>
+                                <Typography component="div" variant={"body1"} maxWidth={"40%"}>
+                                    <Skeleton sx={{ bgcolor: 'grey.600' }} />
+                                </Typography>
+                                <Typography component="div" variant={"caption"} maxWidth={"40%"}>
+                                    <Skeleton sx={{ bgcolor: 'grey.600' }} />
+                                </Typography>
+                            </>
+                        }>
+                            <DetalleBanner item={item} />
+                        </Suspense>
+                    )}
                 </div>
             </div>
         </motion.div>

@@ -33,7 +33,7 @@ const CarouselURL = React.memo(({ URL, title, isLarge }: CarouselURLProps) => {
   );
 
   const validItems = useMemo(
-    () => items?.results?.filter((item: Movie | Serie) => item.backdrop_path && item.poster_path) || [],
+    () => items?.results?.filter((item: Movie | Serie) => item.backdrop_path && item.poster_path && item.overview)  || [],
     [items]
   );
 

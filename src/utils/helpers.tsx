@@ -5,7 +5,7 @@ import CardItem from "../components/CardItem/CardItem";
 export const getCertifiedReleaseItem= (item: Serie |Movie |undefined, country: string = "US") => {
     if (item && "content_ratings" in item) {
         const contentRCountry = item.content_ratings.results.filter((data) => (
-            data.iso_3166_1 === country || "US" || "ES" || "AR" || "MX"
+            data.iso_3166_1 === country || "ES" || "AR" || "MX"
         ))
         const rating = contentRCountry.filter((data) => (
             data?.rating != ""

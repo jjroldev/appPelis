@@ -71,6 +71,9 @@ export default function SeasonC({ series, numeroTemporadas }: SeasonProps) {
                         <EpisodeSkeleton />
                         <EpisodeSkeleton />
                         <EpisodeSkeleton />
+                        <EpisodeSkeleton />
+                        <EpisodeSkeleton />
+                        <EpisodeSkeleton />
                     </>
                 ) : season?.episodes?.length === 0 ? (
                     <motion.div

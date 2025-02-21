@@ -16,6 +16,7 @@ import { lazy, Suspense } from "react";
 const CarouselCollection = lazy(() => import('../CarouselCollection/CarouselCollection'))
 const SeasonC = lazy(() => import("../Season/Season"))
 const CarouselCredits = lazy(() => import('../CarouselCredits/CarouselCredits'))
+const CarouselBoostrap = lazy(() => import('../CarouselBoostrap/CarouselBoostrap'))
 export default function InfoSerie() {
     const { seriesId } = useParams()
     const { language } = useLanguage()
@@ -71,6 +72,14 @@ export default function InfoSerie() {
                         <SeasonC series={item} numeroTemporadas={item?.number_of_seasons} />
                     </Suspense>
                 )}
+
+                <div className="contenedor-imagenes">
+                    <div className="flex flex-col backdropss">
+                        <Suspense fallback={<></>}>
+                            <CarouselBoostrap item={item} />
+                        </Suspense>
+                    </div>
+                </div>
 
             </div>
         </div>
