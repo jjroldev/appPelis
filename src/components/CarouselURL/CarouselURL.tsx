@@ -56,7 +56,8 @@ const CarouselURL = React.memo(({ URL, title, isLarge }: CarouselURLProps) => {
         keyBoardControl={true}
         partialVisible={true}
         className={`${width < 600 ? "carousel-cell" : ""}`}
-        slidesToSlide={8}
+        slidesToSlide={1}
+        focusOnSelect={false}
       >
         {renderItems(validItems, isLarge, width, handleAddFavorite)}
       </Carousel>

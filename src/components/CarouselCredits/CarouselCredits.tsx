@@ -27,6 +27,8 @@ const CarouselCredits = ({ item, title }: { item: Movie | Serie | undefined; tit
                 className={`carousel-cast ${width < 630 ? "cast-visible" : ""}`}
                 partialVisible={true}
                 minimumTouchDrag={0}
+                slidesToSlide={1}
+                focusOnSelect={false}
             >
                 {castMembers.map(castM => <Card key={castM.id} castMember={castM} />)}
                 {crewMembers.map(crewM => <Card key={crewM.id} castMember={crewM} isCrew />)}

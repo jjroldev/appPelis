@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { useQuery } from "react-query";
 import "./Banner.css";
 import { fetchData } from "../../utils/fetchData";
-import { getVideoItem } from "../../utils/helpers.tsx";
+import { getLogoPath, getVideoItem } from "../../utils/helpers.tsx";
 import { Typography, Skeleton } from "@mui/material";
 import { getCertifiedReleaseItem } from "../../utils/helpers.tsx";
 import {
@@ -48,7 +48,7 @@ export function Banner({ itemId, isDetail = false, type }: BannerProps) {
         { enabled: !!itemId }
     );
 
-    const { data: dataImages } = useQuery<any>(
+    const { data: dataImages,isLoading:isLoading1 } = useQuery<any>(
         `logo-item-${type}-${itemId}`,
         () =>
             type === "movie"
@@ -57,20 +57,7 @@ export function Banner({ itemId, isDetail = false, type }: BannerProps) {
         { enabled: !!itemId, staleTime: 1000 * 60 * 5 }
     );
 
-    const logoPath =
-    item?.images?.logos?.find((l) => 
-        l.iso_639_1 === language || 
-        l.iso_639_1 === "en" || 
-        l.iso_639_1 === "es"
-    )?.file_path ||
-    dataImages?.logos?.find((l:any) => 
-        l.iso_639_1 === language || 
-        l.iso_639_1 === "en" || 
-        l.iso_639_1 === "es"
-    )?.file_path ||
-    dataImages?.logos[0]
-    ||
-    null;
+    const logoPath =getLogoPath(item,dataImages,language);
 
     const pasarItem = useCallback(() => {
         navigate(`/${type}/${item?.id}`);
@@ -128,7 +115,7 @@ export function Banner({ itemId, isDetail = false, type }: BannerProps) {
         );
     }
 
-    if (!itemId || !item || isLoading) {
+    if (!itemId || !item || isLoading ||isLoading1) {
         return (
             <motion.div
                 className="header"

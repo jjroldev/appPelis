@@ -30,8 +30,6 @@ const CarouselCollection = React.memo(({ title, isLarge = false, item }: Carouse
     { refetchOnWindowFocus: false, enabled: !!item?.belongs_to_collection?.id }
   );
 
-  console.log(collection)
-
   const responsivew = useMemo(() => responsive(width > 1000 ? isLarge : false), [width, isLarge]);
 
   const renderItems = useCallback(
@@ -66,7 +64,8 @@ const CarouselCollection = React.memo(({ title, isLarge = false, item }: Carouse
         keyBoardControl={true}
         partialVisible={true}
         className={`${width < 600 ? "carousel-cell" : ""}`}
-        slidesToSlide={8}
+        slidesToSlide={1}
+        focusOnSelect={false}
       >
         {renderItems(collection?.parts)}
       </Carousel>

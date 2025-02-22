@@ -27,6 +27,30 @@ export const getCertifiedReleaseItem= (item: Serie |Movie |undefined, country: s
     return null
 };
 
+
+export function getLogoPath(item:Movie|Serie|undefined,dataImages:any,language:string){
+    const logoPath =
+    item?.images?.logos?.find((l) => 
+        l.iso_639_1 === language || 
+        l.iso_639_1 === "en" || 
+        l.iso_639_1 === "es"
+    )?.file_path ||
+    dataImages?.logos?.find((l:any) => 
+        l.iso_639_1 === language || 
+        l.iso_639_1 === "en" || 
+        l.iso_639_1 === "es"
+    )?.file_path ||
+    dataImages?.logos[0]?.file_path
+    ||
+    null;
+
+    return logoPath
+}
+
+export function isMovie(item:Movie|Serie|undefined){
+    return item && "title" in item
+}
+
 export function getIdVideoEpisode(videos:Videos | undefined){
     return videos?.results?.filter((data)=>(
         data?.key!=null

@@ -70,6 +70,7 @@ const CardItem = React.memo(
               initial={{ opacity: 0 }}
               animate={imageLoaded ? { opacity: 1 } : {}}
               transition={{ duration: 0.3, ease: "easeOut" }}
+              className="main-image"
             />
           )}
 

@@ -20,7 +20,7 @@ export default function InfoMovie() {
     const { language } = useLanguage()
     const { data: item } = useQuery<Movie>(
         `movieInfo-${movieId}-${language}`,
-        () => fetchData(getURLMovieDetails(movieId,language).movieDetails),
+        () => fetchData(getURLMovieDetails(movieId, language).movieDetails),
         { refetchOnWindowFocus: false, enabled: !!movieId }
     );
 
@@ -61,9 +61,11 @@ export default function InfoMovie() {
                 </div>
                 <div className="contenedor-imagenes">
                     <div className="flex flex-col backdropss">
-                        <Suspense fallback={<></>}>
-                            <CarouselBoostrap item={item} />
-                        </Suspense>
+                        {item && (
+                            <Suspense fallback={<></>}>
+                                <CarouselBoostrap item={item} />
+                            </Suspense>
+                        )}
                     </div>
                 </div>
             </div>

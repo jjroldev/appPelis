@@ -37,7 +37,7 @@ export default function ItemsActor() {
             <BarMenu />
             <div className="contenedorItemsPosters items-center justify-center">
                 {validResults.map((movie: Movie | Serie) => (
-                    <CardItem item={movie} isLarge={false} onAddFavorite={handleAddFavorite} />
+                    <CardItem key={movie.id} item={movie} isLarge={false} onAddFavorite={handleAddFavorite} />
                 ))}
                 {
                     !isLoading && !validResults.length && (

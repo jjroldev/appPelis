@@ -63,7 +63,8 @@ export default function CarouselFavorites({ isLarge, title }: CarouselFProps) {
         partialVisible
         keyBoardControl={true}
         className={`${width < 600 ? "carousel-cell" : ""}`}
-        slidesToSlide={8}
+        slidesToSlide={1}
+        focusOnSelect={false}
       >
         {renderItems(items)}
       </Carousel>

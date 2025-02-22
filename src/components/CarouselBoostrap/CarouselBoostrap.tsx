@@ -8,12 +8,12 @@ import "./CarouselBoostrap.css";
 import { Serie } from "../../interface/Serie";
 import { motion } from 'framer-motion'
 import { useLanguage } from "../../context/LanguageContext";
+import { isMovie } from "../../utils/helpers";
 const Backdrop = lazy(() => import("../BackDrop/Backdrop"));
 
-const CarouselBoostrap = memo(({ item }: { item: Movie | Serie | null | undefined }) => {
+const CarouselBoostrap = memo(({ item }: { item: Movie | Serie | undefined }) => {
   const {language}=useLanguage()
-  const isMovie = item && "title" in item;
-  const fetchURL = isMovie
+  const fetchURL = isMovie(item)
     ? getURLMovieDetails(item?.id,language).movieDetails
     : getSeriesDetailsURL(item?.id,language);
 
@@ -22,8 +22,6 @@ const CarouselBoostrap = memo(({ item }: { item: Movie | Serie | null | undefine
     () => fetchData(fetchURL),
     { refetchOnWindowFocus: false }
   );
-
-  console.log(items)
 
   const images = useMemo(() => {
     if (!items || !("images" in items)) return [];

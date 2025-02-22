@@ -54,7 +54,8 @@ const CarouselBase = React.memo(({ title, isLarge }: CarouselBaseProps) => {
         keyBoardControl={true}
         partialVisible={true}
         className={`${width < 600 ? "carousel-cell" : ""}`}
-        slidesToSlide={8}
+        slidesToSlide={1}
+        focusOnSelect={false}
       >
         {renderItems(validItemsTR, isLarge, width, handleAddFavorite)}
       </Carousel>
