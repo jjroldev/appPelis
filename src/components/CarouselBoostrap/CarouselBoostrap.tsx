@@ -7,20 +7,23 @@ import { getSeriesDetailsURL, getURLMovieDetails } from "../../utils/endPoints";
 import "./CarouselBoostrap.css";
 import { Serie } from "../../interface/Serie";
 import { motion } from 'framer-motion'
+import { useLanguage } from "../../context/LanguageContext";
 const Backdrop = lazy(() => import("../BackDrop/Backdrop"));
 
 const CarouselBoostrap = memo(({ item }: { item: Movie | Serie | null | undefined }) => {
-
+  const {language}=useLanguage()
   const isMovie = item && "title" in item;
   const fetchURL = isMovie
-    ? getURLMovieDetails(item?.id).movieDetails
-    : getSeriesDetailsURL(item?.id);
+    ? getURLMovieDetails(item?.id,language).movieDetails
+    : getSeriesDetailsURL(item?.id,language);
 
   const { data: items } = useQuery<Movie | Serie>(
     ["mediaDetails", item?.id],
     () => fetchData(fetchURL),
     { refetchOnWindowFocus: false }
   );
+
+  console.log(items)
 
   const images = useMemo(() => {
     if (!items || !("images" in items)) return [];

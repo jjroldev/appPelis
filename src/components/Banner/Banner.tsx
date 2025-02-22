@@ -43,8 +43,8 @@ export function Banner({ itemId, isDetail = false, type }: BannerProps) {
         `movie-${itemId}`,
         () =>
             type === "movie"
-                ? fetchData(getURLMovieDetails(itemId).movieDetails)
-                : fetchData(getSeriesDetailsURL(itemId)),
+                ? fetchData(getURLMovieDetails(itemId,language).movieDetails)
+                : fetchData(getSeriesDetailsURL(itemId,language)),
         { enabled: !!itemId }
     );
 
@@ -58,9 +58,19 @@ export function Banner({ itemId, isDetail = false, type }: BannerProps) {
     );
 
     const logoPath =
-        item?.images?.logos?.find((l) => l.iso_639_1 === language)?.file_path ||
-        dataImages?.logos?.[0]?.file_path ||
-        null;
+    item?.images?.logos?.find((l) => 
+        l.iso_639_1 === language || 
+        l.iso_639_1 === "en" || 
+        l.iso_639_1 === "es"
+    )?.file_path ||
+    dataImages?.logos?.find((l:any) => 
+        l.iso_639_1 === language || 
+        l.iso_639_1 === "en" || 
+        l.iso_639_1 === "es"
+    )?.file_path ||
+    dataImages?.logos[0]
+    ||
+    null;
 
     const pasarItem = useCallback(() => {
         navigate(`/${type}/${item?.id}`);

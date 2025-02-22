@@ -26,7 +26,7 @@ const CarouselBase = React.memo(({ title, isLarge }: CarouselBaseProps) => {
 
   const { data: itemsTR, isLoading } = useQuery(
     ["itemsTR", language],
-    () => fetchData(getFetchURLs(language).topRatedMovies),
+    () => fetchData(getFetchURLs(language).popularMovies),
     { refetchOnWindowFocus: false }
   );
 

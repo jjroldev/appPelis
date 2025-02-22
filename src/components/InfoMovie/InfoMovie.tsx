@@ -19,8 +19,8 @@ export default function InfoMovie() {
     const { movieId } = useParams()
     const { language } = useLanguage()
     const { data: item } = useQuery<Movie>(
-        `movieInfo-${movieId}`,
-        () => fetchData(getURLMovieDetails(movieId).movieDetails),
+        `movieInfo-${movieId}-${language}`,
+        () => fetchData(getURLMovieDetails(movieId,language).movieDetails),
         { refetchOnWindowFocus: false, enabled: !!movieId }
     );
 

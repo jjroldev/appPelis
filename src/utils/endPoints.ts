@@ -55,8 +55,8 @@ export const getFetchSeriesURLs = (language: string) => ({
 });
 
 
-export const getURLMovieDetails=(id:string|undefined|null,language?:string|undefined)=>({
-  movieDetails:`${BASE_URL}/movie/${id}?api_key=${API_KEY}&append_to_response=videos,credits,images,release_dates`,
+export const getURLMovieDetails=(id:string|undefined|null,language:string|undefined)=>({
+  movieDetails:`${BASE_URL}/movie/${id}?api_key=${API_KEY}&append_to_response=videos,credits,images,release_dates&language=${language}`,
   providers: `${BASE_URL}/movie/${id}/watch/providers?api_key=${API_KEY}`,
   similar:`${BASE_URL}/movie/${id}/similar?api_key=${API_KEY}&language=${language}`
 })
@@ -64,8 +64,8 @@ export const getURLMovieDetails=(id:string|undefined|null,language?:string|undef
 export const getMovieImagesURL =(movieId: string | null |undefined)=> 
   `${BASE_URL}/movie/${movieId}/images?api_key=${API_KEY}`;
 
-export const getSeriesDetailsURL = (seriesId: string | null |undefined) => 
-  `${BASE_URL}/tv/${seriesId}?api_key=${API_KEY}&append_to_response=videos,credits,images,content_ratings`;
+export const getSeriesDetailsURL = (seriesId: string | null |undefined,language:string |undefined) => 
+  `${BASE_URL}/tv/${seriesId}?api_key=${API_KEY}&append_to_response=videos,credits,images,content_ratings&language=${language}`;
 
 export const getImagesEpisode=(series_id:string |undefined,season_number:number,episode_number:number)=>
   `${BASE_URL}/tv/${series_id}/season/${season_number}/episode/${episode_number}/images?api_key=${API_KEY}`
@@ -91,16 +91,20 @@ export const getSimilarSeriesURL = (seriesId: string | null |undefined, language
 
 
 export const getSeriesImagesURL =(seriesId: string | null |undefined)=> 
-  `${BASE_URL}/tv/${seriesId}/images?api_key=${API_KEY}&include_image_language=en,null`;
+  `${BASE_URL}/tv/${seriesId}/images?api_key=${API_KEY}`;
 
-export const getSeriesVideosURL = (seriesId:string | null |undefined)=>
-  `${BASE_URL}/tv/${seriesId}/videos?api_key=${API_KEY}&language=en`
-
-
-export const getCollectionDetailsURL = (collectionId: string | undefined) =>
-  `${BASE_URL}/collection/${collectionId}?api_key=${API_KEY}`;
+export const getSeriesVideosURL = (seriesId:string | null |undefined,language:string|undefined)=>
+  `${BASE_URL}/tv/${seriesId}/videos?api_key=${API_KEY}&language=${language}`
 
 
-export const getVideosEpisodeURL = (series_id:string | undefined,season_number:number,episode_number:number)=>{
-  return `${BASE_URL}/tv/${series_id}/season/${season_number}/episode/${episode_number}/videos?api_key=${API_KEY}&language=en`
+export const getCollectionDetailsURL = (collectionId: string | undefined, language: string| undefined) =>
+  `${BASE_URL}/collection/${collectionId}?api_key=${API_KEY}&language=${language}`;
+
+
+export const getVideosEpisodeURL = (series_id:string | undefined,season_number:number,episode_number:number,language:string|undefined)=>{
+  return `${BASE_URL}/tv/${series_id}/season/${season_number}/episode/${episode_number}/videos?api_key=${API_KEY}&language=${language}`
 }
+
+
+export const getURLItemsOfActor=(ACTOR_ID:string | undefined,language:string|undefined)=>
+  `${BASE_URL}/person/${ACTOR_ID}/combined_credits?api_key=${API_KEY}&language=${language}`

@@ -22,7 +22,7 @@ export default function InfoSerie() {
     const { language } = useLanguage()
     const { data: item } = useQuery<Serie>(
         `seriesInfo-${seriesId}`,
-        () => fetchData(getSeriesDetailsURL(seriesId)),
+        () => fetchData(getSeriesDetailsURL(seriesId,language)),
         { refetchOnWindowFocus: false, enabled: !!seriesId }
     );
 

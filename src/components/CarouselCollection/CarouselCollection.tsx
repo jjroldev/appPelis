@@ -12,6 +12,7 @@ import { useQuery } from "react-query";
 import { BelongsCollection } from "../../interface/Movie";
 import { fetchData } from "../../utils/fetchData";
 import { getCollectionDetailsURL } from "../../utils/endPoints";
+import { useLanguage } from "../../context/LanguageContext";
 
 interface CarouselProps {
   title: string;
@@ -22,12 +23,14 @@ interface CarouselProps {
 const CarouselCollection = React.memo(({ title, isLarge = false, item }: CarouselProps) => {
   const { handleAddFavorite } = useFavorites();
   const width = useWindowWidth();
-
+  const {language}=useLanguage()
   const { data: collection, isLoading } = useQuery<BelongsCollection>(
     `collection-${item?.id}`,
-    () => fetchData(getCollectionDetailsURL(item?.belongs_to_collection?.id)),
+    () => fetchData(getCollectionDetailsURL(item?.belongs_to_collection?.id,language)),
     { refetchOnWindowFocus: false, enabled: !!item?.belongs_to_collection?.id }
   );
+
+  console.log(collection)
 
   const responsivew = useMemo(() => responsive(width > 1000 ? isLarge : false), [width, isLarge]);
 
