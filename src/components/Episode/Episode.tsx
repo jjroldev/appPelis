@@ -9,6 +9,7 @@ import { useWindowWidth } from '../../hooks/useWindowWidth';
 import { formatRuntime, getIdVideoEpisode } from '../../utils/helpers.tsx';
 import { Videos } from '../../interface/VideosEpisode';
 import toast from 'react-hot-toast';
+import { useLanguage } from '../../context/LanguageContext.tsx';
 interface EpisodeProps {
     episode: Episode,
     serie_backdrop: string
@@ -19,6 +20,7 @@ export default function EpisodeC({ episode, serie_backdrop }: EpisodeProps) {
     const [randomImageIndex, setRandomImageIndex] = useState<number | null>(null);
     const width = useWindowWidth()
     const navigate = useNavigate()
+    const {language}=useLanguage()
 
     const { data, isLoading } = useQuery(`images-${seriesId}`, () => fetchData(getSeriesImagesURL(seriesId)), {
         enabled: !!seriesId && episode.still_path == null,
@@ -33,7 +35,7 @@ export default function EpisodeC({ episode, serie_backdrop }: EpisodeProps) {
     }, [data, randomImageIndex]);
 
     const { data: videos } = useQuery<Videos>(`videos-${episode.id}`, () =>
-        fetchData(getVideosEpisodeURL(seriesId, episode.season_number, episode.episode_number)))
+        fetchData(getVideosEpisodeURL(seriesId, episode.season_number, episode.episode_number,language)))
 
     if (isLoading) return null;
 
