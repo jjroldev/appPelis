@@ -1,1 +1,0 @@
-import{j as r}from"./index-CmXgx7D_.js";import{p as s}from"./CardItem-Bcx_Fy3P.js";function c({backdrop_path:a}){return r.jsx("div",{className:"wrapperBackdrop",children:r.jsx("img",{src:s+a,className:"backdropInfo"})})}export{c as default};
