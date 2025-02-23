@@ -6,7 +6,6 @@ import { getSeasonDetailsURL } from '../../utils/endPoints';
 import { useLanguage } from '../../context/LanguageContext';
 import { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import EpisodeSkeleton from '../../components/Episode/EpidoseSkeleton';
-import { useWindowWidth } from '../../hooks/useWindowWidth';
 import { motion } from "framer-motion";
 const EpisodeC = lazy(() => import('../Episode/Episode'))
 interface SeasonProps {
@@ -16,7 +15,6 @@ interface SeasonProps {
 
 export default function SeasonC({ series, numeroTemporadas }: SeasonProps) {
     const { language } = useLanguage();
-    const width = useWindowWidth();
     const [numSeason, setNumSeason] = useState<number>(1);
 
     const { data: season, isLoading } = useQuery<Season>(
@@ -56,7 +54,7 @@ export default function SeasonC({ series, numeroTemporadas }: SeasonProps) {
     }
 
     return (
-        <div className={`containerSeason ${width >= 1260 && "CSSinMargin"}`}>
+        <div className={`containerSeason`}>
             <div className="contenedorSeleccionSeason gap-1">
                 <h3 className='tituloSerie'>{series.name}</h3>
                 <select onChange={(e) => setNumSeason(Number(e.target.value))}>

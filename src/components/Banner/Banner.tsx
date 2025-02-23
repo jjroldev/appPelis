@@ -43,12 +43,12 @@ export function Banner({ itemId, isDetail = false, type }: BannerProps) {
         `movie-${itemId}`,
         () =>
             type === "movie"
-                ? fetchData(getURLMovieDetails(itemId,language).movieDetails)
-                : fetchData(getSeriesDetailsURL(itemId,language)),
+                ? fetchData(getURLMovieDetails(itemId, language).movieDetails)
+                : fetchData(getSeriesDetailsURL(itemId, language)),
         { enabled: !!itemId }
     );
 
-    const { data: dataImages,isLoading:isLoading1 } = useQuery<any>(
+    const { data: dataImages, isLoading: isLoading1 } = useQuery<any>(
         `logo-item-${type}-${itemId}`,
         () =>
             type === "movie"
@@ -57,7 +57,7 @@ export function Banner({ itemId, isDetail = false, type }: BannerProps) {
         { enabled: !!itemId, staleTime: 1000 * 60 * 5 }
     );
 
-    const logoPath =getLogoPath(item,dataImages,language);
+    const logoPath = getLogoPath(item, dataImages, language);
 
     const pasarItem = useCallback(() => {
         navigate(`/${type}/${item?.id}`);
@@ -104,18 +104,20 @@ export function Banner({ itemId, isDetail = false, type }: BannerProps) {
 
                 {location.hash !== "#/info" && (
                     <button onClick={pasarItem} className="boton-info-banner">
-                        <i className="fa-solid fa-circle-info"></i> More Information
+                        <span className="material-symbols-outlined">
+                            info
+                        </span> More Information
                     </button>
                 )}
 
                 <button onClick={() => handleAddFavorite(item)} className="botonMeGustaBanner">
-                    <i className="fa-solid fa-heart"></i>
+                    <i className="fa-solid fa-plus"></i>
                 </button>
             </div>
         );
     }
 
-    if (!itemId || !item || isLoading ||isLoading1) {
+    if (!itemId || !item || isLoading || isLoading1) {
         return (
             <motion.div
                 className="header"

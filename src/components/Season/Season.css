@@ -1,12 +1,13 @@
 .containerSeason {
     display: flex;
     flex-direction: column;
+    padding: 0 20px;
 }
 
 .contenedorSeleccionSeason {
     display: flex;
     justify-content: space-between;
-    padding: 60px 0;
+    padding: 20px 0px;
 }
 
 .contenedorSeleccionSeason select {
@@ -34,27 +35,12 @@
     justify-content: center;
 }
 
-.CSSinMargin {
-    margin-right: 45px;
-}
-
-
-@media (max-width: 1260px) {
-    .contenedorSeleccionSeason {
-        padding: 60px 10px;
-    }
-}
-
 
 @media (max-width: 1024px) {
     .CSSinMargin {
         margin-right: 25px;
     }
 
-    .contenedorSeleccionSeason {
-        padding-top: 40px;
-        padding-bottom: 40px;
-    }
 
     .tituloSerie {
         font-size: 1.6rem;
@@ -63,14 +49,18 @@
     .contenedorSeleccionSeason select {
         padding: 10px;
     }
+
+
+    .containerSeason {
+        padding: 0;
+    }
+
+    .contenedorSeleccionSeason{
+        padding: 10px;
+    }
 }
 
 @media (max-width: 650px) {
-
-    .contenedorSeleccionSeason {
-        padding-top: 20px;
-        padding-bottom: 20px;
-    }
 
     .tituloSerie {
         font-size: 1.3rem;

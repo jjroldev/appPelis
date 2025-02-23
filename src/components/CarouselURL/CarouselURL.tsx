@@ -38,10 +38,12 @@ const CarouselURL = React.memo(({ URL, title, isLarge }: CarouselURLProps) => {
   );
 
   const responsivew = useMemo(() => responsive(width > 1000 ? isLarge : false), [width, isLarge]);
+  console.log(isLarge)
 
   if (isLoading) {
     return <SkeletonCarousel numItems={10} isLarge={width > 1000 ? isLarge : false} title={title} />;
   }
+
 
   return validItems.length ? (
     <div className="carousel">
@@ -51,7 +53,6 @@ const CarouselURL = React.memo(({ URL, title, isLarge }: CarouselURLProps) => {
         showDots={false}
         responsive={responsivew}
         ssr={true}
-        infinite
         autoPlay={false}
         keyBoardControl={true}
         partialVisible={true}

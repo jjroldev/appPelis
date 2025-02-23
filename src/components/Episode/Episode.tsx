@@ -20,7 +20,7 @@ export default function EpisodeC({ episode, serie_backdrop }: EpisodeProps) {
     const [randomImageIndex, setRandomImageIndex] = useState<number | null>(null);
     const width = useWindowWidth()
     const navigate = useNavigate()
-    const {language}=useLanguage()
+    const { language } = useLanguage()
 
     const { data, isLoading } = useQuery(`images-${seriesId}`, () => fetchData(getSeriesImagesURL(seriesId)), {
         enabled: !!seriesId && episode.still_path == null,
@@ -35,7 +35,7 @@ export default function EpisodeC({ episode, serie_backdrop }: EpisodeProps) {
     }, [data, randomImageIndex]);
 
     const { data: videos } = useQuery<Videos>(`videos-${episode.id}`, () =>
-        fetchData(getVideosEpisodeURL(seriesId, episode.season_number, episode.episode_number,language)))
+        fetchData(getVideosEpisodeURL(seriesId, episode.season_number, episode.episode_number, language)))
 
     if (isLoading) return null;
 
@@ -60,13 +60,9 @@ export default function EpisodeC({ episode, serie_backdrop }: EpisodeProps) {
                     {image_path && (
                         <img src={URL_IMAGE_STILL + image_path || serie_backdrop} alt={episode.name} />
                     )}
-                    {
-                        width <= 580 && (
-                            <div className='containerPlayMobile absolute'>
-                                <i className="fa-solid fa-play play-icon absolute" />
-                            </div>
-                        )
-                    }
+                    <div className='containerPlayMobile absolute'>
+                        <i className="fa-solid fa-play play-icon absolute" />
+                    </div>
                 </div>
                 <div className="info-episode">
                     <h4>{episode.episode_number}.  {episode.name}</h4>
@@ -89,13 +85,14 @@ export default function EpisodeC({ episode, serie_backdrop }: EpisodeProps) {
                         }
                         </p>}
                 </div>
-                {
-                    width > 580 && (
-                        <div className="containerPlay">
-                            <i className="fa-solid fa-play"></i>
-                        </div>
-                    )
-                }
+
+                <div className="containerDownload">
+                    <span className="material-symbols-outlined">
+                        download
+                    </span>
+                </div>
+
+
             </div>
             {
                 width <= 990 && episode.overview && (

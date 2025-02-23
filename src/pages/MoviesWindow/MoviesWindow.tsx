@@ -23,9 +23,9 @@ export default function MoviesWindow() {
     }, []);
 
     const carousels = useMemo(() => [
-        { URL: fetchURLS.popularMovies, title: "Popular Movies" },
+        { URL: fetchURLS.popularMovies, title: "Popular Movies",isLarge: false },
         { URL: fetchURLS.topRatedMovies, title: "Best Voted", isLarge: true },
-        { URL: fetchURLS.actionMovies, title: "Movies of action" },
+        { URL: fetchURLS.actionMovies, title: "Movies of action",isLarge: false },
         { URL: fetchURLS.adventureMovies, title: "Adventure on family", isLarge: true },
         { URL: fetchURLS.animationMovies, title: "Animation", isLarge: true },
         { URL: fetchURLS.comedyMovies, title: "Comedy", isLarge: true },
@@ -34,8 +34,8 @@ export default function MoviesWindow() {
         { URL: fetchURLS.dramaMovies, title: "Drama", isLarge: true },
         { URL: fetchURLS.familyMovies, title: "Family", isLarge: true },
         { URL: fetchURLS.fantasyMovies, title: "Fantasy", isLarge: true },
-        { URL: fetchURLS.historyMovies, title: "History" },
-        { URL: fetchURLS.horrorMovies, title: "Horror" },
+        { URL: fetchURLS.historyMovies, title: "History" ,isLarge: false},
+        { URL: fetchURLS.horrorMovies, title: "Horror" ,isLarge: false},
         { URL: fetchURLS.musicMovies, title: "Music", isLarge: true },
         { URL: fetchURLS.mysteryMovies, title: "Mystery", isLarge: true },
         { URL: fetchURLS.romanceMovies, title: "Romance", isLarge: true },

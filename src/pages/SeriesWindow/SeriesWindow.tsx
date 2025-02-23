@@ -23,9 +23,9 @@ export default function SeriesWindow() {
     }, []);
 
     const carousels = useMemo(() => [
-        { URL: fetchURLS.popularSeries, title: "Popular Series" },
+        { URL: fetchURLS.popularSeries, title: "Popular Series" ,isLarge: false},
         { URL: fetchURLS.topRatedSeries, title: "Best Voted", isLarge: true },
-        { URL: fetchURLS.actionAdventureSeries, title: "Series of action and adventure" },
+        { URL: fetchURLS.actionAdventureSeries, title: "Series of action and adventure" ,isLarge: false},
         { URL: fetchURLS.familySeries, title: "Series for watch family", isLarge: true },
         { URL: fetchURLS.animationSeries, title: "Animation series", isLarge: true },
         { URL: fetchURLS.comedySeries, title: "Comedy series", isLarge: true },
@@ -33,8 +33,8 @@ export default function SeriesWindow() {
         { URL: fetchURLS.documentarySeries, title: "Documentary series", isLarge: true },
         { URL: fetchURLS.dramaSeries, title: "Drama series", isLarge: true },
         { URL: fetchURLS.sciFiFantasySeries, title: "Fantasy series", isLarge: true },
-        { URL: fetchURLS.kidsSeries, title: "Kids series" },
-        { URL: fetchURLS.realitySeries, title: "Reality series" },
+        { URL: fetchURLS.kidsSeries, title: "Kids series" ,isLarge: false},
+        { URL: fetchURLS.realitySeries, title: "Reality series",isLarge: false },
         { URL: fetchURLS.mysterySeries, title: "Mystery series", isLarge: true },
         { URL: fetchURLS.warPoliticsSeries, title: "Series of war", isLarge: true },
     ], [fetchURLS]);

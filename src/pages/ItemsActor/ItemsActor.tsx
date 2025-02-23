@@ -10,23 +10,26 @@ import Spinner from '../../components/Spinner/Spinner'
 import CardItem from '../../components/CardItem/CardItem'
 import { useFavorites } from '../../hooks/useFavorites'
 import { useLanguage } from '../../context/LanguageContext'
-
+import { useEffect } from 'react'
 const BarMenu = lazy(() => import('../../components/BarMenu/BarMenu'))
 export default function ItemsActor() {
     const { actorId } = useParams()
-    const {language}=useLanguage()
+    const { language } = useLanguage()
     const { handleAddFavorite } = useFavorites()
     const { data: results, isLoading } = useQuery(`movies-${actorId}`,
-        () => fetchData(getURLItemsOfActor(actorId,language)), {
+        () => fetchData(getURLItemsOfActor(actorId, language)), {
         refetchOnWindowFocus: false
     })
-
 
     const validResults = useMemo(() => {
         if (!results || !results.cast) return [];
         return results.cast.filter((movie: Movie | Serie) => movie.poster_path && movie.backdrop_path && movie.overview);
     }, [results])
-    
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    }, []);
+
 
     if (isLoading) {
         return <Spinner />
@@ -36,8 +39,8 @@ export default function ItemsActor() {
         <div className="containerItemsActor">
             <BarMenu />
             <div className="contenedorItemsPosters items-center justify-center">
-                {validResults.map((movie: Movie | Serie) => (
-                    <CardItem key={movie.id} item={movie} isLarge={false} onAddFavorite={handleAddFavorite} />
+                {validResults.map((movie: Movie | Serie, index: number) => (
+                    <CardItem key={movie.id + index} item={movie} isLarge={false} onAddFavorite={handleAddFavorite} />
                 ))}
                 {
                     !isLoading && !validResults.length && (

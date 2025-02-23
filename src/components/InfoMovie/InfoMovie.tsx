@@ -12,17 +12,22 @@ import { useMenu } from "../../context/MenuContext";
 import { Suspense, lazy } from "react";
 import CarouselURL from "../../components/CarouselURL/CarouselURL";
 import { useLanguage } from "../../context/LanguageContext";
+import CardItem from "../CardItem/CardItem";
+import Spinner from "../Spinner/Spinner";
 const CarouselBoostrap = lazy(() => import('../CarouselBoostrap/CarouselBoostrap'))
 const CarouselCollection = lazy(() => import('../CarouselCollection/CarouselCollection'))
 const CarouselCredits = lazy(() => import('../CarouselCredits/CarouselCredits'))
 export default function InfoMovie() {
     const { movieId } = useParams()
     const { language } = useLanguage()
-    const { data: item } = useQuery<Movie>(
+    const { data: item ,isLoading} = useQuery<Movie>(
         `movieInfo-${movieId}-${language}`,
         () => fetchData(getURLMovieDetails(movieId, language).movieDetails),
         { refetchOnWindowFocus: false, enabled: !!movieId }
     );
+
+    const { data: similars,isLoading:isLoading1 } = useQuery(`similar-${movieId}-${language}`, () =>
+        fetchData(getURLMovieDetails(movieId, language, 2).similar), { refetchOnWindowFocus: false })
 
     const { setSearchTerm } = useSearch();
     const { setOpenMenu } = useMenu();
@@ -33,7 +38,9 @@ export default function InfoMovie() {
         setSearchTerm("");
     }, [movieId]);
 
-
+    if(isLoading || isLoading1){
+        return <Spinner />
+    }
     return (
         <div className="contenedorPrincipalItem">
             <Banner itemId={movieId} isDetail type={"movie"} />
@@ -59,6 +66,20 @@ export default function InfoMovie() {
                         <CarouselCredits item={item} title="CAST" />
                     </Suspense>
                 </div>
+                {
+                    similars?.results?.length && (
+                        <div className="similarContainer flex flex-col gap-2">
+                            <h3>Similar movies</h3>
+                            <div className="contenedorPeliculasSimilares bg-red w-full">
+                                {
+                                    similars?.results?.map((movie: Movie) => (
+                                        movie.poster_path && movie.overview && <CardItem item={movie} isLarge={false} />
+                                    ))
+                                }
+                            </div>
+                        </div>
+                    )
+                }
                 <div className="contenedor-imagenes">
                     <div className="flex flex-col backdropss">
                         {item && (

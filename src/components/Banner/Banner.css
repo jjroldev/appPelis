@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Neuton:ital,wght@0,200;0,300;0,400;0,700;0,800;1,400&display=swap');
 
 
 .header {
@@ -19,9 +18,10 @@
 }
 
 .header .fondoMobile {
+    scale: 1.4;
     height: auto;
     object-fit:contain;
-    padding-top: 70px;
+    padding-top: 85px;
     -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0) 100%);
     mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 70%, rgba(0, 0, 0, 0) 100%);
 }
@@ -83,7 +83,7 @@
 }
 
 .contenedorLogo {
-    bottom: 180px;
+    bottom: 140px;
     z-index: 3;
 }
 
@@ -126,8 +126,8 @@
     z-index: 5;
 }
 
-.botones button i{
-    font-size: 2rem;
+.botones button i,.botones button span{
+    font-size: 1.9rem;
 }
 
 .botones button:first-child {
@@ -152,6 +152,10 @@
     background-color: rgba(0, 0, 0, .5);
     color: #fff;
     border-radius: 5px;
+    width: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .botonMeGustaBanner i{
@@ -159,7 +163,7 @@
 }
 
 .botonMeGustaBanner:hover {
-    color: red;
+    transform: scale(1.1);
 }
 
 .edadParaPublicoBanner{
@@ -169,16 +173,19 @@
     padding: 5px 10px;
     font-weight: bold;
     font-size: 1.6rem;
-    font-family: Neuton !important;
 }
 
+.material-symbols-outlined{
+    font-weight: bold;
+    fill: 1;
+}
 
 @media (max-width: 1200px) {
     .overview {
         font-size: 1.1rem;
     }
 
-    .botones button i{
+    .botones button i,.botones button span{
         font-size: 1.9rem;
     }
 
@@ -220,7 +227,7 @@
         padding: 8px 10px;
     }
 
-    .botones button i {
+    .botones button i,.botones button span {
         font-size: .9rem;
     }
 
@@ -229,7 +236,7 @@
     }
 
 
-    .botones button i{
+    .botones button i,.botones button span{
         font-size: 1.6rem;
     }
 
@@ -258,7 +265,7 @@
     }
 
 
-    .botones button i{
+    .botones button i,.botones button span{
         font-size: 1.3rem;
     }
 

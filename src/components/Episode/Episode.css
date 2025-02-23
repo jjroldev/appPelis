@@ -74,24 +74,20 @@
     color: #ababab;
 }
 
-.containerPlay {
+.containerDownload {
     width: 5%;
     padding: 10px;
     display: flex;
-    align-items: top;
+    align-items: center;
     justify-content: center;
 }
 
-.containerPlay i {
+.containerDownload span {
     cursor: pointer;
     transition: all .3s ease-in-out;
     margin-top: 5px;
+    font-size: 2.5rem;
 }
-
-.containerPlay i:hover {
-    color: rgb(202, 205, 0);
-}
-
 
 .info-episode h4 {
     font-size: 1.2rem;
@@ -119,10 +115,6 @@
 }
 .containerPlayMobile i{
     font-size: 1rem;
-}
-
-.containerPlay i {
-    font-size: 1.8rem;
 }
 
 .play-icon{
@@ -167,8 +159,8 @@
         font-size: 1rem;
     }
 
-    .containerPlay i {
-        font-size: 1.6rem;
+    .containerDownload span {
+        font-size: 2.2rem;
     }
 
 
@@ -193,8 +185,8 @@
         height: 140px;
     }
 
-    .containerPlay i {
-        font-size: 1.4rem;
+    .containerDownload span {
+        font-size: 1.9rem;
     }
 
     .info-episode h4 {
@@ -255,10 +247,6 @@
 
     .info-episode h4 {
         font-size: 1rem;
-    }
-
-    .containerPlay i {
-        font-size: 1.5rem;
     }
 
     .info-episode p,

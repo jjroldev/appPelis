@@ -1,0 +1,52 @@
+.similarContainer{
+    padding:50px 20px;
+}
+
+.contenedorPeliculasSimilares{
+    display: grid;
+    grid-template-columns: repeat(8,1fr);
+    gap: 10px;
+}
+
+.similarContainer h3{
+    width: 100%;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+
+@media(max-width:1170px){
+
+    .similarContainer h3{
+        font-size: 1.4rem;
+    }
+    .contenedorPeliculasSimilares{
+        grid-template-columns: repeat(6,1fr);
+    }
+}
+
+
+
+@media(max-width:950px){
+    .contenedorPeliculasSimilares{
+        grid-template-columns: repeat(5,1fr);
+    }
+}
+
+
+@media(max-width:800px){
+    .contenedorPeliculasSimilares{
+        grid-template-columns: repeat(4,1fr);
+    }
+
+    .similarContainer h3{
+        font-size: 1.2rem;
+    }
+}
+
+
+@media(max-width:600px){
+    .contenedorPeliculasSimilares{
+        grid-template-columns: repeat(3,1fr);
+    }
+}
