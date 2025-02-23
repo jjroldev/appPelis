@@ -1,6 +1,7 @@
 import { useAuth } from "../../context/AuthContext";
 import { Movie } from "../../interface/Movie";
 import { useQuery } from "react-query";
+import './CarouselFavorites.css'
 import { getFavoritesByProfile } from "../../firebase";
 import { useCallback, useMemo } from "react";
 import CardItem from "../CardItem/CardItem";
@@ -11,6 +12,7 @@ import { SkeletonCarousel } from "../SkeletonCarousel/SkeletonCarousel";
 import { responsive } from "../../utils/ResponsiveCarrousel";
 import { Serie } from "../../interface/Serie";
 import '../CarouselURL/CarouselURL.css'
+import { useNavigate } from "react-router";
 interface CarouselFProps {
   isLarge: boolean;
   title: string;
@@ -20,6 +22,7 @@ export default function CarouselFavorites({ isLarge, title }: CarouselFProps) {
   const { handleRemoveFavorite } = useFavorites();
   const width = useWindowWidth();
   const { currentPerfil, currentUser } = useAuth();
+  const navigate = useNavigate()
 
   const { data: items, isLoading } = useQuery<Movie[] | Serie[]>(
     `favorites-${currentUser?.id}-${currentPerfil?.id}`,
@@ -37,7 +40,6 @@ export default function CarouselFavorites({ isLarge, title }: CarouselFProps) {
           item={item}
           isLarge={width > 1000 ? isLarge : false}
           onRemoveFavorite={handleRemoveFavorite}
-          doDelete={true}
         />
       )),
     [width, isLarge, handleRemoveFavorite]
@@ -53,7 +55,10 @@ export default function CarouselFavorites({ isLarge, title }: CarouselFProps) {
 
   return (
     <div className="carousel">
-      <h2 className="tituloCarousel">{title}</h2>
+      <div className="flex flex-row items-end containerExplorar" onClick={()=>navigate('/miLista')}>
+        <h2 className="tituloCarousel">{title}</h2>
+        <h3 className={`explorar ${width<=600 ?"explorarMobile":""}`}>Explorar todos {">"}</h3>
+      </div>
       <Carousel
         swipeable
         showDots={false}

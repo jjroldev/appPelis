@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import CardItem from '../../components/CardItem/CardItem';
 import { Movie } from '../../interface/Movie';
 import "./MiLista.css"
@@ -15,7 +15,7 @@ export default function MiLista() {
   const { setSearchTerm } = useSearch()
   const { setOpenMenu } = useMenu()
   const { handleRemoveFavorite } = useFavorites()
-
+  const [enabledEdit,setEnabledEdit]=useState(false)
   const { data: items, isLoading } = useQuery<Movie[] | Serie[]>(
     `favorites-${currentUser?.id}-${currentPerfil?.id}`,
     () => getFavoritesByProfile(currentUser?.id, currentPerfil?.id),
@@ -50,7 +50,12 @@ export default function MiLista() {
     <>
       <BarMenu />
       <div className="favorites">
-        <h2 className="tituloFavoritas">{currentPerfil?.name.toUpperCase()}</h2>
+        <div className="contenedorTituloFavoritas flex justify-between">
+          <h2 className="tituloFavoritas">{currentPerfil?.name.toUpperCase()}</h2>
+          <span className="material-symbols-outlined" onClick={()=>setEnabledEdit(!enabledEdit)}>
+            edit
+          </span>
+        </div>
         <div className='contenedorFavoritas'>
           <div className={`favoritasContainer ${items?.length === 0 ? 'empty' : ''}`}>
             {!isLoading && (
@@ -59,7 +64,7 @@ export default function MiLista() {
                   key={item.id}
                   item={item}
                   isLarge={true}
-                  doDelete={true}
+                  doDelete={enabledEdit}
                   onRemoveFavorite={handleRemoveFavorite}
                 />
               ))

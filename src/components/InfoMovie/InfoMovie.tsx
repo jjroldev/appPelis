@@ -67,13 +67,13 @@ export default function InfoMovie() {
                     </Suspense>
                 </div>
                 {
-                    similars?.results?.length && (
+                    similars?.results?.length>0 && (
                         <div className="similarContainer flex flex-col gap-2">
                             <h3>Similar movies</h3>
                             <div className="contenedorPeliculasSimilares bg-red w-full">
                                 {
-                                    similars?.results?.map((movie: Movie) => (
-                                        movie.poster_path && movie.overview && <CardItem item={movie} isLarge={false} />
+                                    similars?.results?.map((movie: Movie,index:number) => (
+                                        movie.poster_path && movie.overview && <CardItem key={index} item={movie} isLarge={false} />
                                     ))
                                 }
                             </div>

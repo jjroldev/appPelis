@@ -74,6 +74,10 @@
     color: #ababab;
 }
 
+.material-symbols-outlined{
+    font-weight: 300;
+}
+
 .containerDownload {
     width: 5%;
     padding: 10px;

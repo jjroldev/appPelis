@@ -27,25 +27,24 @@ export const getCertifiedReleaseItem= (item: Serie |Movie |undefined, country: s
     return null
 };
 
+export function getLogoPath(item: Movie | Serie | undefined, dataImages: any, language: string) {
+    if (!item && !dataImages) return null;
 
-export function getLogoPath(item:Movie|Serie|undefined,dataImages:any,language:string){
-    const logoPath =
-    item?.images?.logos?.find((l) => 
-        l.iso_639_1 === language || 
-        l.iso_639_1 === "en" || 
-        l.iso_639_1 === "es"
-    )?.file_path ||
-    dataImages?.logos?.find((l:any) => 
-        l.iso_639_1 === language || 
-        l.iso_639_1 === "en" || 
-        l.iso_639_1 === "es"
-    )?.file_path ||
-    dataImages?.logos[0]?.file_path
-    ||
-    null;
+    const logoPathItem = item?.images?.logos?.find((l) => l.iso_639_1 === language) 
+                      || item?.images?.logos?.find((l) => l.iso_639_1 === "en");
 
-    return logoPath
+    if (logoPathItem) return logoPathItem.file_path;
+
+    const logoPathData = dataImages?.logos?.find((l: any) => l.iso_639_1 === language) 
+                      || dataImages?.logos?.find((l: any) => l.iso_639_1 === "en");
+
+    if (logoPathData) return logoPathData.file_path;
+
+    if (dataImages?.logos?.length) return dataImages.logos[0]?.file_path;
+
+    return null;
 }
+
 
 export function isMovie(item:Movie|Serie|undefined){
     return item && "title" in item
@@ -77,8 +76,8 @@ export const formatRuntime = (minutes: number) => {
     return mins > 0 ? `${hours} h ${mins} min` : `${hours} h`;
 };
 
-export const renderItems = (items: Movie[] | Serie[], isLarge: boolean | undefined, width: number, handleAddFavorite: (item: Movie | Serie) => void) => {
+export const renderItems = (items: Movie[] | Serie[], isLarge: boolean | undefined, width: number)  => {
     return items.map((item:Movie|Serie) => (
-        <CardItem key={item.id} item={item} isLarge={width > 1000 ? isLarge : false} onAddFavorite={handleAddFavorite} />
+        <CardItem key={item.id} item={item} isLarge={width > 1000 ? isLarge : false} />
     ));
 };

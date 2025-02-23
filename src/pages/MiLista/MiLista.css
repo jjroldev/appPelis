@@ -4,12 +4,26 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    min-height: 120vh;
-    min-height: 120dvh;
+    min-height: 100vh;
+    min-height: 100dvh;
     padding: 110px 72px 60px 72px;
 }
 
+.contenedorTituloFavoritas{
+    height: 50px;
+}
 
+.contenedorTituloFavoritas span{
+    font-size: 1.8rem;
+    color: #fff;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+}
+
+.contenedorTituloFavoritas span:hover{
+    transform: scale(1.2);
+}
 .tituloFavoritas {
     color: #fff;
     font-weight: 500;

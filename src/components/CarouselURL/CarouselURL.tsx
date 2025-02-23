@@ -7,7 +7,6 @@ import { fetchData } from "../../utils/fetchData";
 import { responsive } from "../../utils/ResponsiveCarrousel";
 import "./CarouselURL.css";
 import { useWindowWidth } from "../../hooks/useWindowWidth";
-import { useFavorites } from "../../hooks/useFavorites";
 import { Serie } from "../../interface/Serie";
 import { SkeletonCarousel } from "../SkeletonCarousel/SkeletonCarousel";
 import { useLanguage } from "../../context/LanguageContext";
@@ -22,7 +21,6 @@ interface CarouselURLProps {
 }
 
 const CarouselURL = React.memo(({ URL, title, isLarge }: CarouselURLProps) => {
-  const { handleAddFavorite } = useFavorites();
   const width = useWindowWidth();
   const { language } = useLanguage();
 
@@ -38,7 +36,6 @@ const CarouselURL = React.memo(({ URL, title, isLarge }: CarouselURLProps) => {
   );
 
   const responsivew = useMemo(() => responsive(width > 1000 ? isLarge : false), [width, isLarge]);
-  console.log(isLarge)
 
   if (isLoading) {
     return <SkeletonCarousel numItems={10} isLarge={width > 1000 ? isLarge : false} title={title} />;
@@ -58,9 +55,10 @@ const CarouselURL = React.memo(({ URL, title, isLarge }: CarouselURLProps) => {
         partialVisible={true}
         className={`${width < 600 ? "carousel-cell" : ""}`}
         slidesToSlide={1}
+        infinite
         focusOnSelect={false}
       >
-        {renderItems(validItems, isLarge, width, handleAddFavorite)}
+        {renderItems(validItems, isLarge, width)}
       </Carousel>
     </div>
   ) : (

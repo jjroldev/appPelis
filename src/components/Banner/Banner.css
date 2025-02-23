@@ -171,8 +171,10 @@
     color: #fff;
     text-align: center;
     padding: 5px 10px;
-    font-weight: bold;
-    font-size: 1.6rem;
+    font-weight: 200;
+    font-size: 1.4rem;
+    padding-right: 2%;
+    border-left: 3px solid #fff;
 }
 
 .material-symbols-outlined{

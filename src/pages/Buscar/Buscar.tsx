@@ -1,11 +1,11 @@
 import "./Buscar.css";
 import { useEffect, useMemo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { useQuery, useQueryClient } from "react-query";
+import { useQuery} from "react-query";
 
 import { BASE_URL, getFetchURLs, API_KEY, getFetchSeriesURLs } from "../../utils/endPoints";
 import { fetchData } from "../../utils/fetchData";
-import { addFavoriteToProfile, getFavoritesByProfile } from "../../firebase";
+import { getFavoritesByProfile } from "../../firebase";
 
 import { useSearch } from "../../context/SearchContext";
 import { useLanguage } from "../../context/LanguageContext";
@@ -21,7 +21,6 @@ import BarMenu from "../../components/BarMenu/BarMenu";
 
 export default function Buscar() {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
 
   const { searchTerm, setSearchTerm } = useSearch();
   const { language } = useLanguage();
@@ -57,16 +56,6 @@ export default function Buscar() {
     `favorites-${currentUser?.id}-${currentPerfil?.id}`,
     () => getFavoritesByProfile(currentUser?.id, currentPerfil?.id),
     { enabled: !!currentUser?.id && !!currentPerfil?.id }
-  );
-
-  const handleAddFavorite = useCallback(
-    async (movie: Movie | null) => {
-      await addFavoriteToProfile(currentUser?.id, currentPerfil?.id, movie);
-      await queryClient.invalidateQueries(
-        `favorites-${currentUser?.id}-${currentPerfil?.id}`
-      );
-    },
-    [currentUser?.id, currentPerfil?.id, queryClient]
   );
 
   const fetchSearchMovies = useMemo(() =>
@@ -118,7 +107,7 @@ export default function Buscar() {
 
   const renderMovies = (items: Movie[]) =>
     items.map((item, index) => (
-      <CardItem key={index} item={item} onAddFavorite={() => handleAddFavorite(item)} />
+      <CardItem key={index} item={item} />
     ));
 
   const renderContent = () => {

@@ -23,24 +23,24 @@ export default function MoviesWindow() {
     }, []);
 
     const carousels = useMemo(() => [
-        { URL: fetchURLS.popularMovies, title: "Popular Movies",isLarge: false },
-        { URL: fetchURLS.topRatedMovies, title: "Best Voted", isLarge: true },
-        { URL: fetchURLS.actionMovies, title: "Movies of action",isLarge: false },
-        { URL: fetchURLS.adventureMovies, title: "Adventure on family", isLarge: true },
-        { URL: fetchURLS.animationMovies, title: "Animation", isLarge: true },
-        { URL: fetchURLS.comedyMovies, title: "Comedy", isLarge: true },
-        { URL: fetchURLS.crimeMovies, title: "Crime", isLarge: true },
-        { URL: fetchURLS.documentaryMovies, title: "Documentary", isLarge: true },
-        { URL: fetchURLS.dramaMovies, title: "Drama", isLarge: true },
-        { URL: fetchURLS.familyMovies, title: "Family", isLarge: true },
-        { URL: fetchURLS.fantasyMovies, title: "Fantasy", isLarge: true },
-        { URL: fetchURLS.historyMovies, title: "History" ,isLarge: false},
-        { URL: fetchURLS.horrorMovies, title: "Horror" ,isLarge: false},
-        { URL: fetchURLS.musicMovies, title: "Music", isLarge: true },
-        { URL: fetchURLS.mysteryMovies, title: "Mystery", isLarge: true },
-        { URL: fetchURLS.romanceMovies, title: "Romance", isLarge: true },
-        { URL: fetchURLS.scienceFictionMovies, title: "Science Fiction", isLarge: true },
-        { URL: fetchURLS.thrillerMovies, title: "Thriller", isLarge: true },
+        { URL: fetchURLS.popularMovies, title: "Popular Movies" },
+        { URL: fetchURLS.topRatedMovies, title: "Best Voted" },
+        { URL: fetchURLS.actionMovies, title: "Movies of action" },
+        { URL: fetchURLS.adventureMovies, title: "Adventure on family" },
+        { URL: fetchURLS.animationMovies, title: "Animation" },
+        { URL: fetchURLS.comedyMovies, title: "Comedy" },
+        { URL: fetchURLS.crimeMovies, title: "Crime" },
+        { URL: fetchURLS.documentaryMovies, title: "Documentary" },
+        { URL: fetchURLS.dramaMovies, title: "Drama" },
+        { URL: fetchURLS.familyMovies, title: "Family" },
+        { URL: fetchURLS.fantasyMovies, title: "Fantasy" },
+        { URL: fetchURLS.historyMovies, title: "History" },
+        { URL: fetchURLS.horrorMovies, title: "Horror" },
+        { URL: fetchURLS.musicMovies, title: "Music" },
+        { URL: fetchURLS.mysteryMovies, title: "Mystery" },
+        { URL: fetchURLS.romanceMovies, title: "Romance" },
+        { URL: fetchURLS.scienceFictionMovies, title: "Science Fiction" },
+        { URL: fetchURLS.thrillerMovies, title: "Thriller" },
     ], [fetchURLS]);
 
 
@@ -54,7 +54,7 @@ export default function MoviesWindow() {
                     setVisibleCarousels((prev) => Math.min(prev + 7, carousels.length));
                 }
             },
-            { rootMargin: "100px" }
+            { rootMargin: "450px" }
         );
 
         const target = loadMoreRef.current;
@@ -71,10 +71,10 @@ export default function MoviesWindow() {
             <Banner itemId={featuredMovie?.id} type='movie' />
             <div className="contenedorItems">
                 {carousels.slice(0, visibleCarousels).map((carousel, index) => (
-                    <CarouselURL key={index} {...carousel} />
+                    <CarouselURL key={index} isLarge={true} URL={carousel.URL} title={carousel.title} />
                 ))}
                 {visibleCarousels < carousels.length && (
-                    <div ref={loadMoreRef} style={{ height: '120px', background: 'transparent' }} />
+                    <div ref={loadMoreRef} style={{ height: '200px', background: 'transparent' }} />
                 )}
             </div>
         </div>

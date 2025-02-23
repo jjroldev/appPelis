@@ -23,20 +23,20 @@ export default function SeriesWindow() {
     }, []);
 
     const carousels = useMemo(() => [
-        { URL: fetchURLS.popularSeries, title: "Popular Series" ,isLarge: false},
-        { URL: fetchURLS.topRatedSeries, title: "Best Voted", isLarge: true },
-        { URL: fetchURLS.actionAdventureSeries, title: "Series of action and adventure" ,isLarge: false},
-        { URL: fetchURLS.familySeries, title: "Series for watch family", isLarge: true },
-        { URL: fetchURLS.animationSeries, title: "Animation series", isLarge: true },
-        { URL: fetchURLS.comedySeries, title: "Comedy series", isLarge: true },
-        { URL: fetchURLS.crimeSeries, title: "Crime series", isLarge: true },
-        { URL: fetchURLS.documentarySeries, title: "Documentary series", isLarge: true },
-        { URL: fetchURLS.dramaSeries, title: "Drama series", isLarge: true },
-        { URL: fetchURLS.sciFiFantasySeries, title: "Fantasy series", isLarge: true },
-        { URL: fetchURLS.kidsSeries, title: "Kids series" ,isLarge: false},
-        { URL: fetchURLS.realitySeries, title: "Reality series",isLarge: false },
-        { URL: fetchURLS.mysterySeries, title: "Mystery series", isLarge: true },
-        { URL: fetchURLS.warPoliticsSeries, title: "Series of war", isLarge: true },
+        { URL: fetchURLS.popularSeries, title: "Popular Series" },
+        { URL: fetchURLS.topRatedSeries, title: "Best Voted" },
+        { URL: fetchURLS.actionAdventureSeries, title: "Series of action and adventure" },
+        { URL: fetchURLS.familySeries, title: "Series for watch family" },
+        { URL: fetchURLS.animationSeries, title: "Animation series",  },
+        { URL: fetchURLS.comedySeries, title: "Comedy series",  },
+        { URL: fetchURLS.crimeSeries, title: "Crime series",  },
+        { URL: fetchURLS.documentarySeries, title: "Documentary series",  },
+        { URL: fetchURLS.dramaSeries, title: "Drama series",  },
+        { URL: fetchURLS.sciFiFantasySeries, title: "Fantasy series",  },
+        { URL: fetchURLS.kidsSeries, title: "Kids series" },
+        { URL: fetchURLS.realitySeries, title: "Reality series" },
+        { URL: fetchURLS.mysterySeries, title: "Mystery series",  },
+        { URL: fetchURLS.warPoliticsSeries, title: "Series of war",  },
     ], [fetchURLS]);
 
     const [visibleCarousels, setVisibleCarousels] = useState(5);
@@ -49,7 +49,7 @@ export default function SeriesWindow() {
                     setVisibleCarousels((prev) => Math.min(prev + 7, carousels.length));
                 }
             },
-            { rootMargin: "100px" }
+            { rootMargin: "450px" }
         );
 
         const target = loadMoreRef.current;
@@ -65,10 +65,10 @@ export default function SeriesWindow() {
             <Banner itemId={featuredSerie?.id} type='serie' />
             <div className="contenedorItems">
                 {carousels.slice(0, visibleCarousels).map((carousel, index) => (
-                    <CarouselURL key={index} {...carousel} />
-                ))}
+                        <CarouselURL key={index} isLarge={true} URL={carousel.URL} title={carousel.title} />
+                    ))}
                 {visibleCarousels < carousels.length && (
-                    <div ref={loadMoreRef} style={{ height: '120px', background: 'transparent' }} />
+                    <div ref={loadMoreRef} style={{ height: '200px', background: 'transparent' }} />
                 )}
             </div>
         </div>

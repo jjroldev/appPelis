@@ -71,13 +71,13 @@ export default function InfoSerie() {
                 </div>
 
                 {
-                    similars?.results?.length && (
+                    similars?.results?.length>0 && (
                         <div className="similarContainer flex flex-col gap-2">
                             <h3>Similar TV shows</h3>
                             <div className="contenedorPeliculasSimilares bg-red w-full">
                                 {
-                                    similars?.results?.map((serie: Serie) => (
-                                        serie.poster_path && serie.overview && <CardItem item={serie} isLarge={false} />
+                                    similars?.results?.map((serie: Serie,index:number) => (
+                                        serie.poster_path && serie.overview && <CardItem key={index} item={serie} isLarge={false} />
                                     ))
                                 }
                             </div>

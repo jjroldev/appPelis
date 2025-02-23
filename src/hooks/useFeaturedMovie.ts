@@ -11,7 +11,7 @@ export function useFeaturedMovie(nameItem: string, keyQuery: string, type: strin
     const { language } = useLanguage();
     const { currentPerfil } = useAuth();
     const fetchURLS = useMemo(() => getFetchURLs(language), [language]);
-    const fetchSeriesURLS = useMemo(() => getFetchSeriesURLs(language), [language]);
+    const fetchSeriesURLS = useMemo(() => getFetchSeriesURLs(language,3), [language]);
 
     const { data: items, isLoading } = useQuery([keyQuery, language], () =>
         type === "movie" ? fetchData(fetchURLS.topRatedMovies) : fetchData(fetchSeriesURLS.topRatedSeries)

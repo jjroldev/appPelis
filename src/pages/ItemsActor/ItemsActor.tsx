@@ -8,14 +8,12 @@ import { Movie } from '../../interface/Movie'
 import { Serie } from '../../interface/Serie'
 import Spinner from '../../components/Spinner/Spinner'
 import CardItem from '../../components/CardItem/CardItem'
-import { useFavorites } from '../../hooks/useFavorites'
 import { useLanguage } from '../../context/LanguageContext'
 import { useEffect } from 'react'
 const BarMenu = lazy(() => import('../../components/BarMenu/BarMenu'))
 export default function ItemsActor() {
     const { actorId } = useParams()
     const { language } = useLanguage()
-    const { handleAddFavorite } = useFavorites()
     const { data: results, isLoading } = useQuery(`movies-${actorId}`,
         () => fetchData(getURLItemsOfActor(actorId, language)), {
         refetchOnWindowFocus: false
@@ -40,7 +38,7 @@ export default function ItemsActor() {
             <BarMenu />
             <div className="contenedorItemsPosters items-center justify-center">
                 {validResults.map((movie: Movie | Serie, index: number) => (
-                    <CardItem key={movie.id + index} item={movie} isLarge={false} onAddFavorite={handleAddFavorite} />
+                    <CardItem key={movie.id + index} item={movie} isLarge={false}/>
                 ))}
                 {
                     !isLoading && !validResults.length && (

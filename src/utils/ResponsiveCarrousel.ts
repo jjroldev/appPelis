@@ -53,8 +53,8 @@ export const responsiveInfo = {
 export const responsive = (isLarge?: boolean) => {
     return {
         desktop: { breakpoint: { max: 3000, min: 1321 }, items: isLarge ? 5 : 8, slidesToSlide: isLarge ? 5 : 8 ,partialVisibilityGutter:12,},
-        tablet: { breakpoint: { max: 1320, min: 769 }, items: isLarge ? 5 : 6, slidesToSlide: isLarge ? 4 : 5 ,partialVisibilityGutter: 12,},
-        mobileLarge: { breakpoint: { max: 768, min: 481 }, items: isLarge ? 3 : 4, slidesToSlide: 8 ,partialVisibilityGutter: 12,},
-        mobileSmall: { breakpoint: { max: 480, min: 0 }, items: 3, slidesToSlide: 3,partialVisibilityGutter: 12, },
+        tablet: { breakpoint: { max: 1320, min: 769 }, items: isLarge ? 4 : 6, slidesToSlide: isLarge ? 4 : 6 ,partialVisibilityGutter: 12,},
+        mobileLarge: { breakpoint: { max: 768, min: 600 }, items: isLarge ? 3 : 5, slidesToSlide: isLarge ? 3 : 5 ,partialVisibilityGutter: 12,},
+        mobileSmall: { breakpoint: { max: 600, min: 0 }, items: 3, slidesToSlide: 3,partialVisibilityGutter: 12, },
     }
 }

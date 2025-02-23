@@ -2,26 +2,40 @@ import React, { useState, useCallback, useRef, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { motion } from "framer-motion";
 import { Movie } from "../../interface/Movie";
-import { URL_IMAGE_BACKDROP, URL_IMAGE_POSTER } from "../../utils/endPoints";
+import { URL_IMAGE_BACKDROP, URL_IMAGE_lOGO, URL_IMAGE_POSTER } from "../../utils/endPoints";
 import { Serie } from "../../interface/Serie";
 import "./CardItem.css";
-
+import { getLogoPath, isMovie } from "../../utils/helpers";
+import { useQuery } from "react-query";
+import { fetchData } from "../../utils/fetchData";
+import { getMovieImagesURL, getSeriesImagesURL } from "../../utils/endPoints";
+import { useLanguage } from "../../context/LanguageContext";
 interface CardItemProps {
   item: Movie | Serie;
   isLarge?: boolean;
   doDelete?: boolean;
   onRemoveFavorite?: (item: Movie | Serie) => void;
-  onAddFavorite?: (item: Movie | Serie) => void;
 }
 
 const CardItem = React.memo(
-  ({ item, isLarge, doDelete = false, onRemoveFavorite, onAddFavorite }: CardItemProps) => {
+  ({ item, isLarge, doDelete = false, onRemoveFavorite }: CardItemProps) => {
     const itemTitle = "title" in item ? item.title : item.name;
     const navigate = useNavigate();
     const imgRef = useRef<HTMLDivElement | null>(null);
-
+    const {language}=useLanguage()
     const [isVisible, setIsVisible] = useState(false);
     const [imageLoaded, setImageLoaded] = useState(false);
+
+    const { data: dataImages } = useQuery<any>(
+      `logo-item-${isMovie(item) ? "movie" : "serie"}-${item.id}`,
+      () =>
+        isMovie(item)
+          ? fetchData(getMovieImagesURL(item.id))
+          : fetchData(getSeriesImagesURL(item.id)),
+      { enabled: !!item.id && isLarge, staleTime: 1000 * 60 * 5 }
+    );
+
+    const logoPath = getLogoPath(item, dataImages, language)
 
     const pasarMovie = useCallback(() => {
       const tipo = "title" in item ? "movie" : "serie";
@@ -32,12 +46,6 @@ const CardItem = React.memo(
       event.stopPropagation();
       onRemoveFavorite && onRemoveFavorite(item);
     };
-
-    const handleAdd = (event: React.MouseEvent) => {
-      event.stopPropagation();
-      onAddFavorite && onAddFavorite(item);
-    };
-
     useEffect(() => {
       const observer = new IntersectionObserver(
         ([entry]) => {
@@ -63,31 +71,41 @@ const CardItem = React.memo(
       <div ref={imgRef} className={`contenedor-poster ${isLarge ? "large" : ""}`} onClick={pasarMovie}>
         <div className={`cardContainerImage ${isLarge ? "backdrop" : "poster"}`}>
           {isVisible && (
-            <motion.img
-              src={isLarge ? `${URL_IMAGE_BACKDROP}${item.backdrop_path}` : `${URL_IMAGE_POSTER}${item.poster_path}`}
-              alt={itemTitle}
-              onLoad={() => setImageLoaded(true)}
-              initial={{ opacity: 0 }}
-              animate={imageLoaded ? { opacity: 1 } : {}}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-              className="main-image"
-            />
+            <>
+              <motion.img
+                src={isLarge ? `${URL_IMAGE_BACKDROP}${item.backdrop_path}` : `${URL_IMAGE_POSTER}${item.poster_path}`}
+                alt={itemTitle}
+                onLoad={() => setImageLoaded(true)}
+                initial={{ opacity: 0 }}
+                animate={imageLoaded ? { opacity: 1 } : {}}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="main-image"
+              />
+              {logoPath && isLarge===true&& (
+                <motion.img
+                  src={URL_IMAGE_lOGO + logoPath}
+                  alt={itemTitle}
+                  onLoad={() => setImageLoaded(true)}
+                  initial={{ opacity: 0 }}
+                  animate={imageLoaded ? { opacity: 1 } : {}}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  className="logoCardItem"
+                />
+              )}
+            </>
           )}
 
           <div className="details-cardItem">
-            <h2 className="titulo-cardItem">
-              {isLarge && (itemTitle.includes(":") ? itemTitle.split(":")[0] : itemTitle)}
-            </h2>
-            <div className="play-button">
-              <button onClick={handleAdd} className={doDelete ? "heartVisible corazon" : "corazon"}>
-                <i className="fa-solid fa-heart"></i>
-              </button>
-              {doDelete && (
+            {doDelete && (
+              <div className="play-button">
                 <button className="corazon" onClick={handleRemove}>
-                  <i className="fa-solid fa-trash"></i>
+                  <span className="material-symbols-outlined">
+                    delete
+                  </span>
                 </button>
-              )}
-            </div>
+
+              </div>
+            )}
           </div>
         </div>
       </div>

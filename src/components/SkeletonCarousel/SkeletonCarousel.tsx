@@ -24,7 +24,6 @@ export function SkeletonCarousel({ isLarge=true,numItems ,title}: { isLarge: boo
                     showDots={false}
                     responsive={responsivew}
                     ssr={true}
-                    infinite={true}
                     autoPlay={false}
                     className={`${width < 600 ? "carousel-cell" : ""}`}
                     partialVisible={true}
