@@ -7,7 +7,6 @@ import { fetchData } from "../../utils/fetchData";
 import { responsive } from "../../utils/ResponsiveCarrousel";
 import "../CarouselURL/CarouselURL.css";
 import { useWindowWidth } from "../../hooks/useWindowWidth";
-import { useFavorites } from "../../hooks/useFavorites";
 import { Serie } from "../../interface/Serie";
 import { SkeletonCarousel } from "../SkeletonCarousel/SkeletonCarousel";
 import { getFetchURLs } from "../../utils/endPoints";
@@ -20,7 +19,6 @@ interface CarouselBaseProps {
 }
 
 const CarouselBase = React.memo(({ title, isLarge }: CarouselBaseProps) => {
-  const { handleAddFavorite } = useFavorites();
   const width = useWindowWidth();
   const { language } = useLanguage();
 
@@ -57,7 +55,7 @@ const CarouselBase = React.memo(({ title, isLarge }: CarouselBaseProps) => {
         slidesToSlide={1}
         focusOnSelect={false}
       >
-        {renderItems(validItemsTR, isLarge, width, handleAddFavorite)}
+        {renderItems(validItemsTR, isLarge, width)}
       </Carousel>
     </div>
   );

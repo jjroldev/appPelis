@@ -37,7 +37,7 @@ const CarouselCollection = React.memo(({ title, isLarge = false, item }: Carouse
       items?.map(
         (item) =>
           item.poster_path && (
-            <CardItem key={item.id} item={item} isLarge={width > 1000 ? isLarge : false} onAddFavorite={handleAddFavorite} />
+            <CardItem key={item.id} item={item} isLarge={width > 1000 ? isLarge : false} />
           )
       ),
     [width, isLarge, handleAddFavorite]
