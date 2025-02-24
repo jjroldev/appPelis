@@ -58,3 +58,20 @@ export const responsive = (isLarge?: boolean) => {
         mobileSmall: { breakpoint: { max: 600, min: 0 }, items: 3, slidesToSlide: 3,partialVisibilityGutter: 12, },
     }
 }
+
+
+export const responsiveActor = () => {
+    return {
+        desktop: { breakpoint: { max: 3000, min: 1321 }, items: 7, slidesToSlide: 7 ,partialVisibilityGutter:12,},
+        tablet: { breakpoint: { max: 1320, min: 1169 }, items:  6, slidesToSlide:  6 ,partialVisibilityGutter: 12,},
+        mobileLarge: { breakpoint: { max: 1168, min: 890 }, items: 5, slidesToSlide:5 ,partialVisibilityGutter: 12,},
+        mobileSmall: { breakpoint: { max: 889, min: 720 }, items: 4, slidesToSlide: 4,partialVisibilityGutter: 12, },
+        mobileExtraSmall: {
+            breakpoint: { max: 719, min: 615 },
+            items: 3,
+            slidesToSlide: 3,
+            partialVisibilityGutter: 12,
+        },
+        extraTiny: { breakpoint: { max: 614, min: 0 }, items: 2, slidesToSlide: 2, partialVisibilityGutter: 12 },
+    }
+}

@@ -4,48 +4,46 @@ import "react-multi-carousel/lib/styles.css";
 import { Movie } from "../../interface/Movie";
 import { useQuery } from "react-query";
 import { fetchData } from "../../utils/fetchData";
-import { responsive } from "../../utils/ResponsiveCarrousel";
-import "./CarouselURL.css";
-import { useWindowWidth } from "../../hooks/useWindowWidth";
+import {responsiveActor} from "../../utils/ResponsiveCarrousel";
 import { Serie } from "../../interface/Serie";
 import { SkeletonCarousel } from "../SkeletonCarousel/SkeletonCarousel";
 import { useLanguage } from "../../context/LanguageContext";
-import { renderItems } from "../../utils/helpers";
-
+import CardItem from "../CardItem/CardItem";
+import '../CarouselURL/CarouselURL.css'
+import './CarouselItemActor.css'
 const CarouselBase = lazy(() => import("../CarouselBase/CarouselBase"));
 
-interface CarouselURLProps {
+interface CarouselItemsActorProps {
   URL: string;
   title: string;
   isLarge?: boolean;
 }
 
-const CarouselURL = React.memo(({ URL, title, isLarge }: CarouselURLProps) => {
-  const width = useWindowWidth();
+const CarouselItemsActor = React.memo(({ URL, title, isLarge }: CarouselItemsActorProps) => {
   const { language } = useLanguage();
 
   const { data: items, isLoading } = useQuery(
-    ["items", URL, title, language],
+    ["itemsActor", URL, title, language],
     () => fetchData(URL),
     { refetchOnWindowFocus: false }
   );
 
   const validItems = useMemo(
-    () => items?.results?.filter((item: Movie | Serie) => item.backdrop_path && item.poster_path && item.overview)  || [],
+    () => items?.cast?.filter((item: Movie | Serie) => item.backdrop_path && item.poster_path && item.overview)  || [],
     [items]
   );
 
-  const responsivew = useMemo(() => responsive(width > 1000 ? isLarge : false), [width, isLarge]);
+  const responsivew = useMemo(() => responsiveActor(), []);
 
 
   if (isLoading) {
-    return <SkeletonCarousel numItems={10} isLarge={width > 1000 ? isLarge : false} title={title}/>;
+    return <SkeletonCarousel numItems={10} isLarge={false} title={title}/>;
   }
 
 
   return validItems.length ? (
     <div className="carousel">
-      <h2 className="tituloCarousel">{title}</h2>
+      <h2 className="tituloCarouselActor">{title}</h2>
       <Carousel
         swipeable
         showDots={false}
@@ -54,12 +52,13 @@ const CarouselURL = React.memo(({ URL, title, isLarge }: CarouselURLProps) => {
         autoPlay={false}
         keyBoardControl={true}
         partialVisible={true}
-        className={`${width < 600 ? "carousel-cell" : ""}`}
         slidesToSlide={1}
         infinite
         focusOnSelect={false}
       >
-        {renderItems(validItems, isLarge, width)}
+        {validItems.map((item:Movie|Serie,index:number)=>(
+            <CardItem key={index} item={item} isLarge={isLarge}/>
+        ))}
       </Carousel>
     </div>
   ) : (
@@ -67,4 +66,4 @@ const CarouselURL = React.memo(({ URL, title, isLarge }: CarouselURLProps) => {
   );
 });
 
-export default CarouselURL;
+export default CarouselItemsActor;

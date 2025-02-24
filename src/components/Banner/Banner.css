@@ -9,8 +9,8 @@
 
 
 .header .fondo {
-    width: 100%;
-    height: 100%;
+    width: 100% !important;
+    height: 100% !important;
     object-fit: cover;
     object-position: top;
     position: absolute;
@@ -83,7 +83,7 @@
 }
 
 .contenedorLogo {
-    bottom: 140px;
+    bottom: 180px;
     z-index: 3;
 }
 

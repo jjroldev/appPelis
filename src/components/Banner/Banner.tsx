@@ -66,7 +66,7 @@ export function Banner({ itemId, isDetail = false, type }: BannerProps) {
     const renderOverview = () =>
         item?.overview ? (
             <p className="overview">
-                {width > 600 ? item.overview.slice(0, 350) : item.overview.slice(0, 150)}...
+                {width > 600 ? item.overview.slice(0, 350) : item.overview.slice(0, 250)}...
             </p>
         ) : null;
 

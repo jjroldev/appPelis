@@ -10,6 +10,7 @@ import Spinner from '../../components/Spinner/Spinner'
 import CardItem from '../../components/CardItem/CardItem'
 import { useLanguage } from '../../context/LanguageContext'
 import { useEffect } from 'react'
+import SectionActor from '../../components/SectionActor/SectionActor'
 const BarMenu = lazy(() => import('../../components/BarMenu/BarMenu'))
 export default function ItemsActor() {
     const { actorId } = useParams()
@@ -24,6 +25,11 @@ export default function ItemsActor() {
         return results.cast.filter((movie: Movie | Serie) => movie.poster_path && movie.backdrop_path && movie.overview);
     }, [results])
 
+    const validResultsCrew = useMemo(() => {
+        if (!results || !results.cast) return [];
+        return results.crew.filter((movie: Movie | Serie) => movie.poster_path && movie.backdrop_path && movie.overview);
+    }, [results])
+
     useEffect(() => {
         window.scrollTo({ top: 0, left: 0, behavior: "instant" });
     }, []);
@@ -36,15 +42,22 @@ export default function ItemsActor() {
     return (
         <div className="containerItemsActor">
             <BarMenu />
-            <div className="contenedorItemsPosters items-center justify-center">
-                {validResults.map((movie: Movie | Serie, index: number) => (
-                    <CardItem key={movie.id + index} item={movie} isLarge={false}/>
-                ))}
-                {
-                    !isLoading && !validResults.length && (
-                        <p>No hay películas o series de este actor</p>
-                    )
-                }
+            <div className="flex flex-col contenedorInformacionActor">
+                <SectionActor actorId={actorId} />
+                <div className={`contenedorItemsPosters items-center justify-center`}>
+                    {validResults.map((movie: Movie | Serie, index: number) => (
+                        <CardItem key={index} item={movie} isLarge={false} />
+                    ))}
+
+                    {validResultsCrew.map((movie: Movie | Serie, index: number) => (
+                        <CardItem key={index} item={movie} isLarge={false} />
+                    ))}
+                    {
+                        !isLoading && !validResults.length && (
+                            <p className='text-white'>No hay películas o series de este actor</p>
+                        )
+                    }
+                </div>
             </div>
         </div>
     )

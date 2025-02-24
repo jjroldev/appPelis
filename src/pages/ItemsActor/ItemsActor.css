@@ -9,13 +9,24 @@
     display: grid;
     grid-template-columns: repeat(8,1fr);
     gap: 10px;
-    padding: 90px 40px;
+}
+
+.contenedorInformacionActor{
+     padding: 10px 40px;
+     padding-bottom: 50px !important;
+     padding-top: 90px !important;
+     gap: 50px;
 }
 
 @media(max-width:1050px){
     .contenedorItemsPosters{
         grid-template-columns: repeat(7,1fr);
     }
+
+    .contenedorInformacionActor{
+        padding: 10px 30px;
+   }
+   
 }
 
 @media(max-width:870px){
@@ -33,16 +44,20 @@
 
 
 
-@media(max-width:670px){
+@media(max-width:620px){
     .contenedorItemsPosters{
         grid-template-columns: repeat(4,1fr);
     }
+
+    .contenedorInformacionActor{
+        padding: 10px 15px;
+   }
 }
 
 
-@media(max-width:575px){
+@media(max-width:440px){
     .contenedorItemsPosters{
         grid-template-columns: repeat(3,1fr);
-        padding: 90px 20px;
+        /* padding: 0px 20px; */
     }
 }
