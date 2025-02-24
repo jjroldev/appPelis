@@ -7,18 +7,15 @@ import { useMenu } from '../../context/MenuContext';
 import '../Home/Home.css';
 import './SeriesWindow.css';
 import CarouselURL from '../../components/CarouselURL/CarouselURL';
-import { useSearch } from '../../context/SearchContext';
 
 export default function SeriesWindow() {
     const featuredSerie = useFeaturedMovie("feautedSerieSW", "itemsBannerSeries", "serie");
     const { language } = useLanguage();
     const fetchURLS = useMemo(() => getFetchSeriesURLs(language), [language]);
-    const { setSearchTerm } = useSearch();
     const { setOpenMenu } = useMenu();
 
     useEffect(() => {
         window.scroll({ top: 0, left: 0, behavior: "instant" });
-        setSearchTerm("");
         setOpenMenu(false);
     }, []);
 

@@ -2,7 +2,7 @@ import './SectionActor.css'
 import { useQuery } from 'react-query'
 import { Actor } from '../../interface/Actor'
 import { fetchData } from '../../utils/fetchData'
-import {getURLDetailsOfActor, getURLItemsOfActor, URL_IMAGE_PROFILE_HD } from '../../utils/endPoints'
+import { getURLDetailsOfActor, getURLSearchActors, URL_IMAGE_PROFILE_HD } from '../../utils/endPoints'
 import { useLanguage } from '../../context/LanguageContext'
 import { motion } from 'framer-motion'
 import { useWindowWidth } from '../../hooks/useWindowWidth'
@@ -15,9 +15,17 @@ export default function SectionActor({ actorId }: { actorId: string | undefined 
         refetchOnWindowFocus: false
     })
 
+    const { data: dataSearchActors, isLoading: isLoading1 } = useQuery(`dataActors-search-${actorId}`,
+        () => fetchData(getURLSearchActors(actorDetails?.name, language)), {
+        enabled: !isLoading, refetchOnWindowFocus: false
+    }
+    )
+
+    const known_for = dataSearchActors?.results?.find((data: Actor) => data.name === actorDetails?.name).known_for
+
     const width = useWindowWidth()
 
-    if (isLoading) {
+    if (isLoading || isLoading1) {
         return (
             <Skeleton
                 sx={{ bgcolor: 'grey.900' }}
@@ -29,7 +37,11 @@ export default function SectionActor({ actorId }: { actorId: string | undefined 
     }
 
     return (
-        <div className="containerDetailsActor flex w-full bg-red text-white">
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="containerDetailsActor flex w-full bg-red text-white">
             <div className="containerPerfilIMG flex flex-col relative">
                 <motion.img
                     className='object-contain object-center img-actor'
@@ -61,13 +73,16 @@ export default function SectionActor({ actorId }: { actorId: string | undefined 
                     <div className="detailActor w-full relative">
                         <h3>Biography</h3>
                         <p className='biography'>{width >= 950 ?
-                            actorDetails?.biography.split('.').slice(0, 4) :
+                            actorDetails?.biography.split('.').slice(0, 7) :
                             actorDetails?.biography.split('.').slice(0, 3)} .</p>
                     </div>
                 )
                 }
-                <CarouselItemsActor URL={getURLItemsOfActor(actorId,language)} title={`Series and movies of ${actorDetails?.name}`}/>
+                <CarouselItemsActor items={known_for}
+                    title='Known for'
+                    isLarge={false}
+                />
             </div>
-        </div>
+        </motion.div>
     )
 }

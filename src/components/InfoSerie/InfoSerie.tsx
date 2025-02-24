@@ -7,7 +7,6 @@ import { useEffect } from "react";
 import { fetchData } from "../../utils/fetchData";
 import { useQuery } from "react-query";
 import { getSeriesDetailsURL, getSimilarSeriesURL } from "../../utils/endPoints";
-import { useSearch } from "../../context/SearchContext";
 import { useMenu } from "../../context/MenuContext";
 import CarouselURL from "../../components/CarouselURL/CarouselURL";
 import { useLanguage } from "../../context/LanguageContext";
@@ -31,13 +30,11 @@ export default function InfoSerie() {
     const { data: similars, isLoading: isLoading1 } = useQuery(`similar-${seriesId}-${language}`, () =>
         fetchData(getSimilarSeriesURL(seriesId, language, 2)), { refetchOnWindowFocus: false })
 
-    const { setSearchTerm } = useSearch();
     const { setOpenMenu } = useMenu();
 
     useEffect(() => {
         window.scroll({ top: 0, left: 0, behavior: "instant" });
         setOpenMenu(false);
-        setSearchTerm("");
     }, [seriesId]);
 
     if (isLoading || isLoading1) {
@@ -66,7 +63,7 @@ export default function InfoSerie() {
                         }
                     </div>
                     <Suspense fallback={<></>}>
-                        <CarouselCredits item={item} title="CREW" />
+                        <CarouselCredits item={item} title="Crew" />
                     </Suspense>
                 </div>
 

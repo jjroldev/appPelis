@@ -7,7 +7,6 @@ import { useEffect } from "react";
 import { fetchData } from "../../utils/fetchData";
 import { useQuery } from "react-query";
 import { getURLMovieDetails } from "../../utils/endPoints";
-import { useSearch } from "../../context/SearchContext";
 import { useMenu } from "../../context/MenuContext";
 import { Suspense, lazy } from "react";
 import CarouselURL from "../../components/CarouselURL/CarouselURL";
@@ -29,13 +28,11 @@ export default function InfoMovie() {
     const { data: similars,isLoading:isLoading1 } = useQuery(`similar-${movieId}-${language}`, () =>
         fetchData(getURLMovieDetails(movieId, language, 2).similar), { refetchOnWindowFocus: false })
 
-    const { setSearchTerm } = useSearch();
     const { setOpenMenu } = useMenu();
 
     useEffect(() => {
         window.scroll({ top: 0, left: 0, behavior: "instant" });
         setOpenMenu(false);
-        setSearchTerm("");
     }, [movieId]);
 
     if(isLoading || isLoading1){
@@ -63,7 +60,7 @@ export default function InfoMovie() {
                     </div>
 
                     <Suspense fallback={<></>}>
-                        <CarouselCredits item={item} title="CAST" />
+                        <CarouselCredits item={item} title="Cast" />
                     </Suspense>
                 </div>
                 {

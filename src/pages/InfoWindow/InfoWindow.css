@@ -14,7 +14,7 @@
     height: auto;
 }
 
-.contenedorSimilares{
+.contenedorSimilares {
     margin-bottom: 60px;
     display: flex;
     flex-direction: column;
@@ -28,8 +28,8 @@
 }
 
 .detallesReparto h2 {
-    font-size: clamp(.95rem, 1.5vw, 1.6rem);
-    font-weight: bold;
+    font-size: 1.4rem;
+    font-weight: 500;
     position: relative;
     padding-bottom: 10px;
 }
@@ -37,7 +37,7 @@
 .detallesReparto h2::after {
     content: "";
     display: block;
-    width: 10%;
+    width: 100%;
     height: 4px;
     background-color: rgb(255, 255, 73);
     position: absolute;
@@ -72,7 +72,7 @@
     font-size: 2rem;
 }
 
-.cast-visible .react-multiple-carousel__arrow{
+.cast-visible .react-multiple-carousel__arrow {
     display: none;
 }
 
@@ -100,11 +100,18 @@
         min-height: 32px;
     }
 
-    .contenedorSimilares{
+    .contenedorSimilares {
         margin-bottom: 40px;
         gap: 40px;
     }
 
+}
+
+@media (max-width: 800px) {
+
+    .detallesReparto h2 {
+        font-size: 1.25rem;
+    }
 }
 
 @media (max-width: 780px) {
@@ -128,7 +135,7 @@
         min-height: 35px;
     }
 
-    .contenedorSimilares{
+    .contenedorSimilares {
         margin-bottom: 35px;
         gap: 35px;
     }
@@ -136,11 +143,19 @@
 
 @media (max-width: 650px) {
 
-    .contenedorSimilares{
+    .contenedorSimilares {
         margin-bottom: 30px;
         gap: 30px;
     }
 }
+
+@media (max-width: 550px) {
+
+    .detallesReparto h2 {
+        font-size: 1.15rem;
+    }
+}
+
 
 
 @media (max-width: 500px) {

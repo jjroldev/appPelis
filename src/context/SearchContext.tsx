@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, ReactNode,useEffect } from "react";
 
 interface SearchContextType {
   searchTerm: string;
@@ -8,7 +8,19 @@ interface SearchContextType {
 const SearchContext = createContext<SearchContextType | undefined>(undefined);
 
 export function SearchProvider({ children }: { children: ReactNode }) {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState<string>(() => {
+    const storedSearchTerm = sessionStorage.getItem("searchTerm");
+    return storedSearchTerm || "";
+  });
+
+
+  useEffect(() => {
+    if (searchTerm) {
+      sessionStorage.setItem("searchTerm", searchTerm);
+    } else {
+      sessionStorage.removeItem("searchTerm");
+    }
+  }, [searchTerm]);
 
   return (
     <SearchContext.Provider value={{ searchTerm, setSearchTerm }}>

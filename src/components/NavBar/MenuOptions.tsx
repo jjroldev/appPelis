@@ -31,6 +31,13 @@ const MenuOptions = () => {
         >
             Series
         </Link>
+
+        <Link
+            className={`textInicio ${location.pathname === "/actors" ? "!text-yellow-600 font-bold" : ""}`}
+            to="/actors"
+        >
+            Actors
+        </Link>
     </>
     )
 }

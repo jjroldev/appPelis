@@ -4,8 +4,8 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-    min-height: 100vh;
-    min-height: 100dvh;
+    min-height: 120vh;
+    min-height: 120dvh;
     padding: 110px 72px 60px 72px;
 }
 

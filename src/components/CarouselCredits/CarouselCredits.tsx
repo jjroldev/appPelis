@@ -4,7 +4,6 @@ import { useWindowWidth } from "../../hooks/useWindowWidth";
 import { Serie } from "../../interface/Serie";
 import { Card } from "../Card/Card";
 import { Movie } from "../../interface/Movie";
-
 const CarouselCredits = ({ item, title }: { item: Movie | Serie | undefined; title: string }) => {
     const width = useWindowWidth();
 
@@ -15,7 +14,7 @@ const CarouselCredits = ({ item, title }: { item: Movie | Serie | undefined; tit
 
     return (
         <div className="detallesReparto">
-            <h2>{title}</h2>
+            <h2 className="tituloCarouselCredits">{title}</h2>
             <Carousel
                 swipeable
                 draggable

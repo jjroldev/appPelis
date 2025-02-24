@@ -1,5 +1,4 @@
 .carousel {
-    height: 100%;
     display: flex;
     flex-direction: column;
     z-index: 5;

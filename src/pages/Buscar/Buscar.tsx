@@ -1,5 +1,5 @@
 import "./Buscar.css";
-import { useEffect, useMemo, useCallback } from "react";
+import { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuery} from "react-query";
 
@@ -22,7 +22,7 @@ import BarMenu from "../../components/BarMenu/BarMenu";
 export default function Buscar() {
   const navigate = useNavigate();
 
-  const { searchTerm, setSearchTerm } = useSearch();
+  const { searchTerm} = useSearch();
   const { language } = useLanguage();
   const { currentPerfil, currentUser } = useAuth();
   const { setOpenMenu } = useMenu();
@@ -41,15 +41,6 @@ export default function Buscar() {
   useEffect(() => {
     setOpenMenu(false);
   }, [setOpenMenu]);
-
-  const handleSearch = useCallback(
-    (value: string) => {
-      if (value !== searchTerm) {
-        setSearchTerm(value);
-      }
-    },
-    [searchTerm, setSearchTerm]
-  );
 
   //esto se pone para actualizar mi lista
   useQuery<Movie[] | Serie[]>(
@@ -126,7 +117,7 @@ export default function Buscar() {
     <div className="contenedor">
       <BarMenu/>
       <div className="contenedorBuscar">
-        {width < 900 && <Lupa placeholder="Search movies, series, tv series..." onSubmit={handleSearch} />}
+        {width < 900 && <Lupa placeholder="Search movies, series, tv series..." />}
         {renderContent()}
       </div>
     </div>

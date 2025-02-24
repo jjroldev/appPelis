@@ -5,14 +5,12 @@ import "./MiLista.css"
 import { useAuth } from '../../context/AuthContext';
 import { useQuery } from 'react-query';
 import { getFavoritesByProfile } from '../../firebase';
-import { useSearch } from '../../context/SearchContext';
 import { useMenu } from '../../context/MenuContext';
 import { useFavorites } from '../../hooks/useFavorites';
 import { Serie } from '../../interface/Serie';
 import BarMenu from '../../components/BarMenu/BarMenu';
 export default function MiLista() {
   const { currentUser, currentPerfil } = useAuth()
-  const { setSearchTerm } = useSearch()
   const { setOpenMenu } = useMenu()
   const { handleRemoveFavorite } = useFavorites()
   const [enabledEdit,setEnabledEdit]=useState(false)
@@ -27,7 +25,6 @@ export default function MiLista() {
   useEffect(() => {
     window.scroll({ top: 0, left: 0, behavior: "instant" });
     setOpenMenu(false)
-    setSearchTerm("")
   }, []);
 
 

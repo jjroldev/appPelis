@@ -7,18 +7,15 @@ import { useEffect, useMemo } from 'react';
 import { getFetchURLs } from '../../utils/endPoints';
 import '../Home/Home.css';
 import { useMenu } from '../../context/MenuContext';
-import { useSearch } from '../../context/SearchContext';
 import { useRef, useState } from 'react';
 export default function MoviesWindow() {
     const featuredMovie = useFeaturedMovie("feautedMovieMW", "itemsBannerMovies", "movie");
     const { language } = useLanguage();
     const fetchURLS = useMemo(() => getFetchURLs(language), [language]);
     const { setOpenMenu } = useMenu();
-    const { setSearchTerm } = useSearch();
 
     useEffect(() => {
         window.scroll({ top: 0, left: 0, behavior: "instant" });
-        setSearchTerm("");
         setOpenMenu(false);
     }, []);
 

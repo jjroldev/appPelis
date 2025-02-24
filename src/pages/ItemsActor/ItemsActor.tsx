@@ -44,7 +44,7 @@ export default function ItemsActor() {
             <BarMenu />
             <div className="flex flex-col contenedorInformacionActor">
                 <SectionActor actorId={actorId} />
-                <div className={`contenedorItemsPosters items-center justify-center`}>
+                <div className={`contenedorItemsPosters ${validResults.length === 0 && validResultsCrew.length === 0 ? '!flex items-center justify-center' : ''}`}>
                     {validResults.map((movie: Movie | Serie, index: number) => (
                         <CardItem key={index} item={movie} isLarge={false} />
                     ))}
@@ -52,12 +52,14 @@ export default function ItemsActor() {
                     {validResultsCrew.map((movie: Movie | Serie, index: number) => (
                         <CardItem key={index} item={movie} isLarge={false} />
                     ))}
+
                     {
-                        !isLoading && !validResults.length && (
-                            <p className='text-white'>No hay películas o series de este actor</p>
+                        !isLoading && validResults.length === 0 && validResultsCrew.length === 0 && (
+                            <p className='text-white w-full'>No hay películas o series de este actor</p>
                         )
                     }
                 </div>
+
             </div>
         </div>
     )

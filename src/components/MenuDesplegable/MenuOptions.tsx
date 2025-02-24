@@ -12,6 +12,7 @@ export default function MenuOptions() {
                 <Link className="opcionMH" to="/buscar">BUSCAR</Link>
                 <Link className="opcionMH" to="/movies">MOVIES</Link>
                 <Link className="opcionMH" to="/series">SERIES</Link>
+                <Link className="opcionMH" to="/actors">ACTORS</Link>
                 <div className="opcionMH c-perfil-HB">
                     <Link to="/miLista">{currentPerfil?.name.toUpperCase()}</Link>
                     <Suspense fallback={<></>}>

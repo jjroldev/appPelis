@@ -5,14 +5,12 @@ import { useSearch } from "../../context/SearchContext";
 
 interface LupaProps {
     placeholder: string;
-    onSubmit: (value: string) => void;
 }
 
-const Lupa = memo(({ placeholder, onSubmit }: LupaProps) => {
+const Lupa = memo(({ placeholder }: LupaProps) => {
     const { searchTerm, setSearchTerm } = useSearch();
     const inputRef = useRef<HTMLInputElement>(null);
-    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-    const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm);
+    const [inputValue, setInputValue] = useState(searchTerm);
 
     useEffect(() => {
         if (inputRef.current) {
@@ -21,19 +19,12 @@ const Lupa = memo(({ placeholder, onSubmit }: LupaProps) => {
     }, []);
 
     useEffect(() => {
-        if (timeoutRef.current) clearTimeout(timeoutRef.current);
-
-        timeoutRef.current = setTimeout(() => {
-            if (searchTerm !== localSearchTerm) {
-                setSearchTerm(localSearchTerm);
-                onSubmit(localSearchTerm);
-            }
+        const handler = setTimeout(() => {
+            setSearchTerm(inputValue);
         }, 1000);
 
-        return () => {
-            if (timeoutRef.current) clearTimeout(timeoutRef.current);
-        };
-    }, [localSearchTerm]);
+        return () => clearTimeout(handler);
+    }, [inputValue, setSearchTerm]);
 
     return (
         <form id="busqueda" onSubmit={(e) => e.preventDefault()}>
@@ -44,8 +35,8 @@ const Lupa = memo(({ placeholder, onSubmit }: LupaProps) => {
                     type="text"
                     className="lupaMovile"
                     placeholder={placeholder}
-                    value={localSearchTerm}
-                    onChange={(e) => setLocalSearchTerm(e.target.value)}
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
                 />
                 <i className="fa-solid fa-magnifying-glass lupaIcono"></i>
                 <button type="submit" style={{ display: 'none' }} />

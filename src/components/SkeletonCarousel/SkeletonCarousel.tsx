@@ -21,7 +21,7 @@ export function SkeletonCarousel({ isLarge=true,numItems ,title,actor=false}: { 
     return (
         <>
             <div className="carousel">
-                <h2 className="tituloCarousel">{title}</h2>
+                <h2 className={`${actor ? "tituloCarouselActor":"tituloCarousel"}`}>{title}</h2>
                 <Carousel
                     swipeable={false}
                     draggable={false}

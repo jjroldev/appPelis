@@ -2,8 +2,8 @@ export const URL_IMAGE_POSTER = "https://image.tmdb.org/t/p/w300";
 export const URL_IMAGE_BACKDROP = "https://image.tmdb.org/t/p/w500";
 export const URL_IMAGE_BACKDROPC = "https://image.tmdb.org/t/p/original";
 export const URL_IMAGE_BANNER = "https://image.tmdb.org/t/p/original";
-export const URL_IMAGE_PROFILE = "https://image.tmdb.org/t/p/w185";
-export const URL_IMAGE_PROFILE_HD = "https://image.tmdb.org/t/p/w300";
+export const URL_IMAGE_PROFILE = "https://image.tmdb.org/t/p/w300";
+export const URL_IMAGE_PROFILE_HD = "https://image.tmdb.org/t/p/original";
 export const URL_IMAGE_lOGO = "https://image.tmdb.org/t/p/w500";
 export const URL_IMAGE_STILL = "https://image.tmdb.org/t/p/w500";
 export const BASE_URL = "https://api.themoviedb.org/3";
@@ -118,4 +118,11 @@ export const getURLMoviesOfActor=(ACTOR_ID:string | undefined,language:string|un
   `${BASE_URL}/person/${ACTOR_ID}/movie_credits?api_key=${API_KEY}&language=${language}`
 
 export const getURLDetailsOfActor = (actorId: string | undefined, language: string) => 
-  `${BASE_URL}/person/${actorId}?api_key=${API_KEY}&language=${language}`
+  `${BASE_URL}/person/${actorId}?api_key=${API_KEY}&append_to_response=combined_credits&language=${language}`
+
+export const getURLSearchActors=(nameActor:string| undefined,language:string)=>
+  `${BASE_URL}/search/person?api_key=${API_KEY}&query=${nameActor}&language=${language}`
+
+export const getURLPopularActors = (language: string) =>
+  `${BASE_URL}/person/popular?api_key=${API_KEY}&language=${language}`;
+

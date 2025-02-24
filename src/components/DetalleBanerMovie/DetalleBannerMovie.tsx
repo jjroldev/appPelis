@@ -17,7 +17,7 @@ const DetalleBannerMovie = memo(({ movie }: { movie: Movie }) => {
     <>
       <div className="itemDetailsBanner flex flex-col">
         <div className="bannerDetails flex flex-row">
-          <span>IMDb {movie?.vote_average.toFixed(1)}</span>
+          <span>{movie?.vote_average.toFixed(1) != "0.0" ? "IMDb " + movie?.vote_average.toFixed(1) : ""}</span>
           <span>{movie?.release_date.split("-")[0]}</span>
           <span>{formatRuntime(movie.runtime)}</span>
         </div>

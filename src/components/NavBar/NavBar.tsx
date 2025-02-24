@@ -30,6 +30,7 @@ export default function NavBar() {
                             || location.pathname=="/movies"
                             || location.pathname=="/series"
                             || location.pathname=="/miLista"
+                            || location.pathname=="/actors"
                             || false}
                     />
                     <PerfilDrop />

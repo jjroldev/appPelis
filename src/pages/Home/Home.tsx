@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState, useRef, Suspense, lazy } from "react";
-import { useSearch } from "../../context/SearchContext";
 import { useMenu } from "../../context/MenuContext";
 import "./Home.css";
 import { useFeaturedMovie } from "../../hooks/useFeaturedMovie";
@@ -10,7 +9,6 @@ const CarouselFavorites = lazy(() => import("../../components/CarouselFavorites/
 const CarouselURL = lazy(() => import("../../components/CarouselURL/CarouselURL"))
 
 export default function Home() {
-    const { setSearchTerm } = useSearch();
     const { setOpenMenu } = useMenu();
     const { language } = useLanguage();
 
@@ -67,7 +65,6 @@ export default function Home() {
     useEffect(() => {
         window.scrollTo({ top: 0, left: 0, behavior: "instant" });
         setOpenMenu(false);
-        setSearchTerm("");
     }, []);
 
     useEffect(() => {
