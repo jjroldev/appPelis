@@ -67,8 +67,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setCurrentUser(null);
     setCurrentPerfil(null);
     setIsLoggedIn(false);
-    sessionStorage.removeItem("currentPerfil");
-    sessionStorage.removeItem("searchTerm")
+    sessionStorage.clear();
   };
 
   return (

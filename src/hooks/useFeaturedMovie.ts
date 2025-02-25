@@ -14,7 +14,7 @@ export function useFeaturedMovie(nameItem: string, keyQuery: string, type: strin
     const fetchSeriesURLS = useMemo(() => getFetchSeriesURLs(language,1), [language]);
 
     const { data: items, isLoading } = useQuery([keyQuery, language], () =>
-        type === "movie" ? fetchData(fetchURLS.nowPlaying) : fetchData(fetchSeriesURLS.now_playing)
+        type === "movie" ? fetchData(fetchURLS.nowPlaying) : fetchData(fetchSeriesURLS.mysterySeries)
     );
 
     const [featuredItem, setFeaturedItem] = useState<Movie | Serie | null>(null);

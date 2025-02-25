@@ -6,6 +6,7 @@ import { fetchData } from "../../utils/fetchData";
 import { getLogoPath, getVideoItem } from "../../utils/helpers.tsx";
 import { getCertifiedReleaseItem } from "../../utils/helpers.tsx";
 import { getFavoritesByProfile } from "../../firebase.ts";
+import { Skeleton, Box } from "@mui/material";
 import {
     URL_IMAGE_lOGO,
     URL_IMAGE_BANNER,
@@ -126,8 +127,8 @@ export function Banner({ itemId, isDetail = false, type }: BannerProps) {
                     </button>
                 )}
 
-                <button onClick={toggleFavorite} 
-                className="botonMeGustaBanner">
+                <button onClick={toggleFavorite}
+                    className="botonMeGustaBanner">
                     <i className={`fa-solid ${isFavorite ? "fa-check" : "fa-plus"}`}></i>
                 </button>
             </div>
@@ -178,7 +179,13 @@ export function Banner({ itemId, isDetail = false, type }: BannerProps) {
                     </div>
 
                     {isDetail && width >= 650 && (
-                        <Suspense fallback={<></>}>
+                        <Suspense fallback={<>
+                            <Box sx={{ width: 300 }}>
+                                <Skeleton sx={{ bgcolor: 'grey.700' }} />
+                                <Skeleton animation="wave" sx={{ bgcolor: 'grey.700' }} />
+                                <Skeleton animation={false} sx={{ bgcolor: 'grey.700' }} />
+                            </Box>
+                        </>}>
                             <DetalleBanner item={item} />
                         </Suspense>
                     )}
