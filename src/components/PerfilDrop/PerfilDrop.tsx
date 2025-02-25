@@ -26,15 +26,15 @@ export default function PerfilDrop() {
 
     const handleSetCurrentPerfil = (perfil: Perfil | null) => {
         setCurrentPerfil(perfil);
-        window.location.reload()
+        if(currentPerfil?.id!=perfil?.id){
+            window.location.reload()
+        }
         setShowDropdown(false);
     };
 
     return (
         <div
             className="contenedorPerfilImagen"
-            onMouseEnter={() => setShowDropdown(true)}
-            onMouseLeave={() => setShowDropdown(false)}
             onClick={() => setShowDropdown(!showDropdown)}
         >
             <div className="containerImagePerfil">

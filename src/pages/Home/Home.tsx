@@ -5,6 +5,7 @@ import { useFeaturedMovie } from "../../hooks/useFeaturedMovie";
 import { getFetchSeriesURLs, getFetchURLs } from "../../utils/endPoints";
 import { useLanguage } from "../../context/LanguageContext";
 import { Banner } from "../../components/Banner/Banner";
+import Loader from "../../components/Loader/Loader";
 const CarouselFavorites = lazy(() => import("../../components/CarouselFavorites/CarouselFavorites"))
 const CarouselURL = lazy(() => import("../../components/CarouselURL/CarouselURL"))
 
@@ -96,7 +97,9 @@ export default function Home() {
                     ))}
                 </Suspense>
                 {visibleCarousels < allCarousels.length && (
-                    <div ref={loadMoreRef} style={{ height: '200px', background: 'transparent' }} />
+                    <div ref={loadMoreRef} style={{ height: '200px', background: 'transparent' }} >
+                        <Loader />
+                    </div>
                 )}
             </div>
         </div>

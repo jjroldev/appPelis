@@ -8,6 +8,7 @@ import { getFetchURLs } from '../../utils/endPoints';
 import '../Home/Home.css';
 import { useMenu } from '../../context/MenuContext';
 import { useRef, useState } from 'react';
+import Loader from '../../components/Loader/Loader';
 export default function MoviesWindow() {
     const featuredMovie = useFeaturedMovie("feautedMovieMW", "itemsBannerMovies", "movie");
     const { language } = useLanguage();
@@ -71,7 +72,9 @@ export default function MoviesWindow() {
                     <CarouselURL key={index} isLarge={true} URL={carousel.URL} title={carousel.title} />
                 ))}
                 {visibleCarousels < carousels.length && (
-                    <div ref={loadMoreRef} style={{ height: '200px', background: 'transparent' }} />
+                    <div ref={loadMoreRef} style={{ height: '200px', background: 'transparent' }} >
+                        <Loader />
+                    </div>
                 )}
             </div>
         </div>

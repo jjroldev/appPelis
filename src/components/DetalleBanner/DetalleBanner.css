@@ -13,9 +13,9 @@
 }
 
 .bannerDetails span{
-    font-weight: 700;
+    font-weight: 500;
     justify-content: space-between;
-    color: rgba(240, 240, 240, 0.9);
+    color: rgb(255, 255, 255);
     font-size: 1.15rem;
 }
 .generosBanner{
@@ -23,7 +23,7 @@
     row-gap: -10px;
     list-style:disc;
     list-style-position: inside;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 1.15rem;
     max-width: 90%;
     display: flex;

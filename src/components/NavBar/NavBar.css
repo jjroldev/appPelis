@@ -36,7 +36,6 @@ a {
 }
 
 .lupa {
-  font-size: 1.3rem;
   transition: 0.3s ease-in-out;
   cursor: pointer;
   color: #fff;

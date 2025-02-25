@@ -2,8 +2,8 @@ export const URL_IMAGE_POSTER = "https://image.tmdb.org/t/p/w300";
 export const URL_IMAGE_BACKDROP = "https://image.tmdb.org/t/p/w500";
 export const URL_IMAGE_BACKDROPC = "https://image.tmdb.org/t/p/original";
 export const URL_IMAGE_BANNER = "https://image.tmdb.org/t/p/original";
-export const URL_IMAGE_PROFILE = "https://image.tmdb.org/t/p/w300";
-export const URL_IMAGE_PROFILE_HD = "https://image.tmdb.org/t/p/original";
+export const URL_IMAGE_PROFILE = "https://image.tmdb.org/t/p/h632";
+export const URL_IMAGE_PROFILE_HD = "https://image.tmdb.org/t/p/h632";
 export const URL_IMAGE_lOGO = "https://image.tmdb.org/t/p/w500";
 export const URL_IMAGE_STILL = "https://image.tmdb.org/t/p/w500";
 export const BASE_URL = "https://api.themoviedb.org/3";
@@ -35,6 +35,7 @@ export const getFetchURLs = (language: string,page:number=1) => {
 };
 
 export const getFetchSeriesURLs = (language: string,page:number=1) => ({
+  now_playing:`${BASE_URL}/tv/airing_today?api_key=${API_KEY}&language=${language}&page=${page}`,
   popularSeries: `${BASE_URL}/tv/popular?api_key=${API_KEY}&language=${language}&page=${page}`,
     topRatedSeries: `${BASE_URL}/tv/top_rated?api_key=${API_KEY}&language=${language}&page=${page}`,
     upcomingSeries: `${BASE_URL}/tv/on_the_air?api_key=${API_KEY}&language=${language}&page=${page}`,

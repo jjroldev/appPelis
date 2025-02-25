@@ -7,6 +7,7 @@ import { useMenu } from '../../context/MenuContext';
 import '../Home/Home.css';
 import './SeriesWindow.css';
 import CarouselURL from '../../components/CarouselURL/CarouselURL';
+import Loader from '../../components/Loader/Loader';
 
 export default function SeriesWindow() {
     const featuredSerie = useFeaturedMovie("feautedSerieSW", "itemsBannerSeries", "serie");
@@ -65,7 +66,9 @@ export default function SeriesWindow() {
                         <CarouselURL key={index} isLarge={true} URL={carousel.URL} title={carousel.title} />
                     ))}
                 {visibleCarousels < carousels.length && (
-                    <div ref={loadMoreRef} style={{ height: '200px', background: 'transparent' }} />
+                    <div ref={loadMoreRef} style={{ height: '200px', background: 'transparent' }} >
+                        <Loader />
+                    </div>
                 )}
             </div>
         </div>

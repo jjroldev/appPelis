@@ -4,8 +4,8 @@ import { useQuery } from "react-query";
 import "./Banner.css";
 import { fetchData } from "../../utils/fetchData";
 import { getLogoPath, getVideoItem } from "../../utils/helpers.tsx";
-import { Typography, Skeleton } from "@mui/material";
 import { getCertifiedReleaseItem } from "../../utils/helpers.tsx";
+import { getFavoritesByProfile } from "../../firebase.ts";
 import {
     URL_IMAGE_lOGO,
     URL_IMAGE_BANNER,
@@ -22,6 +22,7 @@ import { useWindowWidth } from "../../hooks/useWindowWidth";
 import { useLanguage } from "../../context/LanguageContext";
 import BarMenu from "../BarMenu/BarMenu";
 import toast from "react-hot-toast";
+import { useAuth } from "../../context/AuthContext.tsx";
 
 const DetalleBanner = lazy(() => import("../DetalleBanner/DetalleBaner"));
 
@@ -33,12 +34,11 @@ interface BannerProps {
 
 export function Banner({ itemId, isDetail = false, type }: BannerProps) {
     const navigate = useNavigate();
-    const { handleAddFavorite } = useFavorites();
+    const { handleAddFavorite, handleRemoveFavorite } = useFavorites();
     const { language } = useLanguage();
     const width = useWindowWidth();
     const [logoLoaded, setLogoLoaded] = useState(false);
-
-
+    const { currentPerfil, currentUser } = useAuth()
     const { data: item, isLoading } = useQuery<Movie | Serie>(
         `movie-${itemId}`,
         () =>
@@ -58,6 +58,22 @@ export function Banner({ itemId, isDetail = false, type }: BannerProps) {
     );
 
     const logoPath = getLogoPath(item, dataImages, language);
+
+    const { data: itemsFavorites } = useQuery<Movie[] | Serie[]>(
+        `favorites-${currentUser?.id}-${currentPerfil?.id}`,
+        () => getFavoritesByProfile(currentUser?.id, currentPerfil?.id),
+        {
+            enabled: !!currentUser?.id && !!currentPerfil?.id,
+        }
+    );
+
+    const isFavorite = itemsFavorites?.some(fav => fav.id === item?.id);
+
+    const toggleFavorite = () => {
+        if (item) {
+            isFavorite ? handleRemoveFavorite(item) : handleAddFavorite(item);
+        }
+    };
 
     const pasarItem = useCallback(() => {
         navigate(`/${type}/${item?.id}`);
@@ -110,8 +126,9 @@ export function Banner({ itemId, isDetail = false, type }: BannerProps) {
                     </button>
                 )}
 
-                <button onClick={() => handleAddFavorite(item)} className="botonMeGustaBanner">
-                    <i className="fa-solid fa-plus"></i>
+                <button onClick={toggleFavorite} 
+                className="botonMeGustaBanner">
+                    <i className={`fa-solid ${isFavorite ? "fa-check" : "fa-plus"}`}></i>
                 </button>
             </div>
         );
@@ -172,12 +189,6 @@ export function Banner({ itemId, isDetail = false, type }: BannerProps) {
                     {isDetail && width < 650 && (
                         <Suspense fallback={
                             <>
-                                <Typography component="div" variant={"body1"} maxWidth={"40%"}>
-                                    <Skeleton sx={{ bgcolor: 'grey.600' }} />
-                                </Typography>
-                                <Typography component="div" variant={"caption"} maxWidth={"40%"}>
-                                    <Skeleton sx={{ bgcolor: 'grey.600' }} />
-                                </Typography>
                             </>
                         }>
                             <DetalleBanner item={item} />

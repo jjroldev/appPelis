@@ -37,7 +37,7 @@
     row-gap: 100px;
     place-content: center;
     text-align: center;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     padding: 0;
 }
 

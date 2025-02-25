@@ -1,7 +1,7 @@
 import "./Buscar.css";
 import { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { useQuery} from "react-query";
+import { useQuery } from "react-query";
 
 import { BASE_URL, getFetchURLs, API_KEY, getFetchSeriesURLs } from "../../utils/endPoints";
 import { fetchData } from "../../utils/fetchData";
@@ -18,11 +18,12 @@ import { Movie } from "../../interface/Movie";
 import { useWindowWidth } from "../../hooks/useWindowWidth";
 import { Serie } from "../../interface/Serie";
 import BarMenu from "../../components/BarMenu/BarMenu";
+import Loader from "../../components/Loader/Loader";
 
 export default function Buscar() {
   const navigate = useNavigate();
 
-  const { searchTerm} = useSearch();
+  const { searchTerm } = useSearch();
   const { language } = useLanguage();
   const { currentPerfil, currentUser } = useAuth();
   const { setOpenMenu } = useMenu();
@@ -88,14 +89,6 @@ export default function Buscar() {
     return [...movies, ...series].sort(() => Math.random() - 0.5);
   }, [moviesData?.results, seriesData?.results]);
 
-  if (isLoading) {
-    return (
-      <div className="contenedor">
-        <BarMenu />
-      </div>
-    );
-  }
-
   const renderMovies = (items: Movie[]) =>
     items.map((item, index) => (
       <CardItem key={index} item={item} />
@@ -115,10 +108,21 @@ export default function Buscar() {
 
   return (
     <div className="contenedor">
-      <BarMenu/>
+      <BarMenu />
       <div className="contenedorBuscar">
-        {width < 900 && <Lupa placeholder="Search movies, series, tv series..." />}
-        {renderContent()}
+        {
+          isLoading ? (
+            <>
+              {width < 900 && <Lupa placeholder="Search movies, series, tv series..." />}
+              <Loader />
+            </>
+          ) : (
+            <>
+              {width < 900 && <Lupa placeholder="Search movies, series, tv series..." />}
+              {renderContent()}
+            </>
+          )
+        }
       </div>
     </div>
   );

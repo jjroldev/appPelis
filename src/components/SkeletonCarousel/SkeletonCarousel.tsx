@@ -29,6 +29,7 @@ export function SkeletonCarousel({ isLarge=true,numItems ,title,actor=false}: { 
                     responsive={responsiveSettings}
                     ssr={true}
                     autoPlay={false}
+                    infinite
                     className={`${width < 600 ? "carousel-cell" : ""}`}
                     partialVisible={true}
                 >

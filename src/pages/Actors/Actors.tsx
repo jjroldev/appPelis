@@ -7,11 +7,13 @@ import { fetchData } from '../../utils/fetchData';
 import { getURLPopularActors, getURLSearchActors } from '../../utils/endPoints';
 import { Card } from '../../components/Card/Card';
 import Loader from '../../components/Loader/Loader';
+import { useMenu } from '../../context/MenuContext';
 const BarMenu = lazy(() => import('../../components/BarMenu/BarMenu'));
 
 export default function Actors() {
     const [nameActor, setNameActor] = useState(() => sessionStorage.getItem('nameActor') || "");
     const { language } = useLanguage()
+    const {setOpenMenu}=useMenu()
 
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -39,6 +41,11 @@ export default function Actors() {
         if (inputRef.current) {
             inputRef.current.focus();
         }
+    }, []);
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+        setOpenMenu(false);
     }, []);
 
     return (

@@ -25,9 +25,9 @@ export default function SearchBar({ desdeHome }: SearchBarProps) {
             const target = event.target as Node;
             const navbar = document.querySelector(".navbar");
             if (
-                lupaActive && 
-                lupaContainerRef.current && 
-                !lupaContainerRef.current.contains(target) && 
+                lupaActive &&
+                lupaContainerRef.current &&
+                !lupaContainerRef.current.contains(target) &&
                 (!navbar || !navbar.contains(target))
             ) {
                 setLupaActive(false);
@@ -42,7 +42,7 @@ export default function SearchBar({ desdeHome }: SearchBarProps) {
 
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
-    
+
         if (value) {
             setSearchTerm(value);
             navigate("/buscar");
@@ -50,14 +50,17 @@ export default function SearchBar({ desdeHome }: SearchBarProps) {
             setSearchTerm("");
         }
     };
-    
+
     return (
-        <div className="search-bar">
+        <div className="search-bar flex items-center justify-center">
             {!lupaActive && (
-                <i 
-                    className="fa-solid fa-magnifying-glass lupa" 
-                    onClick={() => setLupaActive(true)}
-                ></i>
+                <span className="material-symbols-outlined lupa"
+                    onClick={() => {
+                        setLupaActive(true);
+                    }}
+                >
+                    search
+                </span>
             )}
 
             {lupaActive && (
@@ -70,16 +73,17 @@ export default function SearchBar({ desdeHome }: SearchBarProps) {
                         value={searchTerm}
                         onChange={handleSearch}
                     />
-                    <i 
-                        className="fa-solid fa-magnifying-glass lupaExpandedIcon" 
+                    <span className="material-symbols-outlined lupaExpandedIcon"
                         onClick={() => {
                             setLupaActive(false);
                         }}
-                    ></i>
+                    >
+                        search
+                    </span>
                     {
                         searchTerm && (
-                            <i 
-                                onClick={() => setSearchTerm("")} 
+                            <i
+                                onClick={() => setSearchTerm("")}
                                 className={"fa-solid fa-x lupaExDelete"}
                             ></i>
                         )
