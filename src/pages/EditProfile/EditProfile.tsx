@@ -98,7 +98,7 @@ export default function EditProfile() {
             <form className="formContainer h-screen" onSubmit={handleEditar}>
                 <div className="wrapper-img-EP">
                     <img src={`/appPelis/${profile?.imagen}`} alt="Profile" />
-                    <i className="fa-solid fa-pencil pencil-icon"></i>
+                    {/* <i className="fa-solid fa-pencil pencil-icon"></i> */}
                 </div>
                 <input
                     className='inputTextFormEP'

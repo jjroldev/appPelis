@@ -20,7 +20,6 @@
     position: relative;
     width: 90px;
     height: 90px;
-    cursor: pointer;
 }
 
 .wrapper-img-cp img {
@@ -37,14 +36,14 @@
     border-radius: 50%;
 }
 
-.pencil-icon {
+/* .pencil-icon {
     color: #fff;
     font-size: 1.5rem;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-}
+} */
 
 .formContainer {
     display: flex;

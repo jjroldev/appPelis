@@ -58,15 +58,13 @@ export default function ManagePerfil() {
                         <div key={perfil.id} className="containerP" onClick={() => handleNavigate(perfil)}>
                             <div className="contenedorPerfil">
                                 <img className='perfil-img' src={`/appPelis/${perfil.imagen}`} alt="" />
+                                {
+                                    edit && (
+                                        <i className="fa-solid fa-pencil"></i>
+                                    )
+                                }
                             </div>
                             <h4 className='nombrePerfil'>{perfil.name}</h4>
-                            {
-                                edit && (
-                                    <div className="containerEdit">
-                                        <i className="fa-solid fa-pencil"></i>
-                                    </div>
-                                )
-                            }
                         </div>
                     ))}
 
@@ -84,8 +82,8 @@ export default function ManagePerfil() {
                     }
                 </div>
                 <div className="container-button-crearProfile p-2">
-                    <button className={`buttonPerfiles bg-gray-800 ${!perfiles.length?"disabled-button-MP":""}`} onClick={toggleEdit}
-                    disabled={!perfiles.length}
+                    <button className={`buttonPerfiles bg-gray-800 ${!perfiles.length ? "disabled-button-MP" : ""}`} onClick={toggleEdit}
+                        disabled={!perfiles.length}
                     >
                         {edit ? "Done" : "Edit profile"}
                     </button>

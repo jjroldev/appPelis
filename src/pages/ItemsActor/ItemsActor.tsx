@@ -43,7 +43,7 @@ export default function ItemsActor() {
         <div className="containerItemsActor">
             <BarMenu />
             <div className="flex flex-col contenedorInformacionActor">
-                <SectionActor actorId={actorId} />
+                <SectionActor />
                 <div className={`contenedorItemsPosters ${validResults.length === 0 && validResultsCrew.length === 0 ? '!flex items-center justify-center' : ''}`}>
                     {validResults.map((movie: Movie | Serie, index: number) => (
                         <CardItem key={index} item={movie} isLarge={false} />

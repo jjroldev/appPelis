@@ -8,8 +8,11 @@ import { motion } from 'framer-motion'
 import { useWindowWidth } from '../../hooks/useWindowWidth'
 import { Skeleton } from '@mui/material'
 import CarouselItemsActor from '../CarouselItemsActor/CarouselItemsActor'
-export default function SectionActor({ actorId }: { actorId: string | undefined }) {
+import { useParams } from 'react-router'
+export default function SectionActor() {
+    const {actorId}=useParams()
     const { language } = useLanguage()
+    const width = useWindowWidth()
     const { data: actorDetails, isLoading } = useQuery<Actor>(`actor-${actorId}`,
         () => fetchData(getURLDetailsOfActor(actorId, language)), {
         refetchOnWindowFocus: false
@@ -23,15 +26,13 @@ export default function SectionActor({ actorId }: { actorId: string | undefined 
 
     const known_for = dataSearchActors?.results?.find((data: Actor) => data.name === actorDetails?.name).known_for
 
-    const width = useWindowWidth()
-
     if (isLoading || isLoading1) {
         return (
             <Skeleton
                 sx={{ bgcolor: 'grey.900' }}
                 variant="rectangular"
                 width={"100%"}
-                height={300}
+                height={width >600 ? 500 : 300}
             />
         )
     }

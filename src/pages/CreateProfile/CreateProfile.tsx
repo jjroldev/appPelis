@@ -74,7 +74,7 @@ export default function CreateProfile() {
             <form className="formContainer h-screen" method='post'>
                 <div className="wrapper-img-cp">
                     <img src={checked ? "/appPelis/kid-1.png" : `/appPelis/adult-1.png`} alt="" />
-                    <i className="fa-solid fa-pencil pencil-icon"></i>
+                    {/* <i className="fa-solid fa-pencil pencil-icon"></i> */}
                 </div>
                 <input className='inputTextFormCP' type="text" placeholder='Enter name' ref={inputRef}
                     required onChange={(e) => setNombrePerfil(e.target.value)} />
