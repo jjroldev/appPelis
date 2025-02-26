@@ -88,19 +88,23 @@ export function Banner({ itemId, isDetail = false, type }: BannerProps) {
         ) : null;
 
 
-    const Logo = ({ item }: { item: Serie | Movie | undefined }) =>
-        logoPath && !isLoading ? (
-            <img
-                className="logo-banner"
-                src={`${URL_IMAGE_lOGO}${logoPath}`}
-                alt="Logo"
-                onLoad={() => setLogoLoaded(true)}
-                style={{
-                    opacity: logoLoaded ? 1 : 0,
-                    transition: "opacity 0.6s ease-in-out",
-                }}
-            />
-        ) : <h2 className="titleItemNoLogo">{item ? ("title" in item ? item.title : item.name) : "No Title"}</h2>
+    const Logo = ({ item }: { item: Serie | Movie | undefined }) => {
+        return (
+            logoPath && !isLoading ? (
+                <img
+                    className="logo-banner"
+                    src={`${URL_IMAGE_lOGO}${logoPath}`}
+                    alt="Logo"
+                    onLoad={() => setLogoLoaded(true)}
+                    style={{
+                        opacity: logoLoaded ? 1 : 0,
+                        transition: "opacity 0.6s ease-in-out",
+                    }}
+                />
+            ) : <h2 className="titleItemNoLogo">{item ? ("title" in item ? item.title.split(' ').slice(0, 3).join(" ") :
+                item.name.split(' ').slice(0, 3).join(" ")) : "No Title"}</h2>
+        )
+    }
 
 
     const handleNavigateVideo = () => {
