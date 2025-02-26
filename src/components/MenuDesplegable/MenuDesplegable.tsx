@@ -5,10 +5,12 @@ import Hamburger from 'hamburger-react';
 import './MenuDesplegable.css'
 import '../NavBar/NavBar.css'
 import { lazy, Suspense } from "react";
+import { useWindowWidth } from "../../hooks/useWindowWidth";
 const MenuOptions = lazy(() => import('./MenuOptions'))
 export default function MenuDesplegable() {
 
     const { openMenu, setOpenMenu } = useMenu()
+    const width=useWindowWidth()
 
     const scrolled = useScroll()
 
@@ -19,7 +21,7 @@ export default function MenuDesplegable() {
                 <Hamburger
                     color="white"
                     onToggle={() => setOpenMenu(!openMenu)}
-                    size={26}
+                    size={width>600 ? 26:24}
                 />
             </div>
             {openMenu && (

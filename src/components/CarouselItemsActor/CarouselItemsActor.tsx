@@ -45,7 +45,7 @@ const CarouselItemsActor = React.memo(({title, isLarge,items }: CarouselItemsAct
         focusOnSelect={false}
       >
         {items.map((item:Movie|Serie,index:number)=>(
-            <CardItem key={index} item={item} isLarge={isLarge}/>
+            <CardItem key={index} item={item} isLarge={false}/>
         ))}
       </Carousel>
     </div>

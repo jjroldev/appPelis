@@ -29,13 +29,13 @@ export default function SectionActor() {
     if (isLoading || isLoading1) {
         return (
             <Skeleton
-                sx={{ bgcolor: 'grey.900' }}
                 variant="rectangular"
                 width={"100%"}
-                height={width >600 ? 500 : 300}
+                height={"110vh"}
             />
         )
     }
+
 
     return (
         <motion.div
@@ -68,7 +68,7 @@ export default function SectionActor() {
                     </div>
                 </div>
             </div>
-            <div className="containerDetailsActorIMG w-full">
+            <div className="containerDetailsActorIMG">
                 <h2 className='actor-name'>{actorDetails?.name}</h2>
                 {actorDetails?.biography && (
                     <div className="detailActor w-full relative">
