@@ -13,7 +13,7 @@ const BarMenu = lazy(() => import('../../components/BarMenu/BarMenu'));
 export default function Actors() {
     const [nameActor, setNameActor] = useState(() => sessionStorage.getItem('nameActor') || "");
     const { language } = useLanguage()
-    const {setOpenMenu}=useMenu()
+    const { setOpenMenu } = useMenu()
 
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -69,7 +69,10 @@ export default function Actors() {
                 </form>
 
                 <div
-                    className={`wrapper-actors w-full ${filteredActors.length == 0 ? '!flex items-center justify-center' : ""}`}
+                    className={`wrapper-actors w-full ${isLoading || isLoadingP || filteredActors.length === 0
+                            ? '!flex items-center justify-center'
+                            : ''
+                        }`}
                 >
                     {isLoading || isLoadingP ? (
                         <Loader />
