@@ -80,6 +80,7 @@
     width: 90%;
     font-size: 4rem;
     margin-bottom: 20px;
+    text-transform: uppercase;
 }
 
 .contenedorLogo {
@@ -202,7 +203,6 @@
 
     .contenedorLogo img {
         width: 360px;
-        margin-bottom: 14px;
         height: auto;
     }
 }
@@ -358,7 +358,7 @@
     .titleItemNoLogo{
         font-weight: bold;
         width: 90%;
-        font-size: 2rem;
+        font-size: 2.3rem;
     }
 
     .contenedorLogo img {
@@ -383,6 +383,6 @@
 
 @media (max-width: 480px) and (max-height: 750px){
     .header {
-        height: 78vh;
+        height: 76vh;
     }
 }
