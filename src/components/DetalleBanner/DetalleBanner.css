@@ -1,5 +1,5 @@
 .contenedorDetailN{
-    bottom: 100px;
+    bottom: 120px;
 }
 
 .itemDetailsBanner{
@@ -35,9 +35,8 @@
     position: absolute;
     align-items: center;
     justify-content: center;
-    padding:  0 10px;
-    gap: 15px;
-    right: 55px;
+    padding:  0 ;
+    right: 23px;
     bottom: 0px;
     width: 40%;
 }
