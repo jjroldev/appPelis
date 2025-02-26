@@ -1,65 +1,30 @@
 .logo {
-    width: 10vw;
+    width: 100px;
     height: auto;
+    margin-right: 40px;
 }
 
 .logoGrande {
-    width: 14vw;
+    width: 120px;
     height: auto;
 }
 
-
-
-@media (max-width: 1200px) {
-    .logo {
-        width: 13vw;
-    }
-
-    .logoGrande {
-        width: 17vw;
-        height: auto;
-    }
-
-}
-
-@media (max-width: 1000px) {
-    .logo {
-        width: 12vw;
-    }
-
-    .logoGrande {
-        width: 18vw;
-        height: auto;
-    }
-
-}
-
-@media (max-width: 900px) {
-    .logo {
-        width: 18vw;
-    }
-
-}
-
 @media (max-width: 800px) {
+    .logo{
+        width: 95px;
+    }
 
     .logoGrande {
-        width: 34vw;
+        width: 100px;
         height: auto;
     }
 }
+
 
 @media (max-width: 600px) {
 
-    .logo {
-        width: 24vw;
-        margin-left: -10px !important;
+    .logoGrande {
+        width: 80px;
     }
 }
 
-@media (max-width: 400px) {
-
-    .logo {
-        width: 27vw;
-    }
-}

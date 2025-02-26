@@ -290,17 +290,15 @@
     .edadParaPublicoBanner{
         font-size: 1.2rem;
     }
+
+    .contenedorLogo {
+        bottom: 100px;
+        gap: 12px;
+    }
     
 }
 
 @media (max-width: 768px) {
-
-    .contenedorLogo {
-        bottom: 120px;
-        z-index: 3;
-        gap: 12px;
-    }
-
 
     .titleItemNoLogo{
         font-weight: bold;
@@ -310,6 +308,10 @@
 
     .edadParaPublicoBanner{
         font-size: 1rem;
+    }
+
+    .cuerpoBanner {
+        padding: 18px;
     }
 }
 

@@ -6,7 +6,7 @@
     gap: 10px;
     min-height: 120vh;
     min-height: 120dvh;
-    padding: 110px 72px 60px 72px;
+    padding: 110px 50px 60px 50px;
 }
 
 .contenedorTituloFavoritas{
@@ -70,9 +70,13 @@
     .favoritasContainer {
         grid-template-columns: repeat(4, 1fr);
     }
+}
+
+
+@media (max-width: 1024px) {
 
     .favorites{
-        padding: 100px 65px 50px 65px;
+        padding: 100px 25px 50px 25px;
     }
 }
 
@@ -81,24 +85,22 @@
         grid-template-columns: repeat(3, 1fr);
         row-gap: 40px;
     }
-
-    .favorites{
-        padding: 120px 55px 40px 55px;
-    }
-
     .tituloFavoritas{
         font-size: 1.5rem;
         margin-bottom: 40px;
     }
 }
 
+
+@media (max-width: 768px) {
+    .favorites{
+        padding: 100px 18px 40px 18px;
+    }
+}
+
 @media (max-width: 600px) {
     .favoritasContainer {
         grid-template-columns: repeat(2, 1fr);
-    }
-
-    .favorites{
-        padding: 120px 25px 40px 25px;
     }
 }
 

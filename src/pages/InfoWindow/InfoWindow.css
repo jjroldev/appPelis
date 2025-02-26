@@ -53,7 +53,7 @@
 
 .detallesInfo {
     gap: 30px;
-    padding-left: 45px;
+    padding-left: 50px;
 }
 
 .carousel-cast .react-multi-carousel-item {
@@ -123,7 +123,6 @@
 
     .detallesInfo {
         gap: 10px;
-        padding-left: 18px;
     }
 
     .carousel-cast .react-multiple-carousel__arrow::before {
@@ -138,6 +137,13 @@
     .contenedorSimilares {
         margin-bottom: 35px;
         gap: 35px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .detallesInfo {
+        padding-left: 18px;
     }
 }
 

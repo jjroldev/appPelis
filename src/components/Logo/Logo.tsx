@@ -1,13 +1,9 @@
 import './Logo.css'
-import { Helmet } from "react-helmet"
 export default function Logo({ logoGrande }: { logoGrande?: boolean }) {
     return (
         <>
-            <Helmet>
-                <link rel="preload" as="image" href="/appPelis/JUSTFLIX.svg" />
-            </Helmet>
             <img
-                src="/appPelis/JUSTFLIX.svg"
+                src="/appPelis/JUSTFLIX3.png"
                 alt="Logo"
                 className={`${logoGrande ? "logoGrande" : "logo"}`}
             />

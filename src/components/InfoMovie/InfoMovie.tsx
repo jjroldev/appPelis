@@ -19,13 +19,13 @@ const CarouselCredits = lazy(() => import('../CarouselCredits/CarouselCredits'))
 export default function InfoMovie() {
     const { movieId } = useParams()
     const { language } = useLanguage()
-    const { data: item ,isLoading} = useQuery<Movie>(
+    const { data: item, isLoading } = useQuery<Movie>(
         `movieInfo-${movieId}-${language}`,
         () => fetchData(getURLMovieDetails(movieId, language).movieDetails),
         { refetchOnWindowFocus: false, enabled: !!movieId }
     );
 
-    const { data: similars,isLoading:isLoading1 } = useQuery(`similar-${movieId}-${language}`, () =>
+    const { data: similars, isLoading: isLoading1 } = useQuery(`similar-${movieId}-${language}`, () =>
         fetchData(getURLMovieDetails(movieId, language, 2).similar), { refetchOnWindowFocus: false })
 
     const { setOpenMenu } = useMenu();
@@ -35,7 +35,7 @@ export default function InfoMovie() {
         setOpenMenu(false);
     }, [movieId]);
 
-    if(isLoading || isLoading1){
+    if (isLoading || isLoading1) {
         return <Spinner />
     }
     return (
@@ -62,28 +62,29 @@ export default function InfoMovie() {
                     <Suspense fallback={<></>}>
                         <CarouselCredits item={item} title="Cast" />
                     </Suspense>
-                </div>
-                {
-                    similars?.results?.length>0 && (
-                        <div className="similarContainer flex flex-col gap-2">
-                            <h3>Similar movies</h3>
-                            <div className="contenedorPeliculasSimilares bg-red w-full">
-                                {
-                                    similars?.results?.map((movie: Movie,index:number) => (
-                                        movie.poster_path && movie.overview && <CardItem key={index} item={movie} isLarge={false} />
-                                    ))
-                                }
+
+                    {
+                        similars?.results?.length > 0 && (
+                            <div className="similarContainer flex flex-col gap-2">
+                                <h3>Similar movies</h3>
+                                <div className="contenedorPeliculasSimilares bg-red w-full">
+                                    {
+                                        similars?.results?.map((movie: Movie, index: number) => (
+                                            movie.poster_path && movie.overview && <CardItem key={index} item={movie} isLarge={false} />
+                                        ))
+                                    }
+                                </div>
                             </div>
+                        )
+                    }
+                    <div className="contenedor-imagenes">
+                        <div className="flex flex-col backdropss">
+                            {item && (
+                                <Suspense fallback={<></>}>
+                                    <CarouselBoostrap item={item} />
+                                </Suspense>
+                            )}
                         </div>
-                    )
-                }
-                <div className="contenedor-imagenes">
-                    <div className="flex flex-col backdropss">
-                        {item && (
-                            <Suspense fallback={<></>}>
-                                <CarouselBoostrap item={item} />
-                            </Suspense>
-                        )}
                     </div>
                 </div>
             </div>

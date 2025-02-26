@@ -1,7 +1,7 @@
 .containerSeason {
     display: flex;
     flex-direction: column;
-    padding: 0 20px;
+    margin-right: 50px;
 }
 
 .contenedorSeleccionSeason {
@@ -13,7 +13,7 @@
 .contenedorSeleccionSeason select {
     color: #c0c0c0;
     background-color: rgb(29, 29, 29);
-    border-radius: 9px;
+    border-radius: 2px;
     gap: 10px;
     padding: 10px;
 }
@@ -37,10 +37,6 @@
 
 
 @media (max-width: 1024px) {
-    .CSSinMargin {
-        margin-right: 25px;
-    }
-
 
     .tituloSerie {
         font-size: 1.6rem;
@@ -52,11 +48,17 @@
 
 
     .containerSeason {
-        padding: 0;
+        margin-right: 25px;
     }
 
     .contenedorSeleccionSeason{
-        padding: 10px;
+        padding: 10px 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .containerSeason {
+        margin-right: 18px;
     }
 }
 

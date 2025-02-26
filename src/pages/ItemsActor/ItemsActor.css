@@ -12,7 +12,7 @@
 }
 
 .contenedorInformacionActor{
-     padding: 10px 40px;
+     padding: 10px 50px;
      padding-bottom: 50px !important;
      padding-top: 90px !important;
      gap: 50px;
@@ -29,6 +29,13 @@
    
 }
 
+@media(max-width:1024px){
+    .contenedorInformacionActor{
+        padding-right: 25px;
+        padding-left: 25px;
+   }
+}
+
 @media(max-width:870px){
     .contenedorItemsPosters{
         grid-template-columns: repeat(6,1fr);
@@ -36,10 +43,15 @@
 }
 
 
-@media(max-width:770px){
+@media(max-width:768px){
     .contenedorItemsPosters{
         grid-template-columns: repeat(5,1fr);
     }
+
+    .contenedorInformacionActor{
+        padding-right: 18px;
+        padding-left: 18px;
+   }
 }
 
 

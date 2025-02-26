@@ -38,7 +38,7 @@ export default function App() {
 
   return (
     <HashRouter>
-      <Toaster position="bottom-center" reverseOrder={false} />
+      <Toaster position="bottom-right" reverseOrder={false} />
       <Suspense fallback={<Spinner />}>
         <Routes>
           <Route

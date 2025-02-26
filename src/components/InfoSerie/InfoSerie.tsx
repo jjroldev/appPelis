@@ -65,36 +65,36 @@ export default function InfoSerie() {
                     <Suspense fallback={<></>}>
                         <CarouselCredits item={item} title="Crew" />
                     </Suspense>
-                </div>
 
-                {
-                    similars?.results?.length>0 && (
-                        <div className="similarContainer flex flex-col gap-2">
-                            <h3>Similar TV shows</h3>
-                            <div className="contenedorPeliculasSimilares bg-red w-full">
-                                {
-                                    similars?.results?.map((serie: Serie,index:number) => (
-                                        serie.poster_path && serie.overview && <CardItem key={index} item={serie} isLarge={false} />
-                                    ))
-                                }
+
+                    {
+                        similars?.results?.length > 0 && (
+                            <div className="similarContainer flex flex-col gap-2">
+                                <h3>Similar TV shows</h3>
+                                <div className="contenedorPeliculasSimilares bg-red w-full">
+                                    {
+                                        similars?.results?.map((serie: Serie, index: number) => (
+                                            serie.poster_path && serie.overview && <CardItem key={index} item={serie} isLarge={false} />
+                                        ))
+                                    }
+                                </div>
                             </div>
-                        </div>
-                    )
-                }
-                {item&& (
-                    <Suspense fallback={<></>}>
-                        <SeasonC series={item} numeroTemporadas={item?.number_of_seasons} />
-                    </Suspense>
-                )}
-
-                <div className="contenedor-imagenes">
-                    <div className="flex flex-col backdropss">
+                        )
+                    }
+                    {item && (
                         <Suspense fallback={<></>}>
-                            <CarouselBoostrap item={item} />
+                            <SeasonC series={item} numeroTemporadas={item?.number_of_seasons} />
                         </Suspense>
+                    )}
+
+                    <div className="contenedor-imagenes">
+                        <div className="flex flex-col backdropss">
+                            <Suspense fallback={<></>}>
+                                <CarouselBoostrap item={item} />
+                            </Suspense>
+                        </div>
                     </div>
                 </div>
-
             </div>
         </div>
 
