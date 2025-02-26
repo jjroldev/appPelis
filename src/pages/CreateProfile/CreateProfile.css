@@ -6,7 +6,7 @@
     justify-content: center;
     flex-direction: column;
     padding: 90px 0px 30px 0px;
-    background-color: #000000;
+    background-color: var(--color-primario);
     gap: 20px;
 }
 

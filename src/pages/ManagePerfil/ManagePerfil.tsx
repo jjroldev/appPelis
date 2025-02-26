@@ -57,10 +57,12 @@ export default function ManagePerfil() {
                     {perfiles.map((perfil) => (
                         <div key={perfil.id} className="containerP" onClick={() => handleNavigate(perfil)}>
                             <div className="contenedorPerfil">
-                                <img className='perfil-img' src={`/appPelis/${perfil.imagen}`} alt="" />
+                                <img className='perfil-img relative' src={`/appPelis/${perfil.imagen}`} alt="" />
                                 {
                                     edit && (
-                                        <i className="fa-solid fa-pencil"></i>
+                                        <div className="containerEdit absolute top-0 right-0 w-full h-full">
+                                            <i className="fa-solid fa-pencil"></i>
+                                        </div>
                                     )
                                 }
                             </div>

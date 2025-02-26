@@ -1,6 +1,6 @@
 
 .favorites {
-    background-color: #000;
+    background-color: var(--color-primario);
     display: flex;
     flex-direction: column;
     gap: 10px;

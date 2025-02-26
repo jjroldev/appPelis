@@ -5,7 +5,6 @@ import { useMemo, useEffect, useRef, useState } from 'react';
 import { getFetchSeriesURLs } from '../../utils/endPoints';
 import { useMenu } from '../../context/MenuContext';
 import '../Home/Home.css';
-import './SeriesWindow.css';
 import CarouselURL from '../../components/CarouselURL/CarouselURL';
 import Loader from '../../components/Loader/Loader';
 

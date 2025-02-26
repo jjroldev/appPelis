@@ -1,7 +1,7 @@
 .containerPerfiles {
     min-height: 100vh;
     min-height: 100dvh;
-    background-color: #000;
+    background-color: var(--color-primario);
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -128,15 +128,19 @@ input::placeholder {
     flex-grow: 1;
 }
 
+.containerEdit{
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .2s ease-in-out;
+}
+
 .contenedorPerfil i {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
     color: #e0e0e0;
     font-size: 1.6rem;
     transition: .2s ease-in-out;
-    text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.7);
 }
 
 .disabled-button-MP {
@@ -190,7 +194,7 @@ input::placeholder {
 }
 
 /* Efecto de hover */
-.containerP:hover .contenedorPerfil img,.containerP:hover .crearPerfilDiv {
+.containerP:hover .contenedorPerfil img,.containerP:hover .crearPerfilDiv,.containerP:hover .containerEdit {
     transform: scale(1.05);
 }
 

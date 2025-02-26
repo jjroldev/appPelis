@@ -1,1 +1,7 @@
 @import "tailwindcss";
+
+:root {
+    --color-primario: #101010;
+    --tamaño-fuente: 16px;
+    --espaciado: 10px;
+}

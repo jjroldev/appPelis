@@ -1,5 +1,5 @@
 .contenedorPrincipalItem {
-    background-color: #000;
+    background-color: var(--color-primario);
     overflow-x: hidden !important;
     padding-bottom: 80px;
 }
@@ -47,7 +47,7 @@
 }
 
 .cargandoInfo {
-    background-color: #000;
+    background-color: var(--color-primario);
 }
 
 

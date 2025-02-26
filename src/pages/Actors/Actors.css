@@ -1,7 +1,7 @@
 .contenedorActors{
     min-height: 120vh;
     min-height: 120dvh;
-    background-color: #000;
+    background-color: var(--color-primario);
     padding-top: 90px;
 }
 

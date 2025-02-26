@@ -1,4 +1,3 @@
-import './PageRegister.css'
 import { lazy } from 'react'
 import { Suspense } from 'react'
 import Spinner from '../../components/Spinner/Spinner'

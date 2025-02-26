@@ -1,6 +1,6 @@
 .contenedorWindow {
     height: 100%;
-    background-color: #000;
+    background-color: var(--color-primario);
     display: flex;
     flex-direction: column;
     overflow-y: visible;
@@ -14,7 +14,7 @@
     flex-direction: column;
     gap: 35px;
     width: 100%;
-    background-color: #000;
+    background-color: var(--color-primario);
     box-sizing: border-box;
     min-height: 800px;
 }

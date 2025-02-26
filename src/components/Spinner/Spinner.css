@@ -1,5 +1,5 @@
 .cargandoSpinner{
-    background-color: rgb(0, 0, 0);
+    background-color: var(--color-primario);
     display: flex;
     height: 100vh;
     height: 100dvh;
