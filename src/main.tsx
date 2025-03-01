@@ -1,5 +1,6 @@
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
+import { StrictMode } from 'react'
 import "./index.css"
 import { MenuProvider } from './context/MenuContext.tsx'
 import { LanguageProvider } from './context/LanguageContext.tsx'
@@ -11,17 +12,19 @@ import { QueryClient } from 'react-query'
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById('root')!).render(
-    <QueryClientProvider client={queryClient}>
-        <MenuProvider >
-            <LanguageProvider>
-                <AuthProvider>
-                    <EmailProvider>
-                        <SearchProvider>
-                            <App />
-                        </SearchProvider>
-                    </EmailProvider>
-                </AuthProvider>
-            </LanguageProvider>
-        </MenuProvider>
-    </QueryClientProvider>
+    <StrictMode>
+        <QueryClientProvider client={queryClient}>
+            <MenuProvider >
+                <LanguageProvider>
+                    <AuthProvider>
+                        <EmailProvider>
+                            <SearchProvider>
+                                <App />
+                            </SearchProvider>
+                        </EmailProvider>
+                    </AuthProvider>
+                </LanguageProvider>
+            </MenuProvider>
+        </QueryClientProvider>
+    </StrictMode>
 )

@@ -72,7 +72,7 @@ export default function MoviesWindow() {
                     <CarouselURL key={index} isLarge={true} URL={carousel.URL} title={carousel.title} />
                 ))}
                 {visibleCarousels < carousels.length && (
-                    <div ref={loadMoreRef} style={{ height: '200px', background: 'transparent' }} >
+                    <div ref={loadMoreRef} style={{ height: '100px', background: 'transparent' }} >
                         <Loader />
                     </div>
                 )}

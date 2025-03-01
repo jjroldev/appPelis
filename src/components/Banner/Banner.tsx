@@ -199,8 +199,11 @@ export function Banner({ itemId, isDetail = false, type }: BannerProps) {
 
                     {isDetail && width < 650 && (
                         <Suspense fallback={
-                            <>
-                            </>
+                            <Box sx={{ width: 300 }}>
+                                <Skeleton sx={{ bgcolor: 'grey.700' }} />
+                                <Skeleton animation="wave" sx={{ bgcolor: 'grey.700' }} />
+                                <Skeleton animation={false} sx={{ bgcolor: 'grey.700' }} />
+                            </Box>
                         }>
                             <DetalleBanner item={item} />
                         </Suspense>

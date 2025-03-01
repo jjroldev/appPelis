@@ -60,7 +60,7 @@ export default function Home() {
     ], [fetchURLS, fetchSeriesURLS]);
     
 
-    const [visibleCarousels, setVisibleCarousels] = useState<number>(5);
+    const [visibleCarousels, setVisibleCarousels] = useState<number>(6);
     const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
@@ -97,7 +97,7 @@ export default function Home() {
                     ))}
                 </Suspense>
                 {visibleCarousels < allCarousels.length && (
-                    <div ref={loadMoreRef} style={{ height: '200px', background: 'transparent' }} >
+                    <div ref={loadMoreRef} style={{ height: '100px', background: 'transparent' }} >
                         <Loader />
                     </div>
                 )}
