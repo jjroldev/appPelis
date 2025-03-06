@@ -8,12 +8,12 @@ import { getCertifiedReleaseItem } from "../../utils/helpers.tsx";
 import { getFavoritesByProfile } from "../../firebase.ts";
 import { Skeleton, Box } from "@mui/material";
 import {
-    URL_IMAGE_lOGO,
     URL_IMAGE_BANNER,
     getURLMovieDetails,
     getSeriesDetailsURL,
     getMovieImagesURL,
-    getSeriesImagesURL
+    getSeriesImagesURL,
+    URL_IMAGE_lOGO_HD
 } from "../../utils/endPoints";
 import { Movie } from "../../interface/Movie";
 import { motion } from "framer-motion";
@@ -93,7 +93,7 @@ export function Banner({ itemId, isDetail = false, type }: BannerProps) {
             logoPath && !isLoading ? (
                 <img
                     className="logo-banner"
-                    src={`${URL_IMAGE_lOGO}${logoPath}`}
+                    src={`${URL_IMAGE_lOGO_HD}${logoPath}`}
                     alt="Logo"
                     onLoad={() => setLogoLoaded(true)}
                     style={{

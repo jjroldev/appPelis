@@ -32,6 +32,7 @@ export default function SectionActor() {
                 variant="rectangular"
                 width={"100%"}
                 height={"110vh"}
+                sx={{backgroundColor:"var(--color-primario)"}}
             />
         )
     }

@@ -75,7 +75,7 @@ export default function Home() {
                     setVisibleCarousels((prev) => Math.min(prev + 8, allCarousels.length));
                 }
             },
-            { rootMargin: "450px" }
+            { rootMargin: "1300px" }
         );
 
         const target = loadMoreRef.current;

@@ -46,7 +46,7 @@ export default function SeriesWindow() {
                     setVisibleCarousels((prev) => Math.min(prev + 7, carousels.length));
                 }
             },
-            { rootMargin: "450px" }
+            { rootMargin: "1300px" }
         );
 
         const target = loadMoreRef.current;
