@@ -8,7 +8,6 @@ import { responsive } from "../../utils/ResponsiveCarrousel";
 import "./CarouselURL.css";
 import { useWindowWidth } from "../../hooks/useWindowWidth";
 import { Serie } from "../../interface/Serie";
-import { SkeletonCarousel } from "../SkeletonCarousel/SkeletonCarousel";
 import { useLanguage } from "../../context/LanguageContext";
 import { renderItems } from "../../utils/helpers";
 
@@ -24,7 +23,7 @@ const CarouselURL = React.memo(({ URL, title, isLarge }: CarouselURLProps) => {
   const width = useWindowWidth();
   const { language } = useLanguage();
 
-  const { data: items, isLoading } = useQuery(
+  const { data: items } = useQuery(
     ["items", URL, title, language],
     () => fetchData(URL),
     { refetchOnWindowFocus: false }
@@ -36,12 +35,6 @@ const CarouselURL = React.memo(({ URL, title, isLarge }: CarouselURLProps) => {
   );
 
   const responsivew = useMemo(() => responsive(width > 1000 ? isLarge : false), [width, isLarge]);
-
-
-  if (isLoading) {
-    return <SkeletonCarousel numItems={10} isLarge={width > 1000 ? isLarge : false} title={title}/>;
-  }
-
 
   return validItems.length ? (
     <div className="carousel">

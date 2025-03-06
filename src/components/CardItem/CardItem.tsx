@@ -53,7 +53,7 @@ const CardItem = React.memo(
             setIsVisible(true);
           }
         },
-        { threshold: 0.05 }
+        { threshold: 0 }
       );
 
       if (imgRef.current) {
@@ -68,8 +68,8 @@ const CardItem = React.memo(
     }, []);
 
     return (
-      <div ref={imgRef} className={`contenedor-poster ${isLarge ? "large" : ""}`} onClick={pasarMovie}>
-        <div className={`cardContainerImage ${isLarge ? "backdrop" : "poster"}`}>
+      <div  className={`contenedor-poster ${isLarge ? "large" : ""}`} onClick={pasarMovie}>
+        <div ref={imgRef} className={`cardContainerImage ${isLarge ? "backdrop" : "poster"}`}>
           {isVisible && (
             <>
               <motion.img
@@ -78,7 +78,7 @@ const CardItem = React.memo(
                 onLoad={() => setImageLoaded(true)}
                 initial={{ opacity: 0 }}
                 animate={imageLoaded ? { opacity: 1 } : {}}
-                transition={{ duration: 0.2, ease: "easeOut" }}
+                transition={{ duration: 0, ease: "easeOut" }}
                 className="main-image"
               />
               {logoPath && isLarge===true&& (
@@ -88,7 +88,7 @@ const CardItem = React.memo(
                   onLoad={() => setImageLoaded(true)}
                   initial={{ opacity: 0 }}
                   animate={imageLoaded ? { opacity: 1 } : {}}
-                  transition={{ duration: 0.1, ease: "easeOut" }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
                   className="logoCardItem"
                 />
               )}

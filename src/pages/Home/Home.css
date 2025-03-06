@@ -8,7 +8,7 @@
 }
 
 .contenedorItems {
-    padding: 20px 0 20px 50px;
+    padding: 20px 0 100px 50px;
     margin-top: -115px;
     display: flex;
     flex-direction: column;
