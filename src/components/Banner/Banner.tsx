@@ -1,4 +1,4 @@
-import { useState, useCallback, Suspense, lazy } from "react";
+import { useCallback, Suspense, lazy } from "react";
 import { useNavigate } from "react-router";
 import { useQuery } from "react-query";
 import "./Banner.css";
@@ -16,7 +16,6 @@ import {
     URL_IMAGE_lOGO_HD
 } from "../../utils/endPoints";
 import { Movie } from "../../interface/Movie";
-import { motion } from "framer-motion";
 import { Serie } from "../../interface/Serie";
 import { useFavorites } from "../../hooks/useFavorites";
 import { useWindowWidth } from "../../hooks/useWindowWidth";
@@ -38,7 +37,6 @@ export function Banner({ itemId, isDetail = false, type }: BannerProps) {
     const { handleAddFavorite, handleRemoveFavorite } = useFavorites();
     const { language } = useLanguage();
     const width = useWindowWidth();
-    const [logoLoaded, setLogoLoaded] = useState(false);
     const { currentPerfil, currentUser } = useAuth()
     const { data: item, isLoading } = useQuery<Movie | Serie>(
         `movie-${itemId}`,
@@ -95,11 +93,6 @@ export function Banner({ itemId, isDetail = false, type }: BannerProps) {
                     className="logo-banner"
                     src={`${URL_IMAGE_lOGO_HD}${logoPath}`}
                     alt="Logo"
-                    onLoad={() => setLogoLoaded(true)}
-                    style={{
-                        opacity: logoLoaded ? 1 : 0,
-                        transition: "opacity 0.6s ease-in-out",
-                    }}
                 />
             ) : <h2 className="titleItemNoLogo">{item ? ("title" in item ? item.title.split(' ').slice(0, 3).join(" ") :
                 item.name.split(' ').slice(0, 3).join(" ")) : "No Title"}</h2>
@@ -141,32 +134,24 @@ export function Banner({ itemId, isDetail = false, type }: BannerProps) {
 
     if (!itemId || !item || isLoading || isLoading1) {
         return (
-            <motion.div
+            <div
                 className="header"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.2, ease: "easeOut" }}
             >
                 <BarMenu />
                 <div
                     className={`fondoCardItem h-full w-full absolute inset-0 opacity-100 transition-opacity duration-400`}
                 ></div>
-            </motion.div>
+            </div>
         );
     }
 
     return (
-        <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
+        <div
             className="header"
         >
             <img
                 src={`${URL_IMAGE_BANNER}${item?.backdrop_path}`}
                 className={`fondo ${width <= 650 ? "fondoMobile" : ""}`}
-                onLoad={(e) => (e.currentTarget.style.opacity = "1")}
-                style={{ opacity: 0, transition: "opacity 0.2s ease-in-out" }}
             />
 
             {
@@ -210,6 +195,6 @@ export function Banner({ itemId, isDetail = false, type }: BannerProps) {
                     )}
                 </div>
             </div>
-        </motion.div>
+        </div>
     );
 }
