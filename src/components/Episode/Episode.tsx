@@ -58,7 +58,7 @@ export default function EpisodeC({ episode, serie_backdrop }: EpisodeProps) {
             <div className='container-episode'>
                 <div className='wrapper-img-episode relative'>
                     {image_path && (
-                        <img src={URL_IMAGE_STILL + image_path || serie_backdrop} alt={episode.name} />
+                        <img src={URL_IMAGE_STILL + image_path || serie_backdrop} alt={episode.name}/>
                     )}
                     <div className='containerPlayMobile absolute'>
                         <i className="fa-solid fa-play play-icon absolute" />
