@@ -3,10 +3,12 @@
     min-height: 120dvh;
     background-color: var(--color-primario);
     padding-top: 90px;
+    padding-left: 50px;
+    padding-right: 50px;
 }
 
 .wrapper-actors{
-    padding: 40px 15px;
+    padding: 40px 0px;
     display: grid;
     grid-template-columns: repeat(8,1fr);
     gap: 10px;
@@ -39,11 +41,28 @@
     }    
 }
 
+
+
+@media(max-width:1024px){
+    .contenedorActors{
+        padding-left: 25px;
+        padding-right: 25px;
+    }    
+}
+
 @media(max-width:920px){
     .wrapper-actors{
         grid-template-columns: repeat(5,1fr);
     }    
 }
+
+@media(max-width:768px){
+    .contenedorActors{
+        padding-left: 18px;
+        padding-right: 18px;
+    }    
+}
+
 
 @media(max-width:750px){
     .wrapper-actors{

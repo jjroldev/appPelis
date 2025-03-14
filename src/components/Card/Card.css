@@ -40,11 +40,11 @@
 
 .papel{
   color: rgb(156, 156, 156);
-  font-size: clamp(.8rem, 1.4vw, 1.1rem);
+  font-size: clamp(.8rem, 1.4vw, 1.05rem);
 }
 
 .nombre-caster{
-  font-size: clamp(.8rem, 1.4vw, 1.15rem);
+  font-size: clamp(.8rem, 1.4vw, 1.05rem);
 }
 
 
